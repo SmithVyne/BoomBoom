@@ -1,0 +1,41 @@
+@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap');
+:root {
+    --main-blue: #4B75FC;
+    font-family: 'Jost', sans-serif;
+}
+
+body, #root {
+    min-height: 100vh;
+    height: fit-content;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav .logo {
+    margin-right: 105px;
+}
+
+.menu {
+    display: flex;
+    gap: 46.5px;
+    margin-right: auto;
+}
+
+.nav-right {
+    display: flex;
+    gap: 28px;
+}
+
+.nav-right button {
+    font-size: 40px;
+    background-color: var(--main-blue);
+    border-radius: 34px;
+    border: none;
+    outline: none;
+    padding: 12px 24px 16px 24px;
+    color: #fff;
+    cursor: pointer;
+}
