@@ -16,7 +16,7 @@ export default function Nav() {
     const {darkTheme} = useContext(themeContext)
     return (
         <nav>
-            <img className="logo" src={darkTheme ? logo1 : logo2} />
+            <img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} />
             <div className="menu">
                 <NavItem href="#">о нас</NavItem>
                 <NavItem href="#">услуги</NavItem>

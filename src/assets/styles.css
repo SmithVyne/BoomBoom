@@ -5,6 +5,10 @@
     font-family: 'Jost', sans-serif;
 }
 
+/* * {
+    transition: 0.5s;
+} */
+
 body, #root {
     min-height: 100vh;
     height: fit-content;

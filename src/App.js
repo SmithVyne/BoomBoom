@@ -7,7 +7,7 @@ export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
   if(darkTheme) {
     return {
-      background: "#000000",
+      background: "#010101",
       textColor: "#ffffff",
     }
   } else {
