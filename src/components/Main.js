@@ -7,12 +7,12 @@ import {IoIosArrowDropleft, IoIosArrowDropright} from "react-icons/all";
 const slides = [
     {
         title: "БУМ! БУМ!, И ты на связи!",
-        subtitle: "Тарифы для связи от 350 руб. в месяц",
+        subtitle: "Тарифы для связи, от 350 руб. в месяц",
         imgUrl: ""
     },
     {
         title: "БУМ! БУМ!, И ты в бизнесе!",
-        subtitle: "Премиальные тарифы для связи от 1500 руб. в месяц",
+        subtitle: "Премиальные тарифы для связи, от 1500 руб. в месяц",
         imgUrl: ""
     }
 ]

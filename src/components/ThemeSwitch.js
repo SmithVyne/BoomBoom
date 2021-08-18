@@ -13,17 +13,17 @@ const Switch = styled.span`
     transition: 0.5s;
     cursor: pointer;
     align-items: center;
+    border: none;
 `
 
 const Flick = styled.img`
-    width: 42px;
-    height: 42px;
+    width: 69px;
+    height: 69px;
     border-radius: 50%;
     padding: 13px;
     transition: 0.5s;
     transform: ${props => props.darkTheme && "translateX(68px)"};
     background: ${props => props.theme.background};
-    border: 1px solid ${props => props.theme.background};
 `
 
 export default function ThemeSwitch() {
