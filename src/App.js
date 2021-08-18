@@ -12,8 +12,8 @@ const whichTheme = (darkTheme) => {
     }
   } else {
     return {
-      background: "#ffffff",
-      textColor: "#000000",
+      background: "#F8F8F8",
+      textColor: "#121212",
     }
   }
 };

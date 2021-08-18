@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Slide from './Slide';
 import {IoIosArrowDropleft, IoIosArrowDropright} from "react-icons/all";
+import hand_with_phone from "../assets/images/hand_with_phone.png";
+import peace_hand from "../assets/images/peace_hand.png";
+import Tariffs from './Tariffs';
 
 
 const slides = [
     {
         title: "БУМ! БУМ!, И ты на связи!",
         subtitle: "Тарифы для связи, от 350 руб. в месяц",
-        imgUrl: ""
+        imgUrl: hand_with_phone
     },
     {
         title: "БУМ! БУМ!, И ты в бизнесе!",
         subtitle: "Премиальные тарифы для связи, от 1500 руб. в месяц",
-        imgUrl: ""
+        imgUrl: peace_hand
     }
 ]
 
 const Carousel = styled.div`
     background: #fff;
     position: relative;
-    border: 2px solid #000;
     border-radius: 44px;
     margin-top: 40px;
 `
@@ -30,10 +32,6 @@ const WrapCtrls = styled.span`
     bottom: 88px;
     display: flex;
     gap: 31px;
-`;
-
-const Offers = styled.div`
-    
 `;
 
 const Controls = ({move}) => {
@@ -81,9 +79,7 @@ export default function Main() {
                 <Slide slide={slides[index]} />
                 <Controls move={move} />
             </Carousel>
-            <Offers>
-
-            </Offers>
+            <Tariffs />
         </main>
     )
 }

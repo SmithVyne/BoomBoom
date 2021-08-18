@@ -10,6 +10,8 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 129px 55px 0 109px;
+    background: url(${({bg}) => bg}) no-repeat;
+    background-position: 97% 129px;
 `;
 
 const Div = styled.div`
@@ -23,31 +25,34 @@ const SiteHeader = styled.h1`
 `
 const Subtitle = styled.p`
     font-size: 40px;
+    font-weight: 400;
 `
 const GoButton = styled.button`
     color: #fff;
     background: #4B75FC;
     box-shadow: 0px 0px 0px 5px rgba(75,117,252,0.36);
     font-size: 24px;
-    padding: 20px 16px;
+    height: 62px;
+    padding: 0 16px;
     border: none;
     border-radius: 32px;
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
+    margin-top: 50px;
 `
 
-
-export default function Slide({slide}) {
-    const title = slide.title.split(',');
-    const subtitle = slide.subtitle.split(',');
+export default function Slide({slide: {title, subtitle, imgUrl}}) {
+    const ttl = title.split(',');
+    const subttl = subtitle.split(',');
 
     return (
-        <Wrapper>
+        <Wrapper bg={imgUrl}>
             <Div>
-                <SiteHeader>{title[0]}<br/>{title[1]}</SiteHeader>
-                <Subtitle>{subtitle[0]}<br/>{subtitle[1]}</Subtitle>
-                <GoButton>Подключить <AiOutlineRight /></GoButton>
+                <SiteHeader>{ttl[0]}<br/>{ttl[1]}</SiteHeader>
+                <Subtitle>{subttl[0]}<br/>{subttl[1]}</Subtitle>
+                <GoButton>Подключить <AiOutlineRight style={{transform: "translateY(10%)"}} /></GoButton>
             </Div>
         </Wrapper>
     )
