@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Slide from './Slide';
 import {IoIosArrowDropleft, IoIosArrowDropright} from "react-icons/all";
