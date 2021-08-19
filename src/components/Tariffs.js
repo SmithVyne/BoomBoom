@@ -12,7 +12,7 @@ const Offers = styled.div`
     border-radius: 44px;
     background: ${({darkTheme, theme}) => darkTheme ? theme.background : "#fff"};
     padding: 40px 60px;
-    height: fit-content;
+    height: max-content;
 `;
 
 const Para1 = styled.p`
@@ -75,7 +75,7 @@ export default function Tariffs() {
             <Offers darkTheme={darkTheme}>
                 <div className="tariffDivider">
                     <Para2>
-                        <Sectitle>Переходите на новый уровень обслуживания с премиум тарифами</Sectitle>
+                        <Sectitle>Переходите на новый <br/> уровень обслуживания <br/> с премиум тарифами</Sectitle>
                         <SecDetails darkTheme={darkTheme}>премиум обслуживание</SecDetails>
                         <SecDetails darkTheme={darkTheme}>выделенная линия поддержки</SecDetails>
                         <SecDetails darkTheme={darkTheme}>классный дизайн личного кабинета</SecDetails>

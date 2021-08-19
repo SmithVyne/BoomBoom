@@ -11,7 +11,7 @@ import TinySwitch from "./TinySwitch";
 const Wrapper = styled.div`
     background: ${({background}) => background};
     background-size: ${({title}) => title === "VIP" && "600%"};
-    width: 100%;
+    width: fit-content;
     height: 100%;
     color: #fff;
     border-radius: 28px;
@@ -31,7 +31,7 @@ const SubScribeBtn = styled.button`
     box-shadow: none;
     color: #121212;
     background: #fff;
-    width: 60%;
+    width: 260px;
     height: 76px;
     border-radius: 38px;
     border: none;
@@ -46,7 +46,7 @@ const Sub = styled.small`
     font-size: 21px;
 `
 const Slider = styled.img`
-    width: 100%;
+    width: 400px;
     margin-bottom: 15px;
 `
 
@@ -90,7 +90,7 @@ export default function TariffCard({background, title, hit, icon}) {
             </span>
             <span className="priceInfo">
                 350 руб./мес
-                <SubScribeBtn>Подключить <AiOutlineRight style={{transform: "translateY(10%)"}} /></SubScribeBtn>
+                <SubScribeBtn>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )
