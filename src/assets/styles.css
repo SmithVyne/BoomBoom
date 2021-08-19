@@ -78,8 +78,8 @@ main {
 
 .tariffDivider {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(3, 30%);
+    gap: 5%;
     grid-auto-rows: 540px;
 }
 
@@ -96,6 +96,7 @@ main {
 .tarif-settings  {
     display: flex;
     gap: 20px;
+    width: 100%;
 }
 
 .tarif-settings .item {
