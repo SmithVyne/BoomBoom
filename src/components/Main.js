@@ -34,6 +34,13 @@ const WrapCtrls = styled.span`
     gap: 31px;
 `;
 
+const Smith = styled.span`
+    color: #000;
+    font-family: 'Calligraffitti', cursive;
+    font-size: 45px;
+    text-align: center;
+`
+
 const Controls = ({move}) => {
     return (
             <>{(slides.length >= 2) &&
@@ -80,6 +87,7 @@ export default function Main() {
                 <Controls move={move} />
             </Carousel>
             <Tariffs />
+            <Smith>Smith .</Smith>
         </main>
     )
 }

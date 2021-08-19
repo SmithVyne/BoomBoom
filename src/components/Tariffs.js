@@ -40,7 +40,7 @@ const Sectitle = styled.p`
     font-weight: 400;
     line-height: 40px;
     margin: 0;
-    margin-bottom: 31px;
+    margin-bottom: 40px;
     color: ${({theme}) => theme.textColor}
 `;
 
