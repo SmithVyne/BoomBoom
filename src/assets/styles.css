@@ -46,6 +46,10 @@ nav .logo {
     color: #fff;
     cursor: pointer;
     font-weight: 500;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 main {
