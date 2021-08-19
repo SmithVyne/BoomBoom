@@ -35,7 +35,7 @@ const WrapCtrls = styled.span`
 `;
 
 const Smith = styled.span`
-    color: #000;
+    color: ${({theme}) => theme.textColor};
     font-family: 'Calligraffitti', cursive;
     font-size: 45px;
     text-align: center;
