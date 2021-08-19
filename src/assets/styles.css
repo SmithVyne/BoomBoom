@@ -53,6 +53,7 @@ nav .logo {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.3s;
 }
 
 main {
@@ -78,7 +79,7 @@ main {
     flex-direction: column;
     height: 100%;
     width: fit-content;
-    margin-top: 20px;
+    margin-top: 25px;
 } 
 
 .tariffDivider {
@@ -97,7 +98,7 @@ main {
     width: fit-content;
     gap: 20px;
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .tarif-settings  {
@@ -123,9 +124,16 @@ main {
     border-radius: 30px;
 }
 
-@media screen and (max-width: 1650px) {
+@media (max-width: 1650px) {
     .tariffDivider {
         justify-content: flex-start;
         gap: 20px;
+    }
+}
+
+
+@media (max-width: 1230px) {
+    .nav-right button {
+        font-size: 2vw;
     }
 }
