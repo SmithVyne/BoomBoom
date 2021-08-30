@@ -1,7 +1,9 @@
 import { createContext, useState } from "react";
 import Nav from "./components/Nav";
-import Main from "./components/Main";
+import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import TariffPage from "./pages/TariffPage";
 
 export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -24,6 +26,9 @@ const Wrapper = styled.div`
   height: fit-content;
   background: ${props => props.theme.background};
   padding: 48px 80px;
+  @media(max-width: 720px) {
+    padding: 5vw;
+  }
 `;
 
 export default function App() {
@@ -32,10 +37,15 @@ export default function App() {
   return (
     <themeContext.Provider value={{darkTheme, setDarkTheme}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
-        <Wrapper>
-          <Nav />
-          <Main />
-        </Wrapper>
+        <Router>
+          <Wrapper>
+            <Nav />
+            <Switch>
+              <Route exact path="/" component={Main} />
+              <Route path="/tariffs" component={TariffPage} />
+            </Switch>
+          </Wrapper>
+        </Router>
       </ThemeProvider>
     </themeContext.Provider>
   )

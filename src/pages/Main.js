@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Slide from './Slide';
+import Slide from '../components/Slide';
 import {IoIosArrowDropleft, IoIosArrowDropright} from "react-icons/all";
 import hand_with_phone from "../assets/images/hand_with_phone.png";
 import peace_hand from "../assets/images/peace_hand.png";
-import Tariffs from './Tariffs';
+import Tariffs from '../components/Tariffs';
 
 
 const slides = [
@@ -32,6 +32,9 @@ const WrapCtrls = styled.span`
     bottom: 88px;
     display: flex;
     gap: 31px;
+    @media(max-width: 1000px) {
+        display: none;
+    }
 `;
 
 const Smith = styled.span`

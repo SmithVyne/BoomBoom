@@ -60,6 +60,9 @@ main {
     display: flex;
     flex-direction: column;
     gap: 60px;
+    @media(max-width: 1000px) {
+        display: none;
+    }
 }
 
 .tariffTypeSwitch {
@@ -85,7 +88,6 @@ main {
 .tariffDivider {
     display: flex;
     justify-content: space-between;
-    grid-auto-rows: 540px;
     flex-wrap: wrap;
 }
 
@@ -134,5 +136,11 @@ main {
 @media (max-width: 1230px) {
     .nav-right button {
         font-size: 2vw;
+    }
+}
+
+@media(max-width: 1000px) {
+    .menu {
+        display: none;
     }
 }

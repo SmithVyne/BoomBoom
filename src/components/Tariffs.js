@@ -13,6 +13,9 @@ const Offers = styled.div`
     background: ${({darkTheme, theme}) => darkTheme ? theme.background : "#fff"};
     padding: 40px 60px;
     height: max-content;
+    @media(max-width: 700px) {
+        padding: 0;
+    }
 `;
 
 const Para1 = styled.p`
@@ -59,13 +62,13 @@ export default function Tariffs() {
     return (
         <>
             <Offers darkTheme={darkTheme}>
-                <offerHeading>
+                <div>
                     <Para1>Платите только за необходимое</Para1>  
                     <div className="tariffTypeSwitch">
                         <Select style={{background: "#4B6CFD", color: "#fff"}}>Тарифы для смартфонов</Select>
                         <Select>Тарифы для планшетов и модемов</Select>
                     </div>
-                </offerHeading>
+                </div>
                 <div className="tariffDivider">
                     <TariffCard title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
                     <TariffCard title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />

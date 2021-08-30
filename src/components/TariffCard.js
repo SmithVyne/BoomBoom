@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     background: ${({background}) => background};
     background-size: ${({title}) => title === "VIP" && "600%"};
     width: fit-content;
+    max-width: 100%;
     height: 100%;
     color: #fff;
     border-radius: 28px;
@@ -47,6 +48,7 @@ const Sub = styled.small`
 `
 const Slider = styled.img`
     width: 400px;
+    max-width: 100%;
     margin-bottom: 15px;
 `
 
