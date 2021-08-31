@@ -5,6 +5,7 @@ import {IoIosArrowDropleft, IoIosArrowDropright} from "react-icons/all";
 import hand_with_phone from "../assets/images/hand_with_phone.png";
 import peace_hand from "../assets/images/peace_hand.png";
 import Tariffs from '../components/Tariffs';
+import Footer from '../globals/Footer';
 
 
 const slides = [
@@ -36,13 +37,6 @@ const WrapCtrls = styled.span`
         display: none;
     }
 `;
-
-const Smith = styled.span`
-    color: ${({theme}) => theme.textColor};
-    font-family: 'Calligraffitti', cursive;
-    font-size: 45px;
-    text-align: center;
-`
 
 const Controls = ({move}) => {
     return (
@@ -84,13 +78,13 @@ export default function Main() {
     }, [count])
 
     return (
-        <main>
+        <>
             <Carousel>
                 <Slide slide={slides[index]} />
                 <Controls move={move} />
             </Carousel>
             <Tariffs />
-            <Smith>Smith .</Smith>
-        </main>
+            <Footer />
+        </>
     )
 }

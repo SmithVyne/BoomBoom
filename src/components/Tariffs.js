@@ -36,6 +36,7 @@ const Para1 = styled.p`
         padding-left: 10px;
     }
 `;
+
 const Select = styled.p`
     color: ${({theme}) => theme.textColor};
     border: 1px solid #4B6CFD;
@@ -48,6 +49,7 @@ const Select = styled.p`
         border-radius: 18px;
     }
 `;
+
 const Para2 = styled.div`
     display: flex;
     flex-direction: column;

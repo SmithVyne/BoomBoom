@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     background: ${({background}) => background};
     background-size: ${({title}) => title === "VIP" && "600%"};
     width: fit-content;
-    max-width: 100%;
+    max-width: ${({scrolling}) => scrolling ? '90vw' : '100%'};
     height: 100%;
     color: #fff;
     border-radius: 28px;
@@ -65,9 +65,9 @@ const MiniIcon = styled.img`
     margin: 5px 0;
 `
 
-export default function TariffCard({background, title, hit, icon}) {
+export default function TariffCard({background, title, hit, icon, scrolling}) {
     return (
-        <Wrapper title={title} background={background}>
+        <Wrapper title={title} background={background} scrolling={scrolling}>
             <span className="card-top">
                 <img alt="card-icon" style={{width: 44}} src={icon} />
                 <Title>{title}</Title>

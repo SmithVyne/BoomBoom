@@ -30,6 +30,12 @@ const Wrapper = styled.div`
     padding: 5vw;
   }
 `;
+const Mainml = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  color:  ${props => props.theme.textColor};
+`
 
 export default function App() {
   const [darkTheme, setDarkTheme] = useState(false);
@@ -40,10 +46,12 @@ export default function App() {
         <Router>
           <Wrapper>
             <Nav />
-            <Switch>
-              <Route exact path="/" component={Main} />
-              <Route path="/tariffs" component={TariffPage} />
-            </Switch>
+            <Mainml>
+              <Switch>
+                <Route exact path="/" component={Main} />
+                <Route path="/tariffs" component={TariffPage} />
+              </Switch>
+            </Mainml>
           </Wrapper>
         </Router>
       </ThemeProvider>

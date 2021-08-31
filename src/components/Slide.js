@@ -37,6 +37,7 @@ const SiteHeader = styled.h1`
 const Subtitle = styled.p`
     font-size: 2.2%;
     font-weight: 400;
+    color: #010101;
     @media(max-width: 1000px) {
         font-size: 4%;
     }
