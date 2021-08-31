@@ -4,7 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Calligraffitti&display=swap');
 
 :root {
-    --main-blue: #4B75FC;
     font-family: 'Jost', sans-serif;
 }
 
@@ -39,23 +38,6 @@ nav .logo {
     justify-content: flex-end;
 }
 
-.nav-right button {
-    font-size: 40px;
-    background-color: var(--main-blue);
-    border-radius: 34px;
-    border: none;
-    outline: none;
-    padding: 12px 24px 16px 24px;
-    color: #fff;
-    cursor: pointer;
-    font-weight: 500;
-    height: 68px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-}
-
 main {
     display: flex;
     flex-direction: column;
@@ -68,6 +50,8 @@ main {
 .tariffTypeSwitch {
     display: flex;
     gap: 12px;
+    margin: 20px 0 32px 0;
+    max-width: 100%;
 }
 
 .card-top {
@@ -134,8 +118,8 @@ main {
 }
 
 @media (max-width: 1230px) {
-    .nav-right button {
-        font-size: 2vw;
+    nav .logo {
+        margin-right: auto;
     }
 }
 

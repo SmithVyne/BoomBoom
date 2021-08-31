@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import Nav from "./components/Nav";
+import Nav from "./globals/Nav";
 import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";

@@ -6,7 +6,7 @@ import infinity from "../assets/images/infinity.png";
 import globe from "../assets/images/globe.png";
 import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
-import TinySwitch from "./TinySwitch";
+import TinySwitch from "../components/TinySwitch";
 
 const Wrapper = styled.div`
     background: ${({background}) => background};
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     padding: 20px;
     display: flex;
     flex-direction: column;
+    font-size: initial;
 `;
 
 const Title = styled.p`
@@ -26,6 +27,7 @@ const Title = styled.p`
     font-weight: bold;
     color: #fff;
     margin: 0;
+    word-break: break-all;
 `;
 
 const SubScribeBtn = styled.button`

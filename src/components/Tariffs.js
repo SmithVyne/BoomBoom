@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { themeContext } from '../App';
 import styled from "styled-components";
-import TariffCard from './TariffCard';
+import TariffCard from '../globals/TariffCard';
 import duck from "../assets/images/duck.png";
 import star from "../assets/images/star.png";
 import goblet from "../assets/images/goblet.png";
@@ -13,25 +13,40 @@ const Offers = styled.div`
     background: ${({darkTheme, theme}) => darkTheme ? theme.background : "#fff"};
     padding: 40px 60px;
     height: max-content;
+    font-size: 100vw;
     @media(max-width: 700px) {
-        padding: 0;
+        padding: 20px 10px;
+        border-radius: 28px;
+    }
+
+    @media(max-width: 350px) {
+        padding: 20px 0;
     }
 `;
 
 const Para1 = styled.p`
     color: ${({theme}) => theme.textColor};
+    font-size: 2.2%;
     font-weight: bold;
-    width: 350px;
-    font-size: 40px;
-    margin: 0;
+    line-height: 90%;
+    @media(max-width: 1000px) {
+        font-size: 6%;
+    }
+    @media(max-width: 350px) {
+        padding-left: 10px;
+    }
 `;
 const Select = styled.p`
-    border: 1px solid #4B6CFD;
     color: ${({theme}) => theme.textColor};
+    border: 1px solid #4B6CFD;
     padding: 12px 16px;
     border-radius: 22px;
-    margin: 20px 0 32px 0;
     cursor: pointer;
+    font-size: 20px;
+    @media(max-width: 1000px) {
+        font-size: 12px;
+        border-radius: 18px;
+    }
 `;
 const Para2 = styled.div`
     display: flex;
@@ -39,12 +54,18 @@ const Para2 = styled.div`
 `;
 
 const Sectitle = styled.p`
-    font-size: 40px;
+    color: ${({theme}) => theme.textColor};
+    line-height: 90%;
     font-weight: 400;
-    line-height: 40px;
+    font-size: 2.2%;
     margin: 0;
     margin-bottom: 40px;
-    color: ${({theme}) => theme.textColor}
+    @media(max-width: 1000px) {
+        font-size: 6%;
+    }
+    @media(max-width: 350px) {
+        padding-left: 10px;
+    }
 `;
 
 const SecDetails = styled.span`
@@ -55,6 +76,11 @@ const SecDetails = styled.span`
     padding: 5px 10px;
     font-weight: 700;
     margin-bottom: 20px;
+    font-size: initial;
+    @media(max-width: 350px) {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 `;
 
 export default function Tariffs() {
@@ -63,7 +89,7 @@ export default function Tariffs() {
         <>
             <Offers darkTheme={darkTheme}>
                 <div>
-                    <Para1>Платите только за необходимое</Para1>  
+                    <Para1>Платите только <br/> за необходимое</Para1>  
                     <div className="tariffTypeSwitch">
                         <Select style={{background: "#4B6CFD", color: "#fff"}}>Тарифы для смартфонов</Select>
                         <Select>Тарифы для планшетов и модемов</Select>

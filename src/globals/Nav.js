@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { themeContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
 import logo2 from '../assets/images/logo2.svg'
-import ThemeSwitch from "./ThemeSwitch";
+import ThemeSwitch from "../components/ThemeSwitch";
 import { Link } from "react-router-dom";
 
 const NavItem = styled(Link)`
@@ -11,6 +11,26 @@ const NavItem = styled(Link)`
     color: ${props => props.theme.textColor};
     font-size: 20px;
     text-decoration: none;
+`;
+
+const DashboardBtn = styled.button`
+    font-size: 40px;
+    background-color: #4B75FC;
+    border-radius: 34px;
+    border: none;
+    outline: none;
+    padding: 12px 24px 16px 24px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    @media (max-width: 1230px) {
+        font-size: 15px;
+    }
 `;
 
 export default function Nav() {
@@ -28,7 +48,7 @@ export default function Nav() {
             </div>
             <div className="nav-right">
                 <ThemeSwitch />
-                <button>личный кабинет</button>
+                <DashboardBtn>личный кабинет</DashboardBtn>
             </div>
         </nav>
     )
