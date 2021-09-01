@@ -102,9 +102,9 @@ export default function Footer() {
                     <MenItem to="/roaming">Роуминг</MenItem>
                 </Menu>
                 <Menu>
-                    <MenItem>Услуги</MenItem>
-                    <MenItem>Номера</MenItem>
-                    <MenItem>Организациям</MenItem>
+                    <MenItem to="/services">Услуги</MenItem>
+                    <MenItem to="numbers">Номера</MenItem>
+                    <MenItem to="/organisations">Организациям</MenItem>
                 </Menu>
                 <Menu>
                     <Tariffs to='/tariffs'>Тарифы</Tariffs>

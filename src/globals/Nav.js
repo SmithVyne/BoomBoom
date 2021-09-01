@@ -14,22 +14,22 @@ const NavItem = styled(Link)`
 `;
 
 const DashboardBtn = styled.button`
-    font-size: 40px;
+    font-size: 37px;
     background-color: #4B75FC;
     border-radius: 34px;
     border: none;
     outline: none;
-    padding: 12px 24px 16px 24px;
+    padding: 0 24px;
     color: #fff;
     cursor: pointer;
     font-weight: 500
     height: 68px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 0.3s;
-    @media (max-width: 1230px) {
-        font-size: 15px;
+    @media (max-width: 900px) {
+        font-size: 17px;
+        height: 52px;
+        align-items: center;
     }
 `;
 
