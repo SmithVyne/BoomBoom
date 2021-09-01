@@ -29,8 +29,11 @@ const Right = styled.div`
 
 const Menu = styled.div`
     display: flex;
-    gap: 32px;
+    gap: 25px;
     flex-direction: column;
+    @media(max-width: 1300px) {
+        gap: 12px;
+    }
 `
 const MenItem = styled(Link)`
     color: ${props => props.theme.textColor};

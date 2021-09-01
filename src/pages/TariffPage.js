@@ -35,13 +35,10 @@ const Div = styled.div`
 `
 const Offers = styled.div`
     height: fit-content;
-    width: calc(100% + 0px);
+    width: 100%;
     overflow-x: scroll;
     ::-webkit-scrollbar {
         width: 0px;
-    }
-    @media(max-width: 720px) {
-        width: 100%;
     }
 `
 const Tariffs = styled.div`
