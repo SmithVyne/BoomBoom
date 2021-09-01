@@ -7,6 +7,9 @@ import globe from "../assets/images/globe.png";
 import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
+import TariffCardModal from "./TariffCardModal";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const Wrapper = styled.div`
     background: ${({background}) => background};
@@ -20,6 +23,8 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     font-size: initial;
+    position: relative;
+    overflow: hidden;
 `;
 
 const Title = styled.p`
@@ -63,11 +68,19 @@ const Details = styled.small`
 const MiniIcon = styled.img`
     width: 14px;
     margin: 5px 0;
+    &:hover {
+        cursor: ${({pointer}) => pointer && "pointer"}
+    }
 `
 
 export default function TariffCard({background, title, hit, icon, scrolling}) {
+    const [showDropdown, setShowDropDown] = useState(false);
+
     return (
         <Wrapper title={title} background={background} scrolling={scrolling}>
+            <AnimatePresence>
+                {showDropdown && <TariffCardModal setShowDropDown={setShowDropDown} />}
+            </AnimatePresence>
             <span className="card-top">
                 <img alt="card-icon" style={{width: 44}} src={icon} />
                 <Title>{title}</Title>
@@ -87,7 +100,7 @@ export default function TariffCard({background, title, hit, icon, scrolling}) {
                     +100 Р
                 </span>
                 <span style={{marginTop: "40px"}}>
-                    <Details><MiniIcon src={infinity} />безлимитные соц сети и мессенджеры<MiniIcon src={info} /></Details>
+                    <Details><MiniIcon src={infinity} />безлимитные соц сети и мессенджеры<MiniIcon onMouseOver={()=>setShowDropDown(true)} pointer src={info} /></Details>
                     <Details><MiniIcon src={globe} />+300 мин в роуминге</Details>
                     <Details style={{opacity: 0.5}}><MiniIcon src={beeline} />безлимитное общение <br /> с абонентами внутри сети Билайн</Details>
                 </span>
