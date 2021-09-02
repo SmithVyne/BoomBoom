@@ -10,6 +10,7 @@ import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import TariffBar from "./TariffBar";
 
 const Wrapper = styled.div`
     background: ${({background}) => background};
@@ -93,7 +94,7 @@ export default function TariffCard({background, title, hit, icon, scrolling}) {
                     <span className="item">300<Sub>МИН</Sub></span>
                     <span className="item">100<Sub>СМС</Sub></span>
                 </span>
-                <Slider alt="tarif-slider" src={slider} />
+                <TariffBar />
                 <span className="_4Gswitch">
                     Безлимитный 4G
                     <TinySwitch />

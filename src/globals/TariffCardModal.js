@@ -22,6 +22,7 @@ export default function TariffCardModal({setShowDropDown}) {
             transition={{duration: 1, type: 'spring'}}
             onMouseOut={()=>setShowDropDown(false)}
         >
+            
         </Wrapper>
     )
 }
