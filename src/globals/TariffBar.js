@@ -5,9 +5,8 @@ import styled from "styled-components";
 
 const Line = styled.div`
     height: 5px;
-    width: 400px;
-    max-width: 100%;
-    margin: 15px 0 25px;
+    width: 100%;
+    margin: 15px auto 25px;
     background: rgba(255, 255, 255, 0.44);
     display: flex;
     align-items: center;
@@ -41,8 +40,8 @@ const Breakpoints = styled.div`
   z-index: 1;
 `;
 const Breakpoint = styled.span`
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   background: white;
   border: 1px solid;
   border-radius: 50%;
@@ -60,7 +59,7 @@ const Level = styled(motion.div)`
 `;
 
 const TariffBar = () => {
-  const [location, setLocation] = useState("-10px");
+  const [location, setLocation] = useState("0px");
   const moveTo = (e) => {
     const { clientX, currentTarget } = e;
     const { left, width } = currentTarget.getBoundingClientRect();
@@ -70,11 +69,11 @@ const TariffBar = () => {
     if (location > error && location <= step1 + error) {
       setLocation(step1 - 13 + "px");
     } else if (location > step1 + error && location <= 2 * step1 + error) {
-      setLocation(2 * step1 - 16 + "px");
+      setLocation(2 * step1 - 17 + "px");
     } else if (location > 2 * step1 + error) {
-      setLocation(3 * step1 - 20 + "px");
+      setLocation(3 * step1 - 21 + "px");
     } else {
-      setLocation("-10px");
+      setLocation("0px");
     }
   };
 
