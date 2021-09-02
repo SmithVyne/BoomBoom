@@ -1,7 +1,6 @@
 import { AiOutlineRight } from "react-icons/ai";
 import styled from "styled-components";
 import Hit from "../assets/images/hit.svg";
-import slider from "../assets/images/slider.png";
 import infinity from "../assets/images/infinity.png";
 import globe from "../assets/images/globe.png";
 import info from "../assets/images/info-icon.png";
@@ -54,12 +53,6 @@ const Sub = styled.small`
     font-weight: light;
     font-size: 21px;
 `
-const Slider = styled.img`
-    width: 400px;
-    max-width: 100%;
-    margin-bottom: 15px;
-`
-
 const Details = styled.small`
     display: flex;
     gap: 10px;
