@@ -73,7 +73,7 @@ export default function TariffCard({background, title, hit, icon, scrolling}) {
     return (
         <Wrapper title={title} background={background} scrolling={scrolling}>
             <AnimatePresence>
-                {showDropdown && <TariffCardModal setShowDropDown={setShowDropDown} />}
+                {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
             <span className="card-top">
                 <img alt="card-icon" style={{width: 44}} src={icon} />
@@ -94,7 +94,12 @@ export default function TariffCard({background, title, hit, icon, scrolling}) {
                     +100 Р
                 </span>
                 <span style={{marginTop: "40px"}}>
-                    <Details><MiniIcon src={infinity} />безлимитные соц сети и мессенджеры<MiniIcon onMouseOver={()=>setShowDropDown(true)} pointer src={info} /></Details>
+                    <Details>
+                        <MiniIcon src={infinity} />безлимитные соц сети и мессенджеры<MiniIcon onMouseOver={(e)=>{
+                            e.stopPropagation()
+                            setShowDropDown(true)
+                        }} pointer src={info} />
+                    </Details>
                     <Details><MiniIcon src={globe} />+300 мин в роуминге</Details>
                     <Details style={{opacity: 0.5}}><MiniIcon src={beeline} />безлимитное общение <br /> с абонентами внутри сети Билайн</Details>
                 </span>

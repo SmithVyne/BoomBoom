@@ -53,9 +53,8 @@ const DoMore = styled.div`
 const More = styled.div`
     display: flex;
     flex-direction: column;
-    font size: 16px;
-    align: Left;
-    vertical align: Center;
+    font-size: 16px;
+    align-items: left;
     color: rgba(1, 1, 1, 0.64);
 `
 const Socials = styled.div`
