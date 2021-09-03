@@ -80,7 +80,7 @@ export default function LoginForm() {
 
     useEffect(() => {
         window.addEventListener("scroll", () => setLoginForm(false))
-    }, [])
+    }, [setLoginForm])
     
     return (
         <Wrapper
