@@ -4,6 +4,7 @@ import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
+import LoginForm from "./globals/LoginForm";
 
 export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -39,9 +40,10 @@ const Mainml = styled.main`
 
 export default function App() {
   const [darkTheme, setDarkTheme] = useState(false);
+  const [loginForm, setLoginForm] = useState(false);
 
   return (
-    <themeContext.Provider value={{darkTheme, setDarkTheme}}>
+    <themeContext.Provider value={{darkTheme, setDarkTheme, setLoginForm}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <Router>
           <Wrapper>
@@ -53,6 +55,7 @@ export default function App() {
               </Switch>
             </Mainml>
           </Wrapper>
+          {loginForm && <LoginForm />}
         </Router>
       </ThemeProvider>
     </themeContext.Provider>

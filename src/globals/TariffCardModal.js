@@ -7,12 +7,12 @@ import snapchat from "../assets/images/snapchat.png";
 import telegram from "../assets/images/telegram.png";
 import kakaotalk from "../assets/images/kakao-talk.png";
 import wechat from "../assets/images/wechat.png";
-import { useEffect, useState } from "react";
+import { useEffect, memo } from "react";
 
 const Wrapper = styled(motion.div)`
     position: absolute;
     width: 100%;
-    height: 80%;
+    height: 90%;
     background: #f1f1f1;
     border-radius: inherit;
     left: 0;
@@ -75,12 +75,12 @@ const MiniIcon = styled.img`
 
 
 
-export default function TariffCardModal({setShowDropDown}) {
+export default memo(function TariffCardModal({setShowDropDown}) {
     useEffect(()=>{
         document.addEventListener("mouseover", () => {
             window.innerWidth <= 1024 && setShowDropDown(false)
         })
-    }, [])
+    }, [setShowDropDown])
 
     return (
         <Wrapper
@@ -89,10 +89,7 @@ export default function TariffCardModal({setShowDropDown}) {
             exit={{y: '-100%'}}
             transition={{duration: 1, type: 'spring'}}
             onMouseLeave={()=>setShowDropDown(false)}
-            onMouseOver={(e)=>{
-                e.stopPropagation()
-                setShowDropDown(true)
-            }}
+            onMouseOver={(e)=>e.stopPropagation()}
         >
             <Sections>
                 <Section>
@@ -124,4 +121,4 @@ export default function TariffCardModal({setShowDropDown}) {
             <Thumb />
         </Wrapper>
     )
-}
+})

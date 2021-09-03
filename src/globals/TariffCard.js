@@ -7,7 +7,7 @@ import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
 
@@ -67,7 +67,7 @@ const MiniIcon = styled.img`
     }
 `
 
-export default function TariffCard({background, title, hit, icon, scrolling}) {
+export default memo(function TariffCard({background, title, hit, icon, scrolling}) {
     const [showDropdown, setShowDropDown] = useState(false);
 
     return (
@@ -110,4 +110,4 @@ export default function TariffCard({background, title, hit, icon, scrolling}) {
             </span>
         </Wrapper>
     )
-}
+})

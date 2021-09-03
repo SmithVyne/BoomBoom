@@ -22,7 +22,7 @@ const DashboardBtn = styled.button`
     padding: 0 24px;
     color: #fff;
     cursor: pointer;
-    font-weight: 500
+    font-weight: 500;
     height: 68px;
     display: flex;
     transition: 0.3s;
@@ -34,7 +34,7 @@ const DashboardBtn = styled.button`
 `;
 
 export default function Nav() {
-    const {darkTheme} = useContext(themeContext)
+    const {darkTheme, setLoginForm} = useContext(themeContext)
     return (
         <nav>
             <img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} />
@@ -48,7 +48,7 @@ export default function Nav() {
             </div>
             <div className="nav-right">
                 <ThemeSwitch />
-                <DashboardBtn>личный кабинет</DashboardBtn>
+                <DashboardBtn onClick={()=>setLoginForm(true)}>личный кабинет</DashboardBtn>
             </div>
         </nav>
     )
