@@ -106,7 +106,7 @@ export default function LoginForm() {
                 <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
                 <Field type="tel" placeholder="+7 (000) 000 00 00" />
-                <Field placeholder="пароль" />
+                <Field type="password" placeholder="пароль" />
                 <Submit>войти</Submit>
             </Form>
         </Wrapper>
