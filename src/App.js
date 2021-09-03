@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from "styled-components";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
+import { AnimatePresence } from "framer-motion";
 
 export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -55,7 +56,7 @@ export default function App() {
               </Switch>
             </Mainml>
           </Wrapper>
-          {loginForm && <LoginForm />}
+          <AnimatePresence>{loginForm && <LoginForm />}</AnimatePresence>
         </Router>
       </ThemeProvider>
     </themeContext.Provider>

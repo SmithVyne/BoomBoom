@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { themeContext } from "../App";
 
 const Wrapper = styled(motion.div)`
-    background: rgba(0, 0, 0, 0.7);
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
     width: 100%;
     height: 100vh;
     position: absolute;
@@ -28,18 +28,22 @@ const Form = styled.div`
     gap: 16px;
     justify-content: flex-end;
     align-items: center;
-    background: ${({theme}) => theme.background};
+    background: ${({darkTheme, theme}) => darkTheme ? theme.background : "#ffffff"};
+    color: ${({theme}) => theme.textColor};
     position: relative;
     @media(max-width: 500px) {
         height: fit-content;
+        padding-top: 60px;
     }
 `
 const Instruction = styled.span`
     font-size: 32px;
-    color: #121212;
     line-height: 110%;
     width: 96%;
     margin-bottom: 15px;
+    @media(max-width: 500px) {
+        font-size: 25px;
+    }
 `
 const Field = styled.input`
     width: 100%;
@@ -47,14 +51,18 @@ const Field = styled.input`
     outline: none;
     font-size: 40px;
     font-weight: 500;
-    padding: 10px 24px 18px 24px;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     line-height: 0px;
     background: #F8F8F8;
+    border: none;
     &::placeholder{
         color: #121212;
-        opacity: 20%;
+        opacity: 25%;
+    }
+    @media(max-width: 500px) {
+        font-size: 25px;
     }
 `
 const Submit = styled.button`
@@ -66,17 +74,20 @@ const Submit = styled.button`
     font-size: 40px;
     border: none;
     cursor: pointer;
+    @media(max-width: 500px) {
+        font-size: 25px;
+        height: 57px;
+    }
 `
 const Close = styled.span`
     position: absolute;
     top: 24px;
     right: 24px;
-    color: ${({theme}) => theme.textColor};
     cursor: pointer
 `
 
 export default function LoginForm() {
-    const {setLoginForm} = useContext(themeContext)
+    const {darkTheme, setLoginForm} = useContext(themeContext)
 
     useEffect(() => {
         window.addEventListener("scroll", () => setLoginForm(false))
@@ -84,8 +95,13 @@ export default function LoginForm() {
     
     return (
         <Wrapper
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
+        transition={{duration: 0.3}}
+        darkTheme={darkTheme}
         onClick={()=>setLoginForm(false)}>
-            <Form onClick={(e)=>e.stopPropagation()}>
+            <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
                 <Field phone placeholder="(000) 000 00 00" />
