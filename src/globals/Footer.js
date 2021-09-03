@@ -107,11 +107,11 @@ export default function Footer() {
                 </Menu>
                 <Menu>
                     <Tariffs to='/tariffs'>Тарифы</Tariffs>
-                    <MenItem>Основной</MenItem>
-                    <MenItem>Яркий</MenItem>
-                    <MenItem>Расширенный</MenItem>
-                    <MenItem>Бизнес</MenItem>
-                    <MenItem>VIP</MenItem>
+                    <MenItem to="">Основной</MenItem>
+                    <MenItem to="">Яркий</MenItem>
+                    <MenItem to="">Расширенный</MenItem>
+                    <MenItem to="">Бизнес</MenItem>
+                    <MenItem to="">VIP</MenItem>
                 </Menu>
             </Right>
             <Copyright>© 2021 ПАО «ААПТЕЛЕКОМ» Все права защищены</Copyright>
