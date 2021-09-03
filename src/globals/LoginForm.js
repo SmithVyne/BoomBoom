@@ -57,6 +57,7 @@ const Field = styled.input`
     line-height: 0px;
     background: #F8F8F8;
     border: none;
+    color: #121212;
     &::placeholder{
         color: #121212;
         opacity: 25%;
@@ -104,7 +105,7 @@ export default function LoginForm() {
             <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
-                <Field phone placeholder="(000) 000 00 00" />
+                <Field type="tel" placeholder="+7 (000) 000 00 00" />
                 <Field placeholder="пароль" />
                 <Submit>войти</Submit>
             </Form>
