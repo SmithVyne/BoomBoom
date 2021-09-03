@@ -7,6 +7,18 @@ import snapchat from "../assets/images/snapchat.png";
 import telegram from "../assets/images/telegram.png";
 import kakaotalk from "../assets/images/kakao-talk.png";
 import wechat from "../assets/images/wechat.png";
+import vk from "../assets/images/vk.png";
+import youtube from "../assets/images/youtube.png";
+import facebook from "../assets/images/facebook.png";
+import twogis from "../assets/images/2gis.png";
+import mailru from "../assets/images/mailru.png";
+import twitter from "../assets/images/twitter.png";
+import yandexmaps from "../assets/images/yandexmaps.png";
+import yandexmail from "../assets/images/yandexmail.png";
+import instagram from "../assets/images/instagram.png";
+import groupniki from "../assets/images/groupniki.png";
+import googlemaps from "../assets/images/googlemaps.png";
+import gmail from "../assets/images/gmail.png";
 import { useEffect, memo } from "react";
 
 const Wrapper = styled(motion.div)`
@@ -28,7 +40,6 @@ const Wrapper = styled(motion.div)`
 const Sections = styled.section`
     height: fit-content;
     width: 100%;
-    border: 1px solid white;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -41,14 +52,14 @@ const Section = styled.section`
     max-width: 100%;
     height: fit-content;
     background-color: white;
-    padding: 11px;
+    padding: 5px 11px;
     border-radius: inherit;
 `
 const Div = styled.div`
     display: flex;
     flex-wrap: wrap;
     height: fit-content;
-    gap: 4px 8px;
+    gap: 1px 8px;
 `
 const Thumb = styled.div`
     width: 49px;
@@ -107,16 +118,35 @@ export default memo(function TariffCardModal({setShowDropDown}) {
                 <Section>
                     <Title>Социальные сети</Title>
                     <Div>
-                        <Media><MiniIcon src={whatsapp} /> twitter</Media>
-                        <Media><MiniIcon src={whatsapp} /> facebook</Media>
-                        <Media><MiniIcon src={whatsapp} /> instagram</Media>
-                        <Media><MiniIcon src={whatsapp} /> одноклассники</Media>
-                        <Media><MiniIcon src={whatsapp} /> вконтакте</Media>
+                        <Media><MiniIcon src={twitter} /> twitter</Media>
+                        <Media><MiniIcon src={facebook} /> facebook</Media>
+                        <Media><MiniIcon src={instagram} /> instagram</Media>
+                        <Media><MiniIcon src={groupniki} /> одноклассники</Media>
+                        <Media><MiniIcon src={vk} /> вконтакте</Media>
                     </Div>
                 </Section>
-                <Section>ererte</Section>
-                <Section>ererte</Section>
-                <Section>ererte</Section>
+                <Section>
+                    <Title>Карты и навигаторы</Title>
+                    <Div>
+                        <Media><MiniIcon src={yandexmaps} /> яндекс карты</Media>
+                        <Media><MiniIcon src={googlemaps} /> google maps</Media>
+                        <Media><MiniIcon src={twogis} /> 2GIS</Media>
+                    </Div>
+                </Section>
+                <Section>
+                    <Title>Почтовые сервисы</Title>
+                    <Div>
+                        <Media><MiniIcon src={mailru} /> mail.ru</Media>
+                        <Media><MiniIcon src={gmail} /> gmail</Media>
+                        <Media><MiniIcon src={yandexmail} /> яндекс почта</Media>
+                    </Div>
+                </Section>
+                <Section>
+                    <Title>Видео</Title>
+                    <Div>
+                        <Media><MiniIcon src={youtube} /> youtube</Media>
+                    </Div>
+                </Section>
             </Sections>
             <Thumb />
         </Wrapper>
