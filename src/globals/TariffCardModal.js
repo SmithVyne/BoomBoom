@@ -52,7 +52,7 @@ const Section = styled.section`
     max-width: 100%;
     height: fit-content;
     background-color: white;
-    padding: 5px 11px;
+    padding: 5px 15px;
     border-radius: inherit;
 `
 const Div = styled.div`
