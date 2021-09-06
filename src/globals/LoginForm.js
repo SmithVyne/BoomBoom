@@ -89,9 +89,9 @@ const Close = styled.span`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
-    const removeForm = () => setLoginForm(false)
 
     useEffect(() => {
+        const removeForm = () => setLoginForm(false)
         document.addEventListener("click", removeForm)
         return () => document.removeEventListener("click", removeForm)
     }, [setLoginForm])
@@ -103,7 +103,10 @@ export default function LoginForm() {
         exit={{opacity: 0}}
         transition={{duration: 0.3}}
         darkTheme={darkTheme}
-        onClick={()=>setLoginForm(false)}>
+        onClick={(e)=>{
+            e.stopPropagation()
+            setLoginForm(false)
+        }}>
             <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
