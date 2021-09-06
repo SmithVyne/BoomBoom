@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import Nav from "./globals/Nav";
 import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
@@ -43,23 +43,22 @@ const Mainml = styled.main`
 export default function App() {
   const [darkTheme, setDarkTheme] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
+  // const [currentUser, setCurrentUser] = useState(null);
 
   return (
     <themeContext.Provider value={{darkTheme, setDarkTheme, setLoginForm}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
-        <Router>
-          <Wrapper>
-            <Nav />
-            <Mainml>
-              <Switch>
-                <Route exact path="/" component={Main} />
-                <Route path="/tariffs" component={TariffPage} />
-                <Route path="/dashboard" component={Dashboard} />
-              </Switch>
-            </Mainml>
-          </Wrapper>
-          <AnimatePresence>{loginForm && <LoginForm />}</AnimatePresence>
-        </Router>
+        <Wrapper>
+          <Nav />
+          <Mainml>
+            <Switch>
+              <Route exact path="/" component={Main} />
+              <Route path="/tariffs" component={TariffPage} />
+              <Route path="/dashboard" component={Dashboard} />
+            </Switch>
+          </Mainml>
+        </Wrapper>
+        <AnimatePresence>{loginForm && <LoginForm />}</AnimatePresence>
       </ThemeProvider>
     </themeContext.Provider>
   )

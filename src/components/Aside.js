@@ -1,0 +1,48 @@
+import { useState } from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.aside`
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+`;
+const Items = styled.a`
+    text-decoration: none;
+    color: ${({theme}) => theme.textColor};
+    position: relative;
+    padding-left: 13px;
+`
+const HovrIcn = styled.div`
+    background: #4B75FC;
+    width: 15px;
+    height: 3px;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    border-radius: 1.5px;
+`
+const itemslist = [
+    "Мой тариф",
+    "Услуги",
+    "Роуминг",
+    "Группы",
+    "Детализация",
+];
+export default function Aside() {
+    const [clicked, setClicked] = useState(null);
+    return (
+        <Wrapper>
+            {itemslist.map((it, idx) =>
+                <Items href={`#${it}`} onClick={()=>setClicked(idx)}>
+                    {clicked === idx && <HovrIcn />}
+                    {it}
+                </Items>
+            )}
+        </Wrapper>
+    )
+}
