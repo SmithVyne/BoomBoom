@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
+import Dashboard from "./pages/Dashboard";
 
 export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -53,6 +54,7 @@ export default function App() {
               <Switch>
                 <Route exact path="/" component={Main} />
                 <Route path="/tariffs" component={TariffPage} />
+                <Route path="/dashboard" component={Dashboard} />
               </Switch>
             </Mainml>
           </Wrapper>
