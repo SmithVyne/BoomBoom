@@ -89,6 +89,12 @@ const Close = styled.span`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
+    const removeForm = () => setLoginForm(false)
+
+    useEffect(() => {
+        document.addEventListener("click", removeForm)
+        return () => document.removeEventListener("click", removeForm)
+    }, [setLoginForm])
     
     return (
         <Wrapper
