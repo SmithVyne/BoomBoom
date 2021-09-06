@@ -18,7 +18,7 @@ const Wrapper = styled(motion.div)`
     align-items: center;
     justify-content: center;
 `
-const Form = styled.div`
+const Form = styled.form`
     display: flex;
     flex-direction: column;
     width: 609px;
@@ -89,10 +89,6 @@ const Close = styled.span`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
-
-    useEffect(() => {
-        window.addEventListener("scroll", () => setLoginForm(false))
-    }, [setLoginForm])
     
     return (
         <Wrapper
