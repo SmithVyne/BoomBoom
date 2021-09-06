@@ -51,15 +51,19 @@ const TarifName = styled.span`
 `
 const Small = styled.small`
     font-size: 12px;
+    line-height: 50%;
+    font-weight: 500;
 `;
 const SubsNumber = styled.span`
     font-size: 28px;
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    line-height: 50%;
+    gap: 16px;
 `
 const SubsBalance = styled(SubsNumber)`
     font-size: 80px;
+    gap: 25px;
 `
 
 export default function Dashboard() {
@@ -74,15 +78,15 @@ export default function Dashboard() {
                         "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
                             <TarifName>Тариф: Бизнес за 1500</TarifName>
                             <SubsNumber>
-                                <Small>Ваш номер</Small>
+                                <Small style={{paddingLeft: 10}}>Ваш номер</Small>
                                 +7 999 999 99 99
                             </SubsNumber>
                             <Button background="white" fontSize="20px" fontWeight="bold" width="307px" height="44px" round >Улучшить</Button>
                     </TopCard>
-                    <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.06)" : "#E9E9E9"}>
+                    <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#E9E9E9"}>
                         <SubsBalance>
                             <Small>Ваш номер</Small>
-                            345,34
+                            345,34 ₽
                         </SubsBalance>
                         <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
                     </TopCard>
