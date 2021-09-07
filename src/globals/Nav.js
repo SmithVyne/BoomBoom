@@ -37,7 +37,7 @@ export default function Nav() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
     return (
         <nav>
-            <img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} />
+            <Link to="/"><img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} /></Link>
             <div className="menu">
                 <NavItem to="/">о нас</NavItem>
                 <NavItem to="/services">услуги</NavItem>
