@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { themeContext } from "../App";
 import Aside from "../components/Aside";
 import { Progress } from 'antd'
+import { HiDownload } from "react-icons/hi";
+import mtc from '../assets/images/mtc.png';
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -27,7 +29,6 @@ const TopCard = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: fit-content;
     color: ${({color, theme}) => color ? color : theme.textColor};
     background: ${({background}) => background};
     height: 250px;
@@ -49,6 +50,8 @@ const Button = styled.button`
     border-radius: ${({round, height}) => round && height};
     border: ${({border}) => border ? border : "none"};
     cursor: pointer;
+    line-height: ${({fontSize}) => fontSize};
+    gap: ${({gap}) => gap};
 `;
 const TarifName = styled.span`
     font-size: 25px;
@@ -84,6 +87,7 @@ const SubCard = styled(TopCard)`
     margin: 0;
     padding: 24px;
     height: 266;
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"};
 `
 const Span = styled.span`
     display: flex;
@@ -108,6 +112,55 @@ const ProgressText = ({title, sub}) => {
         <Psub darkTheme={darkTheme}>{sub}</Psub>
     </Span>)
 }
+const Details = styled.section`
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    color: ${({theme}) => theme.textColor};
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"};
+    border-radius: 28px;
+    padding: 24px;
+    gap: 26px;
+`
+const Dtitle = styled.span`
+    display: flex;
+    justify-content: space-between;
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 650;
+`
+const Dbody = styled.table`
+    width: 100%;
+    font-size: 24px;
+    text-align: left;
+    border-collapse: separate;
+    border-spacing: 0px 12px;
+    & tr:first-child {
+        font-size: 16px;
+        font-weight: 550;
+        & th {
+            padding-left: 24px;
+        }
+    }
+`
+const Trows = styled.tr`
+    font-size: 24px;
+    background: ${({darkTheme}) => darkTheme ? "#242424" : "#f8f8f8"};
+    & td {
+        padding: 24px;
+        line-height: 100%;
+    }
+    & td:first-child {
+        border-radius: 18px 0 0 18px;
+    }
+    & td:last-child {
+        border-radius: 0 18px 18px 0;
+    }
+    & img{
+        width: 30px;
+        margin: -10px 3px -7px 0;
+    }
+`
 
 export default function Dashboard() {
     const {darkTheme} = useContext(themeContext);
@@ -115,7 +168,7 @@ export default function Dashboard() {
         <Wrapper>
             <Aside />
             <MainSection>
-                <TopCards>
+                <TopCards id="Мой тариф">
                     <TopCard color="white" background={darkTheme ? 
                         "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
                         "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
@@ -137,20 +190,46 @@ export default function Dashboard() {
                     </TopCard>
                 </TopCards>
                 <SubCards>
-                        <SubCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
+                        <SubCard darkTheme={darkTheme}>
                             <Small style={{fontWeight: 700}}>Минуты</Small>
                             <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={50} format={() => <ProgressText title="550 мин" sub="из 600" /> } gapDegree={60} />
                         </SubCard>
-                        <SubCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
+                        <SubCard darkTheme={darkTheme}>
                             <Small style={{fontWeight: 700}}>Сообщения</Small>
                             <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={80} format={() => <ProgressText title="200 SMS" sub="из 200" /> } gapDegree={60} />
                         </SubCard>
-                        <SubCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
+                        <SubCard darkTheme={darkTheme}>
                             <Small style={{fontWeight: 700}}>Интернет</Small>
                             <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={12} format={() => <ProgressText title="11,23 гб." sub="из 12" /> } gapDegree={60} />
                         </SubCard>
                     </SubCards>
                     <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Добавить номер или перенести старый +</Button>
+                    <Details id="Детализация" darkTheme={darkTheme}>
+                        <Dtitle>
+                            Детализация
+                            <Button gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
+                                <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
+                            </Button>
+                        </Dtitle>
+                        <Dbody>
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Действие</th>
+                                    <th>Оператор</th>
+                                    <th>Длительность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <Trows darkTheme={darkTheme}>
+                                    <td>Дата</td>
+                                    <td>Действие</td>
+                                    <td><img src={mtc} /> MTC</td>
+                                    <td>Длительность</td>
+                                </Trows>
+                            </tbody>
+                        </Dbody>
+                    </Details>
             </MainSection>         
         </Wrapper>
     )

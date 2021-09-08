@@ -34,7 +34,7 @@ const itemslist = [
     "Детализация",
 ];
 export default function Aside() {
-    const [clicked, setClicked] = useState(null);
+    const [clicked, setClicked] = useState(0);
     return (
         <Wrapper>
             {itemslist.map((it, idx) =>
