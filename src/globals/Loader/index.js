@@ -1,6 +1,12 @@
-import "./index.css"
+import styled from "styled-components";
+import "./index.css";
+const Spinner = styled.div`
+    & div:after {
+        background: ${({theme}) => theme.textColor};
+    }
+`
 export default function Loader() {
     return (
-        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <Spinner className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></Spinner>
     )
 }

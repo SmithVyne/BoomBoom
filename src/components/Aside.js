@@ -39,7 +39,7 @@ export default function Aside() {
     return (
         <Wrapper>
             {itemslist.map((it, idx) =>
-                <Items href={`#${it}`} onClick={()=>setClicked(idx)}>
+                <Items key={it} href={`#${it}`} onClick={()=>setClicked(idx)}>
                     {clicked === idx && <HovrIcn />}
                     {it}
                 </Items>

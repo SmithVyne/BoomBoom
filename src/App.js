@@ -45,7 +45,6 @@ export default function App() {
   const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
-  // const [currentUser, setCurrentUser] = useState(null);
 
   return (
     <themeContext.Provider value={{darkTheme, setDarkTheme, setLoginForm}}>

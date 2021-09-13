@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router";
 import styled from "styled-components";
 import { themeContext } from "../App";
-import { BASE_URL, IntObj, SHOWDASH } from "./utils";
+import { BASE_URL, IntObj, LOGIN, LOGIN_FAILED } from "./utils";
 
 const Wrapper = styled(motion.div)`
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
@@ -88,12 +89,18 @@ const Close = styled.span`
     right: 24px;
     cursor: pointer
 `
+const Error = styled.small `
+    color: red;
+    font-size: 15px;
+    width: 98%;
+`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const dispatch = useDispatch();
+    const logged_in = useSelector(store => store.logged_in);
 
     useEffect(() => {
         const removeForm = () => setLoginForm(false)
@@ -107,34 +114,40 @@ export default function LoginForm() {
         id: username
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         fetch(BASE_URL, IntObj(body))
-        .then(res => {
-            if(res.ok) res.json().then(data => 
-                dispatch({type: SHOWDASH, data})
-            )
-            else throw Error(res.statusText)
-        }).catch(err => console.log(err))
+        .then(res => res.json())
+        .then(data => {
+            if(data.error) {console.warn(data.error); dispatch({type: LOGIN_FAILED})}
+            else dispatch({type: LOGIN, data})
+        })
+        .catch(err => console.log(err))
     }
-    
     return (
-        <Wrapper
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        exit={{opacity: 0}}
-        transition={{duration: 0.3}}
-        darkTheme={darkTheme}
-        onClick={(e)=>{
-            e.stopPropagation()
-            setLoginForm(false)
-        }}>
-            <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
-                <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
-                <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
-                <Field value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" />
-                <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
-                <Submit onClick={handleSubmit}>войти</Submit>
-            </Form>
-        </Wrapper>
+        <>
+        {logged_in === 1 ? 
+            <Redirect to="/dashboard" /> :
+            <Wrapper
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.3}}
+            darkTheme={darkTheme}
+            onClick={(e)=>{
+                e.stopPropagation()
+                setLoginForm(false)
+            }}>
+                <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
+                    <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
+                    <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
+                    {logged_in === -1 && <Error>Неверный логин или пароль</Error>}
+                    <Field value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" />
+                    <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
+                    <Submit onClick={handleSubmit}>войти</Submit>
+                </Form>
+            </Wrapper>
+        }
+        </>
     )
 }

@@ -5,7 +5,6 @@ import Aside from "../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
-import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -165,74 +164,73 @@ const Trows = styled.tr`
 
 export default function Dashboard() {
     const {darkTheme} = useContext(themeContext);
-    const dashboard = useSelector(store => store.dashboard);
     return (
-        <Wrapper id="Мой тариф">
-            <Aside />
-            <MainSection>
-                <TopCards>
-                    <TopCard color="white" background={darkTheme ? 
-                        "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
-                        "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
-                            <Div>
-                                <TarifName>Тариф: Бизнес за 1500</TarifName>
-                                <SubsNumber>
-                                    <Small style={{paddingLeft: 10}}>Ваш номер</Small>
-                                    +7 999 999 99 99
-                                </SubsNumber>
-                            </Div>
-                            <Button background="white" fontSize="20px" fontWeight="bold" width="307px" height="44px" round >Улучшить</Button>
-                    </TopCard>
-                    <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
-                        <SubsBalance>
-                            <Small>Ваш номер</Small>
-                            345,34 ₽
-                        </SubsBalance>
-                        <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
-                    </TopCard>
-                </TopCards>
-                <SubCards>
-                        <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Минуты</Small>
-                            <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={50} format={() => <ProgressText title="550 мин" sub="из 600" /> } gapDegree={60} />
-                        </SubCard>
-                        <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Сообщения</Small>
-                            <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={80} format={() => <ProgressText title="200 SMS" sub="из 200" /> } gapDegree={60} />
-                        </SubCard>
-                        <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Интернет</Small>
-                            <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={12} format={() => <ProgressText title="11,23 гб." sub="из 12" /> } gapDegree={60} />
-                        </SubCard>
-                    </SubCards>
-                    <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Добавить номер или перенести старый +</Button>
-                    <Details id="Детализация" darkTheme={darkTheme}>
-                        <Dtitle>
-                            Детализация
-                            <Button gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
-                                <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
-                            </Button>
-                        </Dtitle>
-                        <Dbody>
-                            <thead>
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Действие</th>
-                                    <th>Оператор</th>
-                                    <th>Длительность</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <Trows darkTheme={darkTheme}>
-                                    <td>Дата</td>
-                                    <td>Действие</td>
-                                    <td><img alt="mtc" src={mtc} /> MTC</td>
-                                    <td>Длительность</td>
-                                </Trows>
-                            </tbody>
-                        </Dbody>
-                    </Details>
-            </MainSection>
-        </Wrapper>
+            <Wrapper id="Мой тариф">
+                <Aside />
+                <MainSection>
+                    <TopCards>
+                        <TopCard color="white" background={darkTheme ? 
+                            "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
+                            "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
+                                <Div>
+                                    <TarifName>Тариф: Бизнес за 1500</TarifName>
+                                    <SubsNumber>
+                                        <Small style={{paddingLeft: 10}}>Ваш номер</Small>
+                                        +7 999 999 99 99
+                                    </SubsNumber>
+                                </Div>
+                                <Button background="white" fontSize="20px" fontWeight="bold" width="307px" height="44px" round >Улучшить</Button>
+                        </TopCard>
+                        <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
+                            <SubsBalance>
+                                <Small>Ваш номер</Small>
+                                345,34 ₽
+                            </SubsBalance>
+                            <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
+                        </TopCard>
+                    </TopCards>
+                    <SubCards>
+                            <SubCard darkTheme={darkTheme}>
+                                <Small style={{fontWeight: 700}}>Минуты</Small>
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={50} format={() => <ProgressText title="550 мин" sub="из 600" /> } gapDegree={60} />
+                            </SubCard>
+                            <SubCard darkTheme={darkTheme}>
+                                <Small style={{fontWeight: 700}}>Сообщения</Small>
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={80} format={() => <ProgressText title="200 SMS" sub="из 200" /> } gapDegree={60} />
+                            </SubCard>
+                            <SubCard darkTheme={darkTheme}>
+                                <Small style={{fontWeight: 700}}>Интернет</Small>
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={12} format={() => <ProgressText title="11,23 гб." sub="из 12" /> } gapDegree={60} />
+                            </SubCard>
+                        </SubCards>
+                        <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Добавить номер или перенести старый +</Button>
+                        <Details id="Детализация" darkTheme={darkTheme}>
+                            <Dtitle>
+                                Детализация
+                                <Button gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
+                                    <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
+                                </Button>
+                            </Dtitle>
+                            <Dbody>
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Действие</th>
+                                        <th>Оператор</th>
+                                        <th>Длительность</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <Trows darkTheme={darkTheme}>
+                                        <td>Дата</td>
+                                        <td>Действие</td>
+                                        <td><img alt="mtc" src={mtc} /> MTC</td>
+                                        <td>Длительность</td>
+                                    </Trows>
+                                </tbody>
+                            </Dbody>
+                        </Details>
+                </MainSection>
+            </Wrapper>
     )
 }

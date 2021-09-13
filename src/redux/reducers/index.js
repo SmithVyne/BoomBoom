@@ -1,7 +1,18 @@
+import { LOGIN, LOGIN_FAILED } from "../../globals/utils"
+
 const initial = {
-    dashboard : false
+    logged_in : 0
 }
 
-export default (store = initial, action) => {
-    return store;
+const LoginReducer = (store = initial, action) => {
+    switch(action.type) {
+        case LOGIN:
+            return {...store, logged_in: 1}
+        case LOGIN_FAILED:
+            return {...store, logged_in: -1}
+        default:
+            return store
+    }
 }
+
+export default LoginReducer;
