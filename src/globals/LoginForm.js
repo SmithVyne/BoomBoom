@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { themeContext } from "../App";
+import { BASE_URL, IntObj, SHOWDASH } from "./utils";
 
 const Wrapper = styled(motion.div)`
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
@@ -89,12 +91,31 @@ const Close = styled.span`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm} = useContext(themeContext)
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const removeForm = () => setLoginForm(false)
         document.addEventListener("click", removeForm)
         return () => document.removeEventListener("click", removeForm)
     }, [setLoginForm])
+
+    const body = {
+        method: "login",
+        params: { username, password },
+        id: username
+    };
+
+    const handleSubmit = () => {
+        fetch(BASE_URL, IntObj(body))
+        .then(res => {
+            if(res.ok) res.json().then(data => 
+                dispatch({type: SHOWDASH, data})
+            )
+            else throw Error(res.statusText)
+        }).catch(err => console.log(err))
+    }
     
     return (
         <Wrapper
@@ -110,9 +131,9 @@ export default function LoginForm() {
             <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
-                <Field type="tel" placeholder="+7 (000) 000 00 00" />
-                <Field type="password" placeholder="пароль" />
-                <Submit>войти</Submit>
+                <Field value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" />
+                <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
+                <Submit onClick={handleSubmit}>войти</Submit>
             </Form>
         </Wrapper>
     )

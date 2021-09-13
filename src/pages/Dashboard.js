@@ -5,6 +5,7 @@ import Aside from "../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -164,11 +165,12 @@ const Trows = styled.tr`
 
 export default function Dashboard() {
     const {darkTheme} = useContext(themeContext);
+    const dashboard = useSelector(store => store.dashboard);
     return (
-        <Wrapper>
+        <Wrapper id="Мой тариф">
             <Aside />
             <MainSection>
-                <TopCards id="Мой тариф">
+                <TopCards>
                     <TopCard color="white" background={darkTheme ? 
                         "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
                         "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
@@ -224,13 +226,13 @@ export default function Dashboard() {
                                 <Trows darkTheme={darkTheme}>
                                     <td>Дата</td>
                                     <td>Действие</td>
-                                    <td><img src={mtc} /> MTC</td>
+                                    <td><img alt="mtc" src={mtc} /> MTC</td>
                                     <td>Длительность</td>
                                 </Trows>
                             </tbody>
                         </Dbody>
                     </Details>
-            </MainSection>         
+            </MainSection>
         </Wrapper>
     )
 }

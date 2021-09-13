@@ -7,6 +7,7 @@ import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 export const themeContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -41,7 +42,8 @@ const Mainml = styled.main`
 `
 
 export default function App() {
-  const [darkTheme, setDarkTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
+  darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
   // const [currentUser, setCurrentUser] = useState(null);
 

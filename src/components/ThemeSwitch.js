@@ -44,7 +44,6 @@ const SwitchBackground = styled.img`
 
 export default function ThemeSwitch() {
     const {darkTheme, setDarkTheme} = useContext(themeContext);
-
     return (
         <Switch onClick={() =>setDarkTheme(dark => !dark)}>
             <SwitchBackground type={"left"} src={darksun} />
