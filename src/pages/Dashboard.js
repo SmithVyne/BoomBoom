@@ -172,7 +172,7 @@ const Ctn = styled(Cleave)`
 `
 
 const getDashboard = Promise.all([
-    Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"})
+    Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"}),
 ])
 
 export default function Dashboard() {
