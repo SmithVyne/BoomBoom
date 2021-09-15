@@ -14,3 +14,6 @@ export async function Fetcher (body) {
             })
             .then(res => res.json())
 }
+
+export const replacePoints = (text) => text.toString().replace(".", ",");
+export const percentage = (current, initial) => (current * 100) / initial;

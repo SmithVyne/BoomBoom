@@ -105,13 +105,13 @@ export default function LoginForm() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const logged_in = useSelector(store => store.logged_in);
+    const apiUsername = username.slice(2, username.length).replaceAll(" ", "")
 
     useEffect(() => {
         const removeForm = () => setLoginForm(false)
         const ifEscape = (e) => e.key === "Escape" && removeForm()
         document.addEventListener("click", removeForm)
-        document.addEventListener("keydown", ifEscape)
-        
+        document.addEventListener("keydown", ifEscape)        
         return () => {
             document.removeEventListener("click", removeForm);
             document.removeEventListener("keydown", ifEscape);
@@ -120,8 +120,8 @@ export default function LoginForm() {
 
     const body = {
         method: "login",
-        params: { username, password },
-        id: username
+        params: { username:apiUsername, password },
+        id: apiUsername
     };
 
     const handleSubmit = (e) => {
@@ -133,7 +133,6 @@ export default function LoginForm() {
         })
         .catch(err => console.log(err))
     }
-    console.log(logged_in)
     return (
         <>
         {userSession ? 
@@ -155,7 +154,7 @@ export default function LoginForm() {
                     <Field as={Cleave} options={{
                         phone: true, 
                         phoneRegionCode: 'RU'
-                    }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>setUsername("+7")} />
+                    }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} />
                     <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
                     <Submit onClick={handleSubmit}>войти</Submit>
                 </Form>

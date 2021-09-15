@@ -7,8 +7,10 @@ import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
-import {Fetcher, USER_INFO } from "../globals/utils";
+import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
 import useLocalStorage from "../hooks/useLocalStorage";
+import Cleave from 'cleave.js/react';
+import 'cleave.js/dist/addons/cleave-phone.ru';
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -70,7 +72,6 @@ const SubsNumber = styled.span`
     display: flex;
     flex-direction: column;
     line-height: 50%;
-    gap: 16px;
 `
 const SubsBalance = styled(SubsNumber)`
     font-size: 80px;
@@ -165,6 +166,12 @@ const Trows = styled.tr`
         margin: -10px 3px -7px 0;
     }
 `
+const Ctn = styled(Cleave)`
+    background: transparent;
+    border: none;
+    outline: none;
+`
+
 const getDashboard = Promise.all([
     Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"})
 ])
@@ -172,6 +179,7 @@ const getDashboard = Promise.all([
 export default function Dashboard() {
     const {darkTheme} = useContext(GlobalContext);
     const userInfo = useSelector(store => store.auth.userInfo?.result);
+    if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
     const dispatch = useDispatch();
     const [userSession] = useLocalStorage("userSession");
     useEffect(() => {
@@ -193,15 +201,15 @@ export default function Dashboard() {
                                     <TarifName>Тариф: {userInfo.plan}</TarifName>
                                     <SubsNumber>
                                         <Small style={{paddingLeft: 10}}>Ваш номер</Small>
-                                        +7 999 999 99 99
+                                        <Ctn disabled options={{phone: true,phoneRegionCode: 'RU'}} value={"+7"+userInfo.ctn} />
                                     </SubsNumber>
                                 </Div>
                                 <Button background="white" fontSize="20px" fontWeight="bold" width="307px" height="44px" round >Улучшить</Button>
                         </TopCard>
                         <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
                             <SubsBalance>
-                                <Small>Ваш номер</Small>
-                                {userInfo.balance} ₽
+                                <Small>Текущий баланс</Small>
+                                {replacePoints(userInfo.balance)} ₽
                             </SubsBalance>
                             <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
                         </TopCard>
@@ -209,15 +217,15 @@ export default function Dashboard() {
                     <SubCards>
                             <SubCard darkTheme={darkTheme}>
                                 <Small style={{fontWeight: 700}}>Минуты</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={50} format={() => <ProgressText title="550 мин" sub="из 600" /> } gapDegree={60} />
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
                             </SubCard>
                             <SubCard darkTheme={darkTheme}>
                                 <Small style={{fontWeight: 700}}>Сообщения</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={80} format={() => <ProgressText title="200 SMS" sub="из 200" /> } gapDegree={60} />
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
                             </SubCard>
                             <SubCard darkTheme={darkTheme}>
                                 <Small style={{fontWeight: 700}}>Интернет</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={12} format={() => <ProgressText title="11,23 гб." sub="из 12" /> } gapDegree={60} />
+                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
                             </SubCard>
                         </SubCards>
                         <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Добавить номер или перенести старый +</Button>
