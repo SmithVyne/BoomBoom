@@ -2,7 +2,7 @@ import sunshine from "../assets/images/sunshine.svg";
 import moonshine from "../assets/images/moonshine.svg";
 import darksun from "../assets/images/darksun.svg";
 import darkmoon from "../assets/images/darkmoon.svg";
-import { themeContext } from "../App";
+import { GlobalContext } from "../App";
 import { useContext } from "react";
 import styled from "styled-components";
 
@@ -43,7 +43,7 @@ const SwitchBackground = styled.img`
 `
 
 export default function ThemeSwitch() {
-    const {darkTheme, setDarkTheme} = useContext(themeContext);
+    const {darkTheme, setDarkTheme} = useContext(GlobalContext);
     return (
         <Switch onClick={() =>setDarkTheme(dark => !dark)}>
             <SwitchBackground type={"left"} src={darksun} />

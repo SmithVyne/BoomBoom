@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { themeContext } from "../App";
+import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
@@ -105,7 +105,7 @@ const Psub = styled.span`
     color: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.6)" : 'rgba(18,18,18, 0.6)'};
 `
 const ProgressText = ({title, sub}) => {
-    const {darkTheme} = useContext(themeContext);
+    const {darkTheme} = useContext(GlobalContext);
     return (
     <Span>
         <Ptitle>{title}</Ptitle>
@@ -163,7 +163,7 @@ const Trows = styled.tr`
 `
 
 export default function Dashboard() {
-    const {darkTheme} = useContext(themeContext);
+    const {darkTheme} = useContext(GlobalContext);
     return (
             <Wrapper id="Мой тариф">
                 <Aside />

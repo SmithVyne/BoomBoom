@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_FAILED } from "../../globals/utils"
+import { LOGIN, LOGIN_FAILED, LOGOUT } from "../../globals/utils"
 
 const initial = {
     logged_in : 0
@@ -10,6 +10,8 @@ const LoginReducer = (store = initial, action) => {
             return {...store, logged_in: 1}
         case LOGIN_FAILED:
             return {...store, logged_in: -1}
+        case LOGOUT:
+            return {...store, logged_in: 0}
         default:
             return store
     }

@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { themeContext } from "../App";
+import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
 import logo2 from '../assets/images/logo2.svg'
 import ThemeSwitch from "../components/ThemeSwitch";
+import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { LOGOUT } from "./utils";
+import { useDispatch } from "react-redux";
 
 const NavItem = styled(Link)`
     text-transform: lowercase;
@@ -13,7 +16,7 @@ const NavItem = styled(Link)`
     text-decoration: none;
 `;
 
-const DashboardBtn = styled.button`
+const DashboardBtn = styled(Link)`
     font-size: 37px;
     background-color: #4B75FC;
     border-radius: 34px;
@@ -31,10 +34,20 @@ const DashboardBtn = styled.button`
         height: 52px;
         align-items: center;
     }
+    &:hover {
+        color: #fff;
+    }
 `;
 
 export default function Nav() {
-    const {darkTheme, setLoginForm} = useContext(themeContext)
+    const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
+    const {pathname} = useLocation();
+    const dispatch = useDispatch();
+    const logged_in = pathname === "/dashboard" && userSession;
+    const handleButton = () => {
+        if(logged_in) {setUserSession(null); dispatch({type: LOGOUT})}
+        else setLoginForm(true)
+    }
     return (
         <nav>
             <Link to="/"><img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} /></Link>
@@ -48,7 +61,7 @@ export default function Nav() {
             </div>
             <div className="nav-right">
                 <ThemeSwitch />
-                <DashboardBtn onClick={()=>setLoginForm(true)}>личный кабинет</DashboardBtn>
+                <DashboardBtn to={logged_in ? "/" : ""} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
         </nav>
     )

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { themeContext } from '../App';
+import { GlobalContext } from '../App';
 import styled from "styled-components";
 import TariffCard from '../globals/TariffCard';
 import duck from "../assets/images/duck.png";
@@ -86,7 +86,7 @@ const SecDetails = styled.span`
 `;
 
 export default function Tariffs() {
-    const {darkTheme} = useContext(themeContext);
+    const {darkTheme} = useContext(GlobalContext);
     return (
         <>
             <Offers darkTheme={darkTheme}>

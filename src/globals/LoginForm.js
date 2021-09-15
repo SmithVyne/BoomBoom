@@ -4,7 +4,7 @@ import { CgClose } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components";
-import { themeContext } from "../App";
+import { GlobalContext } from "../App";
 import { BASE_URL, IntObj, LOGIN, LOGIN_FAILED } from "./utils";
 
 const Wrapper = styled(motion.div)`
@@ -96,7 +96,7 @@ const Error = styled.small `
 `
 
 export default function LoginForm() {
-    const {darkTheme, setLoginForm} = useContext(themeContext)
+    const {darkTheme, setLoginForm, setUserSession} = useContext(GlobalContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
@@ -120,7 +120,7 @@ export default function LoginForm() {
         .then(res => res.json())
         .then(data => {
             if(data.error) {console.warn(data.error); dispatch({type: LOGIN_FAILED})}
-            else dispatch({type: LOGIN, data})
+            else {dispatch({type: LOGIN}); setUserSession(data.result)}
         })
         .catch(err => console.log(err))
     }

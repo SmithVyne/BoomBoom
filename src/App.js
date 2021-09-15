@@ -9,7 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
 import useLocalStorage from "./hooks/useLocalStorage";
 
-export const themeContext = createContext();
+export const GlobalContext = createContext();
 const whichTheme = (darkTheme) => {
   if(darkTheme) {
     return {
@@ -43,11 +43,12 @@ const Mainml = styled.main`
 
 export default function App() {
   const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
+  const [userSession, setUserSession] = useLocalStorage("userSession");
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
 
   return (
-    <themeContext.Provider value={{darkTheme, setDarkTheme, setLoginForm}}>
+    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <Wrapper>
           <Nav />
@@ -61,6 +62,6 @@ export default function App() {
         </Wrapper>
         <AnimatePresence>{loginForm && <LoginForm />}</AnimatePresence>
       </ThemeProvider>
-    </themeContext.Provider>
+    </GlobalContext.Provider>
   )
 }

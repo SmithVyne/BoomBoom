@@ -1,5 +1,6 @@
 export const LOGIN = "LOGIN";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT = "LOGOUT";
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const IntObj = (body) => ({
     method: "POST",
