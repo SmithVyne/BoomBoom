@@ -8,7 +8,6 @@ import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
 import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
-import useLocalStorage from "../hooks/useLocalStorage";
 import Cleave from 'cleave.js/react';
 import 'cleave.js/dist/addons/cleave-phone.ru';
 
@@ -177,11 +176,10 @@ const getDashboard = Promise.all([
 ])
 
 export default function Dashboard() {
-    const {darkTheme} = useContext(GlobalContext);
+    const {darkTheme, userSession} = useContext(GlobalContext);
     const userInfo = useSelector(store => store.auth.userInfo?.result);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
     const dispatch = useDispatch();
-    const [userSession] = useLocalStorage("userSession");
     useEffect(() => {
         userSession && getDashboard
             .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))

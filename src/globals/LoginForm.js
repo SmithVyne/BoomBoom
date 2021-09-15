@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
-import useLocalStorage from "../hooks/useLocalStorage";
 import {Fetcher, LOGIN, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import 'cleave.js/dist/addons/cleave-phone.ru';
@@ -99,8 +98,7 @@ const Error = styled.small `
 `
 
 export default function LoginForm() {
-    const {darkTheme, setLoginForm} = useContext(GlobalContext)
-    const [userSession, setUserSession] = useLocalStorage("userSession");
+    const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
