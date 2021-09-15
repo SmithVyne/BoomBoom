@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
-import { BASE_URL, IntObj, LOGIN, LOGIN_FAILED } from "./utils";
+import useLocalStorage from "../hooks/useLocalStorage";
+import {Fetcher, LOGIN, LOGIN_FAILED} from "./utils";
+import Cleave from 'cleave.js/react';
+import 'cleave.js/dist/addons/cleave-phone.ru';
 
 const Wrapper = styled(motion.div)`
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
@@ -96,7 +99,8 @@ const Error = styled.small `
 `
 
 export default function LoginForm() {
-    const {darkTheme, setLoginForm, setUserSession} = useContext(GlobalContext)
+    const {darkTheme, setLoginForm} = useContext(GlobalContext)
+    const [userSession, setUserSession] = useLocalStorage("userSession");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
@@ -104,8 +108,14 @@ export default function LoginForm() {
 
     useEffect(() => {
         const removeForm = () => setLoginForm(false)
+        const ifEscape = (e) => e.key === "Escape" && removeForm()
         document.addEventListener("click", removeForm)
-        return () => document.removeEventListener("click", removeForm)
+        document.addEventListener("keydown", ifEscape)
+        
+        return () => {
+            document.removeEventListener("click", removeForm);
+            document.removeEventListener("keydown", ifEscape);
+        }
     }, [setLoginForm])
 
     const body = {
@@ -116,17 +126,17 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch(BASE_URL, IntObj(body))
-        .then(res => res.json())
+        Fetcher(body)
         .then(data => {
             if(data.error) {console.warn(data.error); dispatch({type: LOGIN_FAILED})}
             else {dispatch({type: LOGIN}); setUserSession(data.result)}
         })
         .catch(err => console.log(err))
     }
+    console.log(logged_in)
     return (
         <>
-        {logged_in === 1 ? 
+        {userSession ? 
             <Redirect to="/dashboard" /> :
             <Wrapper
             initial={{opacity: 0}}
@@ -142,7 +152,10 @@ export default function LoginForm() {
                     <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                     <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
                     {logged_in === -1 && <Error>Неверный логин или пароль</Error>}
-                    <Field value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" />
+                    <Field as={Cleave} options={{
+                        phone: true, 
+                        phoneRegionCode: 'RU'
+                    }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>setUsername("+7")} />
                     <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
                     <Submit onClick={handleSubmit}>войти</Submit>
                 </Form>

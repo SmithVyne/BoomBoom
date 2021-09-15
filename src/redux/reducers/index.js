@@ -1,20 +1,27 @@
-import { LOGIN, LOGIN_FAILED, LOGOUT } from "../../globals/utils"
+import { combineReducers } from "redux"
+import { LOGIN, LOGIN_FAILED, LOGOUT, USER_INFO } from "../../globals/utils"
 
-const initial = {
-    logged_in : 0
-}
 
-const LoginReducer = (store = initial, action) => {
+const LoginReducer = (store = 0, action) => {
     switch(action.type) {
         case LOGIN:
-            return {...store, logged_in: 1}
+            return 1
         case LOGIN_FAILED:
-            return {...store, logged_in: -1}
+            return -1
         case LOGOUT:
-            return {...store, logged_in: 0}
+            return 0
         default:
             return store
     }
 }
 
-export default LoginReducer;
+const AuthReducer = (store = {}, action) => {
+    switch(action.type) {
+        case USER_INFO:
+            return {...store, userInfo: action.userInfo}
+        default:
+            return store
+    }
+}
+
+export default combineReducers({logged_in: LoginReducer, auth: AuthReducer});

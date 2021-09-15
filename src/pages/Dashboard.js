@@ -1,10 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../globals/Loader";
+import {Fetcher, USER_INFO } from "../globals/utils";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -161,10 +165,23 @@ const Trows = styled.tr`
         margin: -10px 3px -7px 0;
     }
 `
+const getDashboard = Promise.all([
+    Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"})
+])
 
 export default function Dashboard() {
     const {darkTheme} = useContext(GlobalContext);
+    const userInfo = useSelector(store => store.auth.userInfo?.result);
+    const dispatch = useDispatch();
+    const [userSession] = useLocalStorage("userSession");
+    useEffect(() => {
+        userSession && getDashboard
+            .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))
+    }, [userSession, dispatch]);
+
     return (
+            <>
+            {!userInfo ? <Loader /> : 
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
@@ -173,7 +190,7 @@ export default function Dashboard() {
                             "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
                             "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
                                 <Div>
-                                    <TarifName>Тариф: Бизнес за 1500</TarifName>
+                                    <TarifName>Тариф: {userInfo.plan}</TarifName>
                                     <SubsNumber>
                                         <Small style={{paddingLeft: 10}}>Ваш номер</Small>
                                         +7 999 999 99 99
@@ -184,7 +201,7 @@ export default function Dashboard() {
                         <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
                             <SubsBalance>
                                 <Small>Ваш номер</Small>
-                                345,34 ₽
+                                {userInfo.balance} ₽
                             </SubsBalance>
                             <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
                         </TopCard>
@@ -231,6 +248,7 @@ export default function Dashboard() {
                             </Dbody>
                         </Details>
                 </MainSection>
-            </Wrapper>
+                </Wrapper>}
+            </>
     )
 }

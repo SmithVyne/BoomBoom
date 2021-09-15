@@ -75,6 +75,7 @@ export default function Main() {
             setIndex(count%slides.length)
         }, 5000)
         setTimerId(id);
+        return () => clearTimeout(id)
     }, [count])
 
     return (
