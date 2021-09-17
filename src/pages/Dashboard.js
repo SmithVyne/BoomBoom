@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
@@ -10,6 +10,7 @@ import Loader from "../globals/Loader";
 import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
 import Cleave from 'cleave.js/react';
 import 'cleave.js/dist/addons/cleave-phone.ru';
+import html2pdf from "html2pdf.js";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -185,6 +186,11 @@ export default function Dashboard() {
             .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))
     }, [userSession, dispatch]);
 
+    const detailsRef = useRef();
+    const handleDownload = () => {
+        html2pdf().from(detailsRef.current).save("Детализация.pdf")
+    }
+
     return (
             <>
             {!userInfo ? <Loader /> : 
@@ -230,11 +236,11 @@ export default function Dashboard() {
                         <Details id="Детализация" darkTheme={darkTheme}>
                             <Dtitle>
                                 Детализация
-                                <Button gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
+                                <Button onClick={handleDownload} gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
                                     <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
                                 </Button>
                             </Dtitle>
-                            <Dbody>
+                            <Dbody ref={detailsRef}>
                                 <thead>
                                     <tr>
                                         <th>Дата</th>

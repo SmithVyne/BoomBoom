@@ -27,7 +27,7 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     width: 609px;
-    height: 465px;
+    height: 467px;
     border-radius: 32px;
     padding: 24px;
     gap: 16px;
@@ -96,6 +96,14 @@ const Error = styled.small `
     font-size: 15px;
     width: 98%;
 `
+const GetPassword = styled(Error)`
+    color: inherit;
+    font-size: 17px;
+    & span {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+`
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
@@ -154,6 +162,7 @@ export default function LoginForm() {
                         phoneRegionCode: 'RU'
                     }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} />
                     <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
+                    <GetPassword>Нет пароля? <span>Получить пароль</span></GetPassword>
                     <Submit onClick={handleSubmit}>войти</Submit>
                 </Form>
             </Wrapper>
