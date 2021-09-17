@@ -1,15 +1,13 @@
 import { combineReducers } from "redux"
-import { LOGIN, LOGIN_FAILED, LOGOUT, USER_INFO } from "../../globals/utils"
+import { LOGIN_FAILED, GET_PASSWORD, USER_INFO } from "../../globals/utils"
 
 
-const LoginReducer = (store = 0, action) => {
+const FormReducer = (store = null, action) => {
     switch(action.type) {
-        case LOGIN:
-            return 1
         case LOGIN_FAILED:
             return -1
-        case LOGOUT:
-            return 0
+        case GET_PASSWORD:
+            return store === -2 ? null : -2
         default:
             return store
     }
@@ -24,4 +22,4 @@ const AuthReducer = (store = {}, action) => {
     }
 }
 
-export default combineReducers({logged_in: LoginReducer, auth: AuthReducer});
+export default combineReducers({form_status: FormReducer, auth: AuthReducer});

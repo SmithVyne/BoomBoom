@@ -6,8 +6,6 @@ import logo2 from '../assets/images/logo2.svg'
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { LOGOUT } from "./utils";
-import { useDispatch } from "react-redux";
 
 const NavItem = styled(Link)`
     text-transform: lowercase;
@@ -36,16 +34,17 @@ const DashboardBtn = styled(Link)`
     }
     &:hover {
         color: #fff;
+        transform: scale(1.02);
+        transition: 0.2s;
     }
 `;
 
 export default function Nav() {
     const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
     const {pathname} = useLocation();
-    const dispatch = useDispatch();
     const logged_in = pathname === "/dashboard" && userSession;
     const handleButton = () => {
-        if(logged_in) {setUserSession(null); dispatch({type: LOGOUT})}
+        if(logged_in) setUserSession(null)
         else setLoginForm(true)
     }
     return (

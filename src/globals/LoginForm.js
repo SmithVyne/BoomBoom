@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
-import {Fetcher, LOGIN, LOGIN_FAILED} from "./utils";
+import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import 'cleave.js/dist/addons/cleave-phone.ru';
+import { FaCheck } from "react-icons/fa";
+
 
 const Wrapper = styled(motion.div)`
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
@@ -39,6 +41,16 @@ const Form = styled.form`
     @media(max-width: 500px) {
         height: fit-content;
         padding-top: 60px;
+    }
+    & span#check {
+        width: 116px;
+        height: 116px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #79FFD7;
+        margin: 20px 0 50px;
+        border-radius: 100%;
     }
 `
 const Instruction = styled.span`
@@ -110,7 +122,7 @@ export default function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const logged_in = useSelector(store => store.logged_in);
+    const form_status = useSelector(store => store.form_status);
     const apiUsername = username.slice(2, username.length).replaceAll(" ", "")
 
     useEffect(() => {
@@ -126,7 +138,7 @@ export default function LoginForm() {
 
     const body = {
         method: "login",
-        params: { username:apiUsername, password },
+        params: { username: apiUsername, password },
         id: apiUsername
     };
 
@@ -135,9 +147,15 @@ export default function LoginForm() {
         Fetcher(body)
         .then(data => {
             if(data.error) {console.warn(data.error); dispatch({type: LOGIN_FAILED})}
-            else {dispatch({type: LOGIN}); setUserSession(data.result)}
+            else setUserSession(data.result)
         })
         .catch(err => console.log(err))
+    }
+
+    const handleGetPassword = (e) => {
+        e.preventDefault();
+        Fetcher({method: "sendPassword", params: {ctn: apiUsername}, id: apiUsername})
+        .then(() => dispatch({type: GET_PASSWORD}))
     }
     return (
         <>
@@ -155,15 +173,23 @@ export default function LoginForm() {
             }}>
                 <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                     <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
-                    <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
-                    {logged_in === -1 && <Error>Неверный логин или пароль</Error>}
-                    <Field as={Cleave} options={{
-                        phone: true, 
-                        phoneRegionCode: 'RU'
-                    }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} />
-                    <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
-                    <GetPassword>Нет пароля? <span>Получить пароль</span></GetPassword>
-                    <Submit onClick={handleSubmit}>войти</Submit>
+                    {form_status === -2 ?
+                    <>
+                        <Instruction style={{textAlign: "center"}}>Ваш пароль должен прийти вам через СМС</Instruction>
+                        <span id="check"><FaCheck size={50} /></span>
+                    </> : 
+                    <>
+                        <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
+                        {form_status === -1 && <Error>Неверный логин или пароль</Error>}
+                        <Field as={Cleave} options={{
+                            phone: true,
+                            phoneRegionCode: 'RU'
+                        }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} />
+                        <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
+                        <GetPassword>Нет пароля? <span onClick={handleGetPassword}>Получить пароль</span></GetPassword>
+                    </>
+                    }
+                    <Submit onClick={form_status === -2 ? handleGetPassword : handleSubmit}>{form_status === -2 ? "Хорошо" : "войти"}</Submit>
                 </Form>
             </Wrapper>
         }
