@@ -24,7 +24,7 @@ const Flick = styled.span`
     background: ${({checked}) => checked ? "linear-gradient(135deg, rgb(255,186,106) 0%, rgb(235,0,255) 100%)" : "#fff"};
     transform: ${({checked}) => checked && "translateX(20px)"};
     z-index: 2;
-    transition: 0.5s;
+    transition: 0.2s;
 `
 const SwitchBg = styled.img`
     width: 22px;
