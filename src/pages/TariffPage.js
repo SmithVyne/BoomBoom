@@ -5,6 +5,7 @@ import duck from "../assets/images/duck.png";
 import star from "../assets/images/star.png";
 import goblet from "../assets/images/goblet.png";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const SiteHeader = styled.h1`
     font-size: 3%;
@@ -22,8 +23,6 @@ const SubTitle = styled.p`
     font-weight: 500;
     margin: 0;
     margin-bottom: 20px;
-    position: sticky;
-    left: 0;
     @media(max-width: 1000px) {
         font-size: 4%;
     }
@@ -41,28 +40,29 @@ const Div = styled.div`
     }
 `
 const Offers = styled.div`
-    height: fit-content;
-    width: 100%;
-    overflow-x: scroll;
-    ::-webkit-scrollbar {
-        width: 0px;
+    position: relative;
+    & div.scroller {
+        height: fit-content;
+        width: 100%;
+        overflow-x: scroll;
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
     }
 `
 const Tariffs = styled.div`
     display: flex;
     width: max-content;
     gap: 40px;
-    position: relative;
-    padding: 0 50px;
 `;
 
 const WrapCtrls = styled.span`
     position: absolute;
     display: flex;
-    width: 100%;
+    width: calc(100% + 100px);
+    margin-left: -50px;
     z-index: 100;
-    top: calc(50% - 44px);
-    left: 0;
+    top: calc(50% + 20px);
 `;
 
 const Ctrl = styled.span`
@@ -80,31 +80,58 @@ const Ctrl = styled.span`
     cursor: pointer;
 `
 
+const handleScroll = ({current}, type) => {
+    const {scrollLeft} = current;
+    switch(type) {
+        case "back":
+            current.scroll({left: scrollLeft - 500,  behavior: 'smooth'});
+            break;
+        default:
+            current.scroll({left: scrollLeft + 500,  behavior: 'smooth'});
+    }
+}
+
 export default function TariffPage() {
+    const ref1 = useRef();
+    const ref2 = useRef();
+    const [showScroll, setShowScroll] = useState(false);
+    useLayoutEffect(() => {
+        const {current} = ref2;
+        setShowScroll(current.scrollWidth > current.offsetWidth)
+    }, [setShowScroll])
     return (
         <>
             <Div>
                 <SiteHeader>Тарифы boom telecom</SiteHeader>
                 <Offers>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
-                    <Tariffs>
-                        <WrapCtrls>
-                            <Ctrl><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
-                            <Ctrl style={{left: "calc(100vw - 210px)"}}><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
-                        </WrapCtrls>
-                        <TariffCard scrolling={true} title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard scrolling={true} title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
-                        <TariffCard scrolling={true} title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
-                        <TariffCard scrolling={true} title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                        <TariffCard scrolling={true} title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-                    </Tariffs>
-                </Offers>
+                    <WrapCtrls>
+                        <Ctrl onClick={() => handleScroll(ref1, "back")}><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
+                        <Ctrl onClick={() => handleScroll(ref1)} style={{left: "100%"}}><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                    </WrapCtrls>
+                    <div ref={ref1} className="scroller">
+                        <Tariffs>
+                                <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
+                                <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                                <TariffCard scrolling="true" title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
+                                <TariffCard scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                                <TariffCard scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                        </Tariffs>
+                    </div>
+                </Offers>   
                 <Offers>
                     <SubTitle>Для планшетов и модемов</SubTitle>
-                    <Tariffs>
-                        <TariffCard scrolling={true} title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard scrolling={true} title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
-                    </Tariffs>
+                    {showScroll &&
+                    <WrapCtrls>
+                        <Ctrl onClick={() => handleScroll(ref2, "back")}><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
+                        <Ctrl onClick={() => handleScroll(ref2)} style={{left: "100%"}}><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                    </WrapCtrls>}
+                    <div ref={ref2} className="scroller">
+                        <Tariffs>
+                            <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
+                            <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                        </Tariffs>
+                    </div>
                 </Offers>
             </Div>
             <Footer />
