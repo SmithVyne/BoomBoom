@@ -11,6 +11,7 @@ import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
 import Cleave from 'cleave.js/react';
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import html2pdf from "html2pdf.js";
+// import { jsPDF } from "jspdf";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -189,6 +190,10 @@ export default function Dashboard() {
     const detailsRef = useRef();
     const handleDownload = () => {
         html2pdf().from(detailsRef.current).save("Детализация.pdf")
+        // const pdf = new jsPDF();
+        // pdf.html(detailsRef.current, {callback: () => {
+        //     pdf.save('Детализация.pdf')
+        // }});
     }
 
     return (
