@@ -4,6 +4,7 @@ import TariffCard from "../globals/TariffCard";
 import duck from "../assets/images/duck.png";
 import star from "../assets/images/star.png";
 import goblet from "../assets/images/goblet.png";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const SiteHeader = styled.h1`
     font-size: 3%;
@@ -51,7 +52,33 @@ const Tariffs = styled.div`
     display: flex;
     width: max-content;
     gap: 40px;
+    position: relative;
+    padding: 0 50px;
 `;
+
+const WrapCtrls = styled.span`
+    position: absolute;
+    display: flex;
+    width: 100%;
+    z-index: 100;
+    top: calc(50% - 44px);
+    left: 0;
+`;
+
+const Ctrl = styled.span`
+    position: sticky;
+    left: 0;
+    color: #0E5EF8;
+    background-color: #fff;
+    box-shadow: 0px 0px 14px 0px #0101011F;
+    border-radius: 100%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+`
 
 export default function TariffPage() {
     return (
@@ -61,6 +88,10 @@ export default function TariffPage() {
                 <Offers>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
                     <Tariffs>
+                        <WrapCtrls>
+                            <Ctrl><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
+                            <Ctrl style={{left: "calc(100vw - 210px)"}}><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                        </WrapCtrls>
                         <TariffCard scrolling={true} title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
                         <TariffCard scrolling={true} title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
                         <TariffCard scrolling={true} title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
