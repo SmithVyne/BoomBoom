@@ -30,14 +30,6 @@ body, #root {
     min-height: 100vh;
     height: fit-content;
 }
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-nav .logo {
-    margin-right: 105px;
-}
 
 .menu {
     display: flex;
@@ -120,12 +112,6 @@ nav .logo {
     .tariffDivider {
         justify-content: flex-start;
         gap: 20px;
-    }
-}
-
-@media (max-width: 1230px) {
-    nav .logo {
-        margin-right: auto;
     }
 }
 

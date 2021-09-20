@@ -8,9 +8,9 @@ import styled from "styled-components";
 
 export const Switch = styled.span`
     display: flex;
-    width: 136px;
-    height: 68px;
-    border-radius: 34px;
+    width: 104px;
+    height: 52px;
+    border-radius: 26px;
     background: ${props => props.theme.textColor};
     transition: 0.5s;
     cursor: pointer;
@@ -20,19 +20,19 @@ export const Switch = styled.span`
 `
 
 const Flick = styled.img`
-    width: 69px;
-    height: 69px;
+    width: 53px;
+    height: 53px;
     border-radius: 50%;
     padding: 13px;
     transition: 0.5s;
-    transform: ${props => props.darkTheme && "translateX(68px)"};
+    transform: ${props => props.darkTheme && "translateX(52px)"};
     background: ${props => props.theme.background};
     z-index: 2;
 `
 
 const SwitchBackground = styled.img`
-    width: 68px;
-    height: 68px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     padding: 13px;
     position: absolute;

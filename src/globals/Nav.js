@@ -7,35 +7,54 @@ import ThemeSwitch from "../components/ThemeSwitch";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
+const Wrappper = styled.nav`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: ${props => props.theme.textColor};
+    &  .logo {
+        margin-right: 105px;
+    }
+    & span#helpCenter {
+        position: absolute;
+        top: 15px;
+        right: 80px;
+        a {
+            text-decoration: underline;
+            color: inherit;
+            margin: 0 2px;
+            font-weight: 500;
+        }
+    }
+`
+
 const NavItem = styled(Link)`
     text-transform: lowercase;
-    color: ${props => props.theme.textColor};
+    color: inherit;
     font-size: 20px;
     text-decoration: none;
 `;
 
 const DashboardBtn = styled(Link)`
-    font-size: 37px;
+    font-size: 24px;
     background-color: #4B75FC;
-    border-radius: 34px;
-    border: none;
-    outline: none;
-    padding: 0 24px;
     color: #fff;
-    cursor: pointer;
     font-weight: 500;
-    height: 68px;
+    height: 52px;
+    border-radius: 26px;
     display: flex;
-    transition: 0.3s;
+    align-items: center;    
+    border: none;
+    padding: 0 24px 5px;
+    cursor: pointer;
+    line-height: 0px;
     @media (max-width: 900px) {
         font-size: 17px;
-        height: 52px;
-        align-items: center;
     }
     &:hover {
         color: #fff;
-        transform: scale(1.02);
-        transition: 0.2s;
+        transform: scale(1.03);
+        transition: ease 0.2s;
     }
 `;
 
@@ -48,20 +67,20 @@ export default function Nav() {
         else setLoginForm(true)
     }
     return (
-        <nav>
+        <Wrappper>
             <Link to="/"><img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} /></Link>
             <div className="menu">
-                <NavItem to="/">о нас</NavItem>
-                <NavItem to="/services">услуги</NavItem>
                 <NavItem to="/tariffs">ТАРИФЫ</NavItem>
                 <NavItem to="/numbers">НОМЕРА</NavItem>
+                <NavItem to="/services">услуги</NavItem>
                 <NavItem to="/organisation">ОРГАНИЗАЦИЯМ</NavItem>
-                <NavItem to="/roaming">роуминг</NavItem>
+                <NavItem to="/поддержка">роуминг</NavItem>
             </div>
+            <span id="helpCenter">отдел продаж <a href="tel:84951352404">8 495 135 24 04</a>  ежедневно с 9 до 21</span>
             <div className="nav-right">
                 <ThemeSwitch />
                 <DashboardBtn to={logged_in ? "/" : ""} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
-        </nav>
+        </Wrappper>
     )
 }
