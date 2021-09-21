@@ -35,7 +35,7 @@ export default function MobileNav({setShowMobileNav}) {
                 <Menu />
                 <ThemeSwitch />
             </Content>
-            <span onClick={()=>setShowMobileNav(false)}><CgClose strokeWidth={1.5} size={35} /></span>
+            <span><CgClose onClick={()=>setShowMobileNav(false)} strokeWidth={1.5} size={35} /></span>
         </Wrapper>
     )
 }

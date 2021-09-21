@@ -28,12 +28,14 @@ const Item = styled.div`
     @media (max-width: 1100px) {
         flex-direction: column;
         align-items: flex-start;
+        font-size: 23px;
     }
 `
 const SubItems = styled(motion.div)`
     position: absolute;
     top: 35px;
-    background: ${({theme, darkTheme}) => darkTheme ? theme.background : "#fff"};
+    background: #fff;
+    color: #121212;
     z-index: 3;
     width: max-content;
     padding: 15px;
@@ -49,7 +51,7 @@ export default function Menu() {
     const {darkTheme} = useContext(GlobalContext);
     return (
         <>
-            {Items.map(({name, subItems}, idx) => <Item idx={idx} selected={selected} 
+            {Items.map(({name, subItems}, idx) => <Item idx={idx} selected={selected}
             onMouseEnter={() => setSelected(idx)} onMouseLeave={() => setSelected(null)} key={name}>
                 <span>
                     {name}
@@ -58,7 +60,7 @@ export default function Menu() {
                 <AnimatePresence>
                     {selected === idx && 
                     <SubItems darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map(subItem => <Item as={Link} to="">{subItem}</Item>)}
+                        {subItems.map(subItem => <Item key={subItem} as={Link} to="">{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
             </Item>)}
