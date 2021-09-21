@@ -1,24 +1,49 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
 import logo2 from '../assets/images/logo2.svg'
+import burgerMenu from '../assets/images/burgerMenu.png'
+import burgerMenuWhite from '../assets/images/burgerMenuWhite.png'
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import MobileNav from "../components/MobileNav";
 
 const Wrappper = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: ${props => props.theme.textColor};
+    @media (max-width: 1100px) {
+        justify-content: flex-start;
+        & .menu {
+            display: none;
+        }
+    }
+    @media(max-width: 500px) {
+        justify-content: space-between;
+    }
     &  .logo {
         margin-right: 105px;
+        @media(max-width: 1100px) {
+            margin-right: auto;
+        }
+        @media(max-width: 500px) {
+            display: none;
+        }
+        /* img {
+            height: 36px;
+        } */
     }
     & span#helpCenter {
         position: absolute;
         top: 15px;
         right: 80px;
+        @media (max-width: 1100px) {
+            display: none;
+        }
         a {
             text-decoration: underline;
             color: inherit;
@@ -47,14 +72,20 @@ const DashboardBtn = styled(Link)`
     border: none;
     padding: 0 24px 5px;
     cursor: pointer;
-    line-height: 0px;
-    @media (max-width: 900px) {
-        font-size: 17px;
+    @media (max-width: 1100px) {
+        margin-right: 35px;
     }
     &:hover {
         color: #fff;
         transform: scale(1.03);
         transition: ease 0.2s;
+    }
+`;
+const MenuBtn = styled.img`
+    cursor: pointer;
+    display: none;
+    @media (max-width: 1100px) {
+        display: block;
     }
 `;
 
@@ -66,9 +97,14 @@ export default function Nav() {
         if(logged_in) setUserSession(null)
         else setLoginForm(true)
     }
+    const [isMobile, setIsMobile] = useState(false);
+    const [showMobileNav, setShowMobileNav] = useState(false);
+    useEffect(() => {
+        window.innerWidth < 1100 && setIsMobile(true);
+    }, [])
     return (
         <Wrappper>
-            <Link to="/"><img alt="logo" className="logo" src={darkTheme ? logo1 : logo2} /></Link>
+            <Link className="logo" to="/"><img alt="logo" src={darkTheme ? logo1 : logo2} /></Link>
             <div className="menu">
                 <NavItem to="/tariffs">ТАРИФЫ</NavItem>
                 <NavItem to="/numbers">НОМЕРА</NavItem>
@@ -78,9 +114,13 @@ export default function Nav() {
             </div>
             <span id="helpCenter">отдел продаж <a href="tel:84951352404">8 495 135 24 04</a>  ежедневно с 9 до 21</span>
             <div className="nav-right">
-                <ThemeSwitch />
+                {isMobile || <ThemeSwitch />}
                 <DashboardBtn to={logged_in ? "/" : ""} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
+            <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
+            <AnimatePresence>
+                {showMobileNav && <MobileNav setShowMobileNav={setShowMobileNav} />}
+            </AnimatePresence>
         </Wrappper>
     )
 }
