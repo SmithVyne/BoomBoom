@@ -67,13 +67,6 @@ const Wrappper = styled.nav`
     
 `
 
-const NavItem = styled(Link)`
-    text-transform: lowercase;
-    color: inherit;
-    font-size: 20px;
-    text-decoration: none;
-`;
-
 const DashboardBtn = styled(Link)`
     font-size: 24px;
     background-color: #4B75FC;

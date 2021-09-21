@@ -2,6 +2,8 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { CgClose } from 'react-icons/cg'
 import styled from 'styled-components'
+import Menu from './Menu'
+import ThemeSwitch from './ThemeSwitch'
 
 const Wrapper = styled(motion.div)`
     background-color: ${({theme}) => theme.background};
@@ -30,7 +32,8 @@ export default function MobileNav({setShowMobileNav}) {
         animate={{opacity: 1, x: 0}}
         exit={{opacity: 0, x: "100%"}} transition={{duration: 0.5, type: 'spring'}}>
             <Content>
-
+                <Menu />
+                <ThemeSwitch />
             </Content>
             <span onClick={()=>setShowMobileNav(false)}><CgClose strokeWidth={1.5} size={35} /></span>
         </Wrapper>
