@@ -10,12 +10,25 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MobileNav from "../components/MobileNav";
+import Menu from "../components/Menu";
 
 const Wrappper = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: ${props => props.theme.textColor};
+    & .menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 35px;
+        margin-right: auto;
+    }
+    & .nav-right {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
     @media (max-width: 1100px) {
         justify-content: flex-start;
         & .menu {
@@ -26,7 +39,7 @@ const Wrappper = styled.nav`
         justify-content: space-between;
     }
     &  .logo {
-        margin-right: 105px;
+        margin-right: 50px;
         @media(max-width: 1100px) {
             margin-right: auto;
         }
@@ -51,6 +64,7 @@ const Wrappper = styled.nav`
             font-weight: 500;
         }
     }
+    
 `
 
 const NavItem = styled(Link)`
@@ -72,6 +86,7 @@ const DashboardBtn = styled(Link)`
     border: none;
     padding: 0 24px 5px;
     cursor: pointer;
+    width: max-content;
     @media (max-width: 1100px) {
         margin-right: 35px;
     }
@@ -106,11 +121,7 @@ export default function Nav() {
         <Wrappper>
             <Link className="logo" to="/"><img alt="logo" src={darkTheme ? logo1 : logo2} /></Link>
             <div className="menu">
-                <NavItem to="/tariffs">ТАРИФЫ</NavItem>
-                <NavItem to="/numbers">НОМЕРА</NavItem>
-                <NavItem to="/services">услуги</NavItem>
-                <NavItem to="/organisation">ОРГАНИЗАЦИЯМ</NavItem>
-                <NavItem to="/поддержка">роуминг</NavItem>
+                <Menu />
             </div>
             <span id="helpCenter">отдел продаж <a href="tel:84951352404">8 495 135 24 04</a>  ежедневно с 9 до 21</span>
             <div className="nav-right">

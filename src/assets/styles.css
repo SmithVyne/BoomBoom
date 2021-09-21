@@ -31,20 +31,6 @@ body, #root {
     height: fit-content;
 }
 
-.menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 46.5px;
-    margin-right: auto;
-}
-
-.nav-right {
-    display: flex;
-    gap: 28px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
 .tariffTypeSwitch {
     display: flex;
     gap: 12px;
