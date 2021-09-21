@@ -46,9 +46,11 @@ export default function App() {
   const [userSession, setUserSession] = useLocalStorage("userSession");
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
   useEffect(() => {
-      window.innerWidth < 1100 && setIsMobile(true);
+      const watcher = () => setIsMobile(window.innerWidth < 1100);
+      window.addEventListener("resize", watcher);
+      return () => window.removeEventListener("resize", watcher);
   }, [])
 
   return (

@@ -8,7 +8,7 @@ import ThemeSwitch from './ThemeSwitch'
 const Wrapper = styled(motion.div)`
     background-color: ${({theme}) => theme.background};
     width: 100vw;
-    height: 100vh;
+    height: ${() => window.innerHeight < 700 ? "fit-content" : "100vh"};
     position: absolute;
     top: 0;
     z-index: 3;
@@ -24,6 +24,17 @@ const Content = styled.div`
     flex-direction: column;
     gap: 40px;
 `
+const Call = styled.span`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    & a {
+        font-size: 24px;
+        color: inherit;
+        border-bottom: 2px solid;
+    }
+`
 
 export default function MobileNav({setShowMobileNav}) {
     return (
@@ -34,6 +45,7 @@ export default function MobileNav({setShowMobileNav}) {
             <Content>
                 <Menu />
                 <ThemeSwitch />
+                <Call>отдел подключения<a href="tel:84951352404">8 495 135 24 04</a></Call>
             </Content>
             <span><CgClose onClick={()=>setShowMobileNav(false)} strokeWidth={1.5} size={35} /></span>
         </Wrapper>

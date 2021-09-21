@@ -46,9 +46,6 @@ const Wrappper = styled.nav`
         @media(max-width: 500px) {
             display: none;
         }
-        /* img {
-            height: 36px;
-        } */
     }
     & span#helpCenter {
         position: absolute;
