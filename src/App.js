@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Nav from "./globals/Nav";
 import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components";
@@ -46,9 +46,13 @@ export default function App() {
   const [userSession, setUserSession] = useLocalStorage("userSession");
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+      window.innerWidth < 1100 && setIsMobile(true);
+  }, [])
 
   return (
-    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession}}>
+    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <Wrapper>
           <Nav />

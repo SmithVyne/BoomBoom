@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
@@ -98,18 +98,14 @@ const MenuBtn = styled.img`
 `;
 
 export default function Nav() {
-    const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
+    const {darkTheme, setLoginForm, userSession, setUserSession, isMobile} = useContext(GlobalContext);
     const {pathname} = useLocation();
     const logged_in = pathname === "/dashboard" && userSession;
     const handleButton = () => {
         if(logged_in) setUserSession(null)
         else setLoginForm(true)
     }
-    const [isMobile, setIsMobile] = useState(false);
     const [showMobileNav, setShowMobileNav] = useState(false);
-    useEffect(() => {
-        window.innerWidth < 1100 && setIsMobile(true);
-    }, [])
     return (
         <Wrappper>
             <Link className="logo" to="/"><img alt="logo" src={darkTheme ? logo1 : logo2} /></Link>

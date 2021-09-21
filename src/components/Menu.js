@@ -48,18 +48,23 @@ const SubItems = styled(motion.div)`
 `
 export default function Menu() {
     const [selected, setSelected] = useState(null);
-    const {darkTheme} = useContext(GlobalContext);
+    const {darkTheme, isMobile} = useContext(GlobalContext);
+    const Gesture = (idx) => {
+        return isMobile ? 
+            {onClick: () => {setSelected(id => id === idx ? null : idx)}} : 
+            {onMouseEnter: () => setSelected(idx)}
+    }
     return (
         <>
             {Items.map(({name, subItems}, idx) => <Item idx={idx} selected={selected}
-            onMouseEnter={() => setSelected(idx)} onMouseLeave={() => setSelected(null)} key={name}>
+            onMouseLeave={() => setSelected(null)} {...Gesture(idx)} key={name}>
                 <span>
                     {name}
-                    <IoIosArrowDown />
+                    <IoIosArrowDown style={{marginLeft: "5px"}} />
                 </span>
                 <AnimatePresence>
                     {selected === idx && 
-                    <SubItems darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                    <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
                         {subItems.map(subItem => <Item key={subItem} as={Link} to="">{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
