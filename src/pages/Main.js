@@ -6,6 +6,7 @@ import hand_with_phone from "../assets/images/hand_with_phone.png";
 import peace_hand from "../assets/images/peace_hand.png";
 import Tariffs from '../components/Tariffs';
 import Footer from '../globals/Footer';
+import Numbers from '../components/Numbers/Numbers';
 
 
 const slides = [
@@ -85,6 +86,7 @@ export default function Main() {
                 <Controls move={move} />
             </Carousel>
             <Tariffs />
+            <Numbers />
             <Footer />
         </>
     )
