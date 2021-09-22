@@ -31,9 +31,9 @@ const WrapTariffs = styled.div`
 
 const WrapCtrl = styled.span`
     position: absolute;
-    z-index: 100;
+    z-index: 4;
     top: calc(50% - 22px);
-    margin-left: calc(100% + 6px); 
+    margin-left: ${() => window.innerWidth <= 720 ? "calc(100% - calc(44px - 5vw))" : "calc(100% + 6px)"}; 
 `;
 
 const Ctrl = styled.span`
@@ -49,7 +49,7 @@ const Ctrl = styled.span`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 100;
+    z-index: 4;
 `
 
 

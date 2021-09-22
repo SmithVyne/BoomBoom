@@ -66,6 +66,9 @@ const MiniIcon = styled.img`
         cursor: ${({pointer}) => pointer && "pointer"}
     }
 `
+const More = styled.span`
+    text-decoration: underline;
+`
 
 export default memo(function TariffCard({background, title, hit, icon, scrolling}) {
     const [showDropdown, setShowDropDown] = useState(false);
@@ -103,6 +106,7 @@ export default memo(function TariffCard({background, title, hit, icon, scrolling
                     <Details><MiniIcon src={globe} />+300 мин в роуминге</Details>
                     <Details style={{opacity: 0.5}}><MiniIcon src={beeline} />безлимитное общение <br /> с абонентами внутри сети Билайн</Details>
                 </span>
+                <More>Подробнее про тариф</More>
             </span>
             <span className="priceInfo">
                 350 руб./мес

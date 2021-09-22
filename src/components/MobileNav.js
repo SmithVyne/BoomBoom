@@ -11,7 +11,7 @@ const Wrapper = styled(motion.div)`
     height: ${() => window.innerHeight < 700 ? "fit-content" : "100vh"};
     position: absolute;
     top: 0;
-    z-index: 3;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     padding: 48px 24px 0;
