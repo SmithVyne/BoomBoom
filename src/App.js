@@ -66,7 +66,7 @@ export default function App() {
               <Route path="/tariffs" component={TariffPage} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/numbers" component={NumbersPage} />
-              <Route path="/roaming" component={RoamingPage} />
+              <Route path="/роуминг" component={RoamingPage} />
             </Switch>
           </Mainml>
         </Wrapper>

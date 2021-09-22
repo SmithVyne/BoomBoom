@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useContext, useState } from "react"
-import { IoIosArrowDown } from "react-icons/io"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { GlobalContext } from "../App"
@@ -68,7 +67,7 @@ export default function Menu() {
                 <AnimatePresence>
                     {selected === idx && 
                     <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map(subItem => <Item key={subItem} as={Link} to="">{subItem}</Item>)}
+                        {subItems.map(subItem => <Item key={subItem} as={Link} to={`/${subItem}`}>{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
             </Item>)}
