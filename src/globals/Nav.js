@@ -77,6 +77,12 @@ const DashboardBtn = styled(Link)`
     padding: 0 24px 5px;
     cursor: pointer;
     width: max-content;
+    @media(max-width: 1100px) {
+        margin-right: 35px;
+    }
+    @media(max-width: 500px) {
+        margin-right: 0px;
+    }
     &:hover {
         color: #fff;
         transform: scale(1.03);

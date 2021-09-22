@@ -33,7 +33,10 @@ const WrapCtrl = styled.span`
     position: absolute;
     z-index: 4;
     top: calc(50% - 22px);
-    margin-left: ${() => window.innerWidth <= 720 ? "calc(100% - calc(44px - 5vw))" : "calc(100% + 6px)"}; 
+    margin-left: calc(100% + 6px);
+    @media(max-width: 720px) {
+        margin-left: calc(100% - calc(44px - 5vw));
+    }
 `;
 
 const Ctrl = styled.span`
