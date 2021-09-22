@@ -1,6 +1,10 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import duck from "../assets/images/duck.png";
+import star from "../assets/images/star.png";
+import goblet from "../assets/images/goblet.png";
+import TariffCard from "../globals/TariffCard";
 
 const WrapScroller  = styled.div`
     position: relative;
@@ -77,7 +81,15 @@ export default function Tariffs({children}) {
             }
             <Scroller ref={ref} className="scroller">
                 <WrapTariffs>
-                        {children}
+                    {children ? children : (
+                        <>
+                            <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
+                            <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                            <TariffCard scrolling="true" title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
+                            <TariffCard scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                            <TariffCard scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                        </>
+                    )}
                 </WrapTariffs>
             </Scroller>
         </WrapScroller>
