@@ -1,122 +1,85 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../App';
-import styled from "styled-components";
-import TariffCard from '../globals/TariffCard';
-import duck from "../assets/images/duck.png";
-import star from "../assets/images/star.png";
-import goblet from "../assets/images/goblet.png";
+import { useLayoutEffect, useRef, useState } from "react";
+import styled from 'styled-components';
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-const Offers = styled.div`
-    width: 100%;
-    height: 812px;
-    border-radius: 44px;
-    background: ${({darkTheme, theme}) => darkTheme ? theme.background : "#fff"};
-    padding: 40px 60px;
-    height: max-content;
-    font-size: 100vw;
-    @media(max-width: 700px) {
-        padding: 20px 10px;
-        border-radius: 28px;
-    }
-
-    @media(max-width: 350px) {
-        padding: 20px 0;
-    }
-`;
-
-const Para1 = styled.p`
-    color: ${({theme}) => theme.textColor};
-    font-size: 2.2%;
-    font-weight: bold;
-    line-height: 90%;
-    @media(max-width: 1000px) {
-        font-size: 6%;
-    }
-    @media(max-width: 350px) {
-        padding-left: 10px;
-    }
-`;
-
-const Select = styled.p`
-    color: ${({theme}) => theme.textColor};
-    border: 1px solid #4B6CFD;
-    padding: 12px 16px;
-    border-radius: 22px;
-    cursor: pointer;
-    font-size: 20px;
-    @media(max-width: 1000px) {
-        font-size: 12px;
-        border-radius: 18px;
-    }
-`;
-
-const Para2 = styled.div`
+const WrapScroller  = styled.div`
+    position: relative;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`
+const Scroller = styled.div`
+    height: fit-content;
+    width: 100%;
+    overflow-x: scroll;
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+`
+
+const WrapTariffs = styled.div`
+    display: flex;
+    width: max-content;
+    gap: 40px;
 `;
 
-const Sectitle = styled.p`
-    color: ${({theme}) => theme.textColor};
-    line-height: 90%;
-    font-weight: 400;
-    font-size: 2.2%;
-    margin: 0;
-    margin-bottom: 40px;
-    @media(max-width: 1000px) {
-        font-size: 6%;
-    }
-    @media(max-width: 350px) {
-        padding-left: 10px;
-    }
+export const WrapCtrl = styled.span`
+    position: absolute;
+    z-index: 100;
+    top: calc(50% - 22px);
+    margin-left: calc(100% + 6px); 
 `;
 
-const SecDetails = styled.span`
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.04)"};
-    color: ${({theme}) => theme.textColor};
-    width: fit-content;
-    border-radius: 15px;
-    padding: 5px 10px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    font-size: initial;
-    @media(max-width: 350px) {
-        margin-left: 10px;
-        margin-right: 10px;
+export const Ctrl = styled.span`
+    position: sticky;
+    left: 0;
+    color: #0E5EF8;
+    background-color: #fff;
+    box-shadow: 0px 0px 14px 0px #0101011F;
+    border-radius: 100%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+`
+const handleScroll = ({current}, type) => {
+    const {scrollLeft} = current;
+    switch(type) {
+        case "back":
+            current.scroll({left: scrollLeft - 500,  behavior: 'smooth'});
+            break;
+        default:
+            current.scroll({left: scrollLeft + 500,  behavior: 'smooth'});
     }
-`;
+}
 
-export default function Tariffs() {
-    const {darkTheme} = useContext(GlobalContext);
+export default function Tariffs({children}) {
+    const ref = useRef();
+    const [showScroll, setShowScroll] = useState(false);
+
+    useLayoutEffect(() => {
+        const {current} = ref;
+        setShowScroll(current.scrollWidth > current.offsetWidth)
+    }, [setShowScroll])
+
     return (
-        <>
-            <Offers darkTheme={darkTheme}>
-                <div>
-                    <Para1>Платите только <br/> за необходимое</Para1>  
-                    <div className="tariffTypeSwitch">
-                        <Select style={{background: "#4B6CFD", color: "#fff"}}>Тарифы для смартфонов</Select>
-                        <Select>Тарифы для планшетов и модемов</Select>
-                    </div>
-                </div>
-                <div className="tariffDivider">
-                    <TariffCard title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                    <TariffCard title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
-                    <TariffCard title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
-                </div>
-            </Offers>
-            <Offers darkTheme={darkTheme}>
-                <div className="tariffDivider">
-                    <Para2>
-                        <Sectitle>Переходите на новый <br/> уровень обслуживания <br/> с премиум тарифами</Sectitle>
-                        <SecDetails darkTheme={darkTheme}>премиум обслуживание</SecDetails>
-                        <SecDetails darkTheme={darkTheme}>выделенная линия поддержки</SecDetails>
-                        <SecDetails darkTheme={darkTheme}>классный дизайн личного кабинета</SecDetails>
-                        <SecDetails darkTheme={darkTheme}>1 месяц в подарок при оплате на год</SecDetails>
-                        <SecDetails darkTheme={darkTheme}>Личный секретарь</SecDetails>
-                    </Para2>
-                    <TariffCard title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                    <TariffCard title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-                </div>
-            </Offers>
-        </>
+        <WrapScroller>
+            { showScroll &&
+                <>
+                    <Ctrl onClick={() => handleScroll(ref, "back")} style={{marginLeft: "-50px", marginRight: "6px"}} ><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
+                    <WrapCtrl>
+                        <Ctrl onClick={() => handleScroll(ref)} ><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                    </WrapCtrl>
+                </>
+            }
+            <Scroller ref={ref} className="scroller">
+                <WrapTariffs>
+                        {children}
+                </WrapTariffs>
+            </Scroller>
+        </WrapScroller>
     )
 }
