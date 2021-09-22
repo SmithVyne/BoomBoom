@@ -5,6 +5,8 @@ import duck from "../assets/images/duck.png";
 import star from "../assets/images/star.png";
 import goblet from "../assets/images/goblet.png";
 import TariffCard from "../globals/TariffCard";
+import { useContext } from "react";
+import { GlobalContext } from "../App";
 
 const WrapScroller  = styled.div`
     position: relative;
@@ -27,14 +29,14 @@ const WrapTariffs = styled.div`
     gap: 40px;
 `;
 
-export const WrapCtrl = styled.span`
+const WrapCtrl = styled.span`
     position: absolute;
     z-index: 100;
     top: calc(50% - 22px);
     margin-left: calc(100% + 6px); 
 `;
 
-export const Ctrl = styled.span`
+const Ctrl = styled.span`
     position: sticky;
     left: 0;
     color: #0E5EF8;
@@ -49,33 +51,39 @@ export const Ctrl = styled.span`
     cursor: pointer;
     z-index: 100;
 `
-const handleScroll = ({current}, type) => {
-    const {scrollLeft} = current;
-    switch(type) {
-        case "back":
-            current.scroll({left: scrollLeft - 500,  behavior: 'smooth'});
-            break;
-        default:
-            current.scroll({left: scrollLeft + 500,  behavior: 'smooth'});
-    }
-}
+
 
 export default function Tariffs({children}) {
     const ref = useRef();
     const [showScroll, setShowScroll] = useState(false);
+    const {isMobile} = useContext(GlobalContext);
 
     useLayoutEffect(() => {
         const {current} = ref;
         setShowScroll(current.scrollWidth > current.offsetWidth)
     }, [setShowScroll])
 
+    const handleScroll = (type) => {
+        const {current} =  ref;
+        const {scrollLeft} = current;
+        const pixels = isMobile ? 250 : 500;
+        switch(type) {
+            case "back":
+                current.scroll({left: scrollLeft - pixels,  behavior: 'smooth'});
+                break;
+            default:
+                current.scroll({left: scrollLeft + pixels,  behavior: 'smooth'});
+        }
+    }
     return (
         <WrapScroller>
             { showScroll &&
                 <>
-                    <Ctrl onClick={() => handleScroll(ref, "back")} style={{marginLeft: "-50px", marginRight: "6px"}} ><IoIosArrowBack strokeLinecap="square" size={26} /></Ctrl>
+                    <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-50px", marginRight: "6px"}} >
+                        <IoIosArrowBack strokeLinecap="square" size={26} />
+                    </Ctrl>
                     <WrapCtrl>
-                        <Ctrl onClick={() => handleScroll(ref)} ><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                        <Ctrl onClick={() => handleScroll()} ><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
                     </WrapCtrl>
                 </>
             }
