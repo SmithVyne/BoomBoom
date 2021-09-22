@@ -24,3 +24,20 @@ export async function Fetcher (body, accessToken) {
 
 export const replacePoints = (text) => text.toString().replace(".", ",");
 export const percentage = (current, initial) => (current * 100) / initial;
+
+export async function GetNumbers() {
+    return fetch(BASE_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Client-Id": "7f543b97f8029e1ab7674232318c5bbf",
+        },
+        body: JSON.stringify({
+            "jsonrpc": "2.0",
+            "method": "getCtnsForSale",
+            "id": 1
+        }
+        )
+    })
+        .then(res => res.json())
+}

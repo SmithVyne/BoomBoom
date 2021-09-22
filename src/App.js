@@ -8,6 +8,8 @@ import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
 import useLocalStorage from "./hooks/useLocalStorage";
+import NumbersPage from "./pages/NumbersPage/NumbersPage";
+import RoamingPage from "./pages/RoamingPage/RoamingPage";
 
 export const GlobalContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -63,6 +65,8 @@ export default function App() {
               <Route exact path="/" component={Main} />
               <Route path="/tariffs" component={TariffPage} />
               <Route path="/dashboard" component={Dashboard} />
+              <Route path="/numbers" component={NumbersPage} />
+              <Route path="/roaming" component={RoamingPage} />
             </Switch>
           </Mainml>
         </Wrapper>

@@ -66,7 +66,7 @@ export default function Tariffs({children}) {
     const handleScroll = (type) => {
         const {current} =  ref;
         const {scrollLeft} = current;
-        const pixels = isMobile ? 250 : 500;
+        const pixels = isMobile ? window.innerWidth - 30 : 500;
         switch(type) {
             case "back":
                 current.scroll({left: scrollLeft - pixels,  behavior: 'smooth'});
