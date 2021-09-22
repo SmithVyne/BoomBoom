@@ -9,10 +9,9 @@ export default function Numbers() {
     const [allNumbers, setAllNumbers] = React.useState(null);
     const [numbers, setNumbers] = React.useState(null);
     const [selectedNumber, setSelectedNumber] = React.useState({});
-    const [remainingNumbers, setRemainingNumbers] = React.useState(null);
+    const [, setRemainingNumbers] = React.useState(null);
     const [preloaderVisible, setPreloaderVisible] = React.useState(true);
     const [apiError, setApiError] = React.useState('');
-    const [numbersPage, setNumbersPage] = React.useState(0);
     const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
     const { darkTheme } = useContext(GlobalContext);
     const [inputValue, setInputValue] = React.useState('');
@@ -21,18 +20,11 @@ export default function Numbers() {
     const [isInputFocused, setInputFocused] = React.useState(false);
 
     function handleResize() {
-
         setScreenWidth(window.innerWidth)
-
         window.removeEventListener('resize', handleResize);
     }
-
-    // window.addEventListener('resize', handleResize);
-
     React.useEffect(() => {
-
         window.addEventListener('resize', handleResize);
-
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -348,17 +340,6 @@ export default function Numbers() {
                     {numbers && numbers.length > 0 ? numbers.map((item, i) => (
                         <p key={i} onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber.ctn ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}<span className={`numbers__contact_bold ${darkTheme ? 'numbers__contact_bold_dark' : ''}`}>{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</span></p>
                     )) : < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
-
-
-
-
-
-                    {/* {numbers && !inputValue && selectedCategoryID !== 'all' && numbers.length > 0 && numbers.map((item, i) => (
-                        <p onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}<span className={`numbers__contact_bold ${darkTheme ? 'numbers__contact_bold_dark' : ''}`}>{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</span></p>
-                    ))}
-                    {numbers && inputValue && selectedCategoryID && selectedCategoryID !== 'all' && numbers.length > 0 ? numbers.map((item, i) => (
-                        <p onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}<span className={`numbers__contact_bold ${darkTheme ? 'numbers__contact_bold_dark' : ''}`}>{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</span></p>
-                    )) : inputValue && selectedCategoryID !== 'all' ? < p className='numbers__contact'>Ничего не найдено</p> : <></>} */}
                 </div>
                 <button type="submit" className={`numbers__submit-button ${selectedNumber.ctn ? "numbers__submit-button_active" : "numbers__submit-button_disabled"}`} disabled={selectedNumber.ctn ? false : true}>Заказать номер</button>
             </form>

@@ -66,8 +66,15 @@ const MiniIcon = styled.img`
         cursor: ${({pointer}) => pointer && "pointer"}
     }
 `
+const Switches = styled.span`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`
 const More = styled.span`
-    text-decoration: underline;
+    width: fit-content;
+    cursor: pointer;
+    border-bottom: 1px solid;
 `
 
 export default memo(function TariffCard({background, title, hit, icon, scrolling}) {
@@ -91,11 +98,22 @@ export default memo(function TariffCard({background, title, hit, icon, scrolling
                     <span className="item">100<Sub>СМС</Sub></span>
                 </span>
                 <TariffBar />
-                <span className="_4Gswitch">
-                    Безлимитный 4G
-                    <TinySwitch />
-                    +100 Р
-                </span>
+                <Switches>
+                    <span className="_4Gswitch">
+                        Безлимитный 4G
+                        <span>
+                            <TinySwitch />
+                            +100 Р
+                        </span>
+                    </span>
+                    <span className="_4Gswitch">
+                        Раздача интернета
+                        <span>
+                            <TinySwitch />
+                            +50 Р
+                        </span>
+                    </span>
+                </Switches>
                 <span style={{marginTop: "40px"}}>
                     <Details>
                         <MiniIcon src={infinity} />безлимитные соц сети и мессенджеры<MiniIcon onMouseOver={(e)=>{
