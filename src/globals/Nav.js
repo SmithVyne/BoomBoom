@@ -115,7 +115,7 @@ export default function Nav() {
             <span id="helpCenter">отдел продаж <a href="tel:84951352404">8 495 135 24 04</a>  ежедневно с 9 до 21</span>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
-                <DashboardBtn to={logged_in ? "/" : ""} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
+                <DashboardBtn to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
             <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
             <AnimatePresence>

@@ -14,7 +14,7 @@ const Wrapper = styled(motion.div)`
     z-index: 10;
     display: flex;
     justify-content: space-between;
-    padding: 48px 24px 0;
+    padding: 48px 24px 15px;
     top: 0;
     left: 0;
     right: 0;
