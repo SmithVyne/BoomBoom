@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import useLocalStorage from "./hooks/useLocalStorage";
 import NumbersPage from "./pages/NumbersPage/NumbersPage";
 import RoamingPage from "./pages/RoamingPage/RoamingPage";
+import 'cleave.js/dist/addons/cleave-phone.ru';
 
 export const GlobalContext = createContext();
 const whichTheme = (darkTheme) => {

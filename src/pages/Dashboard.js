@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
 import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
 import Cleave from 'cleave.js/react';
-import 'cleave.js/dist/addons/cleave-phone.ru';
 import html2pdf from "html2pdf.js";
 // import { jsPDF } from "jspdf";
 

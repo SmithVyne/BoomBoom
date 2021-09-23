@@ -62,7 +62,6 @@ const Tracker = styled.div`
     width: 92px;
     height: 6px;
     background: ${({darkTheme})=> darkTheme ? "rgba(255, 255, 255, 0.24)" : "#D6D6D6"};
-    z-index: 500;
     border-radius: 6px;
     & div {
         height: 6px;

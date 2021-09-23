@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { GlobalContext } from "../App";
 import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
-import 'cleave.js/dist/addons/cleave-phone.ru';
 import { FaCheck } from "react-icons/fa";
 
 
@@ -15,7 +14,7 @@ const Wrapper = styled(motion.div)`
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
     width: 100%;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;

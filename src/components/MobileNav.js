@@ -9,7 +9,7 @@ const Wrapper = styled(motion.div)`
     background-color: ${({theme}) => theme.background};
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 10;
     display: flex;

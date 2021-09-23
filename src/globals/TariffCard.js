@@ -11,6 +11,7 @@ import { memo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
 import { Link } from "react-router-dom";
+import TariffModal from "../components/TariffModal";
 
 const Wrapper = styled.div`
     background: ${({background}) => background};
@@ -84,6 +85,7 @@ const More = styled(Link)`
 
 export default memo(function TariffCard({background, title, hit, icon, scrolling}) {
     const [showDropdown, setShowDropDown] = useState(false);
+    const [showTariffModal, setShowTariffModal] = useState(false);
 
     return (
         <Wrapper title={title} background={background} scrolling={scrolling}>
@@ -133,7 +135,8 @@ export default memo(function TariffCard({background, title, hit, icon, scrolling
             </span>
             <span className="priceInfo">
                 350 руб./мес
-                <SubScribeBtn>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <SubScribeBtn onClick={() => setShowTariffModal(true)}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <AnimatePresence> {showTariffModal && <TariffModal name={title} setShowTariffModal={setShowTariffModal} />} </AnimatePresence>
             </span>
         </Wrapper>
     )
