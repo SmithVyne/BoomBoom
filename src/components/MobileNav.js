@@ -8,7 +8,7 @@ import ThemeSwitch from './ThemeSwitch'
 const Wrapper = styled(motion.div)`
     background-color: ${({theme}) => theme.background};
     width: 100vw;
-    height: ${() => window.innerHeight < 700 ? "fit-content" : "100vh"};
+    height: 100vh;
     position: absolute;
     top: 0;
     z-index: 10;
@@ -18,6 +18,9 @@ const Wrapper = styled(motion.div)`
     top: 0;
     left: 0;
     right: 0;
+    @media(max-height: 700px) {
+        height: fit-content;
+    }
 `
 const Content = styled.div`
     display: flex;
@@ -39,6 +42,7 @@ const Call = styled.span`
 export default function MobileNav({setShowMobileNav}) {
     return (
         <Wrapper
+        onMouseLeave={()=>setShowMobileNav(false)}
         initial={{opacity: 0, x: "100%"}}
         animate={{opacity: 1, x: 0}}
         exit={{opacity: 0, x: "100%"}} transition={{duration: 0.5, type: 'spring'}}>

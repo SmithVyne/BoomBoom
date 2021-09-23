@@ -55,16 +55,42 @@ const Ctrl = styled.span`
     z-index: 4;
 `
 
+const Tracker = styled.div`
+    position: absolute;
+    top: 100%;
+    left: calc(50% - 46px);
+    width: 92px;
+    height: 6px;
+    background: #D6D6D6;
+    z-index: 500;
+    border-radius: 6px;
+    & div {
+        height: 6px;
+        width: 50%;
+        background: #0E5EF8;
+        border-radius: inherit;
+        margin-left: ${({percentage})=>percentage + "%"};
+    }
+`
 
 export default function Tariffs({children}) {
     const ref = useRef();
-    const [showScroll, setShowScroll] = useState(false);
     const {isMobile} = useContext(GlobalContext);
+    const [showScroll, setShowScroll] = useState(false);
+    const [scrollLeft, setScrollLeft] = useState(0);
+    const [offsetWidth, setOffSetWidth] = useState(1);
+    const [scrollWidth, setScrollWidth] = useState(2);
+    const percentage = (scrollLeft/(scrollWidth-offsetWidth)) * 50;
 
     useLayoutEffect(() => {
         const {current} = ref;
-        setShowScroll(current.scrollWidth > current.offsetWidth)
-    }, [setShowScroll])
+        setShowScroll(current.scrollWidth > current.offsetWidth);
+        setOffSetWidth(current.offsetWidth);
+        setScrollWidth(current.scrollWidth);
+        current.addEventListener("scroll", () => {
+            setScrollLeft(current.scrollLeft);
+        })
+    }, [])
 
     const handleScroll = (type) => {
         const {current} =  ref;
@@ -79,30 +105,31 @@ export default function Tariffs({children}) {
         }
     }
     return (
-        <WrapScroller>
-            { showScroll &&
-                <>
-                    <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-50px", marginRight: "6px"}} >
-                        <IoIosArrowBack strokeLinecap="square" size={26} />
-                    </Ctrl>
-                    <WrapCtrl>
-                        <Ctrl onClick={() => handleScroll()} ><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
-                    </WrapCtrl>
-                </>
-            }
-            <Scroller ref={ref} className="scroller">
-                <WrapTariffs>
-                    {children ? children : (
-                        <>
-                            <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                            <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
-                            <TariffCard scrolling="true" title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
-                            <TariffCard scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                            <TariffCard scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-                        </>
-                    )}
-                </WrapTariffs>
-            </Scroller>
-        </WrapScroller>
+            <WrapScroller>
+                { showScroll &&
+                    <>
+                        <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-50px", marginRight: "6px"}} >
+                            <IoIosArrowBack strokeLinecap="square" size={26} />
+                        </Ctrl>
+                        <WrapCtrl>
+                            <Ctrl onClick={() => handleScroll()} ><IoIosArrowForward strokeLinecap="square" size={26} /></Ctrl>
+                        </WrapCtrl>
+                    </>
+                }
+                <Scroller ref={ref} className="scroller">
+                    <WrapTariffs>
+                        {children ? children : (
+                            <>
+                                <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
+                                <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                                <TariffCard scrolling="true" title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
+                                <TariffCard scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                                <TariffCard scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                            </>
+                        )}
+                    </WrapTariffs>
+                </Scroller>
+                { showScroll && <Tracker percentage={percentage}><div></div></Tracker> }
+            </WrapScroller>
     )
 }
