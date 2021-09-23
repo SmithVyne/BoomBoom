@@ -61,7 +61,7 @@ const Tracker = styled.div`
     left: calc(50% - 46px);
     width: 92px;
     height: 6px;
-    background: #D6D6D6;
+    background: ${({darkTheme})=> darkTheme ? "rgba(255, 255, 255, 0.24)" : "#D6D6D6"};
     z-index: 500;
     border-radius: 6px;
     & div {
@@ -75,7 +75,7 @@ const Tracker = styled.div`
 
 export default function Tariffs({children}) {
     const ref = useRef();
-    const {isMobile} = useContext(GlobalContext);
+    const {isMobile, darkTheme} = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
@@ -129,7 +129,7 @@ export default function Tariffs({children}) {
                         )}
                     </WrapTariffs>
                 </Scroller>
-                { showScroll && <Tracker percentage={percentage}><div></div></Tracker> }
+                { showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
             </WrapScroller>
     )
 }

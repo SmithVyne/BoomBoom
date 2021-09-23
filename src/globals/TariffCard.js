@@ -10,6 +10,7 @@ import TariffCardModal from "./TariffCardModal";
 import { memo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
     background: ${({background}) => background};
@@ -71,10 +72,14 @@ const Switches = styled.span`
     align-items: center;
     gap: 10px;
 `
-const More = styled.span`
+const More = styled(Link)`
     width: fit-content;
     cursor: pointer;
     border-bottom: 1px solid;
+    color: inherit;
+    &:hover {
+        color: inherit;
+    }
 `
 
 export default memo(function TariffCard({background, title, hit, icon, scrolling}) {
