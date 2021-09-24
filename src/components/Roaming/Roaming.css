@@ -4,7 +4,6 @@
 
 .roaming__title {
     font-family: Circe, Arial, sans-serif;
-    ;
     font-style: normal;
     font-weight: bold;
     font-size: 80px;
@@ -79,6 +78,7 @@
     background: #F5F5F5;
     border: 1px solid #D3D3D3;
     border-radius: 73px;
+    
     transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 

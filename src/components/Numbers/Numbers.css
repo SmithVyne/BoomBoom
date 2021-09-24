@@ -177,13 +177,13 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     display: flex;
     align-items: center;
     /* text/day/main */
-    color: rgba(1, 1, 1, 0.16);
+    color: rgba(1, 1, 1, 0.4);
     margin: 0 0 0 44px;
     transition: color ease-in-out 0.3s, border-color ease-in-out 0.3s;
 }
 
 .numbers__category_dark {
-    color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .numbers__category:hover {

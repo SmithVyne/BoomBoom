@@ -5,11 +5,11 @@ import styled from "styled-components"
 import { GlobalContext } from "../App"
 
 const Items = [
-    {name: "все ТАРИФЫ", subItems: ["для телефонов", "для других устройств"]},
-    {name: "выбрать номер", subItems: ["перенести свой", "подключить eSIM"]},
-    {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"]},
-    {name: "ОРГАНИЗАЦИЯМ", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"]},
-    {name: "поддержка", subItems: ["f.a.q", "карта покрытия", "контакты"]},
+    {name: "все ТАРИФЫ", subItems: ["для телефонов", "для других устройств"], route: "tariffs"},
+    {name: "выбрать номер", subItems: ["перенести свой", "подключить eSIM"], route: "numbers"},
+    {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"], route: "roaming"},
+    {name: "ОРГАНИЗАЦИЯМ", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"], route: "organisations"},
+    {name: "поддержка", subItems: ["f.a.q", "карта покрытия", "контакты"], route: "поддержка"},
 ];
 const Item = styled.div`
     display: flex;
@@ -56,7 +56,7 @@ export default function Menu() {
     }
     return (
         <>
-            {Items.map(({name, subItems}, idx) => <Item idx={idx} selected={selected}
+            {Items.map(({name, subItems, route}, idx) => <Item idx={idx} selected={selected}
             onMouseLeave={() => setSelected(null)} {...Gesture(idx)} key={name}>
                 <span>
                     {name}
@@ -67,7 +67,7 @@ export default function Menu() {
                 <AnimatePresence>
                     {selected === idx && 
                     <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map(subItem => <Item key={subItem} as={Link} to={`/${subItem}`}>{subItem}</Item>)}
+                        {subItems.map(subItem => <Item key={subItem} as={Link} to={`${route}`}>{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
             </Item>)}

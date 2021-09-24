@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import useLocalStorage from "./hooks/useLocalStorage";
 import NumbersPage from "./pages/NumbersPage/NumbersPage";
 import RoamingPage from "./pages/RoamingPage/RoamingPage";
+import OrganisationsPage from "./pages/OrganisationsPage/OrganisationsPage";
+import TariffePage from "./pages/TariffePage/TariffePage";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 
 export const GlobalContext = createContext();
@@ -66,8 +68,10 @@ export default function App() {
               <Route exact path="/" component={Main} />
               <Route path="/tariffs" component={TariffPage} />
               <Route path="/dashboard" component={Dashboard} />
-              <Route path="/номера" component={NumbersPage} />
-              <Route path="/роуминг" component={RoamingPage} />
+              <Route path="/numbers" component={NumbersPage} />
+              <Route path="/roaming" component={RoamingPage} />
+              <Route path="/organisations" component={OrganisationsPage} />
+              <Route path="/tariff-info/:tariff" component={TariffePage} />
             </Switch>
           </Mainml>
         </Wrapper>

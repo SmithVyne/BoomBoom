@@ -1,21 +1,21 @@
 @import url('https://necolas.github.io/normalize.css/latest/normalize.css');
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import '~antd/dist/antd.css';
-
 :root {
     font-family: 'Jost', sans-serif;
 }
+
 body::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
- 
+
 body::-webkit-scrollbar-track {
-  background-color: white;
+    background-color: white;
 }
- 
+
 body::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.5);
-  outline:  none;
+    background-color: rgba(0, 0, 0, 0.5);
+    outline: none;
 }
 
 body::-webkit-scrollbar-thumb:hover {
@@ -49,9 +49,13 @@ body, #root {
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: fit-content;
-    margin-top: 25px;
-} 
+    width: 100%;
+    margin-top: 60px;
+}
+
+.card-title-icon {
+    width: 44px;
+}
 
 .tariffDivider {
     display: flex;
@@ -71,28 +75,45 @@ body, #root {
     margin-top: 50px;
 }
 
-.tarif-settings  {
+.tarif-settings {
     display: flex;
     gap: 0 20px;
     width: 100%;
+    margin-top: 12px;
     flex-wrap: wrap;
 }
 
+.tarif-settings-title {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+
 .tarif-settings .item {
-    font-size: 50px;
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
     font-weight: bold;
-    line-height: 50px;
+    font-size: 60px;
+    line-height: 100%;
 }
 
 ._4Gswitch {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 29px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.44);
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
     width: fit-content;
     padding: 10px 8px;
-    border-radius: 10px;
 }
 
 ._4Gswitch span {
@@ -101,9 +122,161 @@ body, #root {
     gap: 10px;
 }
 
+.infinity-text {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 100%;
+    margin: 0;
+    color: #fff;
+}
+
+.beeline-text {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 100%;
+    margin: 0;
+    color: #fff;
+}
+
+.main-text {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 100%;
+    /* or 32px */
+    display: flex;
+    align-items: center;
+    color: #121212;
+    max-width: 431px;
+    margin: 0;
+}
+.main-text_dark{
+    color: #FFFFFF;
+}
+
 @media (max-width: 1650px) {
     .tariffDivider {
         justify-content: flex-start;
         gap: 20px;
+    }
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-Regular.eot');
+    src: local('Circe'), local('Circe-Regular'), url('Circe-Regular.eot?#iefix') format('embedded-opentype'), url('Circe-Regular.woff') format('woff'), url('Circe-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-ExtraLight.eot');
+    src: local('Circe ExtraLight'), local('Circe-ExtraLight'), url('Circe-ExtraLight.eot?#iefix') format('embedded-opentype'), url('Circe-ExtraLight.woff') format('woff'), url('Circe-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-Thin.eot');
+    src: local('Circe Thin'), local('Circe-Thin'), url('Circe-Thin.eot?#iefix') format('embedded-opentype'), url('Circe-Thin.woff') format('woff'), url('Circe-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-Light.eot');
+    src: local('Circe Light'), local('Circe-Light'), url('Circe-Light.eot?#iefix') format('embedded-opentype'), url('Circe-Light.woff') format('woff'), url('Circe-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-Bold.eot');
+    src: local('Circe Bold'), local('Circe-Bold'), url('Circe-Bold.eot?#iefix') format('embedded-opentype'), url('Circe-Bold.woff') format('woff'), url('Circe-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Circe';
+    src: url('Circe-ExtraBold.eot');
+    src: local('Circe ExtraBold'), local('Circe-ExtraBold'), url('Circe-ExtraBold.eot?#iefix') format('embedded-opentype'), url('Circe-ExtraBold.woff') format('woff'), url('Circe-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+@media(max-width: 900px) {
+    .main-text {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 48px;
+        line-height: 100%;
+        max-width: 345px;
+    }
+}
+
+@media(max-width: 720px) {
+    .main-text {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 100%;
+        max-width: 250px;
+    }
+    .card-title-icon {
+        width: 24px;
+    }
+    .card-body {
+        margin-top: 12px;
+    }
+    .tarif-settings .item {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 100%;
+    }
+    ._4Gswitch {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 18px;
+        padding: 8px 12px;
+    }
+    .infinity-text {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 100%;
+    }
+    .beeline-text {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 100%;
+    }
+    .priceInfo {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 35px;
+        margin: 36px 0 0 0;
+    }
+}
+
+@media(max-width: 400px) {
+    .main-text {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 100%;
+        max-width: 190px;
     }
 }

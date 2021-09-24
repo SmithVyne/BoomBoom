@@ -136,7 +136,7 @@ export default function Roaming() {
                     <div onClick={() => handleSuggestionClick('египет')} className={`roaming__popular-item ${darkTheme ? 'roaming__popular-item_dark' : ''}`}>
 
                         <svg className={`roaming__popular-item-flag`} width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0)">
+                            <g clipPath="url(#clip0)">
                                 <path d="M0 6.21643C0 5.66414 0.447715 5.21643 1 5.21643H27C27.5523 5.21643 28 5.66415 28 6.21643V11.0722H0V6.21643Z" fill="#FF0000" />
                                 <rect y="11.0739" width="28" height="5.85577" fill="white" />
                                 <path d="M0 16.9263H28V21.782C28 22.3343 27.5523 22.782 27 22.782H1C0.447715 22.782 0 22.3343 0 21.782V16.9263Z" fill="#1C120F" />
@@ -159,7 +159,7 @@ export default function Roaming() {
                     </div>
                     <div onClick={() => handleSuggestionClick('греция')} className={`roaming__popular-item`}>
                         <svg className={`roaming__popular-item-flag`} width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0)">
+                            <g clipPath="url(#clip0)">
                                 <path d="M0 6.25C0 5.69772 0.447715 5.25 1 5.25H27C27.5523 5.25 28 5.69772 28 6.25V21.75C28 22.3023 27.5523 22.75 27 22.75H1C0.447715 22.75 0 22.3023 0 21.75V6.25Z" fill="#0B55B1" />
                                 <rect x="4.375" y="5.25" width="1.75" height="10.5" fill="#F0F0F0" />
                                 <rect x="10.5" y="9.96094" width="1.75" height="10.5" transform="rotate(90 10.5 9.96094)" fill="#F0F0F0" />

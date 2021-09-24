@@ -39,7 +39,10 @@ const Wrappper = styled.nav`
         justify-content: space-between;
     }
     &  .logo {
-        margin-right: 50px;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        margin-right: 77px;
         @media(max-width: 1100px) {
             margin-right: auto;
         }

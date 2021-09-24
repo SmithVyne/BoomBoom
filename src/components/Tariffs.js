@@ -8,6 +8,113 @@ import TariffCard from "../globals/TariffCard";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
 
+const tariffBase = {
+    tariffName: 'Базовый',
+    position: [{
+        min: 500,
+        gb: 10,
+        sms: 100,
+    },{
+        min: 400,
+        gb: 20,
+        sms: 100,
+    },{
+        min: 300,
+        gb: 30,
+        sms: 100,
+    },{
+        min: 200,
+        gb: 40,
+        sms: 100,
+    }],
+    price: 350,
+}
+const tariffBright = {
+    tariffName: 'Яркий',
+    position: [{
+        min: 1000,
+        gb: 25,
+        sms: 500,
+    }, {
+        min: 900,
+        gb: 35,
+        sms: 500,
+    },{
+        min: 800,
+        gb: 45,
+        sms: 500,
+    }, {
+        min: 700,
+        gb: 55,
+        sms: 500,
+    }],
+    price: 500,
+}
+const tariffAdvanced = {
+    tariffName: 'Расширенный',
+    position: [{
+        min: 2000,
+        gb: 35,
+        sms: 1000,
+    },{
+        min: 1800,
+        gb: 45,
+        sms: 1000,
+    },{
+        min: 1600,
+        gb: 75,
+        sms: 1000,
+    },{
+        min: 1400,
+        gb: 95,
+        sms: 1000,
+    }],
+    price: 800,
+}
+const tariffBiz = {
+    tariffName: 'Бизнес',
+    position: [{
+        min: 4000,
+        gb: 50,
+        sms: 1000,
+    },{
+        min: 3800,
+        gb: 70,
+        sms: 1000,
+    },{
+        min: 3600,
+        gb: 90,
+        sms: 1000,
+    },{
+        min: 3400,
+        gb: 110,
+        sms: 1000,
+    }],
+    price: 1000,
+}
+const tariffVip = {
+    tariffName: 'VIP',
+    position: [{
+        min: 7000,
+        gb: 100,
+        sms: 1000,
+    },{
+        min: 6800,
+        gb: 120,
+        sms: 1000,
+    },{
+        min: 6600,
+        gb: 140,
+        sms: 1000,
+    },{
+        min: 6400,
+        gb: 160,
+        sms: 1000,
+    }],
+    price: 1500,
+}
+
+
 const WrapScroller  = styled.div`
     position: relative;
     display: flex;
@@ -57,7 +164,7 @@ const Ctrl = styled.span`
 
 const Tracker = styled.div`
     position: absolute;
-    top: 100%;
+    top: calc(100% + 10px);
     left: calc(50% - 46px);
     width: 92px;
     height: 6px;
@@ -71,6 +178,7 @@ const Tracker = styled.div`
         margin-left: ${({percentage})=>percentage + "%"};
     }
 `
+
 
 export default function Tariffs({children}) {
     const ref = useRef();
@@ -119,11 +227,11 @@ export default function Tariffs({children}) {
                     <WrapTariffs>
                         {children ? children : (
                             <>
-                                <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                                <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
-                                <TariffCard scrolling="true" title="Расширенный" background="linear-gradient(135deg, #4B40FE 0%, #4B1EFF 100%);" icon={goblet} />
-                                <TariffCard scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                                <TariffCard scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                                <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
+                                <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={star} />
+                                <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={goblet} />
+                                <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                                <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
                             </>
                         )}
                     </WrapTariffs>

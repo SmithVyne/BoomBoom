@@ -37,6 +37,48 @@ const Div = styled.div`
         gap: 25px;
     }
 `
+const tariffBase = {
+    tariffName: 'Базовый',
+    position: [{
+        min: 500,
+        gb: 10,
+        sms: 100,
+    },{
+        min: 400,
+        gb: 20,
+        sms: 100,
+    },{
+        min: 300,
+        gb: 30,
+        sms: 100,
+    },{
+        min: 200,
+        gb: 40,
+        sms: 100,
+    }],
+    price: 350,
+}
+const tariffBright = {
+    tariffName: 'Яркий',
+    position: [{
+        min: 1000,
+        gb: 25,
+        sms: 500,
+    }, {
+        min: 900,
+        gb: 35,
+        sms: 500,
+    },{
+        min: 800,
+        gb: 45,
+        sms: 500,
+    }, {
+        min: 700,
+        gb: 55,
+        sms: 500,
+    }],
+    price: 500,
+}
 
 export default function TariffPage() {    
     return (
@@ -50,8 +92,8 @@ export default function TariffPage() {
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
-                        <TariffCard scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
+                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
                     </Tariffs>
                 </div>
             </Div>

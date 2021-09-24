@@ -51,9 +51,10 @@ const Section = styled.section`
     width: fit-content;
     max-width: 100%;
     height: fit-content;
-    background-color: white;
-    padding: 5px 15px;
-    border-radius: inherit;
+    background: #FFFFFF;
+    border-radius: 20px;
+    
+    padding: 16px;
 `
 const Div = styled.div`
     display: flex;
@@ -68,14 +69,30 @@ const Thumb = styled.div`
     border-radius: 4.5px;
 `
 const Media = styled.span`
+font-family: Circe, Arial, sans-serif;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 100%;
+color: #010101;
     display: flex;
     gap: 8px;
     padding: 4px 6px 4px 0px;
     align-items: center;
     margin: 0;
-    font-size: 12px;
+    @media(max-width: 720px) {
+        font-size: 16px;
+    }
+    @media(max-width: 520px) {
+        font-size: 13px;
+    }
 `
 const Title = styled.p`
+font-family: Circe, Arial, sans-serif;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 100%;
     color: rgba(18,18,18,0.6);
     font-size: 15px;
     margin: 0;
@@ -106,8 +123,8 @@ export default memo(function TariffCardModal({setShowDropDown}) {
                 <Section>
                     <Title>Мессенджеры</Title>
                     <Div>
-                        <Media><MiniIcon src={whatsapp} /> Whatsapp</Media>
-                        <Media><MiniIcon src={skype} /> Skype</Media>
+                        <Media><MiniIcon src={whatsapp} /> what’s app</Media>
+                        <Media><MiniIcon src={skype} /> skype</Media>
                         <Media><MiniIcon src={viber} /> viber</Media>
                         <Media><MiniIcon src={telegram} /> telegram</Media>
                         <Media><MiniIcon src={snapchat} /> snapchat</Media>

@@ -1,5 +1,5 @@
-import sunshine from "../assets/images/sunshine.svg";
-import moonshine from "../assets/images/moonshine.svg";
+// import sunshine from "../assets/images/sunshine.svg";
+// import moonshine from "../assets/images/moonshine.svg";
 import darksun from "../assets/images/darksun.svg";
 import darkmoon from "../assets/images/darkmoon.svg";
 import { GlobalContext } from "../App";
@@ -8,25 +8,24 @@ import styled from "styled-components";
 
 export const Switch = styled.span`
     display: flex;
-    width: 104px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
     border-radius: 26px;
-    background: ${props => props.theme.textColor};
+    border: none;
     transition: 0.5s;
     cursor: pointer;
     align-items: center;
-    border: none;
     position: relative;
 `
 
 const Flick = styled.img`
-    width: 53px;
-    height: 53px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     padding: 13px;
     transition: 0.5s;
-    transform: ${props => props.darkTheme && "translateX(52px)"};
-    background: ${props => props.theme.background};
+    
+    background: ${props => props.theme.textColor};
     z-index: 2;
 `
 
@@ -46,9 +45,10 @@ export default function ThemeSwitch() {
     const {darkTheme, setDarkTheme} = useContext(GlobalContext);
     return (
         <Switch onClick={() =>setDarkTheme(dark => !dark)}>
-            <SwitchBackground type={"left"} src={darksun} />
-            <SwitchBackground type={"right"} src={darkmoon} />
-            <Flick darkTheme={darkTheme} src={darkTheme ? moonshine : sunshine} />
+            <SwitchBackground type={"right"} src={darksun} />
+            <SwitchBackground type={"left"} src={darkmoon} />
+            
+            <Flick darkTheme={darkTheme} src={!darkTheme ? darkmoon : darksun} />
         </Switch>
     )
 }

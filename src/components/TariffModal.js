@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
 import SimCardInfo from './SimCardInfo'
 import { motion } from 'framer-motion'
+import { memo } from 'react'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
@@ -56,7 +57,7 @@ const Option = styled.span`
 `
 
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-export default function TariffModal({setShowTariffModal, name}) {
+export default memo(function TariffModal({setShowTariffModal, name}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     return ReactDOM.createPortal (
@@ -77,4 +78,4 @@ export default function TariffModal({setShowTariffModal, name}) {
         </Wrapper>,
         document.getElementById("modal")
     )
-}
+})

@@ -20,6 +20,11 @@ const Wrapper = styled.footer`
 const Left = styled.div`
     display: flex;
     flex-direction: column;
+    & p {
+        line-height: 35px;
+        font-size: 20px;
+        color: inherit;
+    }
 `
 const Right = styled.div`
     display: flex;

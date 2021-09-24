@@ -6,13 +6,16 @@ import styled from "styled-components";
 const Line = styled.div`
     height: 5px;
     width: 100%;
-    margin: 15px auto 25px;
+    margin: 30px auto 30px;
     background: rgba(255, 255, 255, 0.44);
     display: flex;
     align-items: center;
     position: relative;
     border-radius: 2.5px;
     cursor: pointer;
+    @media(max-width: 720px) {
+      width: 100%;
+  }
 `;
 const Thumb = styled(motion.div)`
   position: relative;
@@ -38,6 +41,9 @@ const Breakpoints = styled.div`
   display: flex;
   align-items: center;
   z-index: 1;
+  @media(max-width: 720px) {
+    width: 100%;
+}
 `;
 const Breakpoint = styled.span`
   width: 12px;
@@ -58,7 +64,7 @@ const Level = styled(motion.div)`
   border-radius: 2.5px;
 `;
 
-const TariffBar = () => {
+const TariffBar = (props) => {
   const [location, setLocation] = useState("0px");
   const moveTo = (e) => {
     const { clientX, currentTarget } = e;
@@ -68,12 +74,16 @@ const TariffBar = () => {
     const error = step1 / 5;
     if (location > error && location <= step1 + error) {
       setLocation(step1 - 13 + "px");
+      props.handlePositionChange(1)
     } else if (location > step1 + error && location <= 2 * step1 + error) {
       setLocation(2 * step1 - 17 + "px");
+      props.handlePositionChange(2)
     } else if (location > 2 * step1 + error) {
       setLocation(3 * step1 - 21 + "px");
+      props.handlePositionChange(3)
     } else {
       setLocation("0px");
+      props.handlePositionChange(0)
     }
   };
 
