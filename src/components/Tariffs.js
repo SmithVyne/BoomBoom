@@ -164,7 +164,7 @@ const Ctrl = styled.span`
 
 const Tracker = styled.div`
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 10px);
     left: calc(50% - 46px);
     width: 92px;
     height: 6px;

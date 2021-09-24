@@ -89,6 +89,7 @@ const Details = styled.small`
     gap: 10px;
     align-items: center;
     margin-top: 22px;
+    font-size: 16px;
     &:first-of-type {
         margin-top: 62px;
     }

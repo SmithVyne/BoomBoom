@@ -122,7 +122,7 @@ export default function LoginForm() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const form_status = useSelector(store => store.form_status);
-    const apiUsername = username.slice(2, username.length).replaceAll(" ", "")
+    const apiUsername = username.slice(2, username.length).replaceAll(" ", "");
 
     useEffect(() => {
         const removeForm = () => setLoginForm(false)
