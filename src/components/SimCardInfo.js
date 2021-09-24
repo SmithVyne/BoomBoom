@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { DatePicker, Input } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
@@ -81,6 +81,7 @@ const Wrapper = styled.div`
             display: flex;
             align-items: center;
             gap: 8px;
+            margin: 12px 0 30px;
         }
     }
 `
@@ -128,17 +129,35 @@ const Inpt =  styled.input`
         background-color:#F5F5F5;
     }
 `
+const Location = styled.div`
+    background: #FBFBFB;
+    width: 100%;
+    height: 88px;
+    max-height: fit-content;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #000;
+    & h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        font-size: 20px;
+        align-items: center;
+        width: 100%;
+    }
+`
 
 const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill="#F8F8F8" />
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
-export default function SimCardInfo({selected, Option}) {
-    useEffect(()=>{
-        // fetch()
-    }, [])
-    
+export default function SimCardInfo({selected, Option}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [checked, setChecked] = useState(false);
@@ -172,6 +191,14 @@ export default function SimCardInfo({selected, Option}) {
                 {selectedOption === 1 && 
                     <Pickup>
                         <Inpt as={Input} placeholder="Адрес или станция метро" prefix={<IoIosSearch color="#D3D3D3" />} />
+                        <Location>
+                            <h3>Салон связи Билайн</h3>
+                            <div>
+                                <span>ул. 1-я Тверская-Ямская, 2</span>
+                                <span>Пн-Вс 09:00 - 22:00</span>
+                                <span>Маяковская</span>
+                            </div>
+                        </Location>
                     </Pickup>
                 } </>
                 : 
@@ -182,10 +209,13 @@ export default function SimCardInfo({selected, Option}) {
                             phoneRegionCode: 'RU'
                         }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
                     <label className="checker"><input onClick={()=>setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
-                    {checked  && <Cleave className="input" options={{
-                            phone: true,
-                            phoneRegionCode: 'RU'
-                        }} type="tel" placeholder="+7 (000) 000 00 00"  />}
+                    {checked  && <>
+                        <label>Контактный номер</label>
+                        <Cleave className="input" options={{
+                                phone: true,
+                                phoneRegionCode: 'RU'
+                            }} type="tel" placeholder="+7 (000) 000 00 00"  />
+                    </>}
                 </div>}
             <Bottom>
                 <span>
