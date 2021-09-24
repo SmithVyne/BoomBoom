@@ -132,12 +132,13 @@ const Inpt =  styled.input`
 const Location = styled.div`
     background: #FBFBFB;
     width: 100%;
-    height: 88px;
-    max-height: fit-content;
+    min-height: 88px;
+    height: fit-content;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 20px;
     color: #000;
     & h3 {
         font-size: 20px;
@@ -191,6 +192,38 @@ export default function SimCardInfo({selected, Option}) {
                 {selectedOption === 1 && 
                     <Pickup>
                         <Inpt as={Input} placeholder="Адрес или станция метро" prefix={<IoIosSearch color="#D3D3D3" />} />
+                        <Location>
+                            <h3>Салон связи Билайн</h3>
+                            <div>
+                                <span>ул. 1-я Тверская-Ямская, 2</span>
+                                <span>Пн-Вс 09:00 - 22:00</span>
+                                <span>Маяковская</span>
+                            </div>
+                        </Location>
+                        <Location>
+                            <h3>Салон связи Билайн</h3>
+                            <div>
+                                <span>ул. 1-я Тверская-Ямская, 2</span>
+                                <span>Пн-Вс 09:00 - 22:00</span>
+                                <span>Маяковская</span>
+                            </div>
+                        </Location>
+                        <Location>
+                            <h3>Салон связи Билайн</h3>
+                            <div>
+                                <span>ул. 1-я Тверская-Ямская, 2</span>
+                                <span>Пн-Вс 09:00 - 22:00</span>
+                                <span>Маяковская</span>
+                            </div>
+                        </Location>
+                        <Location>
+                            <h3>Салон связи Билайн</h3>
+                            <div>
+                                <span>ул. 1-я Тверская-Ямская, 2</span>
+                                <span>Пн-Вс 09:00 - 22:00</span>
+                                <span>Маяковская</span>
+                            </div>
+                        </Location>
                         <Location>
                             <h3>Салон связи Билайн</h3>
                             <div>
