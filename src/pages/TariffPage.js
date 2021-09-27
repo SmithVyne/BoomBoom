@@ -1,4 +1,7 @@
-import Footer from "../globals/Footer";
+import React, { useContext } from 'react';
+import { GlobalContext } from '../App';
+
+import Footer from "../globals/Footer/Footer";
 import styled from "styled-components";
 import TariffCard from "../globals/TariffCard";
 import duck from "../assets/images/duck.png";
@@ -6,6 +9,8 @@ import star from "../assets/images/star.png";
 import Tariffs from "../components/Tariffs";
 
 const SiteHeader = styled.h1`
+color: ${props => props.theme.textColor};
+font-family: Circe, Arial, sans-serif;
     font-size: 3%;
     font-weight: bold;
     line-height: 100%;
@@ -17,8 +22,12 @@ const SiteHeader = styled.h1`
     }
 `
 const SubTitle = styled.p`
+color: ${props => props.theme.textColor};
+font-family: Circe, Arial, sans-serif;
+font-style: normal;
+font-weight: bold;
+opacity: 0.68;
     font-size: 1.5%;
-    font-weight: 500;
     margin: 0;
     margin-bottom: 20px;
     @media(max-width: 1000px) {
@@ -43,15 +52,15 @@ const tariffBase = {
         min: 500,
         gb: 10,
         sms: 100,
-    },{
+    }, {
         min: 400,
         gb: 20,
         sms: 100,
-    },{
+    }, {
         min: 300,
         gb: 30,
         sms: 100,
-    },{
+    }, {
         min: 200,
         gb: 40,
         sms: 100,
@@ -68,7 +77,7 @@ const tariffBright = {
         min: 900,
         gb: 35,
         sms: 500,
-    },{
+    }, {
         min: 800,
         gb: 45,
         sms: 500,
@@ -80,7 +89,8 @@ const tariffBright = {
     price: 500,
 }
 
-export default function TariffPage() {    
+export default function TariffPage() {
+    const { darkTheme } = useContext(GlobalContext);
     return (
         <>
             <Div>
@@ -88,7 +98,7 @@ export default function TariffPage() {
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
                     <Tariffs />
-                </div>   
+                </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>

@@ -3,7 +3,7 @@ import { GlobalContext } from '../../App';
 import { useParams } from 'react-router-dom';
 import Header from './Header'
 import Section from './Section'
-import Footer from '../../globals/Footer/Footer';
+import Footer from '../../globals/Footer';
 import duck from "../../assets/images/duck.png";
 import star from "../../assets/images/star.png";
 import goblet from "../../assets/images/goblet.png";

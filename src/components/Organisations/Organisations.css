@@ -42,6 +42,9 @@ a:active, a:hover {
     outline: 0;
 }
 
+.img-phone{
+    margin: -51px 0 91px -20px !important;
+}
 a {
     display: inline-block;
     text-decoration: none;
@@ -364,6 +367,9 @@ p:last-child {
     .block-pr .col {
         width: 50%;
     }
+    .img-phone{
+        margin: 0 0 18px !important;
+    }
 }
 
 @media screen and (max-width: 960px) {
@@ -388,6 +394,20 @@ p:last-child {
 @media screen and (max-width: 700px) {
     .block-pr .col {
         width: 100%;
+    }
+    .d-flex{
+        flex-direction: column;
+    }
+    .btn {
+        margin-bottom: 12px;
+        width: fit-content;
+    }
+    .btn2 {
+        margin-left: 0;
+        margin-bottom: 12px;
+    }
+    .btn2:last-of-type{
+        margin: 0;
     }
     .block-pr__wrap p {
         font-size: 16px;
@@ -421,13 +441,6 @@ p:last-child {
 @media screen and (max-width: 470px) {
     .btn-group {
         display: block;
-    }
-    .btn {
-        margin-bottom: 12px;
-    }
-    .btn2 {
-        margin-left: 0;
-        margin-bottom: 0
     }
     .img-w {
         height: auto;
