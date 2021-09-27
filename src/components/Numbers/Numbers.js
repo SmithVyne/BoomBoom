@@ -36,7 +36,7 @@ export default function Numbers() {
             if (res.result.length > 0) {
                 let numbers = res.result.filter((item) => {
                     if (item.ctn) {
-                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 6)) {
+                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6)) {
                             return true
                         }
                         return false
@@ -78,36 +78,72 @@ export default function Numbers() {
                 setNumbers(filterd.slice(0, 20))
                 setRemainingNumbers(filterd.slice(20))
             } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                let filterd = allNumbers.filter((item) => {
-                    if (item.ctn) {
-                        if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                            return true
+                if (selectedCategoryID === 3){
+                    let filterd = allNumbers.filter((item) => {
+                        if (item.ctn) {
+                            if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
+                                return true
+                            }
+                            return false
                         }
                         return false
-                    }
-                    return false
 
 
-                })
+                    })
 
-                setNumbers(filterd.slice(0, 20))
+                    setNumbers(filterd.slice(0, 20))
+                    setRemainingNumbers(filterd.slice(20))
+                } else {
+                    let filterd = allNumbers.filter((item) => {
+                        if (item.ctn) {
+                            if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
+                                return true
+                            }
+                            return false
+                        }
+                        return false
+
+
+                    })
+
+                    setNumbers(filterd.slice(0, 20))
                 setRemainingNumbers(filterd.slice(20))
+                }
+                
             }
             else if (selectedCategoryID !== 'all' && inputValue === '') {
-                let filterd = allNumbers.filter((item) => {
-                    if (item.ctn) {
-                        if (item.category === Number(selectedCategoryID)) {
-                            return true
+                if (selectedCategoryID === 3){
+                    let filterd = allNumbers.filter((item) => {
+                        if (item.ctn) {
+                            if (item.category === 3 || item.category === 4 || item.category === 5) {
+                                return true
+                            }
+                            return false
                         }
                         return false
-                    }
-                    return false
 
 
-                })
+                    })
 
-                setNumbers(filterd.slice(0, 20))
-                setRemainingNumbers(filterd.slice(20))
+                    setNumbers(filterd.slice(0, 20))
+                    setRemainingNumbers(filterd.slice(20))
+                } else {
+                    let filterd = allNumbers.filter((item) => {
+                        if (item.ctn) {
+                            if (item.category === Number(selectedCategoryID)) {
+                                return true
+                            }
+                            return false
+                        }
+                        return false
+
+
+                    })
+
+                    setNumbers(filterd.slice(0, 20))
+                    setRemainingNumbers(filterd.slice(20))
+                }
+               
             }
             else if (selectedCategoryID === 'all' && inputValue === '') {
 
@@ -136,36 +172,72 @@ export default function Numbers() {
                     setNumbers(filterd.slice(0, 10))
                     setRemainingNumbers(filterd.slice(10))
                 } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                                return true
+                    if (selectedCategoryID === 3){
+                        let filterd = allNumbers.filter((item) => {
+                            if (item.ctn) {
+                                if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
+                                    return true
+                                }
+                                return false
                             }
                             return false
-                        }
-                        return false
-
-
-                    })
-
-                    setNumbers(filterd.slice(0, 10))
-                    setRemainingNumbers(filterd.slice(10))
+    
+    
+                        })
+    
+                        setNumbers(filterd.slice(0, 10))
+                        setRemainingNumbers(filterd.slice(10))
+                    } else {
+                        let filterd = allNumbers.filter((item) => {
+                            if (item.ctn) {
+                                if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
+                                    return true
+                                }
+                                return false
+                            }
+                            return false
+    
+    
+                        })
+    
+                        setNumbers(filterd.slice(0, 10))
+                        setRemainingNumbers(filterd.slice(10))
+                    }
+                   
                 }
                 else if (selectedCategoryID !== 'all' && inputValue === '') {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === Number(selectedCategoryID)) {
-                                return true
+                    if (selectedCategoryID === 3){
+                        let filterd = allNumbers.filter((item) => {
+                            if (item.ctn) {
+                                if (item.category === 3 || item.category === 4 || item.category === 5) {
+                                    return true
+                                }
+                                return false
                             }
                             return false
-                        }
-                        return false
-
-
-                    })
-
-                    setNumbers(filterd.slice(0, 10))
-                    setRemainingNumbers(filterd.slice(10))
+    
+    
+                        })
+    
+                        setNumbers(filterd.slice(0, 10))
+                        setRemainingNumbers(filterd.slice(10))
+                    } else {
+                        let filterd = allNumbers.filter((item) => {
+                            if (item.ctn) {
+                                if (item.category === Number(selectedCategoryID)) {
+                                    return true
+                                }
+                                return false
+                            }
+                            return false
+    
+    
+                        })
+    
+                        setNumbers(filterd.slice(0, 10))
+                        setRemainingNumbers(filterd.slice(10))
+                    }
+                   
                 }
                 else if (selectedCategoryID === 'all' && inputValue === '') {
 
@@ -193,36 +265,70 @@ export default function Numbers() {
                         setNumbers(filterd.slice(0, 8))
                         setRemainingNumbers(filterd.slice(8))
                     } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                        let filterd = allNumbers.filter((item) => {
-                            if (item.ctn) {
-                                if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                                    return true
+                        if (selectedCategoryID === 3){
+                            let filterd = allNumbers.filter((item) => {
+                                if (item.ctn) {
+                                    if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
+                                        return true
+                                    }
+                                    return false
                                 }
                                 return false
-                            }
-                            return false
-
-
-                        })
-
-                        setNumbers(filterd.slice(0, 8))
-                        setRemainingNumbers(filterd.slice(8))
+        
+        
+                            })
+        
+                            setNumbers(filterd.slice(0, 8))
+                            setRemainingNumbers(filterd.slice(8))
+                        } else {
+                            let filterd = allNumbers.filter((item) => {
+                                if (item.ctn) {
+                                    if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
+                                        return true
+                                    }
+                                    return false
+                                }
+                                return false
+        
+        
+                            })
+        
+                            setNumbers(filterd.slice(0, 8))
+                            setRemainingNumbers(filterd.slice(8))
+                        }
                     }
                     else if (selectedCategoryID !== 'all' && inputValue === '') {
-                        let filterd = allNumbers.filter((item) => {
-                            if (item.ctn) {
-                                if (item.category === Number(selectedCategoryID)) {
-                                    return true
+                        if (selectedCategoryID === 3){
+                            let filterd = allNumbers.filter((item) => {
+                                if (item.ctn) {
+                                    if (item.category === 3 || item.category === 4 || item.category === 5) {
+                                        return true
+                                    }
+                                    return false
                                 }
                                 return false
-                            }
-                            return false
-
-
-                        })
-
-                        setNumbers(filterd.slice(0, 8))
-                        setRemainingNumbers(filterd.slice(8))
+        
+        
+                            })
+        
+                            setNumbers(filterd.slice(0, 8))
+                            setRemainingNumbers(filterd.slice(8))
+                        } else {
+                            let filterd = allNumbers.filter((item) => {
+                                if (item.ctn) {
+                                    if (item.category === Number(selectedCategoryID)) {
+                                        return true
+                                    }
+                                    return false
+                                }
+                                return false
+        
+        
+                            })
+        
+                            setNumbers(filterd.slice(0, 8))
+                            setRemainingNumbers(filterd.slice(8))
+                        }
                     }
                     else if (selectedCategoryID === 'all' && inputValue === '') {
 
@@ -263,22 +369,28 @@ export default function Numbers() {
         }
         if (category === 'Все') {
             setSelectedCategoryID('all')
+            setSelectedNumber({})
 
         }
         if (category === 'Бриллиантовый') {
-            setSelectedCategoryID(6)
+            setSelectedCategoryID(10)
+            setSelectedNumber({})
         }
         if (category === 'Платиновый') {
-            setSelectedCategoryID(4)
+            setSelectedCategoryID(6)
+            setSelectedNumber({})
         }
         if (category === 'Золотой') {
             setSelectedCategoryID(3)
+            setSelectedNumber({})
         }
         if (category === 'Серебрянный') {
             setSelectedCategoryID(2)
+            setSelectedNumber({})
         }
         if (category === 'Бронзовый') {
             setSelectedCategoryID(1)
+            setSelectedNumber({})
         }
 
         setSelectedCategory(category)
