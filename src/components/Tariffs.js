@@ -148,6 +148,13 @@ const WrapCtrl = styled.span`
 
 const Ctrl = styled.span`
     position: sticky;
+    position: absolute;
+    z-index: 4;
+    top: calc(50% - 22px);
+    margin-left: calc(100% + 6px);
+    @media(max-width: 720px) {
+        margin-left: calc(100% - calc(44px - 5vw));
+    }
     left: 0;
     color: #0E5EF8;
     background-color: #fff;
@@ -186,6 +193,7 @@ export default function Tariffs({children}) {
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
+    const [tarrifPosition, setTarrifPosition] = useState(0);
     const [scrollWidth, setScrollWidth] = useState(2);
     const percentage = (scrollLeft/(scrollWidth-offsetWidth)) * 50;
 
@@ -201,19 +209,43 @@ export default function Tariffs({children}) {
 
     const handleScroll = (type) => {
         const {current} =  ref;
+        console.log(tarrifPosition)
         const {scrollLeft} = current;
-        const pixels = isMobile ? window.innerWidth - 30 : 500;
+        let pixels 
+        if (tarrifPosition === 0){
+            pixels = 550
+        } else if (tarrifPosition === 1){
+            pixels = 650
+        }
+        else if (tarrifPosition === 2){
+            pixels = 700
+        }
+        else if (tarrifPosition === 3){
+            pixels = 700
+        }
+        else if (tarrifPosition === 4){
+            pixels = 680
+        }
+        else if (tarrifPosition === 5){
+            pixels = 700
+        }
         switch(type) {
             case "back":
                 current.scroll({left: scrollLeft - pixels,  behavior: 'smooth'});
+                if (tarrifPosition > 0){
+                    setTarrifPosition(tarrifPosition - 1)
+                }
                 break;
             default:
                 current.scroll({left: scrollLeft + pixels,  behavior: 'smooth'});
+                if (tarrifPosition < 5){
+                    setTarrifPosition(tarrifPosition + 1)
+                }
         }
     }
     return (
             <WrapScroller>
-                { showScroll &&
+                {  window.innerWidth >= 721 && showScroll &&
                     <>
                         <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-50px", marginRight: "6px"}} >
                             <IoIosArrowBack strokeLinecap="square" size={26} />
@@ -236,7 +268,7 @@ export default function Tariffs({children}) {
                         )}
                     </WrapTariffs>
                 </Scroller>
-                { showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
+                { window.innerWidth >= 721 && showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
             </WrapScroller>
     )
 }

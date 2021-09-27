@@ -1,11 +1,13 @@
-import React, { useEffect, useContext,  useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+
 import styled from 'styled-components';
 import Slide from '../components/Slide';
 import girl_with_phone from "../assets/images/girl_with_phone_banner.png";
 import hand_banner from "../assets/images/hand_banner.png";
 import Tariffs from '../components/Tariffs';
-import Footer from '../globals/Footer';
+import Footer from '../globals/Footer/Footer';
 import Numbers from '../components/Numbers/Numbers';
+import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
 
 
@@ -13,12 +15,14 @@ const slides = [
     {
         title: "Тарифы, для студентов!",
         subtitle: "Тарифы для связи, от 350 руб. в месяц",
-        imgUrl: girl_with_phone
+        imgUrl: girl_with_phone,
+        url: '/tariff-info/:Базовый'
     },
     {
         title: "БУМ! БУМ!, И ты в бизнесе!",
         subtitle: "Премиальные тарифы для связи, от 1500 руб. в месяц",
-        imgUrl: hand_banner
+        imgUrl: hand_banner,
+        url: '/tariff-info/:Бизнес'
     }
 ]
 
@@ -97,9 +101,11 @@ export default function Main() {
                 <Slide slide={slides[index]} />
                 <Controls move={move} />
             </Carousel>
-            <p className={`main-text ${darkTheme ? 'main-text_dark': ''}`}>Платите только за необходимое</p>
+            <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Платите только за необходимое</p>
             <Tariffs />
             <Numbers />
+            <СoverageMap />
+            {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}
             <Footer />
         </>
     )

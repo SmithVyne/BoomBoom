@@ -1,4 +1,4 @@
-import Footer from '../../globals/Footer';
+import Footer from '../../globals/Footer/Footer';
 import Organisations from '../../components/Organisations/Organisations'
 import './OrganisationsPage.css';
 

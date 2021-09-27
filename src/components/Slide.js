@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -111,8 +112,9 @@ text-align: center;
         line-height: 130%;
     }
 `
-const GoButton = styled.button`
+const GoButton = styled(Link)`
 font-family: Circe, Arial, sans-serif;
+    max-width: fit-content;
     color: #4B75FC;
     background: #FFFFFF;
     box-shadow: 0px 0px 0px 5px rgba(75,117,252,0.36);
@@ -137,7 +139,7 @@ font-family: Circe, Arial, sans-serif;
     }
 `
 
-export default function Slide({ slide: { title, subtitle, imgUrl } }) {
+export default function Slide({ slide: { title, subtitle, imgUrl, url } }) {
     const ttl = title.split(',');
     const subttl = subtitle.split(',');
 
@@ -146,7 +148,7 @@ export default function Slide({ slide: { title, subtitle, imgUrl } }) {
             <Div>
                 <SiteHeader>{ttl[0]}<br />{ttl[1]}</SiteHeader>
                 <Subtitle>{subttl[0]}<br />{subttl[1]}</Subtitle>
-                <GoButton>Подключить <AiOutlineRight style={{ transform: "translateY(10%)" }} /></GoButton>
+                <GoButton to={url}>Подключить <AiOutlineRight style={{ transform: "translateY(10%)" }} /></GoButton>
             </Div>
         </Wrapper>
     )

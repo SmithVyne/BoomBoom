@@ -33,7 +33,8 @@ const Close = styled.span`
 const Modal = styled.div`
     background-color: white;
     position: relative;
-    width: 800px;
+    max-width: 800px;
+    width: calc(100vw - 40px)
     height: fit-content;
     padding: 28px 40px 32px;
     font-size: 24px;

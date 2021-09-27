@@ -1,9 +1,12 @@
+import React, { useContext } from 'react';
+import { GlobalContext } from '../../App';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import instagram from "../assets/images/instagram.png";
-import appstore from "../assets/images/app-store-badge.png";
-import googleplay from "../assets/images/google-play-badge.png";
+import instagram from "../../assets/images/instagram.png";
+import appstore from "../../assets/images/app-store-badge.png";
+import googleplay from "../../assets/images/google-play-badge.png";
 
+import './Footer.css';
 const Wrapper = styled.footer`
     width: 100%;
     display: grid;
@@ -20,11 +23,6 @@ const Wrapper = styled.footer`
 const Left = styled.div`
     display: flex;
     flex-direction: column;
-    & p {
-        line-height: 35px;
-        font-size: 20px;
-        color: inherit;
-    }
 `
 const Right = styled.div`
     display: flex;
@@ -73,25 +71,24 @@ const Copyright = styled.small`
 `
 
 export default function Footer() {
+    const { darkTheme } = useContext(GlobalContext);
     return (
         <>
             <Wrapper>
             <Left>
                 <div>
                     <div style={{fontSize: '30px', fontWeight: "bold"}}>boom telecom - это выгодные тарифы</div>
-                    <p>все актульаные новости и информациб о тарифах вы можете найти <br></br> на сайте и социальных сетях</p>
+                    <p className={`footer__text ${darkTheme ? "footer__text_dark" : ""}`}>все актульаные новости и информацию о тарифах вы можете найти <br></br> на сайте и в социальных сетях</p>
                 </div>
                 <DoMore>
                     <More>
-                        <small>социальные сети</small>
+                        <small className={`footer__socials-text ${darkTheme ? "footer__socials-text_dark" : ""}`}>социальные сети</small>
                         <Socials>
-                            <a href="/"><img alt="socials" src={instagram} /></a>
-                            <a href="/"><img alt="socials" src={instagram} /></a>
                             <a href="/"><img alt="socials" src={instagram} /></a>
                         </Socials>
                     </More>
                     <More>
-                        <small>приложение</small>
+                        <small className={`footer__socials-text ${darkTheme ? "footer__socials-text_dark" : ""}`}>приложение</small>
                         <Socials>
                             <a href="/"><img alt="download" src={googleplay} /></a>
                             <a href="/"><img alt="download" src={appstore} /></a>
@@ -103,11 +100,11 @@ export default function Footer() {
                 <Menu>
                     <MenItem to='/'>О нас</MenItem>
                     <MenItem to='/tariffs'>Тарифы</MenItem>
-                    <MenItem to="/роуминг">Роуминг</MenItem>
+                    <MenItem to="/roaming">Роуминг</MenItem>
                 </Menu>
                 <Menu>
                     <MenItem to="/services">Услуги</MenItem>
-                    <MenItem to="/номера">Номера</MenItem>
+                    <MenItem to="/numbers">Номера</MenItem>
                     <MenItem to="/organisations">Организациям</MenItem>
                 </Menu>
                 <Menu>

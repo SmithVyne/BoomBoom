@@ -1,10 +1,75 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4maps from "@amcharts/amcharts4/maps";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
+
 import { GlobalContext } from '../../App';
+
 import './Roaming.css';
 import { roamingData, allCountrues } from './roamingData'
 
-
+am4core.useTheme(am4themes_animated);
 export default function Roaming() {
+
+
+    useEffect(() => {
+        const chart = am4core.create("chartdiv", am4maps.MapChart);
+        var interfaceColors = new am4core.InterfaceColorSet();
+
+        // Set map definition
+        try {
+            chart.geodata = am4geodata_worldLow;
+        }
+        catch (e) {
+            chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
+        }
+
+
+        // Set projection
+        chart.projection = new am4maps.projections.Orthographic();
+        chart.panBehavior = "rotateLongLat";
+        chart.seriesContainer.draggable = false;
+        chart.seriesContainer.resizable = false;
+        chart.maxZoomLevel = 1;
+
+        // chart.seriesContainer.cursorOverStyle = am4core.MouseCursorStyle.grab;
+        // chart.seriesContainer.cursorDownStyle = am4core.MouseCursorStyle.grabbing;
+
+        // Add zoom control
+
+
+        chart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#ffffff");
+        chart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+
+        // Create map polygon series
+
+
+        var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+        var polygonTemplate = polygonSeries.mapPolygons.template;
+        polygonTemplate.tooltipText = "{name}";
+        polygonTemplate.fill = am4core.color("#74B266");
+
+        // Create hover state and set alternative fill color
+        var hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color("#3C4FFF");
+        polygonSeries.useGeodata = true;
+        polygonSeries.mapPolygons.template.nonScalingStroke = true;
+        polygonSeries.calculateVisualCenter = true;
+        polygonSeries.mapPolygons.template.fill = am4core.color("#4B75FC");
+        polygonSeries.mapPolygons.template.stroke = am4core.color("#4B75FC");
+
+        let graticuleSeries = chart.series.push(new am4maps.GraticuleSeries());
+        graticuleSeries.mapLines.template.stroke = false;
+
+        graticuleSeries.fitExtent = false;
+
+        return () => {
+            chart.dispose();
+        };
+    },[]);
+
+
     const { darkTheme } = useContext(GlobalContext);
     const [isSelectTariffOpen, setSelectTariffOpen] = React.useState(false);
     const [selectedTariff, setSelectedTariff] = React.useState('Базовый');
@@ -92,6 +157,7 @@ export default function Roaming() {
     }, [selectedTariff, countryValue])
     return (
         <div className={`roaming `}>
+
             <h2 className={`roaming__title ${darkTheme ? 'roaming__title_dark' : ''}`}>Роуминг</h2>
             <p className={`roaming__info-text ${darkTheme ? 'roaming__info-text_dark' : ''}`}>Выберите страну, в которую собираетесь поехать и ваш тариф</p>
             <form onSubmit={(e) => {
@@ -179,6 +245,7 @@ export default function Roaming() {
                 </div>
 
             </div>
+            <div id="chartdiv" className={`roaming__globe`} ></div>
             {selectedTariff && countryValue ?
                 <div className={`roaming__info`}>
                     <div className={`roaming__internet-container ${darkTheme ? 'roaming__internet-container_dark' : ''}`}>
@@ -196,6 +263,7 @@ export default function Roaming() {
                             : <></>}
 
                     </div>
+                    <div className="break"> </div>
                     <div className={`roaming__call-container ${darkTheme ? 'roaming__call-container_dark' : ''}`}>
                         <h3 className={`roaming__call-title ${darkTheme ? 'roaming__call-title_dark' : ''}`}>Звонки</h3>
                         {zoneValue && zoneValue === 1 ?
@@ -232,7 +300,11 @@ export default function Roaming() {
 
                 </div>
                 :
-                <div className="roaming__plug"></div>
+                <>
+
+                    <div className="roaming__plug"></div>
+                </>
+
             }
 
 

@@ -1,4 +1,4 @@
-import Footer from '../../globals/Footer';
+import Footer from '../../globals/Footer/Footer';
 import Numbers from '../../components/Numbers/Numbers'
 import './NumbersPage.css';
 

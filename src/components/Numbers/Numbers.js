@@ -34,7 +34,17 @@ export default function Numbers() {
         GetNumbers().then((res) => {
 
             if (res.result.length > 0) {
-                let numbers = res.result
+                let numbers = res.result.filter((item) => {
+                    if (item.ctn) {
+                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 6)) {
+                            return true
+                        }
+                        return false
+                    }
+                    return false
+
+
+                })
                 // throw new Error()
                 setScreenWidth(window.innerWidth)
                 setAllNumbers(numbers)

@@ -1,0 +1,29 @@
+.footer__socials-text {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 100%;
+    /* identical to box height, or 16px */
+    display: flex;
+    align-items: center;
+    color: rgba(1, 1, 1, 0.64);
+}
+
+.footer__socials-text_dark {
+    color: rgba(255, 255, 255, 0.64);
+}
+
+.footer__text {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 100%;
+    /* or 24px */
+    /* text/day/main */
+    color: #010101;
+}
+.footer__text_dark {
+    color: #FFFFFF;
+}
