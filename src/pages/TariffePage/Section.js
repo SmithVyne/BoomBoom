@@ -21,17 +21,20 @@ export default function Section(props) {
                 <h2>Основное</h2>
                 <div className={`blok-data__info d-flex-wrap ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                   <div>
-                    Абонентская плата <span>{props.tariff.price} руб.</span>
+                    Абонентская плата<span>&#183; {props.tariff.price} руб.</span>
                   </div>
                   <div>
-                    Звонки <span>от {props.tariff.callMin} до {props.tariff.callMax}</span>
+                    Звонки<span>&#183; от {props.tariff.callMin} до {props.tariff.callMax}</span>
                   </div>
                   <div>
-                    Интернет (Гб) <span>от {props.tariff.gbMin} до {props.tariff.gbMax}</span>
+                    Интернет (Гб)<span>&#183; от {props.tariff.gbMin} до {props.tariff.gbMax}</span>
                   </div>
                   <div>
-                    SMS и MMS <span>{props.tariff.sms}</span>
+                    SMS и MMS<span>&#183; {props.tariff.sms}</span>
                   </div>
+                </div>
+                <div className="main-data__button">
+                  <p className="main-data__button-text">Купить за 350 руб.</p>
                 </div>
               </div>
               <div className="blok-data-row row">
@@ -41,8 +44,8 @@ export default function Section(props) {
                     <h2>Звонки</h2>
                     <div className={`blok-data__info ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                       <div className="d-i">
-                        <i>Звонки на все номера России (мин.) </i>{" "}
-                        <span>от {props.tariff.callMin} до {props.tariff.callMax}</span>
+                        <i>Звонки на все номера России (мин.)</i>
+                        <span>&#183; от {props.tariff.callMin} до {props.tariff.callMax}</span>
                       </div>
                       <div className="select-block">
                         <div
@@ -57,7 +60,7 @@ export default function Section(props) {
                           </div>
                         </div>
                         {callWrap && (
-                          <div onClick={() => setCallWrap(!callWrap)}  className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
+                          <div onClick={() => setCallWrap(!callWrap)} className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
                             <h3>
                               Тарификация сверх включенных в пакет объемов услуг
                             </h3>
@@ -66,14 +69,14 @@ export default function Section(props) {
                                 Исходящие вызовы в сети «Билайн» на номера всех
                                 операторов всей РФ, кроме Билайн (за 1 минуту) -<span>2 ₽</span>
                               </i>
-                              
+
                             </p>
                             <p>
                               <i>
                                 Исходящие вызовы в сети «Билайн» на все номера
                                 «Билайн» (за 1 минуту) -<span>0 ₽</span>
                               </i>
-                              
+
                             </p>
                           </div>
                         )}
@@ -87,7 +90,7 @@ export default function Section(props) {
                     <h2>Собщения</h2>
                     <div className={`blok-data__info ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                       <div className="d-i">
-                        <i>Исходящие SMS и MMS (шт) по РФ</i> <span>{props.tariff.sms}</span>
+                        <i>Исходящие SMS и MMS (шт) по РФ</i><span>&#183; {props.tariff.sms}</span>
                       </div>
                       <div className="select-block">
                         <div className="a-sel" onClick={() => setSmsWrap(!smsWrap)}>
@@ -108,7 +111,7 @@ export default function Section(props) {
                             </p>
                             <p>
                               MMS в сети «Билайн» (за 1 MMS) -<span>6,45 ₽</span>
-                              
+
                             </p>
                           </div>
                         )}
@@ -123,11 +126,11 @@ export default function Section(props) {
                 <h2>Интернет</h2>
                 <div className={`blok-data__info d-int-wrap ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                   <div className="d-i">
-                    <i>Мобильный интернет (Гб) по РФ</i> <span>от {props.tariff.gbMin} до {props.tariff.gbMax}</span>
+                    <i>Мобильный интернет (Гб) по РФ</i><span>&#183; от {props.tariff.gbMin} до {props.tariff.gbMax}</span>
                   </div>
                   <div className="d-i">
-                    <i>Безлимит на интернет-сервисы</i>{" "}
-                    <span>
+                    <i>Безлимит на интернет-сервисы</i><span>
+                      &#183; 
                       Безлимит на мессенджеры, соц. сети, карты, почтовые сервисы,
                       музыка, видео
                     </span>
@@ -144,7 +147,7 @@ export default function Section(props) {
                     </div>
                   </div>
                   {internetWrap && (
-                    <div onClick={() => setInternetWrap(!internetWrap)}  className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
+                    <div onClick={() => setInternetWrap(!internetWrap)} className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
                       <h3>Дополнительные услуги</h3>
                       <p>
                         Раздача интернета на другие устройства -<span>100 ₽</span>

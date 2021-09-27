@@ -5,7 +5,7 @@ import Footer from "../globals/Footer/Footer";
 import styled from "styled-components";
 import TariffCard from "../globals/TariffCard";
 import duck from "../assets/images/duck.png";
-import star from "../assets/images/star.png";
+import light from "../assets/images/light.png";
 import Tariffs from "../components/Tariffs";
 
 const SiteHeader = styled.h1`
@@ -103,7 +103,7 @@ export default function TariffPage() {
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
                         <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={star} />
+                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={light} />
                     </Tariffs>
                 </div>
             </Div>

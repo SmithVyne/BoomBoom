@@ -6,6 +6,8 @@ import Section from './Section'
 import Footer from '../../globals/Footer/Footer';
 import duck from "../../assets/images/duck.png";
 import star from "../../assets/images/star.png";
+import light from "../../assets/images/light.png";
+import jula from "../../assets/images/jula.png";
 import goblet from "../../assets/images/goblet.png";
 
 export default function TariffePage() {
@@ -28,7 +30,7 @@ export default function TariffePage() {
     } else if (tariff === ':Яркий'){
       setSelectedTrariff({
         name: 'Яркий',
-        img: star,
+        img: light,
         price: 500,
         callMin: 700,
         callMax: 1000,
@@ -39,7 +41,7 @@ export default function TariffePage() {
     } else if (tariff === ':Расширенный'){
       setSelectedTrariff({
         name: 'Расширенный',
-        img: goblet,
+        img: jula,
         price: 800,
         callMin: 1400,
         callMax: 2000,
