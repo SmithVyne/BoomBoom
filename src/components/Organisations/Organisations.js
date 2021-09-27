@@ -15,6 +15,10 @@ import folder from '../../assets/images/folder.png'
 import blub from '../../assets/images/blub.png'
 import computer from '../../assets/images/computer.png'
 import floppy from '../../assets/images/Floppy.png'
+import red_book from '../../assets/images/red-book.png'
+import thermometer from '../../assets/images/Thermometer.png'
+import magic_hat from '../../assets/images/Magic-hat.png'
+import clapperboard from '../../assets/images/clapperboard.png'
 
 const cardsMalBiz = [
     {
@@ -90,6 +94,39 @@ const cardsBigBiz = [
 
 ]
 
+const cardsGosSector = [
+    {
+        img: globe_icon,
+        title: 'Управление общесвенным транспортом и городским трафиком',
+        text: `Единая интеллектуальная трансопртная
+        система`
+    },
+    {
+        img: red_book,
+        title: 'Цифровизация образовательных учреждений',
+        text: `Роббо - классы
+        VR/AR обучение 
+        Интерактивные классы`
+    },
+    {
+        img: thermometer,
+        title: 'Решения для автоматизации процессов в медицинских учреждениях',
+        text: `Сервисы ЕГИСЗ, Электронная медицинская карта, Сервис персонифицированного учета медпомощи`
+    },
+    {
+        img: magic_hat,
+        title: 'Технологичные инструменты для городских коммунальных служб и горуправления',
+        text: `Умное ЖКХ Энергоэффективное городское освещение`
+    },
+    {
+        img: clapperboard,
+        title: 'Инструменты для принятия решений и эффективного управления',
+        text: `Планирование социальной инфраструктуры Оптимизация транспортной инфраструктуры`
+    },
+    
+
+]
+
 export default function Organisations() {
 
     const { darkTheme } = useContext(GlobalContext);
@@ -150,9 +187,9 @@ export default function Organisations() {
                                     ))
                                     : <></>}
 
-                            {/* {
+                            {
                                 selectedCategory === 'Госсектор' ?
-                                    cardsBigBiz.map((item, i) => (
+                                    cardsGosSector.map((item, i) => (
                                         <div className="col" key={i + Math.random() + item.title}>
                                             <div className={`block-pr__wrap ${darkTheme ? 'block-pr__wrap_dark' : ''}`}>
                                                 <div className="img-w">
@@ -164,7 +201,7 @@ export default function Organisations() {
                                             </div>
                                         </div>
                                     ))
-                                    : <></>} */}
+                                    : <></>}
 
 
                         </div>

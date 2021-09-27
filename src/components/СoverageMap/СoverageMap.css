@@ -14,8 +14,7 @@
     position: absolute;
     top: 57px;
     left: 44px;
-    width: 775px;
-    height: 145px;
+    
     background: #FFFFFF;
     border-radius: 32px;
     display: flex;
@@ -27,6 +26,7 @@
     font-family: Jost, Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
+    width: fit-content;
     font-size: 28px;
     line-height: 100%;
     /* identical to box height, or 28px */
@@ -205,6 +205,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     align-items: center;
     text-align: center;
     color: #121212;
+    margin: 0;
 }
 
 @media (max-width: 998px) {
