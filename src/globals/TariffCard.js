@@ -8,10 +8,11 @@ import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
-import { memo, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
-import TariffModal from "../components/TariffModal";
+import TariffModal from "../components/BuyNumberModal/BuyNumberModal";
+import { GlobalContext } from "../App";
 
 
 const Wrapper = styled.div`
@@ -137,7 +138,7 @@ const More = styled(Link)`
 export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
-    const [showTariffModal, setShowTariffModal] = useState(false);
+    const {buyNumberModal, setBuyNumberModal} = useContext(GlobalContext); 
 
     function handlePositionChange(position) {
         setPositionValue(position)
@@ -190,8 +191,8 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес
-                <SubScribeBtn onClick={() => setShowTariffModal(true)}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
-                <AnimatePresence> {showTariffModal && <TariffModal name={title} setShowTariffModal={setShowTariffModal} />} </AnimatePresence>
+                <SubScribeBtn onClick={() => setBuyNumberModal(true)}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <AnimatePresence> {buyNumberModal && <TariffModal name={title} setBuyNumberModal={setBuyNumberModal} />} </AnimatePresence>
             </span>
         </Wrapper>
     )

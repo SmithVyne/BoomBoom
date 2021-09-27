@@ -53,6 +53,7 @@ export default function App() {
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
+  const [buyNumberModal, setBuyNumberModal] = useState(false);
   useEffect(() => {
       const watcher = () => setIsMobile(window.innerWidth < 1100);
       window.addEventListener("resize", watcher);
@@ -60,7 +61,7 @@ export default function App() {
   }, [])
 
   return (
-    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile}}>
+    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile, buyNumberModal, setBuyNumberModal}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <Wrapper>
           <Nav />

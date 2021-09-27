@@ -2,14 +2,14 @@ import {useContext, useState} from 'react'
 import { CgClose } from 'react-icons/cg'
 import styled from 'styled-components'
 import ReactDOM from 'react-dom'
-import { GlobalContext } from '../App'
-import SimCardInfo from './SimCardInfo'
+import { GlobalContext } from '../../App'
+import SimCardInfo from '../SimCardInfo'
 import { motion } from 'framer-motion'
 import { memo } from 'react'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.3)"};
     top: 0;
     left: 0;
     bottom: 0;
@@ -34,7 +34,7 @@ const Modal = styled.div`
     background-color: white;
     position: relative;
     max-width: 800px;
-    width: calc(100vw - 40px)
+    width: calc(100vw - 40px);
     height: fit-content;
     padding: 28px 40px 32px;
     font-size: 24px;
@@ -58,7 +58,7 @@ const Option = styled.span`
 `
 
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-export default memo(function TariffModal({setShowTariffModal, name}) {
+export default memo(function BuyNumberModal({setBuyNumberModal, name}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     return ReactDOM.createPortal (
@@ -67,9 +67,9 @@ export default memo(function TariffModal({setShowTariffModal, name}) {
         animate={{opacity: 1}}
         exit={{opacity: 0}}
         transition={{duration: 0.3}}
-        onClick={()=>setShowTariffModal(false)} darkTheme={darkTheme}>
+        onClick={()=>setBuyNumberModal(false)} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
-                <Close onClick={()=>setShowTariffModal(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
+                <Close onClick={()=>setBuyNumberModal(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                 <h1>Подключение тарифа "{name}"</h1>
                 <div className="options">
                     {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}

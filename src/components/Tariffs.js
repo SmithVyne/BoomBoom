@@ -191,7 +191,7 @@ const Tracker = styled.div`
 
 export default function Tariffs({children}) {
     const ref = useRef();
-    const {isMobile, darkTheme} = useContext(GlobalContext);
+    const {darkTheme} = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
