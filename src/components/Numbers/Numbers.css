@@ -344,9 +344,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     justify-content: center;
     margin: 0 0 0 18px;
     padding: 0;
-    transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
-
+.numbers__page-button_inactive{
+    opacity: 0.1;
+}
+.numbers__page-button_inactive:hover{
+    border-color: inherit;
+}
 .numbers__page-button:first-of-type {
     margin: 0 0 0 0;
 }
