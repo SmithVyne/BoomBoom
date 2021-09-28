@@ -7,12 +7,14 @@ import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
-import useLocalStorage from "./hooks/useLocalStorage";
+import {useLocalStorage} from "./hooks";
 import NumbersPage from "./pages/NumbersPage/NumbersPage";
 import RoamingPage from "./pages/RoamingPage/RoamingPage";
 import OrganisationsPage from "./pages/OrganisationsPage/OrganisationsPage";
 import TariffePage from "./pages/TariffePage/TariffePage";
+import BuyNumberModal from "./components/BuyNumberModal";
 import 'cleave.js/dist/addons/cleave-phone.ru';
+import { useSelector } from "react-redux";
 
 export const GlobalContext = createContext();
 const whichTheme = (darkTheme) => {
@@ -53,12 +55,14 @@ export default function App() {
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
+  const buyNumberModal = useSelector(store => store.buyNumberModal);
+
   useEffect(() => {
       const watcher = () => setIsMobile(window.innerWidth < 1100);
       window.addEventListener("resize", watcher);
       return () => window.removeEventListener("resize", watcher);
   }, [])
-
+  
   return (
     <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
@@ -76,7 +80,10 @@ export default function App() {
             </Switch>
           </Mainml>
         </Wrapper>
-        <AnimatePresence>{loginForm && <LoginForm />}</AnimatePresence>
+        <AnimatePresence>
+          {loginForm && <LoginForm />}
+          {buyNumberModal.show && <BuyNumberModal name={buyNumberModal.title} buy={buyNumberModal.buy} number={buyNumberModal.number} />}
+        </AnimatePresence>
       </ThemeProvider>
     </GlobalContext.Provider>
   )

@@ -11,8 +11,8 @@ import TariffCardModal from "./TariffCardModal";
 import { memo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
-import TariffModal from "../components/TariffModal";
-
+import { SHOW_MODAL } from "./utils";
+import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
     background: ${({ background }) => background};
@@ -137,7 +137,7 @@ const More = styled(Link)`
 export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
-    const [showTariffModal, setShowTariffModal] = useState(false);
+    const dispatch = useDispatch();
 
     function handlePositionChange(position) {
         setPositionValue(position)
@@ -190,8 +190,7 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес
-                <SubScribeBtn onClick={() => setShowTariffModal(true)}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
-                <AnimatePresence> {showTariffModal && <TariffModal name={title} setShowTariffModal={setShowTariffModal} />} </AnimatePresence>
+                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, title})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )

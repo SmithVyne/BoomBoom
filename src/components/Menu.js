@@ -46,7 +46,7 @@ const SubItems = styled(motion.div)`
         top: 0px;
     }
 `
-export default function Menu() {
+export default function Menu({setShowMobileNav}) {
     const [selected, setSelected] = useState(null);
     const {darkTheme, isMobile} = useContext(GlobalContext);
     const Gesture = (idx) => {
@@ -67,7 +67,7 @@ export default function Menu() {
                 <AnimatePresence>
                     {selected === idx && 
                     <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map(subItem => <Item key={subItem} as={Link} to={`${route}`}>{subItem}</Item>)}
+                        {subItems.map(subItem => <Item onClick={()=>setShowMobileNav && setShowMobileNav(false)} key={subItem} as={Link} to={`${route}`}>{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
             </Item>)}

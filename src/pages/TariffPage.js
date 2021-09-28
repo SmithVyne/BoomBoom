@@ -1,6 +1,3 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../App';
-
 import Footer from "../globals/Footer/Footer";
 import styled from "styled-components";
 import TariffCard from "../globals/TariffCard";
@@ -90,7 +87,6 @@ const tariffBright = {
 }
 
 export default function TariffPage() {
-    const { darkTheme } = useContext(GlobalContext);
     return (
         <>
             <Div>

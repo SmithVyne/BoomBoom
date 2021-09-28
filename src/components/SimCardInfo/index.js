@@ -1,3 +1,4 @@
+import "./styles.css";
 import moment from 'moment';
 import { DatePicker, Input } from "antd";
 import { useState } from "react";
@@ -6,7 +7,6 @@ import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
 import { IoIosSearch } from 'react-icons/io';
 const { RangePicker } = DatePicker;
-
 
 const Wrapper = styled.div`
     display: flex;
@@ -57,6 +57,8 @@ const Wrapper = styled.div`
         display: flex;
         align-items: center;
         gap: 12px;
+        max-width: 100%;
+        flex-wrap: wrap;
     }
     & .input {
         width: 300px;
@@ -66,6 +68,9 @@ const Wrapper = styled.div`
         margin-right: 16px;
         outline: none;
         border: 2px solid rgba(1, 1, 1, 0.16);
+        @media(max-width: 640px) {
+            margin-bottom: 16px;
+        }
     }
     & .input:active, .input:focus {
         border-color: #0E5EF8;
@@ -91,6 +96,7 @@ const Bottom = styled.div`
     & > span {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
     & button {
         background: #010101;
@@ -118,13 +124,14 @@ const Bottom = styled.div`
 const Pickup = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 40px;
 `
 const Inpt =  styled.input`
     width: 338px;
+    max-width: 100%;
     height: 56px;
     border-radius: 31px;
     background-color:#F5F5F5;
+    margin-bottom: 28px;
     & input {
         background-color:#F5F5F5;
     }
@@ -140,6 +147,7 @@ const Location = styled.div`
     justify-content: space-between;
     padding: 20px;
     color: #000;
+    margin-top: 12px;
     & h3 {
         font-size: 20px;
         font-weight: 600;
@@ -150,6 +158,15 @@ const Location = styled.div`
         font-size: 20px;
         align-items: center;
         width: 100%;
+        @media(max-width: 601px) {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 16px;
+        }
+    }
+    @media(max-width: 601px) {
+        flex-direction: column;
+        align-items: flex-start;
     }
 `
 
@@ -158,7 +175,7 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
-export default function SimCardInfo({selected, Option}) { 
+export default function SimCardInfo({selected, Option, buy}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [checked, setChecked] = useState(false);
@@ -168,7 +185,9 @@ export default function SimCardInfo({selected, Option}) {
                 <div className="Способ_получения">
                         Способ получения
                         <div className="options">
-                        {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
+                        {buy ? options.slice(0, 2).map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)
+                        :
+                        options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
                         </div>
                         <small>Только Москва и МО</small>
                     </div>
@@ -176,7 +195,7 @@ export default function SimCardInfo({selected, Option}) {
                     <><div className="orderDates">
                         <div className="Способ_получения">
                             Дата доставки
-                            <DatePicker suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
+                            <DatePicker suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
                         </div>
                         <div className="Способ_получения">
                             Времия доставки
@@ -241,7 +260,7 @@ export default function SimCardInfo({selected, Option}) {
                             phone: true,
                             phoneRegionCode: 'RU'
                         }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
-                    <label className="checker"><input onClick={()=>setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
+                    <label className="checker"><input onChange={()=>setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
                     {checked  && <>
                         <label>Контактный номер</label>
                         <Cleave className="input" options={{

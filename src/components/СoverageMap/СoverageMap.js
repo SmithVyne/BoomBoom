@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { YMaps, Map } from 'react-yandex-maps';
-import { GlobalContext } from '../../App';
 import './СoverageMap.css';
 
 
