@@ -4,6 +4,7 @@ export const GET_PASSWORD = "GET_PASSWORD";
 export const USER_INFO = "USER_INFO";
 export const SHOW_MODAL = "SHOW_MODAL";
 export const HIDE_MODAL = "HIDE_MODAL";
+export const BUY_NUMBER = "BUY_NUMBER";
 
 const getAuth = (accessToken) => {
     if (accessToken) return {

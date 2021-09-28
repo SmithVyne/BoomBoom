@@ -8,7 +8,7 @@ import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
-import { memo, useContext, useState } from "react";
+import { memo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import TariffBar from "./TariffBar";
 import { SHOW_MODAL } from "./utils";

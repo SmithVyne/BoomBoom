@@ -175,7 +175,7 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
-export default function SimCardInfo({selected, Option}) { 
+export default function SimCardInfo({selected, Option, buy}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [checked, setChecked] = useState(false);
@@ -185,7 +185,9 @@ export default function SimCardInfo({selected, Option}) {
                 <div className="Способ_получения">
                         Способ получения
                         <div className="options">
-                        {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
+                        {buy ? options.slice(0, 2).map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)
+                        :
+                        options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
                         </div>
                         <small>Только Москва и МО</small>
                     </div>

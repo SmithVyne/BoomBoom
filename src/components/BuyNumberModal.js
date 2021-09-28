@@ -93,7 +93,7 @@ const Option = styled.span`
 `
 
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-export default memo(function BuyNumberModal({name}) {
+export default memo(function BuyNumberModal({name, buy, number}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     const dispatch = useDispatch();
@@ -108,11 +108,11 @@ export default memo(function BuyNumberModal({name}) {
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
-                <h1>Подключение <span>тарифа "{name}"</span></h1>
+                {buy ? <h1>Купить номер <span>{number}</span></h1> : <h1>Подключение <span>тарифа "{name}"</span></h1>}
                 <div className="options first">
                     {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
                 </div>
-                <SimCardInfo selected={selectedOption} Option={Option} />
+                <SimCardInfo selected={selectedOption} Option={Option} buy={buy} />
             </Modal>
         </Wrapper>,
         document.getElementById("modal")

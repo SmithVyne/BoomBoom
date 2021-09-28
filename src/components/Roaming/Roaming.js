@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -15,7 +15,7 @@ export default function Roaming() {
 
     useEffect(() => {
         const chart = am4core.create("chartdiv", am4maps.MapChart);
-        var interfaceColors = new am4core.InterfaceColorSet();
+        // var interfaceColors = new am4core.InterfaceColorSet();
 
         // Set map definition
         try {

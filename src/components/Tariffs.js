@@ -186,6 +186,9 @@ const Tracker = styled.div`
         border-radius: inherit;
         margin-left: ${({percentage})=>percentage + "%"};
     }
+    @media(max-width: 721px){
+        display: none;
+    }
 `
 
 
@@ -270,7 +273,7 @@ export default function Tariffs({children}) {
                         )}
                     </WrapTariffs>
                 </Scroller>
-                { window.innerWidth >= 721 && showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
+                { showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
             </WrapScroller>
     )
 }
