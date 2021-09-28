@@ -2,12 +2,13 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { CgClose } from 'react-icons/cg'
 import styled from 'styled-components'
+import { useEscapeKey } from '../hooks'
 import Menu from './Menu'
 import ThemeSwitch from './ThemeSwitch';
 
 const Wrapper = styled(motion.div)`
     background-color: ${({theme}) => theme.background};
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -40,6 +41,7 @@ const Call = styled.span`
 `
 
 export default memo(function MobileNav({setShowMobileNav}) {
+    useEscapeKey(setShowMobileNav);
     return (
         <Wrapper
         initial={{opacity: 0, x: "100%"}}

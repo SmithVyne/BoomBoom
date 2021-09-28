@@ -2,7 +2,9 @@ export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const GET_PASSWORD = "GET_PASSWORD";
 export const USER_INFO = "USER_INFO";
-export const LOADING = "LOADING";
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
+
 const getAuth = (accessToken) => {
     if (accessToken) return {
         "Authorization": `Bearer ${accessToken}`

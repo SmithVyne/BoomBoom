@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
@@ -8,6 +8,7 @@ import { GlobalContext } from "../App";
 import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import { FaCheck } from "react-icons/fa";
+import {useEscapeKey} from "../hooks";
 
 
 const Wrapper = styled(motion.div)`
@@ -123,17 +124,7 @@ export default function LoginForm() {
     const dispatch = useDispatch();
     const form_status = useSelector(store => store.form_status);
     const apiUsername = username.slice(2, username.length).replaceAll(" ", "");
-
-    useEffect(() => {
-        const removeForm = () => setLoginForm(false)
-        const ifEscape = (e) => e.key === "Escape" && removeForm()
-        document.addEventListener("click", removeForm)
-        document.addEventListener("keydown", ifEscape)        
-        return () => {
-            document.removeEventListener("click", removeForm);
-            document.removeEventListener("keydown", ifEscape);
-        }
-    }, [setLoginForm])
+    useEscapeKey(setLoginForm);
 
     const body = {
         method: "login",
