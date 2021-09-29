@@ -85,14 +85,31 @@ const Modal = styled.div`
                 font-weight: 600;
                 font-size: 36px;
             }
+            @media(max-width: 500px){
+                flex-direction: column-reverse;
+                align-items: flex-start;
+            }
         }
     }
     & .left h1 {
         color: #0E5EF8;
         margin-bottom: 10px;
     }
+    .right {
+        font-size: 36px;
+        font-weight: 500;
+        @media(max-width: 600px) {
+            display: none;
+        }
+    }
     & .buyNumberTop {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
         margin-bottom: 40px;
+        @media(max-width: 600px){
+            margin-bottom: 20px;
+        }
     }
     & .options.buyOptions {
         width: 70%;
@@ -101,7 +118,14 @@ const Modal = styled.div`
             font-size: 28px;
             font-weight: bold;
             display: flex;
+            align-items: center;
             gap: 10px;
+            @media(max-width: 600px){
+                font-size: 12px;
+                img {
+                    width: 28px;
+                }
+            }
         }
         @media(max-width: 700px){
             width: 100%
@@ -110,6 +134,30 @@ const Modal = styled.div`
     & .Доступные_тарифы {
         font-size: 24px;
         font-weight: normal;
+    }
+    & .desktopPrices {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        font-weight: bold;
+        .discount {
+            font-size: 20px;
+        }
+    }
+    & .mobilePrices {
+        display: none;
+        @media(max-width: 600px){
+            display: block;
+            margin-bottom: 20px;
+        }
+        div {
+            display: flex;
+            gap: 10px;
+            height: fit-content;
+        }
+    }
+    del.discount {
+        color: red;
     }
     @media(max-width: 960px) {
         padding: 28px 12px;
@@ -126,6 +174,19 @@ const Option = styled.span`
             width: 100%;
             text-align: center;
             max-width: 296px;
+        }
+    }
+    &.purchaseType {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        font-size: 16px;
+        min-height: 100%;
+        span {
+            font-size: 20px;
+            font-weight: bold;
         }
     }
 `
@@ -148,6 +209,7 @@ const tariffOptions = [
 export default memo(function BuyNumberModal({name, buy, number}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
+    const [purchaseType, setPurchaseType] = useState(0);
     const dispatch = useDispatch();
     useEscapeKey(() => dispatch({type: HIDE_MODAL}))
     
@@ -171,8 +233,26 @@ export default memo(function BuyNumberModal({name, buy, number}) {
                             </span>
                         </span>
                         <span className="right">
-
+                            <span className="desktopPrices">
+                                {number.category === 1 && <del className="discount">10 000 руб.</del>}
+                                {CATEGORIES[number.category].rentPrice}
+                            </span>
                         </span>
+                    </div>
+
+                    <div className="mobilePrices">
+                        Способ покупки
+                        <div>
+                            <Option className="purchaseType" selected={purchaseType} idx={0} onClick={()=>setPurchaseType(0)}>
+                                Арендовать 
+                                <span>{CATEGORIES[number.category].rentPrice}</span>
+                                {number.category === 1 && <del className="discount">10 000 руб.</del>}
+                            </Option>
+                            <Option className="purchaseType" selected={purchaseType} idx={1} onClick={()=>setPurchaseType(1)}>
+                                Выкупить
+                                <span>{CATEGORIES[number.category].purchasePrice}</span>
+                            </Option>
+                        </div>
                     </div>
 
                     <h2 className="Доступные_тарифы">Доступные тарифы</h2>

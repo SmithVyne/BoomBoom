@@ -6,11 +6,11 @@ export const SHOW_MODAL = "SHOW_MODAL";
 export const HIDE_MODAL = "HIDE_MODAL";
 export const BUY_NUMBER = "BUY_NUMBER";
 export const CATEGORIES = {
-    1: {name: "Бронзовый", bg: "#CD7F32"},
-    2: {name: "Серебряный", bg: "#C0C0C0"},
-    3: {name: "Золотой", bg: "#FFD700"},
-    6: {name: "Платиновый", bg: "#e5e4e2"},
-    10: {name: "Бриллиантовый", bg: "#FFB02E"}
+    1: {name: "Бронзовый", bg: "#CD7F32", rentPrice: "Бесплатно!", purchasePrice: "1000 руб."},
+    2: {name: "Серебряный", bg: "#C0C0C0", rentPrice: "300 руб.", purchasePrice: "5000 руб."},
+    3: {name: "Золотой", bg: "#FFD700", rentPrice: "500 руб.", purchasePrice: "35 000 руб."},
+    6: {name: "Платиновый", bg: "#e5e4e2", rentPrice: "1000 руб.", purchasePrice: "200 000 руб."},
+    10: {name: "Бриллиантовый", bg: "#FFB02E", rentPrice: "1500 руб.", purchasePrice: "500 000 руб."}
 }
 
 const getAuth = (accessToken) => {
