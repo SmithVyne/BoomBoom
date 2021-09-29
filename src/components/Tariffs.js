@@ -122,6 +122,7 @@ const WrapScroller  = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    
 `
 const Scroller = styled.div`
     height: fit-content;
