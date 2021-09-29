@@ -360,8 +360,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     ;
     font-style: normal;
     font-weight: normal;
-    font-size: 32px;
-    line-height: 140%;
+    font-size: 28px;
+    line-height: 130%;
     /* or 36px */
     /* text/day/secondary */
     color: #000000;
