@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import { GlobalContext } from '../../App';
-import './Numbers.css';
+import './NumbersForMain.css';
 import searchIcon from '../../assets/images/search.svg'
 import { GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
 
-export default function Numbers() {
+function NumbersForMain(props) {
     const [allNumbers, setAllNumbers] = React.useState(null);
     const [numbers, setNumbers] = React.useState(null);
     const [selectedNumber, setSelectedNumber] = React.useState({});
@@ -517,16 +518,13 @@ export default function Numbers() {
 
     }
     function handleCtnClick(item) {
-
-        if (item.ctn === selectedNumber.ctn) {
-            setSelectedNumber({})
-        } else {
-            setSelectedNumber(item)
-        }
+        return
+        
 
     }
     function handleSubmit(e) {
         e.preventDefault();
+        props.history.push("/numbers");
         console.log(selectedNumber)
     }
     function handleFocus(e) {
@@ -553,10 +551,10 @@ export default function Numbers() {
 
                     </div>
                     <div className="numbers__categories">
-                        <button type='button' className={`numbers__category ${darkTheme ? 'numbers__category_dark' : ''}  ${ selectedCategory === 'Все' ? 'numbers__category_active' : ''}`} onClick={() => handleCategoryChange('Все')}>Все</button>
+                        <button type='button' className={`numbers__category ${darkTheme ? 'numbers__category_dark' : ''}  ${selectedCategory === 'Все' ? 'numbers__category_active' : ''}`} onClick={() => handleCategoryChange('Все')}>Все</button>
                         <div className="numbers__category-container">
-                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${ selectedCategory === 'Бронзовый' ? ' numbers__category_bronze_active' : ''}`} onClick={() => handleCategoryChange('Бронзовый')} >
-                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${ selectedCategory === 'Бронзовый' ? ' numbers__category-name_active' : ''}`}>Бронзовый</p>
+                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  `} onClick={() => handleCategoryChange('Бронзовый')} >
+                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedCategory === 'Бронзовый' ? ' numbers__category_bronze_active' : ''} ${selectedCategory === 'Бронзовый' ? ' numbers__category-name_active' : ''}`}>Бронзовый</p>
                             </button>
                             {
                                 selectedCategory === 'Бронзовый' ?
@@ -567,8 +565,8 @@ export default function Numbers() {
 
                         </div>
                         <div className="numbers__category-container">
-                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${ selectedCategory === 'Серебрянный' ? ' numbers__category_selver_active' : ''}`} onClick={() => handleCategoryChange('Серебрянный')} >
-                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${ selectedCategory === 'Серебрянный' ? ' numbers__category-name_active' : ''}`}>Серебрянный</p>
+                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  `} onClick={() => handleCategoryChange('Серебрянный')} >
+                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedCategory === 'Серебрянный' ? ' numbers__category_selver_active' : ''} ${selectedCategory === 'Серебрянный' ? ' numbers__category-name_active' : ''}`}>Серебрянный</p>
                             </button>
                             {
                                 selectedCategory === 'Серебрянный' ?
@@ -579,8 +577,8 @@ export default function Numbers() {
 
                         </div>
                         <div className="numbers__category-container">
-                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''} ${ selectedCategory === 'Золотой' ? ' numbers__category_gold_active' : ''}`} onClick={() => handleCategoryChange('Золотой')} >
-                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${ selectedCategory === 'Золотой' ? ' numbers__category-name_active' : ''}`}>Золотой</p>
+                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''} ${selectedCategory === 'Золотой' ? ' numbers__category_gold_active' : ''}`} onClick={() => handleCategoryChange('Золотой')} >
+                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedCategory === 'Золотой' ? ' numbers__category-name_active' : ''}`}>Золотой</p>
                             </button>
                             {
                                 selectedCategory === 'Золотой' ?
@@ -591,8 +589,8 @@ export default function Numbers() {
 
                         </div>
                         <div className="numbers__category-container">
-                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${ selectedCategory === 'Платиновый' ? ' numbers__category_platina_active' : ''}`} onClick={() => handleCategoryChange('Платиновый')} >
-                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${ selectedCategory === 'Платиновый' ? ' numbers__category-name_active' : ''}`}>Платиновый</p>
+                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${selectedCategory === 'Платиновый' ? ' numbers__category_platina_active' : ''}`} onClick={() => handleCategoryChange('Платиновый')} >
+                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedCategory === 'Платиновый' ? ' numbers__category-name_active' : ''}`}>Платиновый</p>
                             </button>
                             {
                                 selectedCategory === 'Платиновый' ?
@@ -603,8 +601,8 @@ export default function Numbers() {
 
                         </div>
                         <div className="numbers__category-container">
-                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${ selectedCategory === 'Бриллиантовый' ? ' numbers__category_briliant_active' : ''}`} onClick={() => handleCategoryChange('Бриллиантовый')} >
-                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${ selectedCategory === 'Бриллиантовый' ? ' numbers__category-name_active' : ''}`}>Бриллиантовый</p>
+                            <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${selectedCategory === 'Бриллиантовый' ? ' numbers__category_briliant_active' : ''}`} onClick={() => handleCategoryChange('Бриллиантовый')} >
+                                <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedCategory === 'Бриллиантовый' ? ' numbers__category-name_active' : ''}`}>Бриллиантовый</p>
                             </button>
                             {
                                 selectedCategory === 'Бриллиантовый' ?
@@ -615,104 +613,7 @@ export default function Numbers() {
 
                         </div>
                     </div>
-                    <div className="numbers__page-buttons">
-                        {page > 1 ?
-                            <button onClick={() => {
-                                if (page > 1) {
-                                    setPage(page - 1)
-                                }
-                            }} type='button' className={`numbers__page-button ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
 
-                                <svg className={`numbers__arrow-icon`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-
-                            </button>
-                            :
-                            <button type='button' className={`numbers__page-button numbers__page-button_inactive ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-
-                                <svg className={`numbers__arrow-icon`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-
-                            </button>
-                        }
-                        {inputValue === '' && allNumbers && allNumbers.length > 0 && selectedCategoryID === 'all' && page < Math.ceil(allNumbers.length / itemsPerPage) ?
-                            <button onClick={() => {
-                                if (inputValue === '' && allNumbers && allNumbers.length > 0 && selectedCategoryID === 'all' && page < Math.ceil(allNumbers.length / itemsPerPage)) {
-                                    setPage(page + 1)
-                                }
-                            }} type='button' className={`numbers__page-button ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                            : inputValue === '' && selectedCategoryID === 'all' && <button type='button' className={`numbers__page-button numbers__page-button_inactive ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                        }
-                        {inputValue !== '' && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID === 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage) ?
-                            <button onClick={() => {
-                                if (inputValue !== '' && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID === 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage)) {
-                                    setPage(page + 1)
-                                }
-                            }} type='button' className={`numbers__page-button ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                            : inputValue !== '' && selectedCategoryID === 'all' && <button type='button' className={`numbers__page-button numbers__page-button_inactive ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                        }
-                        {inputValue !== '' && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID !== 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage) ?
-                            <button onClick={() => {
-                                if (inputValue !== '' && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID !== 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage)) {
-                                    setPage(page + 1)
-                                }
-                            }} type='button' className={`numbers__page-button ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                            : inputValue !== '' && selectedCategoryID !== 'all' && <button type='button' className={`numbers__page-button numbers__page-button_inactive ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                        }
-                        {inputValue === '' && filteredNumbers && selectedCategoryID !== 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage) ?
-                            <button onClick={() => {
-                                if (inputValue === '' && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID !== 'all' && page < Math.ceil(filteredNumbers.length / itemsPerPage)) {
-                                    setPage(page + 1)
-                                }
-                            }} type='button' className={`numbers__page-button ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                            : inputValue === '' && selectedCategoryID !== 'all' && <button type='button' className={`numbers__page-button numbers__page-button_inactive ${darkTheme ? 'numbers__page-button_dark' : ''}`}>
-                                <svg width="24" height="24" className={`numbers__arrow-icon numbers__arrow-icon_right`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M4.61852 12L11.5544 18.7297L10.2452 20L2 12L10.2452 4L11.5545 5.27033L4.61852 12Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M3.26773 12.8981H22V11.1016H3.26773V12.8981Z" fill={`${darkTheme ? '#FFF' : '#1F1F1F'}`} />
-                                </svg>
-                            </button>
-                        }
-
-                    </div>
 
                 </div>
                 <div className='numbers__contacts'>
@@ -722,12 +623,12 @@ export default function Numbers() {
 
                     {page === 1 && numbers && numbers.length > 0 ? numbers.map((item, i) => (
                         <p key={i} onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber.ctn ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
-                    )) : page === 1 && !preloaderVisible && < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
+                    )) : !preloaderVisible && page === 1 && < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
 
 
                     {inputValue === '' && page > 1 && allNumbers && allNumbers.length > 0 && selectedCategoryID === 'all' ? allNumbers.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, i) => (
                         <p key={i} onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber.ctn ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
-                    )) : !preloaderVisible && inputValue === ''  && page > 1 && selectedCategoryID === 'all' && < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
+                    )) : !preloaderVisible && inputValue === '' && page > 1 && selectedCategoryID === 'all' && < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
 
                     {inputValue !== '' && page > 1 && filteredNumbers && filteredNumbers.length > 0 && selectedCategoryID === 'all' ? filteredNumbers.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, i) => (
                         <p key={i} onClick={() => handleCtnClick(item)} className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''} ${item.ctn === selectedNumber.ctn ? 'numbers__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
@@ -741,8 +642,9 @@ export default function Numbers() {
                     )) : !preloaderVisible && inputValue === '' && page > 1 && selectedCategoryID !== 'all' && < p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>Ничего не найдено</p>}
 
                 </div>
-                <button type="submit" className={`numbers__submit-button ${selectedNumber.ctn ? "numbers__submit-button_active" : "numbers__submit-button_disabled"}`} disabled={selectedNumber.ctn ? false : true}>Заказать номер</button>
+                <button type="submit" className={`numbers__submit-button numbers__submit-button_active`} >Посмотреть все</button>
             </form>
         </>
     )
 }
+export default withRouter(NumbersForMain)

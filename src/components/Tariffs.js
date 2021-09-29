@@ -153,14 +153,14 @@ const Ctrl = styled.span`
     position: absolute;
     z-index: 4;
     top: calc(50% - 22px);
-    margin-left: calc(100% + 6px);
-    @media(max-width: 720px) {
-        margin-left: calc(100% - calc(44px - 5vw));
+    margin-left: calc(100% -10px);
+    @media(max-width: 871px) {
+        display: none;
     }
     left: 0;
     color: #0E5EF8;
-    background-color: #fff;
-    box-shadow: 0px 0px 14px 0px #0101011F;
+    
+    
     border-radius: 100%;
     width: 44px;
     height: 44px;
@@ -252,7 +252,7 @@ export default function Tariffs({children}) {
             <WrapScroller>
                 {  window.innerWidth >= 721 && showScroll &&
                     <>
-                        <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-50px", marginRight: "6px"}} >
+                        <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-45px", marginRight: "6px"}} >
                             <IoIosArrowBack strokeLinecap="square" size={26} />
                         </Ctrl>
                         <WrapCtrl>

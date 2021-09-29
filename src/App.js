@@ -36,8 +36,11 @@ const Wrapper = styled.div`
   min-height:100vh;
   height: fit-content;
   background: ${props => props.theme.background};
-  padding: 48px 80px;
+  padding: 48px 80px 0 80px;
   overflow: hidden;
+  @media(max-width: 1500px) {
+    padding: 48px 40px 0 40px;
+  }
   @media(max-width: 720px) {
     padding: 5vw;
   }

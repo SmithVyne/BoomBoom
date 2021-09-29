@@ -13,7 +13,7 @@ export default function header(props) {
         </li>
         <li>{props.tariff.name ? props.tariff.name : 'Неизвестный тариф'}</li>
       </ul>
-      <div className={`logo d-flex ${props.darkTheme? 'logo_dark':''}`}>
+      <div className={`box-logo d-flex ${props.darkTheme? 'logo_dark':''}`}>
         <img src={props.tariff.img ? props.tariff.img : LogoImg} alt='Иконка тарифа' />
         <h1>{props.tariff.name ? props.tariff.name : 'Похоже такого тарифа нет'}</h1>
       </div>

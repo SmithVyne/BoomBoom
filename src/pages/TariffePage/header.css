@@ -274,7 +274,7 @@ p:last-child {
   margin-bottom: 25px;
 }
 
-.logo img {
+.box-logo img {
   margin-right: 27px;
   width: 80px;
 }
@@ -655,7 +655,7 @@ p:last-child {
     font-size: 40px;
     line-height: 58px;
   }
-  .logo img {
+  .box-logo img {
     max-width: 41px;
     margin-right: 12px;
   }

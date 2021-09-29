@@ -147,7 +147,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     max-width: 1330px;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
 }
 
 .numbers__category {
@@ -176,109 +175,24 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     /* or 31px */
     display: flex;
     align-items: center;
-    flex-direction: column;
     /* text/day/main */
-    padding: 0;
-    border-radius: 28px;
+    border-radius: 24px;
     color: rgba(1, 1, 1, 0.4);
-    margin: 0 0 0 33px;
+    margin: 0 0 0 44px;
+    padding: 4px 12px;
     transition: color ease-in-out 0.3s, border-color ease-in-out 0.3s;
 }
 
-.numbers__category-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 0 0 33px;
-}
-
-.numbers__category_bronze_active {
-    background: #CD7F32;
-    border-radius: 28px;
-}
-
-.numbers__category_selver_active {
-    background: #C0C0C0;
-    border-radius: 28px;
-}
-
-.numbers__category_gold_active {
-    background: #FFD700;
-    border-radius: 28px;
-}
-
-.numbers__category_platina_active {
-    background: #E5E4E2;
-    border-radius: 28px;
-}
-
-.numbers__category_briliant_active {
-    background: #D6F7FF;
-    border-radius: 28px;
-}
-
-.numbers__category_with-name {
-    margin: 0 !important;
-}
-
 .numbers__category-name {
-    font-family: Montserrat, Arial, sans-serif;
-    width: fit-content;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 130%;
     margin: 0;
-    text-align: center;
     color: rgba(1, 1, 1, 0.4);
+    transition: color ease-in-out 0.3s;
 }
-
-.numbers__category-lastprice {
-    font-family: Inter, Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 100%;
-    /* identical to box height, or 16px */
-    text-align: center;
-    text-decoration: line-through;
-    /* main/red */
-    color: #FF0202;
-    margin: 0;
-}
-
-.numbers__category-price {
-    font-family: Inter, Arial, sans-serif;
-    position: absolute;
-    top: 55px;
-    width: 250px;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 100%;
-    /* identical to box height, or 20px */
-    text-align: center;
-    color: #000000;
-    margin: 0;
-}
-
-.numbers__category-price_dark {
-    color: #FFFFFF;
-}
-
-.numbers__category-name_active {
-    padding: 10px;
-    color: #010101 !important;
-    font-style: normal;
-    font-weight: bold;
-}
-
-.numbers__category-name_active:hover {
-    color: #010101;
-}
-
-.numbers__category-name:hover {
+.numbers__category-name:hover{
     color: #010101;
 }
 
@@ -295,7 +209,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .numbers__category_active {
-    padding: 10px;
     background: #4B75FC;
     color: #F8F8F8;
 }
@@ -314,26 +227,18 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .numbers__category:first-of-type {
-    margin: 8px 0 8px 48px;
+    margin: 0 0 0 48px;
 }
 
 .numbers__category:focus {
     outline: none;
 }
 
-.numbers__category-name_dark {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.numbers__category-name_dark:hover {
-    color: rgba(255, 255, 255, 0.4);
-}
-
 .numbers__contacts {
     position: relative;
     margin: 32px auto 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(284px, 1fr));
     grid-template-rows: 61px;
     grid-auto-rows: 61px;
     row-gap: 24px;
@@ -360,11 +265,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     ;
     font-style: normal;
     font-weight: normal;
-    font-size: 32px;
-    line-height: 140%;
+    font-size: 28px;
+    line-height: 130%;
     /* or 36px */
     /* text/day/secondary */
-    color: #000000;
+    color: rgba(1, 1, 1, 0.68);
     margin: 0;
     padding: 5px 9px;
     border-radius: 12px;
@@ -494,28 +399,13 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     }
 }
 
-@media (max-width: 1643px) {
+@media (max-width: 1600px) {
     .numbers__category:first-of-type {
         margin: 0 0 0 24px;
     }
     .numbers__category {
         margin: 0 0 0 27px;
         font-size: 16px;
-    }
-    .numbers__category-name {
-        font-size: 16px;
-    }
-    .numbers__category-lastprice {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 12px;
-        line-height: 100%;
-    }
-    .numbers__category-price {
-        font-style: normal;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 100%;
     }
 }
 
@@ -541,17 +431,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
         row-gap: 24px;
     }
-    .numbers__category-price {
-        top: 45px;
-        font-size: 16px;
-    }
-    .numbers__category-lastprice{
-        font-size: 12px;
-    }
     .numbers__category {
-        font-size: 12px;
-    }
-    .numbers__category-name {
         font-size: 12px;
     }
 }
@@ -561,29 +441,20 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         display: none;
     }
     .numbers__input-container {
-        width: 167px;
+        width: 100%;
     }
-    .numbers__input {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 100%;
+    .numbers__categories {
+        margin-top: 15px;
+        display: flex;
+        align-items: flex-start;
+        max-width: 1130px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-    .numbers__input::placeholder {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        line-height: 100%;
-    }
-    .numbers__category {
-        margin: 0 0 0 17px;
-    }
-    .numbers__category-container {
-        margin: 0 0 0 23px;
+    .numbers__category:first-of-type {
+        margin: 0 0 0 0;
     }
 }
-
-@media (max-width: 1090px) {}
 
 @media (max-width: 800px) {
     .numbers__contacts {

@@ -39,15 +39,27 @@ const Wrappper = styled.nav`
         justify-content: space-between;
     }
     &  .logo {
+        
         display: flex;
         align-items: center;
         margin: 0;
-        margin-right: 77px;
+        margin-right: 106px;
+        @media(max-width: 1500px) {
+            margin-right: 61px;
+        }
         @media(max-width: 1100px) {
             margin-right: auto;
         }
         @media(max-width: 500px) {
             display: none;
+        }
+        &  img {
+            height: 84px;
+            width: 187px;
+            @media (max-width: 1400px) {
+                height: 60px;
+                width: 134px;
+            }
         }
     }
     & span#helpCenter {
@@ -86,6 +98,13 @@ const DashboardBtn = styled(Link)`
     @media(max-width: 500px) {
         margin-right: 0px;
     }
+    @media(max-width: 326px) {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 100%;
+            margin-left: 16px;
+    }
     &:hover {
         color: #fff;
         transform: scale(1.03);
@@ -93,6 +112,7 @@ const DashboardBtn = styled(Link)`
     }
 `;
 const MenuBtn = styled.img`
+
     cursor: pointer;
     display: none;
     @media (max-width: 1100px) {
