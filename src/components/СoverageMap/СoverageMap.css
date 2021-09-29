@@ -2,11 +2,13 @@
     border-radius: 48px;
     overflow: hidden;
     position: relative;
+    margin-top: 60px;
 }
 
 .coverage-map__map {
     width: 100%;
     height: 860px;
+    
 }
 
 .coverage-map__controllers {

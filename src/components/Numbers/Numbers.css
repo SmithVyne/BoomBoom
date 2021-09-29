@@ -21,7 +21,7 @@
     display: block;
 }
 
-.numbers__titile {
+.numbers__title {
     font-family: Montserrat, Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -35,17 +35,17 @@
     transition: color 0.3s ease-in-out;
 }
 
-.numbers__titile_dark {
+.numbers__title_dark {
     color: #FFFFFF;
 }
 
-.numbers__titile_link {
+.numbers__title_link {
     color: #0E5EF8;
     transition: opacity 0.3s ease-in-out;
     border-bottom: 2px dashed #0E5EF8;
 }
 
-.numbers__titile_link:hover {
+.numbers__title_link:hover {
     cursor: pointer;
     opacity: 0.8;
 }
@@ -481,6 +481,58 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     transform: rotate(180deg);
 }
 
+.numbers__headtitle {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.numbers__headtitle-icon {
+    height: 149.7200164794922px;
+    width: 149.72003173828125px;
+}
+
+.numbers__headtitle-text {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 60px;
+    line-height: 100%;
+    margin: 0;
+    color: #121212;
+}
+
+.numbers__head-buttons {
+    display: flex;
+    margin-top: 34px;
+}
+
+.numbers__head-button {
+    padding: 12px 16px;
+    border: 1px solid #4B6CFD;
+    border-radius: 31px;
+    margin: 0 16px 0 0;
+}
+.numbers__head-button:last-of-type{
+    margin: 0;
+}
+.numbers__head-button_active {
+    background: #4B6CFD;
+}
+
+.numbers__head-button-text {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 130%;
+    /* identical to box height, or 26px */
+    display: flex;
+    align-items: center;
+    color: #121212;
+}
+.numbers__head-button-text_active {
+    color: #FFFFFF;
+}
+
 @media (max-width: 1900px) {
     .numbers__contacts {
         column-gap: 65px;
@@ -526,7 +578,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     .numbers__input::placeholder {
         font-size: 20px;
     }
-    .numbers__titile {
+    .numbers__title {
         font-size: 32px;
         line-height: 39px;
     }
@@ -545,7 +597,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         top: 45px;
         font-size: 16px;
     }
-    .numbers__category-lastprice{
+    .numbers__category-lastprice {
         font-size: 12px;
     }
     .numbers__category {
@@ -557,9 +609,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 1170px) {
-    .numbers__page-buttons {
-        display: none;
-    }
     .numbers__input-container {
         width: 167px;
     }
@@ -583,7 +632,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     }
 }
 
-@media (max-width: 1090px) {}
+@media (max-width: 1029px) {
+    .numbers__page-buttons {
+        display: none;
+    }
+}
 
 @media (max-width: 800px) {
     .numbers__contacts {
@@ -600,7 +653,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 530px) {
-    .numbers__titile {
+    .numbers__title {
         font-size: 16px;
         line-height: 20px;
         max-width: calc(100% - 8px * 2);

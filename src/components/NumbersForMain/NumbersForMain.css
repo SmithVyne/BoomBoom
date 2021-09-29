@@ -1,4 +1,4 @@
-.numbers {
+.numbers-for-main {
     background: #FFFFFF;
     border-radius: 36px;
     width: 100%;
@@ -7,21 +7,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 110px;
+    margin-top: 60px;
     transition: background ease-in-out 0.3s;
     min-height: 300px;
 }
 
-.numbers_dark {
+.numbers-for-main_dark {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #010101;
 }
 
-.numbers__loader {
+.numbers-for-main__loader {
     position: relative;
     display: block;
 }
 
-.numbers__titile {
+.numbers-for-main__title {
     font-family: Montserrat, Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
@@ -35,22 +35,22 @@
     transition: color 0.3s ease-in-out;
 }
 
-.numbers__titile_dark {
+.numbers-for-main__title_dark {
     color: #FFFFFF;
 }
 
-.numbers__titile_link {
+.numbers-for-main__title_link {
     color: #0E5EF8;
     transition: opacity 0.3s ease-in-out;
     border-bottom: 2px dashed #0E5EF8;
 }
 
-.numbers__titile_link:hover {
+.numbers-for-main__title_link:hover {
     cursor: pointer;
     opacity: 0.8;
 }
 
-.numbers__controllers {
+.numbers-for-main__controllers {
     max-width: calc(100% - 44px * 2);
     width: 100%;
     margin: 34px auto 0;
@@ -59,7 +59,7 @@
     flex-wrap: wrap;
 }
 
-.numbers__input-container {
+.numbers-for-main__input-container {
     background: #F5F5F5;
     border-radius: 31px;
     width: 218px;
@@ -79,7 +79,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.numbers__input {
+.numbers-for-main__input {
     padding: 0 0 0 44px;
     caret-color: #0E5EF8;
     -webkit-appearance: none;
@@ -111,16 +111,16 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.numbers__input:focus {
+.numbers-for-main__input:focus {
     outline: none;
 }
 
-.numbers__input-container_focused {
+.numbers-for-main__input-container_focused {
     border: 1px solid #4B75FC;
     background: #FFFFFF;
 }
 
-.numbers__input::placeholder {
+.numbers-for-main__input::placeholder {
     outline: none;
     font-family: Circe, Arial, sans-serif;
     font-style: normal;
@@ -134,14 +134,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.numbers__input-search-icon {
+.numbers-for-main__input-search-icon {
     width: 20px;
     height: 20px;
     position: absolute;
     left: 12px;
 }
 
-.numbers__categories {
+.numbers-for-main__categories {
     display: flex;
     align-items: flex-start;
     max-width: 1330px;
@@ -150,7 +150,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-.numbers__category {
+.numbers-for-main__category {
     -webkit-touch-callout: none;
     /* iOS Safari */
     -webkit-user-select: none;
@@ -185,7 +185,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     transition: color ease-in-out 0.3s, border-color ease-in-out 0.3s;
 }
 
-.numbers__category-container {
+.numbers-for-main__category-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -193,36 +193,36 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0 0 0 33px;
 }
 
-.numbers__category_bronze_active {
+.numbers-for-main__category_bronze_active {
     background: #CD7F32;
     border-radius: 28px;
 }
 
-.numbers__category_selver_active {
+.numbers-for-main__category_selver_active {
     background: #C0C0C0;
     border-radius: 28px;
 }
 
-.numbers__category_gold_active {
+.numbers-for-main__category_gold_active {
     background: #FFD700;
     border-radius: 28px;
 }
 
-.numbers__category_platina_active {
+.numbers-for-main__category_platina_active {
     background: #E5E4E2;
     border-radius: 28px;
 }
 
-.numbers__category_briliant_active {
+.numbers-for-main__category_briliant_active {
     background: #D6F7FF;
     border-radius: 28px;
 }
 
-.numbers__category_with-name {
+.numbers-for-main__category_with-name {
     margin: 0 !important;
 }
 
-.numbers__category-name {
+.numbers-for-main__category-name {
     font-family: Montserrat, Arial, sans-serif;
     width: fit-content;
     font-style: normal;
@@ -234,7 +234,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     color: rgba(1, 1, 1, 0.4);
 }
 
-.numbers__category-lastprice {
+.numbers-for-main__category-lastprice {
     font-family: Inter, Arial, sans-serif;
     font-style: normal;
     font-weight: normal;
@@ -248,7 +248,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.numbers__category-price {
+.numbers-for-main__category-price {
     font-family: Inter, Arial, sans-serif;
     position: absolute;
     top: 55px;
@@ -263,73 +263,73 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.numbers__category-price_dark {
+.numbers-for-main__category-price_dark {
     color: #FFFFFF;
 }
 
-.numbers__category-name_active {
+.numbers-for-main__category-name_active {
     padding: 10px;
     color: #010101 !important;
     font-style: normal;
     font-weight: bold;
 }
 
-.numbers__category-name_active:hover {
+.numbers-for-main__category-name_active:hover {
     color: #010101;
 }
 
-.numbers__category-name:hover {
+.numbers-for-main__category-name:hover {
     color: #010101;
 }
 
-.numbers__category_dark {
+.numbers-for-main__category_dark {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.numbers__category:hover {
+.numbers-for-main__category:hover {
     color: #010101;
 }
 
-.numbers__category_dark:hover {
+.numbers-for-main__category_dark:hover {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.numbers__category_active {
+.numbers-for-main__category_active {
     padding: 10px;
     background: #4B75FC;
     color: #F8F8F8;
 }
 
-.numbers__category_dark_active {
+.numbers-for-main__category_dark_active {
     color: #FFFFFF;
     border-bottom: #0E5EF8 solid 2px;
 }
 
-.numbers__category_dark_active:hover {
+.numbers-for-main__category_dark_active:hover {
     color: #FFFFFF;
 }
 
-.numbers__category_active:hover {
+.numbers-for-main__category_active:hover {
     color: #FFFFFF;
 }
 
-.numbers__category:first-of-type {
+.numbers-for-main__category:first-of-type {
     margin: 8px 0 8px 48px;
 }
 
-.numbers__category:focus {
+.numbers-for-main__category:focus {
     outline: none;
 }
 
-.numbers__category-name_dark {
+.numbers-for-main__category-name_dark {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.numbers__category-name_dark:hover {
+.numbers-for-main__category-name_dark:hover {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.numbers__contacts {
+.numbers-for-main__contacts {
     position: relative;
     margin: 32px auto 0;
     display: grid;
@@ -344,7 +344,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     justify-items: center;
 }
 
-.numbers__contact {
+.numbers-for-main__contact {
     -webkit-touch-callout: none;
     /* iOS Safari */
     -webkit-user-select: none;
@@ -360,8 +360,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     ;
     font-style: normal;
     font-weight: normal;
-    font-size: 28px;
-    line-height: 130%;
+    font-size: 32px;
+    line-height: 140%;
     /* or 36px */
     /* text/day/secondary */
     color: #000000;
@@ -373,28 +373,28 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
-.numbers__contact_bold {
+.numbers-for-main__contact_bold {
     font-style: normal;
     font-weight: 600;
     font-size: 32px;
     color: #000;
 }
 
-.numbers__contact_bold_dark {
+.numbers-for-main__contact_bold_dark {
     color: #FFFFFF;
 }
 
-.numbers__contact_selected {
+.numbers-for-main__contact_selected {
     padding: 5px 9px;
     border-radius: 12px;
     border: solid 3px #0E5EF8;
 }
 
-.numbers__contact_dark {
+.numbers-for-main__contact_dark {
     color: rgba(255, 255, 255, 0.68);
 }
 
-.numbers__submit-button {
+.numbers-for-main__submit-button {
     max-width: calc(100% - 44px * 2);
     width: 100%;
     height: 60px;
@@ -417,29 +417,29 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     margin: 62px 0 0;
 }
 
-.numbers__submit-button:focus {
+.numbers-for-main__submit-button:focus {
     outline: none;
 }
 
-.numbers__submit-button:hover {
+.numbers-for-main__submit-button:hover {
     opacity: 0.8;
 }
 
-.numbers__submit-button_disabled {
+.numbers-for-main__submit-button_disabled {
     cursor: not-allowed;
     opacity: 0.3;
 }
 
-.numbers__submit-button_disabled:hover {
+.numbers-for-main__submit-button_disabled:hover {
     opacity: 0.3;
 }
 
-.numbers__page-buttons {
+.numbers-for-main__page-buttons {
     margin: 0 0 0 auto;
     display: flex;
 }
 
-.numbers__page-button {
+.numbers-for-main__page-button {
     cursor: pointer;
     border: none;
     border: 1px solid #EEEEEE;
@@ -456,62 +456,174 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     transition: border-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.numbers__page-button_inactive {
+.numbers-for-main__page-button_inactive {
     opacity: 0.1;
 }
 
-.numbers__page-button_inactive:hover {
+.numbers-for-main__page-button_inactive:hover {
     border-color: inherit;
 }
 
-.numbers__page-button:first-of-type {
+.numbers-for-main__page-button:first-of-type {
     margin: 0 0 0 0;
 }
 
-.numbers__page-button:hover {
+.numbers-for-main__page-button:hover {
     border-color: #0e60f8a1;
 }
 
-.numbers__arrow-icon {
+.numbers-for-main__arrow-icon {
     width: 24px;
     height: 24px;
 }
 
-.numbers__arrow-icon_right {
+.numbers-for-main__arrow-icon_right {
     transform: rotate(180deg);
 }
 
+.numbers-for-main__card {
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    padding: 27px 24px 25px 29px;
+}
+
+.numbers-for-main__card-row {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 6px;
+}
+
+.numbers-for-main__card-row:first-of-type {
+    margin: 0;
+}
+
+.numbers-for-main__card-name {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 100%;
+    color: #000000;
+    width: fit-content;
+    padding: 17px;
+    margin: 0;
+    border-radius: 66.7105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.numbers-for-main__card-name_type_bronz {
+    background: #CD7F32;
+}
+
+.numbers-for-main__card-name_type_silver {
+    background: #C0C0C0;
+}
+
+.numbers-for-main__card-name_type_gold {
+    background: #FFD700;
+}
+
+.numbers-for-main__card-name_type_platina {
+    background: #E5E4E2;
+}
+
+.numbers-for-main__card-name_type_briliant {
+    background: #D6F7FF;
+}
+
+.numbers-for-main__card-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.numbers-for-main__card-price_last {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20.5263px;
+    line-height: 100%;
+    /* identical to box height, or 21px */
+    text-align: right;
+    text-decoration-line: line-through;
+    /* main/red */
+    color: #FF0202;
+    margin: 0;
+}
+
+.numbers-for-main__card-price_now {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 100%;
+    /* identical to box height, or 28px */
+    text-align: right;
+    color: #000000;
+    margin: 0;
+}
+
+.numbers-for-main__card-number {
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 140%;
+    color: #000000;
+    margin: 0;
+}
+
+.numbers-for-main__card-cart {
+    background: rgba(75, 117, 252, 0.12);
+    border-radius: 41.0526px;
+    width: 136.84px;
+    height: 58.16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.numbers-for-main__card-cart_disabled {
+    opacity: 0.3;
+}
+
 @media (max-width: 1900px) {
-    .numbers__contacts {
+    .numbers-for-main__contacts {
         column-gap: 65px;
     }
-    .numbers {
+    .numbers-for-main {
         background: #FFFFFF;
         border-radius: 36px;
     }
-    .numbers_dark {
+    .numbers-for-main_dark {
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #010101;
     }
 }
 
 @media (max-width: 1643px) {
-    .numbers__category:first-of-type {
+    .numbers-for-main__category:first-of-type {
         margin: 0 0 0 24px;
     }
-    .numbers__category {
+    .numbers-for-main__category {
         margin: 0 0 0 27px;
         font-size: 16px;
     }
-    .numbers__category-name {
+    .numbers-for-main__category-name {
         font-size: 16px;
     }
-    .numbers__category-lastprice {
+    .numbers-for-main__category-lastprice {
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
         line-height: 100%;
     }
-    .numbers__category-price {
+    .numbers-for-main__category-price {
         font-style: normal;
         font-weight: bold;
         font-size: 16px;
@@ -520,132 +632,139 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 1349px) {
-    .numbers__input {
+    .numbers-for-main__input {
         font-size: 20px;
     }
-    .numbers__input::placeholder {
+    .numbers-for-main__input::placeholder {
         font-size: 20px;
     }
-    .numbers__titile {
+    .numbers-for-main__title {
         font-size: 32px;
         line-height: 39px;
     }
-    .numbers__contact {
+    .numbers-for-main__contact {
         font-size: 20px;
     }
-    .numbers__contact_bold {
+    .numbers-for-main__contact_bold {
         font-size: 28px;
     }
-    .numbers__contacts {
+    .numbers-for-main__contacts {
         column-gap: 32px;
         grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
         row-gap: 24px;
     }
-    .numbers__category-price {
+    .numbers-for-main__category-price {
         top: 45px;
         font-size: 16px;
     }
-    .numbers__category-lastprice{
+    .numbers-for-main__category-lastprice {
         font-size: 12px;
     }
-    .numbers__category {
+    .numbers-for-main__category {
         font-size: 12px;
     }
-    .numbers__category-name {
+    .numbers-for-main__category-name {
         font-size: 12px;
     }
 }
 
 @media (max-width: 1170px) {
-    .numbers__page-buttons {
+    .numbers-for-main__page-buttons {
         display: none;
     }
-    .numbers__input-container {
+    .numbers-for-main__input-container {
         width: 167px;
     }
-    .numbers__input {
+    .numbers-for-main__input {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
         line-height: 100%;
     }
-    .numbers__input::placeholder {
+    .numbers-for-main__input::placeholder {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
         line-height: 100%;
     }
-    .numbers__category {
+    .numbers-for-main__category {
         margin: 0 0 0 17px;
     }
-    .numbers__category-container {
+    .numbers-for-main__category-container {
         margin: 0 0 0 23px;
     }
 }
 
 @media (max-width: 1090px) {}
 
-@media (max-width: 800px) {
-    .numbers__contacts {
-        column-gap: 56px;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        row-gap: 24px;
+@media screen and (max-width: 931px) {
+    .numbers-for-main__title {
+        margin: 40px 0 0;
     }
-    .numbers__contact {
-        font-size: 16px;
-    }
-    .numbers__contact_bold {
-        font-size: 20px;
+    .numbers-for-main__submit-button {
+        max-width: 100%;
+        height: 100px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 41.0526px;
+        line-height: 100%;
     }
 }
 
-@media (max-width: 530px) {
-    .numbers__titile {
-        font-size: 16px;
-        line-height: 20px;
-        max-width: calc(100% - 8px * 2);
-        margin: 32px 0 0 8px;
-    }
-    .numbers__contacts {
-        column-gap: 56px;
-        grid-template-columns: 1fr;
-        row-gap: 24px;
-        max-width: unset;
-        grid-template-rows: 50px;
-        grid-auto-rows: 50px;
-        margin: 20px auto 0;
-        justify-items: start;
-        max-width: calc(100% - 20px * 2);
-    }
-    .numbers__contact {
-        font-size: 20px;
-    }
-    .numbers__contact_bold {
+@media screen and (max-width: 571px) {
+    .numbers-for-main__title {
+        font-style: normal;
+        font-weight: 600;
         font-size: 24px;
+        line-height: 29px;
     }
-    .numbers__categories {
-        flex-direction: column;
-        justify-content: start;
-        align-self: unset;
+    .numbers-for-main__card-name {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 100%;
+        padding: 10px;
+        height: 36px;
     }
-    .numbers__category {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 130%;
-        margin: 19px 0 0 0;
+    .numbers-for-main__card-price_last {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 100%;
     }
-    .numbers__category:first-of-type {
-        margin: 14px 0 0 0;
+    .numbers-for-main__card-price_now {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 100%;
     }
-    .numbers__controllers {
-        max-width: calc(100% - 8px * 2);
-        margin: 20PX auto 0;
+    .numbers-for-main__card-number {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 140%;
+    }
+    .numbers-for-main__card-cart {
+        width: 80px;
+        height: 34px;
+        border-radius: 24px;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
-    .numbers__submit-button {
-        max-width: calc(100% - 8px * 2);
+    .numbers-for-main__card-cart-img{
+        width: 24px;
+        height: 24px;
+    }
+    .numbers-for-main__card {
+
+        padding: 16px 14px 16px 9px;
+    }
+    .numbers-for-main__submit-button {
+        height: 60px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 100%;
     }
 }
