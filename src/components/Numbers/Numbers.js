@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
 import './Numbers.css';
 import searchIcon from '../../assets/images/search.svg'
-import { GetNumbers } from '../../globals/utils'
+import { BUY_NUMBER, GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
+import { useDispatch } from 'react-redux';
 
 export default function Numbers() {
     const [allNumbers, setAllNumbers] = React.useState(null);
@@ -405,8 +406,10 @@ export default function Numbers() {
         }
 
     }
+    const dispatch = useDispatch();
     function handleSubmit(e) {
         e.preventDefault();
+        dispatch({type: BUY_NUMBER, number: selectedNumber})
         console.log(selectedNumber)
     }
     function handleFocus(e){
