@@ -19,11 +19,11 @@ function NumbersForMain(props) {
     const [selectedCategory, setSelectedCategory] = React.useState('Все');
     const [selectedCategoryID, setSelectedCategoryID] = React.useState('all');
     const [isInputFocused, setInputFocused] = React.useState(false);
-    const [filteredNumbers, setFilteredNumbers] = React.useState(null);
+    const [, setFilteredNumbers] = React.useState(null);
 
 
     const [page, setPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(0);
+    const [, setItemsPerPage] = React.useState(0);
 
     const [numbersByCategories, setNumbersByCategories] = React.useState({
         category_bronz: [],
