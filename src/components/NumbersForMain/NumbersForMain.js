@@ -4,8 +4,9 @@ import { GlobalContext } from '../../App';
 import './NumbersForMain.css';
 import searchIcon from '../../assets/images/search.svg'
 import numbers_cart from '../../assets/images/numbers-cart.svg'
-import { GetNumbers } from '../../globals/utils'
+import { BUY_NUMBER, GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
+import { useDispatch } from 'react-redux';
 
 function NumbersForMain(props) {
     const [allNumbers, setAllNumbers] = React.useState(null);
@@ -61,8 +62,6 @@ function NumbersForMain(props) {
 
 
                 })
-                console.log(numbers.length)
-
                 for (let i = 0; i < numbers.length - 1; i++) {
 
                     if (numbers[i].category === 1 && numbers.filter((item) => {
@@ -929,7 +928,7 @@ function NumbersForMain(props) {
 
     }
 
-
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -1038,7 +1037,7 @@ function NumbersForMain(props) {
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? `${numbersByCategories.category_bronz[0].ctn.substring(0, 3)} ${numbersByCategories.category_bronz[0].ctn.substring(3, 6)} ${numbersByCategories.category_bronz[0].ctn.substring(6, 8)} ${numbersByCategories.category_bronz[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
                             <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
-                                <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
+                                <img onClick={()=>dispatch({type: BUY_NUMBER, number: numbersByCategories.category_bronz[0]})} className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>
@@ -1053,7 +1052,7 @@ function NumbersForMain(props) {
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_silver.length > 0) ? `${numbersByCategories.category_silver[0].ctn.substring(0, 3)} ${numbersByCategories.category_silver[0].ctn.substring(3, 6)} ${numbersByCategories.category_silver[0].ctn.substring(6, 8)} ${numbersByCategories.category_silver[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
                             <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_silver.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
-                                <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
+                                <img onClick={()=>dispatch({type: BUY_NUMBER, number: numbersByCategories.category_silver[0]})} className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>
@@ -1068,7 +1067,7 @@ function NumbersForMain(props) {
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_gold.length > 0) ? `${numbersByCategories.category_gold[0].ctn.substring(0, 3)} ${numbersByCategories.category_gold[0].ctn.substring(3, 6)} ${numbersByCategories.category_gold[0].ctn.substring(6, 8)} ${numbersByCategories.category_gold[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
                             <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_gold.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
-                                <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
+                                <img onClick={()=>dispatch({type: BUY_NUMBER, number: numbersByCategories.category_gold[0]})} className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>
@@ -1083,7 +1082,7 @@ function NumbersForMain(props) {
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_plat.length > 0) ? `${numbersByCategories.category_plat[0].ctn.substring(0, 3)} ${numbersByCategories.category_plat[0].ctn.substring(3, 6)} ${numbersByCategories.category_plat[0].ctn.substring(6, 8)} ${numbersByCategories.category_plat[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
                             <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_plat.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
-                                <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
+                                <img onClick={()=>dispatch({type: BUY_NUMBER, number: numbersByCategories.category_plat[0]})} className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>
@@ -1098,7 +1097,7 @@ function NumbersForMain(props) {
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? `${numbersByCategories.category_briliant[0].ctn.substring(0, 3)} ${numbersByCategories.category_briliant[0].ctn.substring(3, 6)} ${numbersByCategories.category_briliant[0].ctn.substring(6, 8)} ${numbersByCategories.category_briliant[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
                             <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
-                                <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
+                                <img onClick={()=>(numbersByCategories && numbersByCategories.category_briliant.length > 0) && dispatch({type: BUY_NUMBER, number: numbersByCategories.category_briliant[0]})} className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>

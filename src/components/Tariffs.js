@@ -1,120 +1,8 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import duck from "../assets/images/duck.png";
-import light from "../assets/images/light.png";
-import star from "../assets/images/star.png";
-import jula from "../assets/images/jula.png";
-import goblet from "../assets/images/goblet.png";
-import TariffCard from "../globals/TariffCard";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
-
-const tariffBase = {
-    tariffName: 'Базовый',
-    position: [{
-        min: 500,
-        gb: 10,
-        sms: 100,
-    },{
-        min: 400,
-        gb: 20,
-        sms: 100,
-    },{
-        min: 300,
-        gb: 30,
-        sms: 100,
-    },{
-        min: 200,
-        gb: 40,
-        sms: 100,
-    }],
-    price: 350,
-}
-const tariffBright = {
-    tariffName: 'Яркий',
-    position: [{
-        min: 1000,
-        gb: 25,
-        sms: 500,
-    }, {
-        min: 900,
-        gb: 35,
-        sms: 500,
-    },{
-        min: 800,
-        gb: 45,
-        sms: 500,
-    }, {
-        min: 700,
-        gb: 55,
-        sms: 500,
-    }],
-    price: 500,
-}
-const tariffAdvanced = {
-    tariffName: 'Расширенный',
-    position: [{
-        min: 2000,
-        gb: 35,
-        sms: 1000,
-    },{
-        min: 1800,
-        gb: 45,
-        sms: 1000,
-    },{
-        min: 1600,
-        gb: 75,
-        sms: 1000,
-    },{
-        min: 1400,
-        gb: 95,
-        sms: 1000,
-    }],
-    price: 800,
-}
-const tariffBiz = {
-    tariffName: 'Бизнес',
-    position: [{
-        min: 4000,
-        gb: 50,
-        sms: 1000,
-    },{
-        min: 3800,
-        gb: 70,
-        sms: 1000,
-    },{
-        min: 3600,
-        gb: 90,
-        sms: 1000,
-    },{
-        min: 3400,
-        gb: 110,
-        sms: 1000,
-    }],
-    price: 1000,
-}
-const tariffVip = {
-    tariffName: 'VIP',
-    position: [{
-        min: 7000,
-        gb: 100,
-        sms: 1000,
-    },{
-        min: 6800,
-        gb: 120,
-        sms: 1000,
-    },{
-        min: 6600,
-        gb: 140,
-        sms: 1000,
-    },{
-        min: 6400,
-        gb: 160,
-        sms: 1000,
-    }],
-    price: 1500,
-}
 
 
 const WrapScroller  = styled.div`
@@ -155,13 +43,11 @@ const Ctrl = styled.span`
     z-index: 4;
     top: calc(50% - 22px);
     margin-left: calc(100% -10px);
-    @media(max-width: 871px) {
+    @media(max-width: 600px) {
         display: none;
     }
     left: 0;
-    color: #0E5EF8;
-    
-    
+    color: #0E5EF8;    
     border-radius: 100%;
     width: 44px;
     height: 44px;
@@ -187,9 +73,28 @@ const Tracker = styled.div`
         border-radius: inherit;
         margin-left: ${({percentage})=>percentage + "%"};
     }
-    @media(max-width: 721px){
+    @media(max-width: 600px){
         display: none;
     }
+`
+
+const MobileTracker = styled.div`
+    position: absolute;
+    top: calc(100% + 10px);
+    left: calc(50% - 46px);
+    height: 8px;
+    display: none;
+    @media(max-width: 600px) {
+        display: flex;
+        gap: 7px;
+    }
+`
+const Ellipses = styled.div`
+    height: 8px;
+    width: 8px;
+    background: ${({position, idx})=>position === idx ? "#0E5EF8" : "transparent"};
+    border: 1px solid #0E5EF8;
+    border-radius: 100%;
 `
 
 
@@ -199,9 +104,9 @@ export default function Tariffs({children}) {
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
-    const [tarrifPosition, setTarrifPosition] = useState(0);
     const [scrollWidth, setScrollWidth] = useState(2);
     const percentage = (scrollLeft/(scrollWidth-offsetWidth)) * 50;
+    const [position, setPosition] = useState(0);
 
     useLayoutEffect(() => {
         const {current} = ref;
@@ -213,45 +118,25 @@ export default function Tariffs({children}) {
         })
     }, [])
 
+    useEffect(() => {
+        setPosition(Math.floor(scrollLeft/offsetWidth))
+    }, [scrollLeft, offsetWidth])
+
     const handleScroll = (type) => {
         const {current} =  ref;
-        console.log(tarrifPosition)
         const {scrollLeft} = current;
-        let pixels 
-        if (tarrifPosition === 0){
-            pixels = 550
-        } else if (tarrifPosition === 1){
-            pixels = 650
-        }
-        else if (tarrifPosition === 2){
-            pixels = 700
-        }
-        else if (tarrifPosition === 3){
-            pixels = 700
-        }
-        else if (tarrifPosition === 4){
-            pixels = 680
-        }
-        else if (tarrifPosition === 5){
-            pixels = 700
-        }
+        let pixels = window.innerWidth < 720 ? 500 : 800;
         switch(type) {
             case "back":
                 current.scroll({left: scrollLeft - pixels,  behavior: 'smooth'});
-                if (tarrifPosition > 0){
-                    setTarrifPosition(tarrifPosition - 1)
-                }
                 break;
             default:
                 current.scroll({left: scrollLeft + pixels,  behavior: 'smooth'});
-                if (tarrifPosition < 5){
-                    setTarrifPosition(tarrifPosition + 1)
-                }
         }
     }
     return (
             <WrapScroller>
-                {  window.innerWidth >= 721 && showScroll &&
+                {  showScroll &&
                     <>
                         <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-45px", marginRight: "6px"}} >
                             <IoIosArrowBack strokeLinecap="square" size={26} />
@@ -263,18 +148,17 @@ export default function Tariffs({children}) {
                 }
                 <Scroller ref={ref} className="scroller">
                     <WrapTariffs>
-                        {children ? children : (
-                            <>
-                                <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
-                                <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
-                                <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
-                                <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                                <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-                            </>
-                        )}
+                        {children}
                     </WrapTariffs>
                 </Scroller>
-                { showScroll && <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker> }
+                { showScroll && 
+                    <>
+                    <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker>
+                    <MobileTracker>
+                        {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
+                    </MobileTracker>
+                    </>
+                }
             </WrapScroller>
     )
 }
