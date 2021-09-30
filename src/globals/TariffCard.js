@@ -18,10 +18,6 @@ const Wrapper = styled.div`
     background: ${({ background }) => background};
     background-size: ${({ title }) => title === "VIP" && "600%"};
     width: fit-content;
-    max-width: ${({ scrolling }) => scrolling ? '90vw' : '100%'};
-    height: 782px;
-    width: ${({ title }) => title === "Бизнес" ? "650px" : title === "Яркий" ? '600px' : title === "VIP" ? '650px' : title === "Расширенный" ? '650px' : '520px'};
-    
     color: #fff;
     border-radius: 28px;
     padding: 20px 28px;
@@ -30,9 +26,8 @@ const Wrapper = styled.div`
     font-size: initial;
     position: relative;
     overflow: hidden;
-    @media(max-width: 720px) {
-        width: 100%;
-        height: 705px;
+    @media(max-width: 600px) {
+        width: 90vw;
     }
 `;
 

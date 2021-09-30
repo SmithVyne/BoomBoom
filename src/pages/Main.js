@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-
 import styled from 'styled-components';
 import Slide from '../components/Slide';
 import girl_with_phone from "../assets/images/girl_with_phone_banner.png";
@@ -9,6 +8,13 @@ import Footer from '../globals/Footer/Footer';
 import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
 import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
+import TariffCard from '../globals/TariffCard';
+import duck from "../assets/images/duck.png";
+import light from "../assets/images/light.png";
+import star from "../assets/images/star.png";
+import jula from "../assets/images/jula.png";
+import goblet from "../assets/images/goblet.png";
+import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from '../globals/utils';
 
 
 const slides = [
@@ -102,7 +108,13 @@ export default function Main() {
                 <Controls move={move} />
             </Carousel>
             <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Платите только за необходимое</p>
-            <Tariffs />
+            <Tariffs>
+                <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
+                <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
+                <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
+                <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+            </Tariffs>
             <NumbersForMain />
             <СoverageMap />
             {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}

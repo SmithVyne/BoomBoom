@@ -51,3 +51,109 @@ export async function GetNumbers() {
     })
         .then(res => res.json())
 }
+
+export const tariffBase = {
+    tariffName: 'Базовый',
+    position: [{
+        min: 500,
+        gb: 10,
+        sms: 100,
+    },{
+        min: 400,
+        gb: 20,
+        sms: 100,
+    },{
+        min: 300,
+        gb: 30,
+        sms: 100,
+    },{
+        min: 200,
+        gb: 40,
+        sms: 100,
+    }],
+    price: 350,
+}
+export const tariffBright = {
+    tariffName: 'Яркий',
+    position: [{
+        min: 1000,
+        gb: 25,
+        sms: 500,
+    }, {
+        min: 900,
+        gb: 35,
+        sms: 500,
+    },{
+        min: 800,
+        gb: 45,
+        sms: 500,
+    }, {
+        min: 700,
+        gb: 55,
+        sms: 500,
+    }],
+    price: 500,
+}
+export const tariffAdvanced = {
+    tariffName: 'Расширенный',
+    position: [{
+        min: 2000,
+        gb: 35,
+        sms: 1000,
+    },{
+        min: 1800,
+        gb: 45,
+        sms: 1000,
+    },{
+        min: 1600,
+        gb: 75,
+        sms: 1000,
+    },{
+        min: 1400,
+        gb: 95,
+        sms: 1000,
+    }],
+    price: 800,
+}
+export const tariffBiz = {
+    tariffName: 'Бизнес',
+    position: [{
+        min: 4000,
+        gb: 50,
+        sms: 1000,
+    },{
+        min: 3800,
+        gb: 70,
+        sms: 1000,
+    },{
+        min: 3600,
+        gb: 90,
+        sms: 1000,
+    },{
+        min: 3400,
+        gb: 110,
+        sms: 1000,
+    }],
+    price: 1000,
+}
+export const tariffVip = {
+    tariffName: 'VIP',
+    position: [{
+        min: 7000,
+        gb: 100,
+        sms: 1000,
+    },{
+        min: 6800,
+        gb: 120,
+        sms: 1000,
+    },{
+        min: 6600,
+        gb: 140,
+        sms: 1000,
+    },{
+        min: 6400,
+        gb: 160,
+        sms: 1000,
+    }],
+    price: 1500,
+}

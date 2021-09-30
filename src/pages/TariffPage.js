@@ -1,9 +1,13 @@
 import Footer from "../globals/Footer/Footer";
 import styled from "styled-components";
 import TariffCard from "../globals/TariffCard";
+import Tariffs from "../components/Tariffs";
 import duck from "../assets/images/duck.png";
 import light from "../assets/images/light.png";
-import Tariffs from "../components/Tariffs";
+import star from "../assets/images/star.png";
+import jula from "../assets/images/jula.png";
+import goblet from "../assets/images/goblet.png";
+import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from "../globals/utils";
 
 const SiteHeader = styled.h1`
 color: ${props => props.theme.textColor};
@@ -43,49 +47,6 @@ const Div = styled.div`
         gap: 25px;
     }
 `
-const tariffBase = {
-    tariffName: 'Базовый',
-    position: [{
-        min: 500,
-        gb: 10,
-        sms: 100,
-    }, {
-        min: 400,
-        gb: 20,
-        sms: 100,
-    }, {
-        min: 300,
-        gb: 30,
-        sms: 100,
-    }, {
-        min: 200,
-        gb: 40,
-        sms: 100,
-    }],
-    price: 350,
-}
-const tariffBright = {
-    tariffName: 'Яркий',
-    position: [{
-        min: 1000,
-        gb: 25,
-        sms: 500,
-    }, {
-        min: 900,
-        gb: 35,
-        sms: 500,
-    }, {
-        min: 800,
-        gb: 45,
-        sms: 500,
-    }, {
-        min: 700,
-        gb: 55,
-        sms: 500,
-    }],
-    price: 500,
-}
-
 export default function TariffPage() {
     return (
         <>
@@ -93,7 +54,13 @@ export default function TariffPage() {
                 <SiteHeader>Тарифы boom telecom</SiteHeader>
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
-                    <Tariffs />
+                    <Tariffs>
+                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
+                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
+                        <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
+                        <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
+                        <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                    </Tariffs>
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
