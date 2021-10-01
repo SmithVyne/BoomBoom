@@ -29,6 +29,7 @@ export default function Footer() {
         };
     });
 
+
     const {  setLoginForm, userSession, setUserSession } = useContext(GlobalContext);
     const { pathname } = useLocation();
     const logged_in = pathname === "/dashboard" && userSession;

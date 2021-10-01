@@ -1,12 +1,11 @@
-import "./styles.css";
 import moment from 'moment';
-import { DatePicker, Input } from "antd";
+import { DatePicker, TimePicker, Input } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
 import { IoIosSearch } from 'react-icons/io';
-const { RangePicker } = DatePicker;
+const { RangePicker } = TimePicker;
 
 const Wrapper = styled.div`
     display: flex;
