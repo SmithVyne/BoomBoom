@@ -333,7 +333,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     position: relative;
     margin: 32px auto 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     grid-template-rows: 61px;
     grid-auto-rows: 61px;
     row-gap: 24px;
@@ -593,6 +593,40 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     opacity: 0.3;
 }
 
+.numbers-for-main__cart {
+    height: 24px;
+    width: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.numbers-for-main__cart_hover {
+    opacity: 1;
+}
+
+.numbers-for-main__cart-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 34px;
+    background: rgba(75, 117, 252, 0.12);
+    border-radius: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.numbers-for-main__cart-bg_hover {
+    opacity: 1;
+}
+
+.numbers-for-main__number-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
 @media (max-width: 1900px) {
     .numbers-for-main__contacts {
         column-gap: 65px;
@@ -650,7 +684,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     }
     .numbers-for-main__contacts {
         column-gap: 32px;
-        grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
         row-gap: 24px;
     }
     .numbers-for-main__category-price {
@@ -703,10 +737,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     }
     .numbers-for-main__submit-button {
         max-width: 100%;
-        height: 100px;
+        padding: 26px 53px;
+        height: unset;
         font-style: normal;
         font-weight: normal;
-        font-size: 41.0526px;
+        font-size: 24px;
         line-height: 100%;
     }
 }
@@ -752,19 +787,18 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
         align-items: center;
         justify-content: center;
     }
-    .numbers-for-main__card-cart-img{
+    .numbers-for-main__card-cart-img {
         width: 24px;
         height: 24px;
     }
     .numbers-for-main__card {
-
         padding: 16px 14px 16px 9px;
     }
     .numbers-for-main__submit-button {
-        height: 60px;
+        padding: 14px;
         font-style: normal;
         font-weight: normal;
-        font-size: 24px;
+        font-size: 16px;
         line-height: 100%;
     }
 }

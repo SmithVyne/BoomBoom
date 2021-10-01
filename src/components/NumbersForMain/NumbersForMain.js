@@ -19,11 +19,10 @@ function NumbersForMain(props) {
     const [selectedCategory, setSelectedCategory] = React.useState('Все');
     const [selectedCategoryID, setSelectedCategoryID] = React.useState('all');
     const [isInputFocused, setInputFocused] = React.useState(false);
-    const [filteredNumbers, setFilteredNumbers] = React.useState(null);
-
+    const [, setFilteredNumbers] = React.useState(null);
+    const [hoveredNumber, setHoveredNumber] = React.useState(null);
 
     const [page, setPage] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(0);
 
     const [numbersByCategories, setNumbersByCategories] = React.useState({
         category_bronz: [],
@@ -45,8 +44,8 @@ function NumbersForMain(props) {
             window.removeEventListener('resize', handleResize);
         };
     });
+    
     React.useEffect(() => {
-
         GetNumbers().then((res) => {
 
             if (res.result.length > 0) {
@@ -61,7 +60,7 @@ function NumbersForMain(props) {
 
 
                 })
-                console.log(numbers.length)
+
 
                 for (let i = 0; i < numbers.length - 1; i++) {
 
@@ -162,12 +161,12 @@ function NumbersForMain(props) {
 
 
             }))
-            
-        }
-        if (screenWidth >= 1925 && allNumbers) {
 
-            setItemsPerPage(20)
-            console.log(numbersByCategories)
+        }
+        if (screenWidth >= 2046 && allNumbers) {
+
+
+
             if (inputValue !== '' && selectedCategoryID === 'all') {
                 let filterd = allNumbers.filter((item) => {
                     if (item.ctn) {
@@ -261,303 +260,11 @@ function NumbersForMain(props) {
 
 
         }
-        else if (screenWidth >= 1900 && window.innerWidth < 1925 && allNumbers) {
 
-            setItemsPerPage(18)
-            console.log(numbersByCategories)
-            if (inputValue !== '' && selectedCategoryID === 'all') {
-                let filterd = allNumbers.filter((item) => {
-                    if (item.ctn) {
-                        if (item.ctn.includes(inputValue)) {
-                            return true
-                        }
-                        return false
-                    }
-                    return false
+        else if (screenWidth >= 1350 && window.innerWidth < 2046 && allNumbers) {
 
 
-                })
 
-                setNumbers(filterd.slice(0, 18))
-
-            } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                } else {
-
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                }
-
-            }
-            else if (selectedCategoryID !== 'all' && inputValue === '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === 3 || item.category === 4 || item.category === 5) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                } else {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                }
-
-            }
-            else if (selectedCategoryID === 'all' && inputValue === '') {
-
-
-                setNumbers(allNumbers.slice(0, 18))
-
-            }
-
-
-        } 
-        else if (screenWidth >= 1682 && window.innerWidth < 1900 && allNumbers) {
-
-            setItemsPerPage(20)
-            console.log(numbersByCategories)
-            if (inputValue !== '' && selectedCategoryID === 'all') {
-                let filterd = allNumbers.filter((item) => {
-                    if (item.ctn) {
-                        if (item.ctn.includes(inputValue)) {
-                            return true
-                        }
-                        return false
-                    }
-                    return false
-
-
-                })
-
-                setNumbers(filterd.slice(0, 20))
-
-            } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 20))
-
-                } else {
-
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 20))
-
-                }
-
-            }
-            else if (selectedCategoryID !== 'all' && inputValue === '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === 3 || item.category === 4 || item.category === 5) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 20))
-
-                } else {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 20))
-
-                }
-
-            }
-            else if (selectedCategoryID === 'all' && inputValue === '') {
-
-
-                setNumbers(allNumbers.slice(0, 20))
-
-            }
-
-
-        }
-        else if (screenWidth >= 1350 && window.innerWidth < 1682 && allNumbers) {
-
-            setItemsPerPage(18)
-            console.log(numbersByCategories)
-            if (inputValue !== '' && selectedCategoryID === 'all') {
-                let filterd = allNumbers.filter((item) => {
-                    if (item.ctn) {
-                        if (item.ctn.includes(inputValue)) {
-                            return true
-                        }
-                        return false
-                    }
-                    return false
-
-
-                })
-
-                setNumbers(filterd.slice(0, 18))
-
-            } else if (selectedCategoryID !== 'all' && inputValue !== '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                } else {
-
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                }
-
-            }
-            else if (selectedCategoryID !== 'all' && inputValue === '') {
-                if (selectedCategoryID === 3) {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === 3 || item.category === 4 || item.category === 5) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                } else {
-                    let filterd = allNumbers.filter((item) => {
-                        if (item.ctn) {
-                            if (item.category === Number(selectedCategoryID)) {
-                                return true
-                            }
-                            return false
-                        }
-                        return false
-
-
-                    })
-                    setFilteredNumbers(filterd)
-                    setNumbers(filterd.slice(0, 18))
-
-                }
-
-            }
-            else if (selectedCategoryID === 'all' && inputValue === '') {
-
-
-                setNumbers(allNumbers.slice(0, 18))
-
-            }
-
-
-        }
-        
-        else
-        if (screenWidth >= 1060 && window.innerWidth < 1350 && allNumbers) {
-
-            setItemsPerPage(12)
-            console.log(numbersByCategories)
             if (inputValue !== '' && selectedCategoryID === 'all') {
                 let filterd = allNumbers.filter((item) => {
                     if (item.ctn) {
@@ -651,9 +358,13 @@ function NumbersForMain(props) {
 
 
         }
+
         else
-            if (screenWidth >= 500 && window.innerWidth < 1060 && allNumbers) {
-                setItemsPerPage(12)
+            if (screenWidth >= 1060 && window.innerWidth < 1350 && allNumbers) {
+
+
+
+
                 if (inputValue !== '' && selectedCategoryID === 'all') {
                     let filterd = allNumbers.filter((item) => {
                         if (item.ctn) {
@@ -686,6 +397,7 @@ function NumbersForMain(props) {
                         setNumbers(filterd.slice(0, 12))
 
                     } else {
+
                         let filterd = allNumbers.filter((item) => {
                             if (item.ctn) {
                                 if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
@@ -745,9 +457,11 @@ function NumbersForMain(props) {
                 }
 
 
-            } else
-                if (screenWidth < 500 && allNumbers) {
-                    setItemsPerPage(8)
+            }
+            else
+                if (screenWidth >= 500 && window.innerWidth < 1060 && allNumbers) {
+
+
                     if (inputValue !== '' && selectedCategoryID === 'all') {
                         let filterd = allNumbers.filter((item) => {
                             if (item.ctn) {
@@ -761,7 +475,7 @@ function NumbersForMain(props) {
 
                         })
 
-                        setNumbers(filterd.slice(0, 8))
+                        setNumbers(filterd.slice(0, 12))
 
                     } else if (selectedCategoryID !== 'all' && inputValue !== '') {
                         if (selectedCategoryID === 3) {
@@ -777,7 +491,7 @@ function NumbersForMain(props) {
 
                             })
                             setFilteredNumbers(filterd)
-                            setNumbers(filterd.slice(0, 8))
+                            setNumbers(filterd.slice(0, 12))
 
                         } else {
                             let filterd = allNumbers.filter((item) => {
@@ -792,9 +506,10 @@ function NumbersForMain(props) {
 
                             })
                             setFilteredNumbers(filterd)
-                            setNumbers(filterd.slice(0, 8))
+                            setNumbers(filterd.slice(0, 12))
 
                         }
+
                     }
                     else if (selectedCategoryID !== 'all' && inputValue === '') {
                         if (selectedCategoryID === 3) {
@@ -810,7 +525,7 @@ function NumbersForMain(props) {
 
                             })
                             setFilteredNumbers(filterd)
-                            setNumbers(filterd.slice(0, 8))
+                            setNumbers(filterd.slice(0, 12))
 
                         } else {
                             let filterd = allNumbers.filter((item) => {
@@ -825,26 +540,119 @@ function NumbersForMain(props) {
 
                             })
                             setFilteredNumbers(filterd)
-                            setNumbers(filterd.slice(0, 8))
+                            setNumbers(filterd.slice(0, 12))
 
                         }
+
                     }
                     else if (selectedCategoryID === 'all' && inputValue === '') {
 
 
-                        setNumbers(allNumbers.slice(0, 8))
+                        setNumbers(allNumbers.slice(0, 12))
 
                     }
 
-                } else if (!allNumbers) {
 
-                    setNumbers([])
+                } else
+                    if (screenWidth < 500 && allNumbers) {
 
-                } else {
+                        if (inputValue !== '' && selectedCategoryID === 'all') {
+                            let filterd = allNumbers.filter((item) => {
+                                if (item.ctn) {
+                                    if (item.ctn.includes(inputValue)) {
+                                        return true
+                                    }
+                                    return false
+                                }
+                                return false
 
 
-                    setNumbers(allNumbers)
-                }
+                            })
+
+                            setNumbers(filterd.slice(0, 8))
+
+                        } else if (selectedCategoryID !== 'all' && inputValue !== '') {
+                            if (selectedCategoryID === 3) {
+                                let filterd = allNumbers.filter((item) => {
+                                    if (item.ctn) {
+                                        if (item.ctn.includes(inputValue) && (item.category === 3 || item.category === 4 || item.category === 5)) {
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    return false
+
+
+                                })
+                                setFilteredNumbers(filterd)
+                                setNumbers(filterd.slice(0, 8))
+
+                            } else {
+                                let filterd = allNumbers.filter((item) => {
+                                    if (item.ctn) {
+                                        if (item.ctn.includes(inputValue) && item.category === Number(selectedCategoryID)) {
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    return false
+
+
+                                })
+                                setFilteredNumbers(filterd)
+                                setNumbers(filterd.slice(0, 8))
+
+                            }
+                        }
+                        else if (selectedCategoryID !== 'all' && inputValue === '') {
+                            if (selectedCategoryID === 3) {
+                                let filterd = allNumbers.filter((item) => {
+                                    if (item.ctn) {
+                                        if (item.category === 3 || item.category === 4 || item.category === 5) {
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    return false
+
+
+                                })
+                                setFilteredNumbers(filterd)
+                                setNumbers(filterd.slice(0, 8))
+
+                            } else {
+                                let filterd = allNumbers.filter((item) => {
+                                    if (item.ctn) {
+                                        if (item.category === Number(selectedCategoryID)) {
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    return false
+
+
+                                })
+                                setFilteredNumbers(filterd)
+                                setNumbers(filterd.slice(0, 8))
+
+                            }
+                        }
+                        else if (selectedCategoryID === 'all' && inputValue === '') {
+
+
+                            setNumbers(allNumbers.slice(0, 8))
+
+                        }
+
+                    } else if (!allNumbers) {
+
+                        setNumbers([])
+
+                    } else {
+
+
+                        setNumbers(allNumbers.slice(0, 12))
+                    }
     }, [allNumbers, screenWidth, inputValue, selectedCategoryID, numbersByCategories])
 
 
@@ -910,6 +718,7 @@ function NumbersForMain(props) {
 
     }
     function handleCtnClick(item) {
+        props.buyNumber([item])
         return
 
 
@@ -917,10 +726,8 @@ function NumbersForMain(props) {
     function handleSubmit(e) {
         e.preventDefault();
         props.history.push("/numbers");
-        console.log(selectedNumber)
     }
     function handleFocus(e) {
-        console.log(e)
         if (isInputFocused) {
             setInputFocused(false)
         } else {
@@ -1017,11 +824,27 @@ function NumbersForMain(props) {
                             {apiError ? <p className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''}`}>{apiError}</p> : <></>}
 
                             {page === 1 && numbers && numbers.length > 0 ? numbers.map((item, i) => (
-                                <p key={i} onClick={() => handleCtnClick(item)} className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''} ${item.ctn === selectedNumber.ctn ? 'numbers-for-main__contact_selected' : ''}`}>{`+7 ${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
+                                <div onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
+                                    if (item.ctn !== selectedNumber.ctn) {
+                                        
+                                        setHoveredNumber(null)
+                                        
+                                    }
+                                    
+
+
+                                }} className='numbers-for-main__number-container'>
+                                    <p key={i} onClick={() => handleCtnClick(item)} className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''} ${selectedNumber.ctn && item.ctn === selectedNumber.ctn ? 'numbers-for-main__contact_selected' : ''}`}>{`${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
+                                    <div className={`numbers-for-main__cart-bg ${darkTheme ? 'numbers-for-main__cart-bg_dark' : ''} ${((hoveredNumber && hoveredNumber.ctn && item.ctn === hoveredNumber.ctn) || (selectedNumber.ctn && item.ctn)) ? 'numbers-for-main__cart-bg_hover' : ''}`}>
+                                        <img className={`numbers-for-main__cart ${darkTheme ? 'numbers-for-main__cart_dark' : ''} ${((hoveredNumber && hoveredNumber.ctn && item.ctn === hoveredNumber.ctn) || (selectedNumber.ctn && item.ctn)) ? 'numbers-for-main__cart_hover' : ''}`} src={numbers_cart} alt="Купить" />
+                                    </div>
+
+                                </div>
+
                             )) : !preloaderVisible && page === 1 && < p className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''}`}>Ничего не найдено</p>}
 
                         </div>
-                        <button type="submit" className={`numbers-for-main__submit-button numbers-for-main__submit-button_active`} >Посмотреть все</button>
+                        <button type="submit" className={`numbers-for-main__submit-button numbers-for-main__submit-button_active`} >Посмотреть все или заказать несколько одновременно</button>
                     </form>
                 </>
                 :
@@ -1037,7 +860,12 @@ function NumbersForMain(props) {
                         </div>
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? `${numbersByCategories.category_bronz[0].ctn.substring(0, 3)} ${numbersByCategories.category_bronz[0].ctn.substring(3, 6)} ${numbersByCategories.category_bronz[0].ctn.substring(6, 8)} ${numbersByCategories.category_bronz[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
-                            <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
+                            <div onClick={() => {
+                                if (numbersByCategories && numbersByCategories.category_bronz.length > 0){
+                                    handleCtnClick(numbersByCategories.category_bronz[0])
+                                }
+                                
+                            }} className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
                                 <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
@@ -1052,7 +880,12 @@ function NumbersForMain(props) {
                         </div>
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_silver.length > 0) ? `${numbersByCategories.category_silver[0].ctn.substring(0, 3)} ${numbersByCategories.category_silver[0].ctn.substring(3, 6)} ${numbersByCategories.category_silver[0].ctn.substring(6, 8)} ${numbersByCategories.category_silver[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
-                            <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_silver.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
+                            <div onClick={() => {
+                                if (numbersByCategories && numbersByCategories.category_silver.length > 0){
+                                    handleCtnClick(numbersByCategories.category_silver[0])
+                                }
+                                
+                            }} className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_silver.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
                                 <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
@@ -1067,7 +900,12 @@ function NumbersForMain(props) {
                         </div>
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_gold.length > 0) ? `${numbersByCategories.category_gold[0].ctn.substring(0, 3)} ${numbersByCategories.category_gold[0].ctn.substring(3, 6)} ${numbersByCategories.category_gold[0].ctn.substring(6, 8)} ${numbersByCategories.category_gold[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
-                            <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_gold.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
+                            <div onClick={() => {
+                                if (numbersByCategories && numbersByCategories.category_gold.length > 0){
+                                    handleCtnClick(numbersByCategories.category_gold[0])
+                                }
+                                
+                            }} className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_gold.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
                                 <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
@@ -1082,7 +920,12 @@ function NumbersForMain(props) {
                         </div>
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_plat.length > 0) ? `${numbersByCategories.category_plat[0].ctn.substring(0, 3)} ${numbersByCategories.category_plat[0].ctn.substring(3, 6)} ${numbersByCategories.category_plat[0].ctn.substring(6, 8)} ${numbersByCategories.category_plat[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
-                            <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_plat.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
+                            <div onClick={() => {
+                                if (numbersByCategories && numbersByCategories.category_plat.length > 0){
+                                    handleCtnClick(numbersByCategories.category_plat[0])
+                                }
+                                
+                            }} className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_plat.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
                                 <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
@@ -1097,14 +940,19 @@ function NumbersForMain(props) {
                         </div>
                         <div className={`numbers-for-main__card-row`}>
                             <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? `${numbersByCategories.category_briliant[0].ctn.substring(0, 3)} ${numbersByCategories.category_briliant[0].ctn.substring(3, 6)} ${numbersByCategories.category_briliant[0].ctn.substring(6, 8)} ${numbersByCategories.category_briliant[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
-                            <div className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
+                            <div onClick={() => {
+                                if (numbersByCategories && numbersByCategories.category_briliant.length > 0){
+                                    handleCtnClick(numbersByCategories.category_briliant[0])
+                                }
+                                
+                            }} className={`numbers-for-main__card-cart ${(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? '' : 'numbers-for-main__card-cart_disabled'}`}>
                                 <img className={`numbers-for-main__card-cart-img`} alt="Купить" src={numbers_cart}></img>
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleSubmit} type="button" className={`numbers-for-main__submit-button numbers-for-main__submit-button_active`} >Посмотреть все</button>
+                    <button onClick={handleSubmit} type="button" className={`numbers-for-main__submit-button numbers-for-main__submit-button_active`} >Посмотреть все<br/>или заказать несколько одновременно</button>
                 </>}
         </>
-    )      
+    )
 }
 export default withRouter(NumbersForMain)

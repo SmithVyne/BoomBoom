@@ -29,7 +29,7 @@ export default function Footer() {
         };
     });
 
-    const { darkTheme, setLoginForm, userSession, setUserSession, isMobile } = useContext(GlobalContext);
+    const {  setLoginForm, userSession, setUserSession } = useContext(GlobalContext);
     const { pathname } = useLocation();
     const logged_in = pathname === "/dashboard" && userSession;
     const handleButton = () => {
@@ -42,16 +42,16 @@ export default function Footer() {
                 <>
                     <div className={`footer__first-row`}>
                         <div className={`footer__socials`}>
-                            <Link className={`footer__social-link footer__social_type_phone`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_phone`}>
                                 <img src={footer_call} className={`footer__social-img`} alt="Телефон"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_whatsapp`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_whatsapp`}>
                                 <img src={footer_whatsapp} className={`footer__social-img`} alt="WhatsApp"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_telegram`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_telegram`}>
                                 <img src={footer_telegram} className={`footer__social-img footer__social-img_type_telegram`} alt="Telegram"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_instagram`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_instagram`}>
                                 <img src={footer_instagram} className={`footer__social-img`} alt="Telegram"></img>
                             </Link>
                         </div>
@@ -121,16 +121,16 @@ export default function Footer() {
 
                         </ul>
                         <div className={`footer__socials`}>
-                            <Link className={`footer__social-link footer__social_type_phone`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_phone`}>
                                 <img src={footer_call} className={`footer__social-img`} alt="Телефон"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_whatsapp`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_whatsapp`}>
                                 <img src={footer_whatsapp} className={`footer__social-img`} alt="WhatsApp"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_telegram`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_telegram`}>
                                 <img src={footer_telegram} className={`footer__social-img footer__social-img_type_telegram`} alt="Telegram"></img>
                             </Link>
-                            <Link className={`footer__social-link footer__social_type_instagram`}>
+                            <Link to="/" className={`footer__social-link footer__social_type_instagram`}>
                                 <img src={footer_instagram} className={`footer__social-img`} alt="Telegram"></img>
                             </Link>
                         </div>
