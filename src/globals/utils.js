@@ -55,20 +55,20 @@ export async function GetNumbers() {
 export const tariffBase = {
     tariffName: 'Базовый',
     position: [{
-        min: 500,
-        gb: 10,
-        sms: 100,
+        min: 300,
+        gb: 40,
+        sms: 300,
+    },{
+        min: 400,
+        gb: 30,
+        sms: 300,
     },{
         min: 400,
         gb: 20,
-        sms: 100,
+        sms: 300,
     },{
-        min: 300,
-        gb: 30,
-        sms: 100,
-    },{
-        min: 200,
-        gb: 40,
+        min: 500,
+        gb: 10,
         sms: 100,
     }],
     price: 350,
@@ -76,20 +76,20 @@ export const tariffBase = {
 export const tariffBright = {
     tariffName: 'Яркий',
     position: [{
-        min: 1000,
-        gb: 25,
+        min: 600,
+        gb: 50,
         sms: 500,
     }, {
-        min: 900,
-        gb: 35,
+        min: 800,
+        gb: 40,
         sms: 500,
     },{
         min: 800,
-        gb: 45,
+        gb: 30,
         sms: 500,
     }, {
-        min: 700,
-        gb: 55,
+        min: 1000,
+        gb: 25,
         sms: 500,
     }],
     price: 500,
@@ -97,20 +97,20 @@ export const tariffBright = {
 export const tariffAdvanced = {
     tariffName: 'Расширенный',
     position: [{
+        min: 1000,
+        gb: Infinity,
+        sms: 1000,
+    },{
+        min: 1500,
+        gb: 50,
+        sms: 1000,
+    },{
+        min: 1500,
+        gb: 40,
+        sms: 1000,
+    },{
         min: 2000,
         gb: 35,
-        sms: 1000,
-    },{
-        min: 1800,
-        gb: 45,
-        sms: 1000,
-    },{
-        min: 1600,
-        gb: 75,
-        sms: 1000,
-    },{
-        min: 1400,
-        gb: 95,
         sms: 1000,
     }],
     price: 800,
@@ -118,20 +118,20 @@ export const tariffAdvanced = {
 export const tariffBiz = {
     tariffName: 'Бизнес',
     position: [{
-        min: 4000,
+        min: 2500,
+        gb: Infinity,
+        sms: 1000,
+    },{
+        min: 3000,
+        gb: 60,
+        sms: 1000,
+    },{
+        min: 3000,
         gb: 50,
         sms: 1000,
     },{
-        min: 3800,
-        gb: 70,
-        sms: 1000,
-    },{
-        min: 3600,
-        gb: 90,
-        sms: 1000,
-    },{
-        min: 3400,
-        gb: 110,
+        min: 4000,
+        gb: 50,
         sms: 1000,
     }],
     price: 1000,
@@ -139,20 +139,12 @@ export const tariffBiz = {
 export const tariffVip = {
     tariffName: 'VIP',
     position: [{
+        min: 5000,
+        gb: Infinity,
+        sms: 1000,
+    },{
         min: 7000,
-        gb: 100,
-        sms: 1000,
-    },{
-        min: 6800,
-        gb: 120,
-        sms: 1000,
-    },{
-        min: 6600,
-        gb: 140,
-        sms: 1000,
-    },{
-        min: 6400,
-        gb: 160,
+        gb: 150,
         sms: 1000,
     }],
     price: 1500,

@@ -64,7 +64,7 @@ const Level = styled(motion.div)`
   border-radius: 2.5px;
 `;
 
-const TariffBar = (props) => {
+const TariffBar = ({vip, handlePositionChange}) => {
   const [location, setLocation] = useState("0px");
   const moveTo = (e) => {
     const { clientX, currentTarget } = e;
@@ -72,18 +72,29 @@ const TariffBar = (props) => {
     const location = clientX - left;
     const step1 = width / 3;
     const error = step1 / 5;
-    if (location > error && location <= step1 + error) {
-      setLocation(step1 - 13 + "px");
-      props.handlePositionChange(1)
-    } else if (location > step1 + error && location <= 2 * step1 + error) {
-      setLocation(2 * step1 - 17 + "px");
-      props.handlePositionChange(2)
-    } else if (location > 2 * step1 + error) {
-      setLocation(3 * step1 - 21 + "px");
-      props.handlePositionChange(3)
+    const half = width / 2;
+    if(vip) {
+      if(location >= half) {
+        setLocation(3 * step1 - 21 + "px");
+        handlePositionChange(1)
+      } else {
+        setLocation("0px");
+        handlePositionChange(0)
+      }
     } else {
-      setLocation("0px");
-      props.handlePositionChange(0)
+      if (location > error && location <= step1 + error) {
+        setLocation(step1 - 13 + "px");
+        handlePositionChange(1)
+      } else if (location > step1 + error && location <= 2 * step1 + error) {
+        setLocation(2 * step1 - 17 + "px");
+        handlePositionChange(2)
+      } else if (location > 2 * step1 + error) {
+        setLocation(3 * step1 - 21 + "px");
+        handlePositionChange(3)
+      } else {
+        setLocation("0px");
+        handlePositionChange(0)
+      }
     }
   };
 
@@ -106,8 +117,9 @@ const TariffBar = (props) => {
         <Breakpoints>
             <Breakpoint />
             <Breakpoint />
-            <Breakpoint />
-            <Breakpoint />
+            {vip || 
+            <><Breakpoint />
+            <Breakpoint /></>}
         </Breakpoints>
     </Line>
   );

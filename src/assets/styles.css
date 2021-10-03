@@ -251,7 +251,7 @@ body, #root {
     flex-direction: column;
     height: 100%;
     width: 100%;
-    margin-top: 60px;
+    margin-top: 40px;
 }
 
 .card-title-icon {
@@ -273,31 +273,21 @@ body, #root {
     width: fit-content;
     gap: 20px;
     flex-wrap: wrap;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .tarif-settings {
     display: flex;
     gap: 0 20px;
     width: 100%;
-    margin-top: 12px;
     flex-wrap: wrap;
-}
-
-.tarif-settings-title {
-    font-family: Circe, Arial, sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0;
 }
 
 .tarif-settings .item {
     font-family: Circe, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 60px;
+    font-size: 50px;
     line-height: 100%;
 }
 
@@ -349,7 +339,6 @@ body, #root {
     font-weight: bold;
     font-size: 60px;
     line-height: 100%;
-    /* or 32px */
     display: flex;
     align-items: center;
     color: #121212;
@@ -468,7 +457,6 @@ body, #root {
         font-weight: bold;
         font-size: 24px;
         line-height: 35px;
-        margin: 36px 0 0 0;
     }
 }
 

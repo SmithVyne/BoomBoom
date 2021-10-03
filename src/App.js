@@ -30,7 +30,7 @@ const Wrapper = styled.div`
     padding: 48px 40px 0 40px;
   }
   @media(max-width: 720px) {
-    padding: 5vw;
+    padding: 7vw 5vw 0 5vw;
   }
 `;
 const Mainml = styled.main`

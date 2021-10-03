@@ -107,7 +107,7 @@ export default function Main() {
                 <Slide slide={slides[index]} />
                 <Controls move={move} />
             </Carousel>
-            <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Платите только за необходимое</p>
+            <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только самое необходимое</p>
             <Tariffs>
                 <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
                 <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />

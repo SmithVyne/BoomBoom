@@ -39,7 +39,6 @@ const Wrappper = styled.nav`
         justify-content: space-between;
     }
     &  .logo {
-        
         display: flex;
         align-items: center;
         margin: 0;
@@ -50,9 +49,6 @@ const Wrappper = styled.nav`
         @media(max-width: 1100px) {
             margin-right: auto;
         }
-        @media(max-width: 500px) {
-            display: none;
-        }
         &  img {
             height: 84px;
             width: 187px;
@@ -62,18 +58,25 @@ const Wrappper = styled.nav`
             }
         }
     }
-    & span#helpCenter {
+    & #helpCenter {
         position: absolute;
         top: 15px;
         right: 80px;
-        @media (max-width: 1100px) {
-            display: none;
+        text-decoration: underline;
+        color: inherit;
+        font-weight: 500;
+        font-size: 26px;
+        @media (max-width: 1500px) {
+            right: 40px;
+            font-size: 22px;
         }
-        a {
-            text-decoration: underline;
-            color: inherit;
-            margin: 0 2px;
-            font-weight: 500;
+        @media (max-width: 720px) {
+            top: 0px;
+            right: 5vw;
+        }
+        @media (max-width: 500px) {
+            top: 5px;
+            font-size: 13px;
         }
     }
     
@@ -87,23 +90,26 @@ const DashboardBtn = styled(Link)`
     height: 52px;
     border-radius: 26px;
     display: flex;
-    align-items: center;    
+    align-items: center;
+    text-align: center;   
     border: none;
     padding: 0 24px 5px;
     cursor: pointer;
     width: max-content;
     @media(max-width: 1100px) {
         margin-right: 35px;
+        font-size: 20px;
     }
     @media(max-width: 500px) {
         margin-right: 0px;
+        width: fit-content;
+        flex-wrap: wrap;
+        font-size: 16px;
     }
     @media(max-width: 326px) {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 100%;
-            margin-left: 16px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 100%;
     }
     &:hover {
         color: #fff;
@@ -135,7 +141,7 @@ export default function Nav() {
             <div className="menu">
                 <Menu />
             </div>
-            <span id="helpCenter">отдел продаж <a href="tel:84951352404">8 495 135 24 04</a>  ежедневно с 9 до 21</span>
+            <a id="helpCenter" href="tel:+7 495 795 95 66">+7 495 795 95 66</a>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
                 <DashboardBtn to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>

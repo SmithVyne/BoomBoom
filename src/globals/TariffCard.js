@@ -1,9 +1,10 @@
 import { AiOutlineRight } from "react-icons/ai";
+import { CgInfinity } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Hit from "../assets/images/hit.svg";
 import infinity from "../assets/images/infinity.png";
-import globe from "../assets/images/globe.png";
+import headphones from "../assets/images/headphones.png";
 import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
@@ -17,7 +18,7 @@ import { useDispatch } from "react-redux";
 const Wrapper = styled.div`
     background: ${({ background }) => background};
     background-size: ${({ title }) => title === "VIP" && "600%"};
-    width: fit-content;
+    width: 520px;
     color: #fff;
     border-radius: 28px;
     padding: 20px 28px;
@@ -28,6 +29,9 @@ const Wrapper = styled.div`
     overflow: hidden;
     @media(max-width: 600px) {
         width: 90vw;
+    }
+    .detailsWrapper {
+        width: 70%;
     }
 `;
 
@@ -79,23 +83,21 @@ const Sub = styled.small`
         line-height: 18px;
     }
 `
-const Details = styled.small`
+const Details = styled.span`
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 22px;
     font-size: 16px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease-in-out;
     &:first-of-type {
-        margin-top: 62px;
-    }
-    &:last-of-type {
-        transition: opacity 0.3s ease-in-out;
-        margin-top: 30px;
+        opacity: 1;
+        margin-top: 28px;
     }
 `
 
 const MiniIcon = styled.img`
-
     width: 14px;
     margin: 5px 0;
     &:hover {
@@ -148,13 +150,12 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                 {hit && <img alt="hit" src={Hit} />}
             </span>
             <span className="card-body">
-                <small className="tarif-settings-title">Настроить тариф</small>
                 <span className="tarif-settings">
-                    <span className="item">{tariff.position[positionValue].gb}<Sub>гб</Sub></span>
                     <span className="item">{tariff.position[positionValue].min}<Sub>мин</Sub></span>
+                    <span className="item">{tariff.position[positionValue].gb === Infinity ? <CgInfinity />: tariff.position[positionValue].gb}<Sub>гб</Sub></span>
                     <span className="item">{tariff.position[positionValue].sms}<Sub>смс</Sub></span>
                 </span>
-                <TariffBar handlePositionChange={handlePositionChange} />
+                <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
                     <span className="_4Gswitch">
                         Безлимитный 4G
@@ -171,15 +172,15 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                         </span>
                     </span>
                 </Switches>
-                <span >
+                <span className="detailsWrapper" >
                     <Details>
                         <MiniIcon src={infinity} /><p className='infinity-text'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
                             e.stopPropagation()
                             setShowDropDown(true)
                         }} pointer src={info} />
                     </Details>
-                    <Details><MiniIcon src={globe} /><p className='infinity-text'>+300 мин в роуминге</p></Details>
                     <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='beeline-text'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
+                    <Details><MiniIcon src={headphones} /><p className='infinity-text'>выделенная линия поддержки</p></Details>
                 </span>
                 <More to={`/tariff-info/:${tariff.tariffName}`}>Подробнее про тариф</More>
             </span>
