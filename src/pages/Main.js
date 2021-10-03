@@ -101,6 +101,13 @@ export default function Main() {
         return () => clearTimeout(id)
     }, [count])
 
+    function buyNumber(selectedNumberArray) {
+
+        // !!CONNECT POP UP HERE!!
+
+        console.log(selectedNumberArray)
+    }
+
     return (
         <>
             <Carousel>
@@ -115,7 +122,8 @@ export default function Main() {
                 <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
                 <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
             </Tariffs>
-            <NumbersForMain />
+            <NumbersForMain buyNumber={buyNumber} />
+
             <СoverageMap />
             {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}
             <Footer />

@@ -46,47 +46,25 @@ export default function App() {
   const [loginForm, setLoginForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
   const buyNumberModal = useSelector(store => store.buyNumberModal);
-  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+
   const whichTheme = (darkTheme) => {
     
     if(darkTheme) {
-      if (screenWidth > 930){
+      
         return {
           background: "#010101",
           textColor: "#ffffff",
         }
-      } else{
-        return {
-          background: "#010101",
-          textColor: "#ffffff",
-        }
-      }
+      } else {
      
-    } else {
-      if (screenWidth > 590){
         return {
           background: "#F8F8F8",
           textColor: "#121212",
         }
-      } else{
-        return {
-          background: "#FFFFFF",
-          textColor: "#121212",
-        }
-      }
-      
+      } 
     }
-  };
-  function handleResize() {
-    setScreenWidth(window.innerWidth)
-    window.removeEventListener('resize', handleResize);
-}
-React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-        window.removeEventListener('resize', handleResize);
-    };
-});
+         
+
   useEffect(() => {
       const watcher = () => setIsMobile(window.innerWidth < 1100);
       window.addEventListener("resize", watcher);
