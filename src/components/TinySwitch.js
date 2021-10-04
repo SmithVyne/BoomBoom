@@ -12,7 +12,7 @@ const Tinyswitch = styled.span`
     height: 30px;
     padding: 2px;
     border-radius: 44px;
-    background: ${({checked}) => checked ? "#fff" : "transparent"};
+    background: ${({checked}) => checked ? "#4B75FC" : "rgba(18, 18, 18, 0.12)"};
     border: 1px solid rgba(255, 255, 255, 0.44);
     box-sizing: border-box;
     @media(max-width: 720px) {
@@ -27,7 +27,7 @@ const Flick = styled.span`
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: ${({checked}) => checked ? "linear-gradient(135deg, rgb(255,186,106) 0%, rgb(235,0,255) 100%)" : "#fff"};
+    background: #fff;
     transform: ${({checked}) => checked && "translateX(22px)"};
     z-index: 2;
     transition: 0.2s;
@@ -44,8 +44,7 @@ const SwitchBg = styled.img`
     z-index: 1;
 `
 
-export default function TinySwitch({check}) {
-    const [checked, setChecked] = useState(check)
+export default function TinySwitch({checked, setChecked}) {
     return (
         <Tinyswitch onClick={()=>setChecked(checked => !checked)} checked={checked}>
             

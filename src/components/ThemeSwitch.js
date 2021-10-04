@@ -1,5 +1,3 @@
-// import sunshine from "../assets/images/sunshine.svg";
-// import moonshine from "../assets/images/moonshine.svg";
 import darksun from "../assets/images/darksun.svg";
 import darkmoon from "../assets/images/darkmoon.svg";
 import { GlobalContext } from "../App";

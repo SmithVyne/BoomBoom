@@ -33,6 +33,61 @@ const Wrapper = styled.div`
     .detailsWrapper {
         width: 70%;
     }
+    .card-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+    }
+    .card-title-icon {
+        width: 44px;
+        @media(max-width: 450px) {
+            width: 36px;
+        }
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        margin-top: 40px;
+        .tarif-settings {
+            display: flex;
+            gap: 0 15px;
+            width: 100%;
+            align-items: center;
+            @media(max-width: 450px) {
+                gap: 0;
+                justify-content: space-between;
+            }
+        .item {
+            font-family: Circe, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 50px;
+            line-height: 100%;
+            display: flex;
+            align-items: flex-end;
+            @media(max-width: 600px) {
+                font-size: 30px;
+            }
+        }
+        }
+    }
+    .priceInfo {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 28px;
+        color: #fff;
+        width: fit-content;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+        @media(max-width: 450px) {
+            font-size: 20px;
+        }
+    }
 `;
 
 const Title = styled.p`
@@ -46,7 +101,7 @@ const Title = styled.p`
     @media(max-width: 720px) {
         font-style: normal;
         font-weight: bold;
-        font-size: 28px;
+        font-size: 36px;
         line-height: 100%;
     }
 `;
@@ -75,25 +130,30 @@ const Sub = styled.small`
     font-style: normal;
     font-weight: 350;
     font-size: 28px;
-    line-height: 41px;
-    @media(max-width: 720px) {
-        font-style: normal;
-        font-weight: 350;
-        font-size: 12px;
-        line-height: 18px;
+    @media(max-width: 450px) {
+        font-size: 16px;
     }
 `
 const Details = styled.span`
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    margin-top: 22px;
-    font-size: 16px;
+    margin-top: 24px;
+    font-size: 20px;
     opacity: 0.3;
     transition: opacity 0.3s ease-in-out;
     &:first-of-type {
         opacity: 1;
         margin-top: 28px;
+    }
+    .text-body {
+        font-family: Circe, Arial, sans-serif;
+        font-size: inherit;
+        color: #fff;
+        margin: 0;
+        @media (max-width: 450px) {
+            font-size: 16px;
+        }
     }
 `
 
@@ -107,7 +167,36 @@ const MiniIcon = styled.img`
 const Switches = styled.span`
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
+    font-size: 20px;
+    line-height: 29px;
+    font-family: Circe, Arial, sans-serif;
+    @media(max-width: 450px) {
+    font-size: 16px;
+    }
+    ._4Gswitch {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        width: 50%;
+        height: 100%;
+        padding: 13px;
+        font-weight: bold;
+        span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            @media(max-width: 450px) {
+                font-size: 16px;
+            }
+        }
+    }
 `
 const More = styled(Link)`
     font-family: Circe, Arial, sans-serif;
@@ -123,13 +212,25 @@ const More = styled(Link)`
     &:hover {
         color: inherit; 
     }
-    @media(max-width: 720px) {
+    @media(max-width: 450px) {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
         line-height: 100%;
     }
 `
+
+const _4Gswitch = ({title, price}) => {
+    const [checked, setChecked] = useState(false);
+    return (
+    <span style={checked ?  {background: "#fff", color: "#121212"} : {}} className="_4Gswitch">
+        {title}
+        <span>
+            <TinySwitch checked={checked} setChecked={setChecked} />
+            +{price} ₽
+        </span>
+    </span>)
+}
 
 export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
     const [showDropdown, setShowDropDown] = useState(false);
@@ -157,30 +258,18 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                 </span>
                 <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
-                    <span className="_4Gswitch">
-                        Безлимитный 4G
-                        <span>
-                            <TinySwitch />
-                            +100 Р
-                        </span>
-                    </span>
-                    <span className="_4Gswitch">
-                        Раздача интернета
-                        <span>
-                            <TinySwitch />
-                            +50 Р
-                        </span>
-                    </span>
+                    <_4Gswitch title="Безлимитный 4G" price="150" />
+                    <_4Gswitch title="Раздача интернета" price="50" />
                 </Switches>
                 <span className="detailsWrapper" >
                     <Details>
-                        <MiniIcon src={infinity} /><p className='infinity-text'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
+                        <MiniIcon src={infinity} /><p className='text-body'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
                             e.stopPropagation()
                             setShowDropDown(true)
                         }} pointer src={info} />
                     </Details>
-                    <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='beeline-text'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
-                    <Details><MiniIcon src={headphones} /><p className='infinity-text'>выделенная линия поддержки</p></Details>
+                    <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
+                    <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>
                 </span>
                 <More to={`/tariff-info/:${tariff.tariffName}`}>Подробнее про тариф</More>
             </span>

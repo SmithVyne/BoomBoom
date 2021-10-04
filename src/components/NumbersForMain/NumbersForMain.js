@@ -825,7 +825,7 @@ function NumbersForMain(props) {
                             {apiError ? <p className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''}`}>{apiError}</p> : <></>}
 
                             {page === 1 && numbers && numbers.length > 0 ? numbers.map((item, i) => (
-                                <div onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
+                                <div key={i} onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
                                     if (item.ctn !== selectedNumber.ctn) {
                                         
                                         setHoveredNumber(null)

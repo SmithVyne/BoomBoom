@@ -28,17 +28,6 @@ const Content = styled.div`
     flex-direction: column;
     gap: 40px;
 `
-const Call = styled.span`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    & a {
-        font-size: 24px;
-        color: inherit;
-        border-bottom: 2px solid;
-    }
-`
 
 export default memo(function MobileNav({setShowMobileNav}) {
     useEscapeKey(setShowMobileNav);
@@ -50,7 +39,6 @@ export default memo(function MobileNav({setShowMobileNav}) {
             <Content>
                 <Menu setShowMobileNav={setShowMobileNav} />
                 <ThemeSwitch />
-                <Call>отдел подключения<a href="tel:84951352404">8 495 135 24 04</a></Call>
             </Content>
             <span><CgClose onClick={()=>setShowMobileNav(false)} strokeWidth={1.5} size={35} /></span>
         </Wrapper>

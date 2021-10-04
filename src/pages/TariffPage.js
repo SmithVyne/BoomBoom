@@ -8,6 +8,7 @@ import star from "../assets/images/star.png";
 import jula from "../assets/images/jula.png";
 import goblet from "../assets/images/goblet.png";
 import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from "../globals/utils";
+import { DefaultTariffs } from "./Main";
 
 const SiteHeader = styled.h1`
 color: ${props => props.theme.textColor};
@@ -54,13 +55,7 @@ export default function TariffPage() {
                 <SiteHeader>Тарифы boom telecom</SiteHeader>
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
-                    <Tariffs>
-                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
-                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
-                        <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
-                        <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                        <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-                    </Tariffs>
+                    <DefaultTariffs />
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
