@@ -144,9 +144,6 @@ const Option = styled.span`
             max-width: 296px;
         }
     }
-    &.purchaseType {
-        
-    }
 `
 
 const Switches = styled.span`
@@ -186,6 +183,8 @@ const Dropdown = styled.div`
         }
         svg {
             margin-bottom: 9px;
+            transform: ${({drop}) => drop && "rotate(180deg)"};
+            transition: ease 0.3s;
         }
     }
     border: ${({selected})=> selected && "2px solid #4B75FC"};
@@ -208,14 +207,14 @@ const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xml
 <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill='#010101' />
 </svg>);
 
-// const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
+const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
 
 const TariffsDropDown = ({tariffId, position}) => {
     const tariff = tariffTypesArray[tariffId];
-    const [drop, setDrop] = useState(true);
+    const [drop, setDrop] = useState(false);
     const [selected, setSelected] = useState(position);
     return (
-        <Dropdown onClick={()=>setDrop(val => !val)}>
+        <Dropdown drop={drop} onClick={()=>setDrop(val => !val)}>
             <span className="top">
                 <img alt="tariffIcon" src={tariff.icon} />
                 {tariff.title}
@@ -242,6 +241,7 @@ const TariffsDropDown = ({tariffId, position}) => {
 
 const GarbageCan = styled(RiDeleteBin6Fill)`
     cursor: pointer;
+    width: 24px;
     &:hover {
         color: #FF0202;
     }
@@ -251,7 +251,6 @@ const options = ["Купить новую SIM", "Перенести номер �
 export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
-    // const [purchaseType, setPurchaseType] = useState(0);
     const [deletedNumbers, setDeletedNumbers] = useState([]);
     console.log(deletedNumbers)
     const dispatch = useDispatch();
@@ -275,8 +274,8 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                         <div className="ModalNumbers">
                             {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
                                 <span key={number.ctn} className="number">
-                                    <span className="left">{number.ctn} </span>
-                                    <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
+                                    <span className="left">{spacer(number.ctn)}</span>
+                                    <GarbageCan width={24} height={24} onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
                                 </span>
                             ))}
                         </div>
