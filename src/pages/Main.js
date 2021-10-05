@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Slide from '../components/Slide';
 import girl_with_phone from "../assets/images/girl_with_phone_banner.png";
 import hand_banner from "../assets/images/hand_banner.png";
@@ -13,7 +13,8 @@ import duck from "../assets/images/duck.png";
 import light from "../assets/images/light.png";
 import briefcase from "../assets/images/briefcase.png";
 import goblet from "../assets/images/goblet.png";
-import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from '../globals/utils';
+import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip, BUY_NUMBER } from '../globals/utils';
+import { useDispatch } from 'react-redux';
 
 export const DefaultTariffs = () => (
     <Tariffs>
@@ -55,7 +56,7 @@ const WrapCtrls = styled.span`
     gap: 31px;
     @media(max-width: 1000px) {
         left: 48px;
-    bottom: 32px;
+        bottom: 32px;
     }
     @media(max-width: 540px) {
         left: 20px;
@@ -100,6 +101,8 @@ export default function Main() {
         setIndex(count % slides.length)
     }
 
+    const dispatch = useDispatch();
+    
     useEffect(() => {
         const id = setTimeout(() => {
             setCount(count + 1)
@@ -109,11 +112,9 @@ export default function Main() {
         return () => clearTimeout(id)
     }, [count])
 
-    function buyNumber(selectedNumberArray) {
-
-        // !!CONNECT POP UP HERE!!
-
-        console.log(selectedNumberArray)
+    function buyNumber(numbers) {
+        dispatch({type: BUY_NUMBER, numbers})
+        // console.log(numbers)
     }
 
     return (

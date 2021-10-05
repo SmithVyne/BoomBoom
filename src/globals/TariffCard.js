@@ -1,7 +1,7 @@
 import { AiOutlineRight } from "react-icons/ai";
 import { CgInfinity } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Hit from "../assets/images/hit.svg";
 import infinity from "../assets/images/infinity.png";
 import headphones from "../assets/images/headphones.png";
@@ -174,29 +174,6 @@ const Switches = styled.span`
     @media(max-width: 450px) {
     font-size: 16px;
     }
-    ._4Gswitch {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 12px;
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        width: 50%;
-        height: 100%;
-        padding: 13px;
-        font-weight: bold;
-        span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: normal;
-            @media(max-width: 450px) {
-                font-size: 16px;
-            }
-        }
-    }
 `
 const More = styled(Link)`
     font-family: Circe, Arial, sans-serif;
@@ -220,16 +197,56 @@ const More = styled(Link)`
     }
 `
 
-const _4Gswitch = ({title, price}) => {
+const FourGSwitchStyles = styled.span`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    cursor: pointer;
+    background: ${({modal, checked}) => {
+        if(modal) {
+            return "transparent"
+        } else {
+            return checked ? "#fff" : "rgba(255, 255, 255, 0.12)";
+        }
+    }};
+    color: ${({checked, modal}) => {
+        if(!modal) {
+            return checked && "#121212"
+        }
+    }};
+    border-radius: 14px;
+    width: 50%;
+    padding: 13px;
+    font-weight: bold;
+    border: ${({modal, checked}) => {
+        if(modal) {
+            return checked ? "3px solid #0E5EF8" : "3px solid rgba(1, 1, 1, 0.16)";
+        }
+    }};
+    span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: normal;
+        @media(max-width: 450px) {
+            font-size: 16px;
+        }
+    }
+`
+
+export const FourGSwitch = ({title, price, modal=false}) => {
     const [checked, setChecked] = useState(false);
     return (
-    <span style={checked ?  {background: "#fff", color: "#121212"} : {}} className="_4Gswitch">
+    <FourGSwitchStyles onClick={()=>setChecked(val => !val)} checked={checked} modal={modal}>
         {title}
         <span>
-            <TinySwitch checked={checked} setChecked={setChecked} />
+            <TinySwitch checked={checked} />
             +{price} ₽
         </span>
-    </span>)
+    </FourGSwitchStyles>)
 }
 
 export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
@@ -258,8 +275,8 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                 </span>
                 <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
-                    <_4Gswitch title="Безлимитный 4G" price="150" />
-                    <_4Gswitch title="Раздача интернета" price="50" />
+                    <FourGSwitch title="Безлимитный 4G" price="150" />
+                    <FourGSwitch title="Раздача интернета" price="50" />
                 </Switches>
                 <span className="detailsWrapper" >
                     <Details>
@@ -275,7 +292,7 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес
-                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, title})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )

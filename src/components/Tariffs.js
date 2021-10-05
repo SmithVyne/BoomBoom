@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useContext } from "react";
 import { GlobalContext } from "../App";

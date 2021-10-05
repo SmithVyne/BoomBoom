@@ -4,9 +4,8 @@ import { GlobalContext } from '../../App';
 import './NumbersForMain.css';
 import searchIcon from '../../assets/images/search.svg'
 import numbers_cart from '../../assets/images/numbers-cart.svg'
-import { BUY_NUMBER, GetNumbers } from '../../globals/utils'
+import { GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
-import { useDispatch } from 'react-redux';
 
 function NumbersForMain(props) {
     const [allNumbers, setAllNumbers] = React.useState(null);
@@ -737,7 +736,6 @@ function NumbersForMain(props) {
 
     }
 
-    const dispatch = useDispatch();
 
     return (
         <>

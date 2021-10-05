@@ -1,13 +1,10 @@
 import Footer from "../globals/Footer/Footer";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import TariffCard from "../globals/TariffCard";
 import Tariffs from "../components/Tariffs";
 import duck from "../assets/images/duck.png";
 import light from "../assets/images/light.png";
-import star from "../assets/images/star.png";
-import jula from "../assets/images/jula.png";
-import goblet from "../assets/images/goblet.png";
-import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from "../globals/utils";
+import {  tariffBase,  tariffBright} from "../globals/utils";
 import { DefaultTariffs } from "./Main";
 
 const SiteHeader = styled.h1`

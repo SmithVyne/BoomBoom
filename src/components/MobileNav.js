@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { CgClose } from 'react-icons/cg'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { useEscapeKey } from '../hooks'
 import Menu from './Menu'
 import ThemeSwitch from './ThemeSwitch';

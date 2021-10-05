@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import styled from "styled-components";
-import { useResizer } from "../hooks";
+import styled from "styled-components/macro";
 
 const Line = styled.div`
     height: 5px;

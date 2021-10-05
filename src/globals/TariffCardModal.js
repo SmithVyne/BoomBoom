@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import whatsapp from "../assets/images/whatsapp.png";
 import skype from "../assets/images/skype.png";
 import viber from "../assets/images/viber.png";

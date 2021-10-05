@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
 import logo2 from '../assets/images/logo2.svg'
