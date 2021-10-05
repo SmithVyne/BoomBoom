@@ -725,7 +725,7 @@ function NumbersForMain(props) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-        props.history.push("/numbers");
+        props.history.push("/numbers/:все");
     }
     function handleFocus(e) {
         if (isInputFocused) {
@@ -735,7 +735,6 @@ function NumbersForMain(props) {
         }
 
     }
-
 
     return (
         <>
@@ -823,7 +822,8 @@ function NumbersForMain(props) {
                             {apiError ? <p className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''}`}>{apiError}</p> : <></>}
 
                             {page === 1 && numbers && numbers.length > 0 ? numbers.map((item, i) => (
-                                <div key={i} onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
+
+                                <div  key={i} onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
                                     if (item.ctn !== selectedNumber.ctn) {
                                         
                                         setHoveredNumber(null)
@@ -833,7 +833,7 @@ function NumbersForMain(props) {
 
 
                                 }} className='numbers-for-main__number-container'>
-                                    <p key={i} onClick={() => handleCtnClick(item)} className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''} ${selectedNumber.ctn && item.ctn === selectedNumber.ctn ? 'numbers-for-main__contact_selected' : ''}`}>{`${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
+                                    <p onClick={() => handleCtnClick(item)} className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''} ${selectedNumber.ctn && item.ctn === selectedNumber.ctn ? 'numbers-for-main__contact_selected' : ''}`}>{`${item.ctn.substring(0, 3)} ${item.ctn.substring(3, 6)} `}{`${item.ctn.substring(6, 8)} ${item.ctn.substring(8, 10)}`}</p>
                                     <div className={`numbers-for-main__cart-bg ${darkTheme ? 'numbers-for-main__cart-bg_dark' : ''} ${((hoveredNumber && hoveredNumber.ctn && item.ctn === hoveredNumber.ctn) || (selectedNumber.ctn && item.ctn)) ? 'numbers-for-main__cart-bg_hover' : ''}`}>
                                         <img className={`numbers-for-main__cart ${darkTheme ? 'numbers-for-main__cart_dark' : ''} ${((hoveredNumber && hoveredNumber.ctn && item.ctn === hoveredNumber.ctn) || (selectedNumber.ctn && item.ctn)) ? 'numbers-for-main__cart_hover' : ''}`} src={numbers_cart} alt="Купить" />
                                     </div>

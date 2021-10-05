@@ -9,9 +9,21 @@ export default function NumbersPage() {
     function buyNumbers(numbers){      
         dispatch({ type: BUY_NUMBER, numbers  })
     }
+    function transferNumber({ date, transferredNumber, contactNumber }) {
+
+        // !!!CONNECT Transfer Number POP UP HERE!!!
+        console.log('Transfer Number Triggered')
+        console.log(date, transferredNumber, contactNumber)
+    }
+    function buyEsim() {
+
+        // !!!CONNECT Buy Esim POP UP HERE!!!
+        console.log('EsimBUY Triggered')
+
+    }
     return (
         <>
-            <Numbers buyNumbers={buyNumbers}/>
+            <Numbers buyNumbers={buyNumbers} transferNumber={transferNumber} buyEsim={buyEsim} />
             <Footer />
         </>
     )
