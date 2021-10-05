@@ -1,5 +1,6 @@
 import { AiOutlineRight } from "react-icons/ai";
 import { CgInfinity } from "react-icons/cg";
+import { TiWiFi } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import Hit from "../assets/images/hit.svg";
@@ -166,7 +167,7 @@ const MiniIcon = styled.img`
 `
 const Switches = styled.span`
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 20px;
     font-size: 20px;
     line-height: 29px;
@@ -204,6 +205,11 @@ const FourGSwitchStyles = styled.span`
     align-items: center;
     text-align: center;
     gap: 12px;
+    ${({price}) => {
+        return price === Infinity && {
+            flexDirection: "row",
+        }
+    }}
     background: ${({modal, checked}) => {
         if(modal) {
             return "transparent"
@@ -239,21 +245,28 @@ const FourGSwitchStyles = styled.span`
 export const FourGSwitch = ({title, price, modal=false}) => {
     const [checked, setChecked] = useState(false);
     return (
-    <FourGSwitchStyles checked={checked} modal={modal}>
+    <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
         {title}
+        {price === Infinity ? 
+        (title === "Безлимитный 4G" ? <CgInfinity size={60} /> : <TiWiFi size={60} /> )
+        :
         <span>
             <TinySwitch checked={checked} setChecked={setChecked} />
             +{price} ₽
-        </span>
+        </span> }
     </FourGSwitchStyles>)
 }
 
-export default memo(function TariffCard({ tariff }) {
+
+export default memo(function TariffCard({ tariff, tariffId }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
     const dispatch = useDispatch();
     const {title, icon, background, hit } = tariff;
-
+    const payload = {
+        position: positionValue, 
+        tariffId
+    }
     function handlePositionChange(position) {
         setPositionValue(position)
     }
@@ -269,14 +282,14 @@ export default memo(function TariffCard({ tariff }) {
             </span>
             <span className="card-body">
                 <span className="tarif-settings">
-                    <span className="item">{tariff.position[positionValue].min}<Sub>мин</Sub></span>
-                    <span className="item">{tariff.position[positionValue].gb === Infinity ? <CgInfinity />: tariff.position[positionValue].gb}<Sub>гб</Sub></span>
-                    <span className="item">{tariff.position[positionValue].sms}<Sub>смс</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].min}<Sub>мин</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].gb === Infinity ? <CgInfinity />: tariff.positions[positionValue].gb}<Sub>гб</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].sms}<Sub>смс</Sub></span>
                 </span>
                 <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
-                    <FourGSwitch title="Безлимитный 4G" price="150" />
-                    <FourGSwitch title="Раздача интернета" price="50" />
+                    <FourGSwitch title="Безлимитный 4G" price={tariff.positions[positionValue].fourG} />
+                    <FourGSwitch title="Раздача интернета" price={tariff.positions[positionValue].internet} />
                 </Switches>
                 <span className="detailsWrapper" >
                     <Details>
@@ -292,7 +305,7 @@ export default memo(function TariffCard({ tariff }) {
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес
-                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, payload})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )

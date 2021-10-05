@@ -61,7 +61,7 @@ export async function GetNumbers() {
 export const tariffBase = {
     title: 'Базовый',
     icon: duck,
-    position: [{
+    positions: [{
         min: 300,
         gb: 40,
         sms: 300,
@@ -84,7 +84,7 @@ export const tariffBase = {
 export const tariffBright = {
     title: 'Яркий',
     icon: light,
-    position: [{
+    positions: [{
         min: 600,
         gb: 50,
         sms: 500,
@@ -108,10 +108,11 @@ export const tariffBright = {
 export const tariffAdvanced = {
     title: 'Расширенный',
     icon: star,
-    position: [{
+    positions: [{
         min: 1000,
         gb: Infinity,
         sms: 1000,
+        fourG: Infinity,
     },{
         min: 1500,
         gb: 50,
@@ -131,10 +132,11 @@ export const tariffAdvanced = {
 export const tariffBiz = {
     title: 'Бизнес',
     icon: briefcase,
-    position: [{
+    positions: [{
         min: 2500,
         gb: Infinity,
         sms: 1000,
+        fourG: Infinity,
     },{
         min: 3000,
         gb: 60,
@@ -154,14 +156,17 @@ export const tariffBiz = {
 export const tariffVip = {
     title: 'VIP',
     icon: goblet,
-    position: [{
+    positions: [{
         min: 5000,
         gb: Infinity,
         sms: 1000,
+        fourG: Infinity,
+        internet: Infinity,
     },{
         min: 7000,
         gb: 150,
         sms: 1000,
+        internet: Infinity,
     }],
     price: 1500,
     background:"radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"

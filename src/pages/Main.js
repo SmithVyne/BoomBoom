@@ -100,7 +100,6 @@ export default function Main() {
 
     function buyNumber(numbers) {
         dispatch({type: BUY_NUMBER, numbers})
-        // console.log(numbers)
     }
 
     return (
@@ -111,7 +110,7 @@ export default function Main() {
             </Carousel>
             <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только <span>самое необходимое</span></p>
             <Tariffs>
-                {tariffTypesArray.map(tariff => <TariffCard tariff={tariff} />)}
+                {tariffTypesArray.map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
             </Tariffs>
             <NumbersForMain buyNumber={buyNumber} />
 

@@ -87,7 +87,7 @@ export default function App() {
         </Wrapper>
         <AnimatePresence>
           {loginForm && <LoginForm />}
-          {buyNumberModal.show && <BuyNumberModal numbers={buyNumberModal.numbers} />}
+          {buyNumberModal.show && <BuyNumberModal buy={buyNumberModal.buy} numbers={buyNumberModal.numbers} payload={buyNumberModal.payload} />}
         </AnimatePresence>
       </ThemeProvider>
     </GlobalContext.Provider>

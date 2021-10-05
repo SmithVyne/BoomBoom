@@ -2,8 +2,7 @@ import Footer from "../globals/Footer/Footer";
 import styled from "styled-components/macro";
 import TariffCard from "../globals/TariffCard";
 import Tariffs from "../components/Tariffs";
-import {  tariffBase,  tariffBright, tariffTypesArray} from "../globals/utils";
-import { DefaultTariffs } from "./Main";
+import {  tariffTypesArray} from "../globals/utils";
 
 const SiteHeader = styled.h1`
 color: ${props => props.theme.textColor};
@@ -51,13 +50,13 @@ export default function TariffPage() {
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
                     <Tariffs>
-                        {tariffTypesArray.map(tariff => <TariffCard tariff={tariff} />)}
+                        {tariffTypesArray.map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
-                        {tariffTypesArray.slice(0, 2).map(tariff => <TariffCard tariff={tariff} />)}
+                        {tariffTypesArray.slice(0, 2).map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
             </Div>

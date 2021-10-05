@@ -1,5 +1,6 @@
 import {useContext, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
+import { RiDeleteBin6Fill} from 'react-icons/ri'
 import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
@@ -8,8 +9,9 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { useEscapeKey } from '../hooks'
 import { useDispatch } from 'react-redux'
-import { HIDE_MODAL, CATEGORIES, tariffTypesArray } from '../globals/utils';
+import { HIDE_MODAL, tariffTypesArray } from '../globals/utils';
 import { FourGSwitch } from '../globals/TariffCard'
+import Cleave from 'cleave.js/react';
 
 const Wrapper = styled(motion.div)`
     position: fixed;
@@ -48,6 +50,9 @@ const Modal = styled.div`
     font-size: 24px;
     border-radius: 32px;
     margin: 20px;
+    @media(max-width: 601px) {
+        padding: 16px;
+    }
     & h1 {
         font-weight: bold;
         font-size: 32px;
@@ -75,8 +80,54 @@ const Modal = styled.div`
             margin-bottom: 15px; 
             color: inherit;
         }
-        :first-of-type{
+        :nth-of-type(2n){
             margin-bottom: 64px;
+        }
+    }
+    .выберете_номер {
+        font-size: 20px;
+    }
+    .выберете_номер .input {
+        width: 300px;
+        height: 50px;
+        border-radius: 13px;
+        padding: 0 15px;
+        margin-right: 16px;
+        outline: none;
+        border: 2px solid rgba(1, 1, 1, 0.16);
+        font-weight: 500;
+        font-family: Circe;
+        :active, :focus {
+            border-color: #0E5EF8;
+        }
+        @media(max-width: 601px) {
+            margin-bottom: 16px;
+        }
+    }
+    .выберете_номер button {
+        height: 50px;
+        width: 176px;
+        border-radius: 13px;
+        border: none;
+        cursor: pointer;
+        background: #0E5EF8;
+        color: #fff;
+        font-weight: 500;
+    }
+    .ModalNumbers {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        .number {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            .left {
+                width: 600px;
+                padding: 10px;
+                border: 3px solid #FF0202;
+                border-radius: 12px;
+            }
         }
     }
 `
@@ -106,33 +157,18 @@ const Switches = styled.span`
     line-height: 29px;
     font-family: Circe, Arial, sans-serif;
     width: 70%;
-    @media(max-width: 450px) {
+    @media(max-width: 600px) {
         font-size: 16px;
         width: 100%;
     }
 `
-const Dropdown = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: relative;
+const Dropdown = styled.div`    
     border: 2px solid #4B75FC;
     border-radius: 14px;
-    width: fit-content;
-    margin-bottom: 44px;
-    .absolute {
-        position: absolute;
-        left: 0;
-        top: calc(100% + 4px);
-        z-index: 10;
-        background: #fff;
-        width: fit-content;
-        border: 2px solid rgba(18, 18, 18, 0.12);
-        border-radius: 0 0 14px 14px;  
-    }
-`
-const Item = styled.span`
-    width: 300px;
     height: fit-content;
+    width: 300px;
+    max-width: 100%;
+    margin-bottom: 44px;
     padding: 12px;
     cursor: pointer;
     display: flex;
@@ -154,8 +190,17 @@ const Item = styled.span`
     }
     border: ${({selected})=> selected && "2px solid #4B75FC"};
     .bottom {
-        color: #4B75FC;
         font-size: 20px;
+        color: black;
+    }
+    .bottom.first {
+        color: #4B75FC;
+    }
+    .dropdown {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 `
 
@@ -165,47 +210,53 @@ const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xml
 
 // const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
 
-const TariffsDropDown = () => {
-    const [selected, setSelected] = useState(0);
-    // const [show, setShow] = useState(false);
+const TariffsDropDown = ({tariffId, position}) => {
+    const tariff = tariffTypesArray[tariffId];
+    const [drop, setDrop] = useState(true);
+    const [selected, setSelected] = useState(position);
     return (
-        <Dropdown>
-            <Item>
-                <span className="top">
-                    <img alt="tariffIcon" src={tariffTypesArray[selected].icon} />
-                    {tariffTypesArray[selected].title}
-                    {downArrow}
-                </span>
-                <span className="bottom">
-                    <span className="rate">{tariffTypesArray[selected].position[0].min}мин, </span>
-                    <span className="rate">{tariffTypesArray[selected].position[0].gb === Infinity ? <CgInfinity />: tariffTypesArray[selected].position[0].gb}гб, </span>
-                    <span className="rate">{tariffTypesArray[selected].position[0].sms}смс</span>
-                </span>
-            </Item>
-            {/* <div className="absolute">
-                {tariffTypesArray.map(({title, icon}, idx) => (
-                    <Item onClick={() => setSelected(idx)} selected={selected === idx}>
-                        <span className="top">
-                            <img src={icon} />
-                            {title}
-                        </span>
-                        <span className="bottom">
-                            
-                        </span>
-                    </Item>
+        <Dropdown onClick={()=>setDrop(val => !val)}>
+            <span className="top">
+                <img alt="tariffIcon" src={tariff.icon} />
+                {tariff.title}
+                {downArrow}
+            </span>
+            <span className="bottom first">
+                <span>{tariff.positions[selected].min}мин , </span>
+                <span>{tariff.positions[selected].gb === Infinity ? <CgInfinity />: tariff.positions[selected].gb}гб , </span>
+                <span>{tariff.positions[selected].sms}смс</span>
+            </span>
+            {drop && 
+            <div className="dropdown">
+                {tariff.positions.map((position, index) => (
+                    <span onClick={() => setSelected(index)} className="bottom">
+                        <span>{position.min}мин , </span>
+                        <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
+                        <span>{position.sms}смс</span>
+                    </span>
                 ))}
-            </div> */}
+            </div>}
         </Dropdown>
     )
 }
 
+const GarbageCan = styled(RiDeleteBin6Fill)`
+    cursor: pointer;
+    &:hover {
+        color: #FF0202;
+    }
+`;
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-export default memo(function BuyNumberModal({numbers, buy}) {
+export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     // const [purchaseType, setPurchaseType] = useState(0);
+    const [deletedNumbers, setDeletedNumbers] = useState([]);
+    console.log(deletedNumbers)
     const dispatch = useDispatch();
-    useEscapeKey(() => dispatch({type: HIDE_MODAL}))
+    const {position, tariffId} = payload;
+    useEscapeKey(() => dispatch({type: HIDE_MODAL}));
     
     return ReactDOM.createPortal (
         <Wrapper
@@ -218,12 +269,23 @@ export default memo(function BuyNumberModal({numbers, buy}) {
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
                 {buy ?
                 <>
-                    
+                    <h1>Приобретение номера</h1>
+                    <section>
+                        <p>Выберете тарифы дял номера</p>
+                        <div className="ModalNumbers">
+                            {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
+                                <span key={number.ctn} className="number">
+                                    <span className="left">{number.ctn} </span>
+                                    <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
+                                </span>
+                            ))}
+                        </div>
+                    </section>
                 </>
                 :
                 <>
                     <h1>Подключение тарифа</h1>
-                    <TariffsDropDown />
+                    <TariffsDropDown position={position} tariffId={tariffId} />
                     <section>
                         <p>Дополнительные опции</p>
                         <Switches>
@@ -240,7 +302,10 @@ export default memo(function BuyNumberModal({numbers, buy}) {
                     <section>
                         <p>Выберете номер</p>
                         <div className="выберете_номер">
-                            <input type="text" />
+                            <Cleave className="input" options={{
+                                    phone: true,
+                                    phoneRegionCode: 'RU'
+                                }} type="tel" placeholder="Ваш новый номер" />
                             <button>Найти</button>
                         </div>
                     </section>

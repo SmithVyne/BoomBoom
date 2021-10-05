@@ -1,11 +1,12 @@
 import { combineReducers } from "redux"
 import { LOGIN_FAILED, GET_PASSWORD, USER_INFO, SHOW_MODAL, HIDE_MODAL, BUY_NUMBER } from "../../globals/utils"
 
-const initialNumber = {show: false, numbers: [], buy: false}
+const initialNumber = {show: false, numbers: [], buy: false, payload: {}}
 const BuyNumberReducer = (store = initialNumber, action) => {
     switch(action.type) {
         case SHOW_MODAL:
-            return {...store, show:true}
+            const {payload} = action;
+            return {...store, show: true, payload}
         case BUY_NUMBER:
             const {numbers} = action;
             return {...store, show: true, numbers, buy: true}
