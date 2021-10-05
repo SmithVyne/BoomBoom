@@ -7,16 +7,30 @@ import './NumbersPage.css';
 
 export default function NumbersPage() {
     // const dispatch = useDispatch();
-    function buyNumbers(selectedNumbersArray){
+    function buyNumbers(selectedNumbersArray) {
 
-        // !!!CONNECT POP UP HERE!!!
-        
+        // !!!CONNECT Buy numbers POP UP HERE!!!
+
         // dispatch({ type: BUY_NUMBER, number: selectedNumber })
+
+        console.log('Buy numbers Triggered')
         console.log(selectedNumbersArray)
+    }
+    function transferNumber({ date, transferredNumber, contactNumber }) {
+
+        // !!!CONNECT Transfer Number POP UP HERE!!!
+        console.log('Transfer Number Triggered')
+        console.log(date, transferredNumber, contactNumber)
+    }
+    function buyEsim() {
+
+        // !!!CONNECT Buy Esim POP UP HERE!!!
+        console.log('EsimBUY Triggered')
+
     }
     return (
         <>
-            <Numbers buyNumbers={buyNumbers}/>
+            <Numbers buyNumbers={buyNumbers} transferNumber={transferNumber} buyEsim={buyEsim} />
             <Footer />
         </>
     )
