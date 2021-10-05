@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { GlobalContext } from "../App"
 
 const Items = [

@@ -1,9 +1,11 @@
 import { AiOutlineRight } from "react-icons/ai";
+import { CgInfinity } from "react-icons/cg";
+import { TiWiFi } from "react-icons/ti";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Hit from "../assets/images/hit.svg";
 import infinity from "../assets/images/infinity.png";
-import globe from "../assets/images/globe.png";
+import headphones from "../assets/images/headphones.png";
 import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
@@ -17,7 +19,7 @@ import { useDispatch } from "react-redux";
 const Wrapper = styled.div`
     background: ${({ background }) => background};
     background-size: ${({ title }) => title === "VIP" && "600%"};
-    width: fit-content;
+    width: 520px;
     color: #fff;
     border-radius: 28px;
     padding: 20px 28px;
@@ -28,6 +30,64 @@ const Wrapper = styled.div`
     overflow: hidden;
     @media(max-width: 600px) {
         width: 90vw;
+    }
+    .detailsWrapper {
+        width: 70%;
+    }
+    .card-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+    }
+    .card-title-icon {
+        width: 44px;
+        @media(max-width: 450px) {
+            width: 36px;
+        }
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        margin-top: 40px;
+        .tarif-settings {
+            display: flex;
+            gap: 0 15px;
+            width: 100%;
+            align-items: center;
+            @media(max-width: 450px) {
+                gap: 0;
+                justify-content: space-between;
+            }
+        .item {
+            font-family: Circe, Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 50px;
+            line-height: 100%;
+            display: flex;
+            align-items: flex-end;
+            @media(max-width: 600px) {
+                font-size: 30px;
+            }
+        }
+        }
+    }
+    .priceInfo {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 28px;
+        color: #fff;
+        width: fit-content;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+        @media(max-width: 450px) {
+            font-size: 20px;
+        }
     }
 `;
 
@@ -42,7 +102,7 @@ const Title = styled.p`
     @media(max-width: 720px) {
         font-style: normal;
         font-weight: bold;
-        font-size: 28px;
+        font-size: 36px;
         line-height: 100%;
     }
 `;
@@ -71,31 +131,34 @@ const Sub = styled.small`
     font-style: normal;
     font-weight: 350;
     font-size: 28px;
-    line-height: 41px;
-    @media(max-width: 720px) {
-        font-style: normal;
-        font-weight: 350;
-        font-size: 12px;
-        line-height: 18px;
+    @media(max-width: 450px) {
+        font-size: 16px;
     }
 `
-const Details = styled.small`
+const Details = styled.span`
     display: flex;
     gap: 10px;
-    align-items: center;
-    margin-top: 22px;
-    font-size: 16px;
+    align-items: flex-start;
+    margin-top: 24px;
+    font-size: 20px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease-in-out;
     &:first-of-type {
-        margin-top: 62px;
+        opacity: 1;
+        margin-top: 28px;
     }
-    &:last-of-type {
-        transition: opacity 0.3s ease-in-out;
-        margin-top: 30px;
+    .text-body {
+        font-family: Circe, Arial, sans-serif;
+        font-size: inherit;
+        color: #fff;
+        margin: 0;
+        @media (max-width: 450px) {
+            font-size: 16px;
+        }
     }
 `
 
 const MiniIcon = styled.img`
-
     width: 14px;
     margin: 5px 0;
     &:hover {
@@ -104,8 +167,14 @@ const MiniIcon = styled.img`
 `
 const Switches = styled.span`
     display: flex;
-    align-items: center;
-    gap: 10px;
+    align-items: stretch;
+    gap: 20px;
+    font-size: 20px;
+    line-height: 29px;
+    font-family: Circe, Arial, sans-serif;
+    @media(max-width: 450px) {
+    font-size: 16px;
+    }
 `
 const More = styled(Link)`
     font-family: Circe, Arial, sans-serif;
@@ -121,7 +190,7 @@ const More = styled(Link)`
     &:hover {
         color: inherit; 
     }
-    @media(max-width: 720px) {
+    @media(max-width: 450px) {
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
@@ -129,16 +198,83 @@ const More = styled(Link)`
     }
 `
 
-export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
+const FourGSwitchStyles = styled.span`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    @media (max-width: 500px) {
+        flex-wrap: wrap;
+    }
+    ${({price}) => {
+        return price === Infinity && {
+            flexDirection: "row",
+        }
+    }}
+    background: ${({modal, checked}) => {
+        if(modal) {
+            return "transparent"
+        } else {
+            return checked ? "#fff" : "rgba(255, 255, 255, 0.12)";
+        }
+    }};
+    color: ${({checked, modal}) => {
+        if(!modal) {
+            return checked && "#121212"
+        }
+    }};
+    border-radius: 14px;
+    width: 50%;
+    padding: 13px;
+    font-weight: bold;
+    border: ${({modal, checked}) => {
+        if(modal) {
+            return checked ? "3px solid #0E5EF8" : "3px solid rgba(1, 1, 1, 0.16)";
+        }
+    }};
+    span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: normal;
+        @media(max-width: 450px) {
+            font-size: 16px;
+        }
+    }
+`
+
+export const FourGSwitch = ({title, price, modal=false}) => {
+    const [checked, setChecked] = useState(false);
+    return (
+    <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
+        {title}
+        {price === Infinity ? 
+        (title === "Безлимитный 4G" ? <CgInfinity size={60} /> : <TiWiFi size={60} /> )
+        :
+        <span>
+            <TinySwitch checked={checked} setChecked={setChecked} />
+            +{title === "Безлимитный 4G" ? "150" : "50"} ₽
+        </span> }
+    </FourGSwitchStyles>)
+}
+
+
+export default memo(function TariffCard({ tariff, tariffId }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
     const dispatch = useDispatch();
-
+    const {title, icon, background, hit } = tariff;
+    const payload = {
+        position: positionValue, 
+        tariffId
+    }
     function handlePositionChange(position) {
         setPositionValue(position)
     }
     return (
-        <Wrapper title={title} background={background} scrolling={scrolling}>
+        <Wrapper title={title} background={background}>
             <AnimatePresence>
                 {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
@@ -148,44 +284,31 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                 {hit && <img alt="hit" src={Hit} />}
             </span>
             <span className="card-body">
-                <small className="tarif-settings-title">Настроить тариф</small>
                 <span className="tarif-settings">
-                    <span className="item">{tariff.position[positionValue].gb}<Sub>гб</Sub></span>
-                    <span className="item">{tariff.position[positionValue].min}<Sub>мин</Sub></span>
-                    <span className="item">{tariff.position[positionValue].sms}<Sub>смс</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].min}<Sub>мин</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].gb === Infinity ? <CgInfinity />: tariff.positions[positionValue].gb}<Sub>гб</Sub></span>
+                    <span className="item">{tariff.positions[positionValue].sms}<Sub>смс</Sub></span>
                 </span>
-                <TariffBar handlePositionChange={handlePositionChange} />
+                <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
-                    <span className="_4Gswitch">
-                        Безлимитный 4G
-                        <span>
-                            <TinySwitch />
-                            +100 Р
-                        </span>
-                    </span>
-                    <span className="_4Gswitch">
-                        Раздача интернета
-                        <span>
-                            <TinySwitch />
-                            +50 Р
-                        </span>
-                    </span>
+                    <FourGSwitch title="Безлимитный 4G" price={tariff.positions[positionValue].fourG} />
+                    <FourGSwitch title="Раздача интернета" price={tariff.positions[positionValue].internet} />
                 </Switches>
-                <span >
+                <span className="detailsWrapper" >
                     <Details>
-                        <MiniIcon src={infinity} /><p className='infinity-text'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
+                        <MiniIcon src={infinity} /><p className='text-body'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
                             e.stopPropagation()
                             setShowDropDown(true)
                         }} pointer src={info} />
                     </Details>
-                    <Details><MiniIcon src={globe} /><p className='infinity-text'>+300 мин в роуминге</p></Details>
-                    <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='beeline-text'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
+                    <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
+                    <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>
                 </span>
-                <More to={`/tariff-info/:${tariff.tariffName}`}>Подробнее про тариф</More>
+                <More to={`/tariff-info/:${title}`}>Подробнее про тариф</More>
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес
-                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, title})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, payload})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )

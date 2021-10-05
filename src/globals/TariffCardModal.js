@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import whatsapp from "../assets/images/whatsapp.png";
 import skype from "../assets/images/skype.png";
 import viber from "../assets/images/viber.png";
@@ -105,9 +105,9 @@ const MiniIcon = styled.img`
 
 export default memo(function TariffCardModal({setShowDropDown}) {
     useEffect(()=>{
-        document.addEventListener("mouseover", () => {
-            window.innerWidth <= 1024 && setShowDropDown(false)
-        })
+        const remover = () => setShowDropDown(false);
+        document.addEventListener("mouseover", remover)
+        return () => document.removeEventListener("mouseover", remover)
     }, [setShowDropDown])
 
     return (

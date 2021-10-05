@@ -1,6 +1,6 @@
 import React from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link } from "react-router-dom";
 
 

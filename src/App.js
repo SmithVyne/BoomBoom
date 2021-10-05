@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import Nav from "./globals/Nav";
 import Main from "./pages/Main";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components/macro";
 import {Switch, Route} from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
     padding: 48px 40px 0 40px;
   }
   @media(max-width: 720px) {
-    padding: 5vw;
+    padding: 7vw 5vw 0 5vw;
   }
 `;
 const Mainml = styled.main`
@@ -48,15 +48,12 @@ export default function App() {
   const buyNumberModal = useSelector(store => store.buyNumberModal);
 
   const whichTheme = (darkTheme) => {
-    
     if(darkTheme) {
-      
         return {
           background: "#010101",
           textColor: "#ffffff",
         }
       } else {
-     
         return {
           background: "#F8F8F8",
           textColor: "#121212",
@@ -90,7 +87,7 @@ export default function App() {
         </Wrapper>
         <AnimatePresence>
           {loginForm && <LoginForm />}
-          {buyNumberModal.show && <BuyNumberModal name={buyNumberModal.title} buy={buyNumberModal.buy} number={buyNumberModal.number} />}
+          {buyNumberModal.show && <BuyNumberModal buy={buyNumberModal.buy} numbers={buyNumberModal.numbers} payload={buyNumberModal.payload} />}
         </AnimatePresence>
       </ThemeProvider>
     </GlobalContext.Provider>

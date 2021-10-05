@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import "./index.css";
 const Spinner = styled.div`
     & div:after {

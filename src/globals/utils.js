@@ -1,3 +1,9 @@
+import duck from "../assets/images/duck.png";
+import light from "../assets/images/light.png";
+import star from "../assets/images/star.png";
+import briefcase from "../assets/images/briefcase.png";
+import goblet from "../assets/images/goblet.png";
+
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const GET_PASSWORD = "GET_PASSWORD";
@@ -53,107 +59,117 @@ export async function GetNumbers() {
 }
 
 export const tariffBase = {
-    tariffName: 'Базовый',
-    position: [{
-        min: 500,
-        gb: 10,
-        sms: 100,
+    title: 'Базовый',
+    icon: duck,
+    positions: [{
+        min: 300,
+        gb: 40,
+        sms: 300,
+    },{
+        min: 400,
+        gb: 30,
+        sms: 300,
     },{
         min: 400,
         gb: 20,
-        sms: 100,
+        sms: 300,
     },{
-        min: 300,
-        gb: 30,
-        sms: 100,
-    },{
-        min: 200,
-        gb: 40,
+        min: 500,
+        gb: 10,
         sms: 100,
     }],
     price: 350,
+    background:"linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)"
 }
 export const tariffBright = {
-    tariffName: 'Яркий',
-    position: [{
-        min: 1000,
-        gb: 25,
+    title: 'Яркий',
+    icon: light,
+    positions: [{
+        min: 600,
+        gb: 50,
         sms: 500,
     }, {
-        min: 900,
-        gb: 35,
+        min: 800,
+        gb: 40,
         sms: 500,
     },{
         min: 800,
-        gb: 45,
+        gb: 30,
         sms: 500,
     }, {
-        min: 700,
-        gb: 55,
+        min: 1000,
+        gb: 25,
         sms: 500,
     }],
     price: 500,
+    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);",
+    hit: true,
 }
 export const tariffAdvanced = {
-    tariffName: 'Расширенный',
-    position: [{
-        min: 2000,
-        gb: 35,
+    title: 'Расширенный',
+    icon: star,
+    positions: [{
+        min: 1000,
+        gb: Infinity,
         sms: 1000,
+        fourG: Infinity,
     },{
-        min: 1800,
-        gb: 45,
-        sms: 1000,
-    },{
-        min: 1600,
-        gb: 75,
-        sms: 1000,
-    },{
-        min: 1400,
-        gb: 95,
-        sms: 1000,
-    }],
-    price: 800,
-}
-export const tariffBiz = {
-    tariffName: 'Бизнес',
-    position: [{
-        min: 4000,
+        min: 1500,
         gb: 50,
         sms: 1000,
     },{
-        min: 3800,
-        gb: 70,
+        min: 1500,
+        gb: 40,
         sms: 1000,
     },{
-        min: 3600,
-        gb: 90,
+        min: 2000,
+        gb: 35,
+        sms: 1000,
+    }],
+    price: 800,
+    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)" 
+}
+export const tariffBiz = {
+    title: 'Бизнес',
+    icon: briefcase,
+    positions: [{
+        min: 2500,
+        gb: Infinity,
+        sms: 1000,
+        fourG: Infinity,
+    },{
+        min: 3000,
+        gb: 60,
         sms: 1000,
     },{
-        min: 3400,
-        gb: 110,
+        min: 3000,
+        gb: 50,
+        sms: 1000,
+    },{
+        min: 4000,
+        gb: 50,
         sms: 1000,
     }],
     price: 1000,
+    background:"radial-gradient(ellipse at center, #324E69 0%, #242424 100%)"
 }
 export const tariffVip = {
-    tariffName: 'VIP',
-    position: [{
+    title: 'VIP',
+    icon: goblet,
+    positions: [{
+        min: 5000,
+        gb: Infinity,
+        sms: 1000,
+        fourG: Infinity,
+        internet: Infinity,
+    },{
         min: 7000,
-        gb: 100,
+        gb: 150,
         sms: 1000,
-    },{
-        min: 6800,
-        gb: 120,
-        sms: 1000,
-    },{
-        min: 6600,
-        gb: 140,
-        sms: 1000,
-    },{
-        min: 6400,
-        gb: 160,
-        sms: 1000,
+        internet: Infinity,
     }],
     price: 1500,
+    background:"radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"
 }
+
+export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tariffBiz, tariffVip ]

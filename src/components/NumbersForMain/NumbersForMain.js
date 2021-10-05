@@ -4,7 +4,7 @@ import { GlobalContext } from '../../App';
 import './NumbersForMain.css';
 import searchIcon from '../../assets/images/search.svg'
 import numbers_cart from '../../assets/images/numbers-cart.svg'
-import {GetNumbers } from '../../globals/utils'
+import { GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
 
 function NumbersForMain(props) {
@@ -736,8 +736,6 @@ function NumbersForMain(props) {
 
     }
 
-
-
     return (
         <>
             {screenWidth > 930 ?
@@ -824,6 +822,7 @@ function NumbersForMain(props) {
                             {apiError ? <p className={`numbers-for-main__contact ${darkTheme ? 'numbers-for-main__contact_dark' : ''}`}>{apiError}</p> : <></>}
 
                             {page === 1 && numbers && numbers.length > 0 ? numbers.map((item, i) => (
+
                                 <div  key={i} onMouseEnter={() => setHoveredNumber(item)} onMouseLeave={() => {
                                     if (item.ctn !== selectedNumber.ctn) {
                                         

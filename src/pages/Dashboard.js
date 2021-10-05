@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
 import { Progress } from 'antd'

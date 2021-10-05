@@ -1,13 +1,8 @@
 import Footer from "../globals/Footer/Footer";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import TariffCard from "../globals/TariffCard";
 import Tariffs from "../components/Tariffs";
-import duck from "../assets/images/duck.png";
-import light from "../assets/images/light.png";
-import star from "../assets/images/star.png";
-import jula from "../assets/images/jula.png";
-import goblet from "../assets/images/goblet.png";
-import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from "../globals/utils";
+import {  tariffTypesArray} from "../globals/utils";
 
 const SiteHeader = styled.h1`
 color: ${props => props.theme.textColor};
@@ -55,18 +50,13 @@ export default function TariffPage() {
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
                     <Tariffs>
-                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
-                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
-                        <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
-                        <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                        <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                        {tariffTypesArray.map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
-                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={light} />
+                        {tariffTypesArray.slice(0, 2).map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
             </Div>
