@@ -82,7 +82,7 @@ export default function TariffePage() {
     <div>
       <Header darkTheme={darkTheme} tariff={selectedTrariff}/>
       <Section darkTheme={darkTheme} tariff={selectedTrariff} />
-      <Footer />
+
     </div>
   );
 };

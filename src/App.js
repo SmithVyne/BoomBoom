@@ -2,17 +2,19 @@ import React, { createContext, useEffect, useState } from "react";
 import Nav from "./globals/Nav";
 import Main from "./pages/Main";
 import styled, { ThemeProvider } from "styled-components/macro";
-import {Switch, Route} from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import TariffPage from "./pages/TariffPage";
 import LoginForm from "./globals/LoginForm";
 import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
-import {useLocalStorage} from "./hooks";
+import { useLocalStorage } from "./hooks";
 import NumbersPage from "./pages/NumbersPage/NumbersPage";
 import RoamingPage from "./pages/RoamingPage/RoamingPage";
 import OrganisationsPage from "./pages/OrganisationsPage/OrganisationsPage";
 import TariffePage from "./pages/TariffePage/TariffePage";
+import PageNotFound from './components/PageNotFound/PageNotFound'
 import BuyNumberModal from "./components/BuyNumberModal";
+import Footer from "./globals/Footer/Footer";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
 
@@ -48,28 +50,28 @@ export default function App() {
   const buyNumberModal = useSelector(store => store.buyNumberModal);
 
   const whichTheme = (darkTheme) => {
-    if(darkTheme) {
-        return {
-          background: "#010101",
-          textColor: "#ffffff",
-        }
-      } else {
-        return {
-          background: "#F8F8F8",
-          textColor: "#121212",
-        }
-      } 
+    if (darkTheme) {
+      return {
+        background: "#010101",
+        textColor: "#ffffff",
+      }
+    } else {
+      return {
+        background: "#F8F8F8",
+        textColor: "#121212",
+      }
     }
-         
+  }
+
 
   useEffect(() => {
-      const watcher = () => setIsMobile(window.innerWidth < 1100);
-      window.addEventListener("resize", watcher);
-      return () => window.removeEventListener("resize", watcher);
+    const watcher = () => setIsMobile(window.innerWidth < 1100);
+    window.addEventListener("resize", watcher);
+    return () => window.removeEventListener("resize", watcher);
   }, [])
-  
+
   return (
-    <GlobalContext.Provider value={{darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile}}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <Wrapper>
           <Nav />
@@ -82,8 +84,10 @@ export default function App() {
               <Route path="/roaming" component={RoamingPage} />
               <Route path="/organisations" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
+              <Route path="*" component={PageNotFound} />
             </Switch>
           </Mainml>
+          <Footer/>
         </Wrapper>
         <AnimatePresence>
           {loginForm && <LoginForm />}

@@ -29,7 +29,7 @@ const Wrappper = styled.nav`
         flex-wrap: wrap;
         justify-content: flex-end;
     }
-    @media (max-width: 1100px) {
+    @media (max-width: 1325px) {
         justify-content: flex-start;
         & .menu {
             display: none;
@@ -46,7 +46,7 @@ const Wrappper = styled.nav`
         @media(max-width: 1500px) {
             margin-right: 61px;
         }
-        @media(max-width: 1100px) {
+        @media(max-width: 1325px) {
             margin-right: auto;
         }
         &  img {
@@ -96,7 +96,7 @@ const DashboardBtn = styled(Link)`
     padding: 0 24px 5px;
     cursor: pointer;
     width: max-content;
-    @media(max-width: 1100px) {
+    @media(max-width: 1325px) {
         margin-right: 35px;
         font-size: 20px;
     }
@@ -106,10 +106,12 @@ const DashboardBtn = styled(Link)`
         flex-wrap: wrap;
         font-size: 16px;
     }
-    @media(max-width: 326px) {
+    @media(max-width: 400px) {
+        padding: 0 10px 5px;
         font-weight: 500;
         font-size: 16px;
         line-height: 100%;
+        width: 88px;
     }
     &:hover {
         color: #fff;
@@ -121,7 +123,7 @@ const MenuBtn = styled.img`
 
     cursor: pointer;
     display: none;
-    @media (max-width: 1100px) {
+    @media (max-width: 1325px) {
         display: block;
     }
 `;

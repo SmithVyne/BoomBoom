@@ -7,7 +7,6 @@ export default function NumbersPage() {
     return (
         <>
             <Organisations />
-            <Footer />
         </>
     )
 }

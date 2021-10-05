@@ -5,10 +5,10 @@ import styled from "styled-components/macro"
 import { GlobalContext } from "../App"
 
 const Items = [
-    {name: "все ТАРИФЫ", subItems: ["для телефонов", "для других устройств"], route: "tariffs"},
-    {name: "выбрать номер", subItems: ["перенести свой", "подключить eSIM"], route: "numbers/:все"},
+    {name: "тарифы", subItems: ["для телефонов", "для других устройств"], route: "tariffs"},
+    {name: "номера", subItems: ["перенести свой", "подключить eSIM"], route: "numbers/:все"},
     {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"], route: "roaming"},
-    {name: "ОРГАНИЗАЦИЯМ", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"], route: "organisations"},
+    {name: "организациям", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"], route: "organisations"},
     {name: "поддержка", subItems: ["f.a.q", "карта покрытия", "контакты"], route: "поддержка"},
 ];
 const Item = styled.div`
