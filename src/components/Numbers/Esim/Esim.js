@@ -37,7 +37,7 @@ export default function Esim(props) {
                         <div className={`esim__faq`}>
                             <div className={`esim__faq-title`}>
                                 <img className={`esim__faq-title-img`} alt="?" src={questionMark} />
-                                <h2 className={`esim__faq-title-text`}>Вопросы и ответы</h2>
+                                <h2 className={`esim__faq-title-text ${darkTheme? 'esim__faq-title-text_dark' : ''}`}>Вопросы и ответы</h2>
                             </div>
                             <div className={`esim__faq-cards`}>
                                 {faqData && faqData.map((item, i) => (
@@ -49,22 +49,22 @@ export default function Esim(props) {
                         </div>
                     </div>
                     <div className={`esim__second-column`}>
-                        <div className={`esim__propositions`}>
+                        <div className={`esim__propositions ${darkTheme? 'esim__propositions_dark' : ''}`}>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Огонь" src={fire} />
-                                <p className={`esim__proposition-text`}>Получение<br />за 5 минут</p>
+                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
                             </div>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Песочные часы" src={hourglass} />
-                                <p className={`esim__proposition-text`}>Получение<br />за 5 минут</p>
+                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
                             </div>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Телефон" src={phoneIcon} />
-                                <p className={`esim__proposition-text`}>Несколько номеров<br />на телефоне</p>
+                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Несколько номеров<br />на телефоне</p>
                             </div>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Клевер" src={clover} />
-                                <p className={`esim__proposition-text`}>Безопасно<br />для природы</p>
+                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Безопасно<br />для природы</p>
                             </div>
                         </div>
                         <div className={`esim__how-connect`}>
@@ -101,22 +101,22 @@ export default function Esim(props) {
                         </div>
 
                     </div>
-                    <div className={`esim__propositions`}>
+                    <div className={`esim__propositions ${darkTheme? 'esim__propositions_dark' : ''}`}>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Огонь" src={fire} />
-                            <p className={`esim__proposition-text`}>Получение<br />за 5 минут</p>
+                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
                         </div>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Песочные часы" src={hourglass} />
-                            <p className={`esim__proposition-text`}>Получение<br />за 5 минут</p>
+                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
                         </div>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Телефон" src={phoneIcon} />
-                            <p className={`esim__proposition-text`}>Несколько номеров<br />на телефоне</p>
+                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Несколько номеров<br />на телефоне</p>
                         </div>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Клевер" src={clover} />
-                            <p className={`esim__proposition-text`}>Безопасно<br />для природы</p>
+                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Безопасно<br />для природы</p>
                         </div>
                     </div>
                     <div className={`esim__how-connect`}>
@@ -139,7 +139,7 @@ export default function Esim(props) {
                     <div className={`esim__faq`}>
                         <div className={`esim__faq-title`}>
                             <img className={`esim__faq-title-img`} alt="?" src={questionMark} />
-                            <h2 className={`esim__faq-title-text`}>Часто задаваемые вопросы</h2>
+                            <h2 className={`esim__faq-title-text ${darkTheme? 'esim__faq-title-text_dark' : ''}`}>Часто задаваемые вопросы</h2>
                         </div>
                         <div className={`esim__faq-cards`}>
                             {faqData && faqData.map((item, i) => (

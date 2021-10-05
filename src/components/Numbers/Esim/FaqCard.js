@@ -22,9 +22,9 @@ export default function FaqCard(props) {
 
                     }}>
                         <div className={`esim__faq-card-items`}>
-                            <h2 className={`esim__faq-card-title`}>{props.item && props.item.title}</h2>
+                            <h2 className={`esim__faq-card-title ${darkTheme? 'esim__faq-card-title_dark' : ''}`}>{props.item && props.item.title}</h2>
                             <svg className={`esim__faq-card-tick ${props.faqOpend === `${props.item.title}` ? 'esim__faq-card-tick_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill="#010101" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill={darkTheme? '#ffffff' :"#010101"} />
                             </svg>
                         </div>
 
@@ -42,10 +42,10 @@ export default function FaqCard(props) {
                                     }
 
                                 }}>
-                                    <p className={`esim__faq-answer-dropdown-text`}>{item.title}</p>
-                                    <p className={`esim__faq-answer-dropdown-text`}>{item.subtitle}</p>
+                                    <p className={`esim__faq-answer-dropdown-text ${darkTheme? 'esim__faq-card-title_dark' : ''}`}>{item.title}</p>
+                                    <p className={`esim__faq-answer-dropdown-text ${darkTheme? 'esim__faq-card-title_dark' : ''}`}>{item.subtitle}</p>
                                     <svg className={`esim__faq-card-tick ${props.dropdownOpend === `${item.title}${item.subtitle}` ? 'esim__faq-card-tick_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill="#010101" />
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill={darkTheme? '#ffffff' :"#010101"} />
                                     </svg>
                                 </div>
                                 <ul>
@@ -84,16 +84,16 @@ export default function FaqCard(props) {
 
                     }}>
                         <div className={`esim__faq-card-items`}>
-                            <h2 className={`esim__faq-card-title`}>{props.item && props.item.title}</h2>
+                            <h2 className={`esim__faq-card-title ${darkTheme? 'esim__faq-card-title_dark' : ''}`}>{props.item && props.item.title}</h2>
                             <svg className={`esim__faq-card-tick ${props.faqOpend === `${props.item.title}` ? 'esim__faq-card-tick_active' : ''}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill="#010101" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99967 11.985L15.6077 6.20508L16.6663 7.29613L9.99967 14.1671L3.33301 7.29613L4.39162 6.20508L9.99967 11.985Z" fill={darkTheme? '#ffffff' :"#010101"} />
                             </svg>
                         </div>
 
                     </div>
 
                     <div className={`esim__faq-answer esim__faq-answer_hidden ${props.faqOpend === `${props.item.title}` ? 'esim__faq-answer_active' : ''}`}>
-                        <p className={`esim__faq-answer-text`}>{props.item.answer}</p>
+                        <p className={`esim__faq-answer-text ${darkTheme? 'esim__faq-card-title_dark' : ''}`}>{props.item.answer}</p>
                     </div>
 
 

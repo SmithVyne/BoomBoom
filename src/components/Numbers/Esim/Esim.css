@@ -459,6 +459,19 @@
     }
 }
 
+.esim__faq-title-text_dark{
+    color: #FFFFFF;
+}
+
+.esim__faq-card-title_dark {
+    color: #FFFFFF;
+}
+.esim__propositions_dark{
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #010101;
+}
+.esim__proposition-text_dark{
+    color: #FFFFFF;
+}
 @media screen and (max-width: 569px) {
     .esim__how-connect-list {
         margin: 17px 0 0 0;
