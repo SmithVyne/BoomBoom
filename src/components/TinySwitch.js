@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components/macro';
+import React from 'react';
+import styled from 'styled-components';
 import cool from "../assets/images/cool.png";
 
 const Tinyswitch = styled.span`
@@ -44,9 +44,9 @@ const SwitchBg = styled.img`
     z-index: 1;
 `
 
-export default function TinySwitch({checked}) {
+export default function TinySwitch({checked, setChecked}) {
     return (
-        <Tinyswitch checked={checked}>
+        <Tinyswitch onClick={()=>setChecked(checked => !checked)} checked={checked}>
             <Flick checked={checked} />
             <SwitchBg src={cool} />
         </Tinyswitch>

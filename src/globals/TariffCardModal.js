@@ -105,9 +105,9 @@ const MiniIcon = styled.img`
 
 export default memo(function TariffCardModal({setShowDropDown}) {
     useEffect(()=>{
-        document.addEventListener("mouseover", () => {
-            window.innerWidth <= 1024 && setShowDropDown(false)
-        })
+        const remover = () => setShowDropDown(false);
+        document.addEventListener("mouseover", remover)
+        return () => document.removeEventListener("mouseover", remover)
     }, [setShowDropDown])
 
     return (

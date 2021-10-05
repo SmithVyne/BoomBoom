@@ -2,9 +2,7 @@ import Footer from "../globals/Footer/Footer";
 import styled from "styled-components/macro";
 import TariffCard from "../globals/TariffCard";
 import Tariffs from "../components/Tariffs";
-import duck from "../assets/images/duck.png";
-import light from "../assets/images/light.png";
-import {  tariffBase,  tariffBright} from "../globals/utils";
+import {  tariffBase,  tariffBright, tariffTypesArray} from "../globals/utils";
 import { DefaultTariffs } from "./Main";
 
 const SiteHeader = styled.h1`
@@ -52,13 +50,14 @@ export default function TariffPage() {
                 <SiteHeader>Тарифы boom telecom</SiteHeader>
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
-                    <DefaultTariffs />
+                    <Tariffs>
+                        {tariffTypesArray.map(tariff => <TariffCard tariff={tariff} />)}
+                    </Tariffs>
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
-                        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(135deg, #4B74FC 0%, #3039FF 100%)" icon={duck} />
-                        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(135deg, #4B5AFD 0%, #4B38FE 100%)" hit icon={light} />
+                        {tariffTypesArray.slice(0, 2).map(tariff => <TariffCard tariff={tariff} />)}
                     </Tariffs>
                 </div>
             </Div>

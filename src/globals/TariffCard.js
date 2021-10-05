@@ -204,7 +204,6 @@ const FourGSwitchStyles = styled.span`
     align-items: center;
     text-align: center;
     gap: 12px;
-    cursor: pointer;
     background: ${({modal, checked}) => {
         if(modal) {
             return "transparent"
@@ -240,25 +239,26 @@ const FourGSwitchStyles = styled.span`
 export const FourGSwitch = ({title, price, modal=false}) => {
     const [checked, setChecked] = useState(false);
     return (
-    <FourGSwitchStyles onClick={()=>setChecked(val => !val)} checked={checked} modal={modal}>
+    <FourGSwitchStyles checked={checked} modal={modal}>
         {title}
         <span>
-            <TinySwitch checked={checked} />
+            <TinySwitch checked={checked} setChecked={setChecked} />
             +{price} ₽
         </span>
     </FourGSwitchStyles>)
 }
 
-export default memo(function TariffCard({ tariff, background, title, hit, icon, scrolling }) {
+export default memo(function TariffCard({ tariff }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
     const dispatch = useDispatch();
+    const {title, icon, background, hit } = tariff;
 
     function handlePositionChange(position) {
         setPositionValue(position)
     }
     return (
-        <Wrapper title={title} background={background} scrolling={scrolling}>
+        <Wrapper title={title} background={background}>
             <AnimatePresence>
                 {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
@@ -288,7 +288,7 @@ export default memo(function TariffCard({ tariff, background, title, hit, icon, 
                     <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
                     <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>
                 </span>
-                <More to={`/tariff-info/:${tariff.tariffName}`}>Подробнее про тариф</More>
+                <More to={`/tariff-info/:${title}`}>Подробнее про тариф</More>
             </span>
             <span className="priceInfo">
                 {tariff.price} руб./мес

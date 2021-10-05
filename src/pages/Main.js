@@ -9,22 +9,8 @@ import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
 import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
-import duck from "../assets/images/duck.png";
-import light from "../assets/images/light.png";
-import briefcase from "../assets/images/briefcase.png";
-import goblet from "../assets/images/goblet.png";
-import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip, BUY_NUMBER } from '../globals/utils';
+import { BUY_NUMBER, tariffTypesArray } from '../globals/utils';
 import { useDispatch } from 'react-redux';
-
-export const DefaultTariffs = () => (
-    <Tariffs>
-        <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
-        <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background=" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);" hit icon={light} />
-        <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background=" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)" icon={duck} />
-        <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={briefcase} />
-        <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
-    </Tariffs>
-)
 
 const slides = [
     {
@@ -124,7 +110,9 @@ export default function Main() {
                 <Controls move={move} />
             </Carousel>
             <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только <span>самое необходимое</span></p>
-            <DefaultTariffs />
+            <Tariffs>
+                {tariffTypesArray.map(tariff => <TariffCard tariff={tariff} />)}
+            </Tariffs>
             <NumbersForMain buyNumber={buyNumber} />
 
             <СoverageMap />

@@ -1,3 +1,9 @@
+import duck from "../assets/images/duck.png";
+import light from "../assets/images/light.png";
+import star from "../assets/images/star.png";
+import briefcase from "../assets/images/briefcase.png";
+import goblet from "../assets/images/goblet.png";
+
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const GET_PASSWORD = "GET_PASSWORD";
@@ -53,7 +59,8 @@ export async function GetNumbers() {
 }
 
 export const tariffBase = {
-    tariffName: 'Базовый',
+    title: 'Базовый',
+    icon: duck,
     position: [{
         min: 300,
         gb: 40,
@@ -72,9 +79,11 @@ export const tariffBase = {
         sms: 100,
     }],
     price: 350,
+    background:"linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)"
 }
 export const tariffBright = {
-    tariffName: 'Яркий',
+    title: 'Яркий',
+    icon: light,
     position: [{
         min: 600,
         gb: 50,
@@ -93,9 +102,12 @@ export const tariffBright = {
         sms: 500,
     }],
     price: 500,
+    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);",
+    hit: true,
 }
 export const tariffAdvanced = {
-    tariffName: 'Расширенный',
+    title: 'Расширенный',
+    icon: star,
     position: [{
         min: 1000,
         gb: Infinity,
@@ -114,9 +126,11 @@ export const tariffAdvanced = {
         sms: 1000,
     }],
     price: 800,
+    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)" 
 }
 export const tariffBiz = {
-    tariffName: 'Бизнес',
+    title: 'Бизнес',
+    icon: briefcase,
     position: [{
         min: 2500,
         gb: Infinity,
@@ -135,9 +149,11 @@ export const tariffBiz = {
         sms: 1000,
     }],
     price: 1000,
+    background:"radial-gradient(ellipse at center, #324E69 0%, #242424 100%)"
 }
 export const tariffVip = {
-    tariffName: 'VIP',
+    title: 'VIP',
+    icon: goblet,
     position: [{
         min: 5000,
         gb: Infinity,
@@ -148,4 +164,7 @@ export const tariffVip = {
         sms: 1000,
     }],
     price: 1500,
+    background:"radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"
 }
+
+export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tariffBiz, tariffVip ]

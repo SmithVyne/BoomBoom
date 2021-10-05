@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react'
-import { CgClose } from 'react-icons/cg'
+import { CgClose, CgInfinity } from 'react-icons/cg'
 import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
@@ -8,10 +8,7 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { useEscapeKey } from '../hooks'
 import { useDispatch } from 'react-redux'
-import { HIDE_MODAL, CATEGORIES } from '../globals/utils';
-import duck from "../assets/images/duck.png";
-import star from "../assets/images/star.png";
-import goblet from "../assets/images/goblet.png";
+import { HIDE_MODAL, CATEGORIES, tariffTypesArray } from '../globals/utils';
 import { FourGSwitch } from '../globals/TariffCard'
 
 const Wrapper = styled(motion.div)`
@@ -114,16 +111,99 @@ const Switches = styled.span`
         width: 100%;
     }
 `
+const Dropdown = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 2px solid #4B75FC;
+    border-radius: 14px;
+    width: fit-content;
+    margin-bottom: 44px;
+    .absolute {
+        position: absolute;
+        left: 0;
+        top: calc(100% + 4px);
+        z-index: 10;
+        background: #fff;
+        width: fit-content;
+        border: 2px solid rgba(18, 18, 18, 0.12);
+        border-radius: 0 0 14px 14px;  
+    }
+`
+const Item = styled.span`
+    width: 300px;
+    height: fit-content;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .top {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        font-size: 20px;
+        font-weight: bold;
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        svg {
+            margin-bottom: 9px;
+        }
+    }
+    border: ${({selected})=> selected && "2px solid #4B75FC"};
+    .bottom {
+        color: #4B75FC;
+        font-size: 20px;
+    }
+`
 
-const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
+const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill='#010101' />
+</svg>);
+
+// const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
+
+const TariffsDropDown = () => {
+    const [selected, setSelected] = useState(0);
+    // const [show, setShow] = useState(false);
+    return (
+        <Dropdown>
+            <Item>
+                <span className="top">
+                    <img alt="tariffIcon" src={tariffTypesArray[selected].icon} />
+                    {tariffTypesArray[selected].title}
+                    {downArrow}
+                </span>
+                <span className="bottom">
+                    <span className="rate">{tariffTypesArray[selected].position[0].min}мин, </span>
+                    <span className="rate">{tariffTypesArray[selected].position[0].gb === Infinity ? <CgInfinity />: tariffTypesArray[selected].position[0].gb}гб, </span>
+                    <span className="rate">{tariffTypesArray[selected].position[0].sms}смс</span>
+                </span>
+            </Item>
+            {/* <div className="absolute">
+                {tariffTypesArray.map(({title, icon}, idx) => (
+                    <Item onClick={() => setSelected(idx)} selected={selected === idx}>
+                        <span className="top">
+                            <img src={icon} />
+                            {title}
+                        </span>
+                        <span className="bottom">
+                            
+                        </span>
+                    </Item>
+                ))}
+            </div> */}
+        </Dropdown>
+    )
+}
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-const tariffOptions = [
-    {name: "Базовый", icon: duck}, {name: "Яркий", icon: star}, {name: "Расширенный", icon: goblet}, {name: "Бизнес", icon: star}, {name: "VIP", icon: goblet}
-];
 export default memo(function BuyNumberModal({numbers, buy}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
-    const [purchaseType, setPurchaseType] = useState(0);
+    // const [purchaseType, setPurchaseType] = useState(0);
     const dispatch = useDispatch();
     useEscapeKey(() => dispatch({type: HIDE_MODAL}))
     
@@ -143,6 +223,7 @@ export default memo(function BuyNumberModal({numbers, buy}) {
                 :
                 <>
                     <h1>Подключение тарифа</h1>
+                    <TariffsDropDown />
                     <section>
                         <p>Дополнительные опции</p>
                         <Switches>
@@ -158,9 +239,13 @@ export default memo(function BuyNumberModal({numbers, buy}) {
                     </section>
                     <section>
                         <p>Выберете номер</p>
+                        <div className="выберете_номер">
+                            <input type="text" />
+                            <button>Найти</button>
+                        </div>
                     </section>
                 </>}
-                <SimCardInfo selected={0} Option={Option} buy={buy} />
+                <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
             </Modal>
         </Wrapper>,
         document.getElementById("modal")
