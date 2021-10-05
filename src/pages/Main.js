@@ -6,6 +6,7 @@ import hand_banner from "../assets/images/hand_banner.png";
 import Tariffs from '../components/Tariffs';
 import Footer from '../globals/Footer/Footer';
 import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
+import MainCards from '../components/MainCards/MainCards';
 import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
@@ -122,6 +123,7 @@ export default function Main() {
                 <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
                 <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
             </Tariffs>
+            <MainCards />
             <NumbersForMain buyNumber={buyNumber} />
 
             <СoverageMap />
