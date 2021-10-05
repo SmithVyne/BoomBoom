@@ -124,6 +124,7 @@ const Modal = styled.div`
             align-items: center;
             .left {
                 width: 600px;
+                max-width: 100%;
                 padding: 10px;
                 border: 3px solid #FF0202;
                 border-radius: 12px;
@@ -241,7 +242,8 @@ const TariffsDropDown = ({tariffId, position}) => {
 
 const GarbageCan = styled(RiDeleteBin6Fill)`
     cursor: pointer;
-    width: 24px;
+    min-width: 24px;
+    min-height: 24px;
     &:hover {
         color: #FF0202;
     }
@@ -275,7 +277,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                             {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
                                 <span key={number.ctn} className="number">
                                     <span className="left">{spacer(number.ctn)}</span>
-                                    <GarbageCan width={24} height={24} onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
+                                    <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
                                 </span>
                             ))}
                         </div>
