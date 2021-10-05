@@ -210,7 +210,7 @@ const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xml
 
 const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
 
-const TariffsDropDown = ({tariffId, position}) => {
+const TariffsDropDown = memo(({tariffId, position}) => {
     const tariff = tariffTypesArray[tariffId];
     const [drop, setDrop] = useState(false);
     const [selected, setSelected] = useState(position);
@@ -238,7 +238,7 @@ const TariffsDropDown = ({tariffId, position}) => {
             </div>}
         </Dropdown>
     )
-}
+})
 
 const GarbageCan = styled(RiDeleteBin6Fill)`
     cursor: pointer;
@@ -272,7 +272,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                 <>
                     <h1>Приобретение номера</h1>
                     <section>
-                        <p>Выберете тарифы дял номера</p>
+                        <p>Выберете тарифы для номера</p>
                         <div className="ModalNumbers">
                             {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
                                 <span key={number.ctn} className="number">
@@ -290,8 +290,8 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                     <section>
                         <p>Дополнительные опции</p>
                         <Switches>
-                            <FourGSwitch modal={true} title="Безлимитный 4G" price="150" />
-                            <FourGSwitch modal={true} title="Раздача интернета" price="50" />
+                            <FourGSwitch modal={true} title="Безлимитный 4G" />
+                            <FourGSwitch modal={true} title="Раздача интернета" />
                         </Switches>
                     </section>
                     <section>

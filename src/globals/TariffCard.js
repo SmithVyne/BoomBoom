@@ -245,7 +245,7 @@ const FourGSwitchStyles = styled.span`
     }
 `
 
-export const FourGSwitch = ({title, price, modal=false}) => {
+export const FourGSwitch = memo(({title, price, modal=false}) => {
     const [checked, setChecked] = useState(false);
     return (
     <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
@@ -258,7 +258,7 @@ export const FourGSwitch = ({title, price, modal=false}) => {
             +{title === "Безлимитный 4G" ? "150" : "50"} ₽
         </span> }
     </FourGSwitchStyles>)
-}
+})
 
 
 export default memo(function TariffCard({ tariff, tariffId }) {
