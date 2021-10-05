@@ -1,19 +1,23 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
+import { useParams , useHistory } from 'react-router-dom';
 import './Numbers.css';
 
+import PersonalNumber from './PersonalNumber/PersonalNumber';
 import NumbersTablePages from "./NumbersTablePages";
 import NumbersMobile from "./NumbersMobile";
 import searchIcon from '../../assets/images/search.svg'
 import searchIcon_black from '../../assets/images/search-black.svg'
 import numbersIcon from '../../assets/images/numbers.png'
-
+import Esim from './Esim/Esim';
 
 import { GetNumbers } from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
 
 
 export default function Numbers(props) {
+    const history = useHistory();
+    let { button } = useParams();
     const [allNumbers, setAllNumbers] = React.useState(null);
     const [numbers, setNumbers] = React.useState(null);
 
@@ -751,7 +755,7 @@ export default function Numbers(props) {
             setFullPrice(firstPrice + secondPrice + thirdPrice + fourthPrice + fifthPrice)
         }
     }, [selectedNumbers]);
-    const [selectedButton, setSelectedButton] = React.useState('Все номера');
+    const [selectedButton, setSelectedButton] = React.useState(`${button && (button === ':все'|| button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`);
     const [isSelectCategoryOpen, setSelectCategoryOpen] = React.useState(false);
     function handeleCategoryOpen() {
         if (isSelectCategoryOpen) {
@@ -770,6 +774,9 @@ export default function Numbers(props) {
 
     }
 
+    // /numbers/:все //
+    // /numbers/:перенести //
+    // /numbers/:esim //
     return (
 
         <>
@@ -778,19 +785,35 @@ export default function Numbers(props) {
                 <h2 className={`numbers__headtitle-text ${darkTheme ? 'numbers__headtitle-text_dark' : ''}`}>Выберете<br />номер</h2>
             </div>
             <div className={`numbers__head-buttons`}>
-                <button onClick={() => setSelectedButton('Все номера')} className={`numbers__head-button ${selectedButton === "Все номера" ? "numbers__head-button_active" : ''} `}>
-                    <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "Все номера" ? "numbers__head-button-text_active" : ''} `}>Все номера</p>
+                <button onClick={() => {
+                    history.push(':все')
+                    setSelectedButton('все')
+                    }} className={`numbers__head-button ${selectedButton === "все" ? "numbers__head-button_active" : ''} `}>
+                    <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "все" ? "numbers__head-button-text_active" : ''} `}>Все номера</p>
                 </button>
-                <button onClick={() => setSelectedButton('Перенести свой')} className={`numbers__head-button ${selectedButton === "Перенести свой" ? "numbers__head-button_active" : ''} `}>
-                    <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "Перенести свой" ? "numbers__head-button-text_active" : ''} `}>Перенести свой</p>
+                <button onClick={() => {
+                    history.push(':перенести')
+                    setSelectedButton('перенести')}} className={`numbers__head-button ${selectedButton === "перенести" ? "numbers__head-button_active" : ''} `}>
+                    <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "перенести" ? "numbers__head-button-text_active" : ''} `}>Перенести свой</p>
                 </button>
-                <button onClick={() => setSelectedButton('Подключить eSIM')} className={`numbers__head-button ${selectedButton === "Подключить eSIM" ? "numbers__head-button_active" : ''} `}>
-                    <p className={`numbers__head-button-text  ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "Подключить eSIM" ? "numbers__head-button-text_active" : ''}`}>Подключить eSIM</p>
+                <button onClick={() => {
+                    history.push(':esim')
+                    setSelectedButton('esim')}} className={`numbers__head-button ${selectedButton === "esim" ? "numbers__head-button_active" : ''} `}>
+                    <p className={`numbers__head-button-text  ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "esim" ? "numbers__head-button-text_active" : ''}`}>Подключить eSIM</p>
                 </button>
             </div>
-
+            {selectedButton === "перенести"? 
+            <PersonalNumber transferNumber={props.transferNumber} screenWidth={screenWidth}/>
+            :
+            <>
+            </>}
+            {selectedButton === "esim"? 
+            <Esim  screenWidth={screenWidth} buyEsim={props.buyEsim} />
+            :
+            <>
+            </>}
             {screenWidth > 930 ?
-                selectedButton === "Все номера" &&
+                selectedButton === "все" &&
                 <>
 
                     <form autoComplete="off" onSubmit={handleSubmit} className={`numbers ${darkTheme ? 'numbers_dark' : ''}`}>
@@ -1032,7 +1055,7 @@ export default function Numbers(props) {
                     </form>
                 </>
 
-                : selectedButton === "Все номера" &&
+                : selectedButton === "все" &&
                 <div className="numbers-for-mobile">
                     <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберете до пяти номеров<br />или <span className='numbers__title_link'>переходите со своим</span></h2>
                     <p onClick={() => { if (selectedNumbers && selectedNumbers.length > 0) setSelectedNumbersOpen(!selectedNumbersOpen) }} className={`numbers__selected-numbers-button ${darkTheme ? 'numbers__selected-numbers-button_dark' : ''}`}>{selectedNumbers && selectedNumbers.length === 0 ? 'Ничего не выбрано' : selectedNumbersOpen ? 'Вернуться к поиску' : 'Посмотреть выбраные номера'}</p>

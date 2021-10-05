@@ -510,9 +510,12 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     display: flex;
     margin-top: 34px;
     flex-wrap: wrap;
+    z-index: 3;
 }
 
 .numbers__head-button {
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
     display: inline-block;
     height: fit-content;
     padding: 12px 16px;

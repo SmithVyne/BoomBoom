@@ -81,7 +81,7 @@ export default function App() {
               <Route exact path="/" component={Main} />
               <Route path="/tariffs" component={TariffPage} />
               <Route path="/dashboard" component={Dashboard} />
-              <Route path="/numbers" component={NumbersPage} />
+              <Route path="/numbers/:button" component={NumbersPage} />
               <Route path="/roaming" component={RoamingPage} />
               <Route path="/organisations" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
