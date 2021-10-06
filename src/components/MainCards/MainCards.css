@@ -24,24 +24,23 @@
     width: 533px;
     height: 331px;
     position: relative;
+    -webkit-filter: drop-shadow(8px 8px 100px rgba(0, 0, 0, 0.16));
+    filter: drop-shadow(8px 8px 100px rgba(0, 0, 0, 0.16));
 }
 
 .main__card:first-of-type {
     margin: 0;
 }
 
-.main__card-bg-shadow {
-    width: 90%;
-    height: 84%;
-    border-radius: 67px;
-    box-shadow: 8px 8px 100px rgba(0, 0, 0, 0.16);
-}
+
 
 .main__card-headphones {
     top: -56px;
     left: -84px;
     position: absolute;
     z-index: 3;
+    -webkit-filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
 }
 
 .main__card-clock {
@@ -49,6 +48,8 @@
     right: -84px;
     position: absolute;
     z-index: 3;
+    -webkit-filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
 }
 
 .main__card-bg {
@@ -78,6 +79,8 @@
     position: absolute;
     bottom: -51px;
     left: -10px;
+    -webkit-filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
 }
 
 .main__card-blur-big-triangle {
@@ -154,6 +157,8 @@
     position: absolute;
     bottom: -71px;
     left: -205px;
+    -webkit-filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8.65848px 3.14854px 19.6784px rgba(0, 0, 0, 0.25));
 }
 
 .main__card-blur-triangle {

@@ -352,9 +352,18 @@ input {
         margin: 48px 0 0;
         width: 100%;
         display: flex;
+        min-height: 358px;
     }
     .personal-number__container:first-of-type {
         margin: 0;
+    }
+    .personal-number__container-text {
+        max-width: 60%;
+    }
+    .personal-number__container_with-img{
+        display: flex;
+        flex-direction: row !important;
+        align-items: center;
     }
 }
 
@@ -391,11 +400,13 @@ input {
     .personal-number__container-img {
         position: absolute;
         width: 253px;
+        
         height: 242px;
         bottom: 26px;
         left: 10px;
     }
     .personal-number__container_with-img {
+        min-height: unset;
         height: 259px;
         max-height: unset;
         display: flex;
@@ -478,11 +489,12 @@ input {
         min-height: 348px;
         max-height: unset;
         display: flex;
-        flex-direction: column;
+        flex-direction: column !important;
     }
     .personal-number__container-text {
         margin: 128px 0 0 0;
         align-self: center;
+        max-width: 100%;
     }
     .personal-number_submit-button {
         padding: 21px 0;
