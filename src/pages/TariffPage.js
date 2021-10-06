@@ -60,7 +60,7 @@ export default function TariffPage() {
                     </Tariffs>
                 </div>
             </Div>
-
+            <Footer />
         </>
     )
 }

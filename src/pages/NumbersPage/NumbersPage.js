@@ -24,7 +24,7 @@ export default function NumbersPage() {
     return (
         <>
             <Numbers buyNumbers={buyNumbers} transferNumber={transferNumber} buyEsim={buyEsim} />
-
+            <Footer />
         </>
     )
 }
