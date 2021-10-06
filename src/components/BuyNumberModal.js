@@ -1,6 +1,7 @@
 import {useContext, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
 import { RiDeleteBin6Fill} from 'react-icons/ri'
+import { BsArrowLeft} from 'react-icons/bs'
 import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
@@ -12,6 +13,8 @@ import { useDispatch } from 'react-redux'
 import { HIDE_MODAL, tariffTypesArray } from '../globals/utils';
 import { FourGSwitch } from '../globals/TariffCard'
 import Cleave from 'cleave.js/react';
+import NumbersMobile from './Numbers/NumbersMobile'
+import searchIcon_black from '../assets/images/search-black.svg'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
@@ -131,6 +134,13 @@ const Modal = styled.div`
             }
         }
     }
+    .goBack {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        font-weight: 500;
+    }
 `
 
 const Option = styled.span`
@@ -229,7 +239,7 @@ const TariffsDropDown = memo(({tariffId, position}) => {
             {drop && 
             <div className="dropdown">
                 {tariff.positions.map((position, index) => (
-                    <span onClick={() => setSelected(index)} className="bottom">
+                    <span key={index} onClick={() => setSelected(index)} className="bottom">
                         <span>{position.min}мин , </span>
                         <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
                         <span>{position.sms}смс</span>
@@ -249,12 +259,51 @@ const GarbageCan = styled(RiDeleteBin6Fill)`
     }
 `;
 
+const NumbersDropDown = ({inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
+    const [isSelectCategoryOpen, setIsSelectCategoryOpen] = useState(false);
+    const [isInputFocused, setIsInputFocused] = useState(false);
+    function handleCategoryChange(e, category) {
+        e.stopPropagation();
+        setIsSelectCategoryOpen(false);
+        setSelectedCategoryID(category);
+    }
+    return (
+    <div className="numbers-for-mobile__inputs modal">
+        <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
+            <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
+            <input onBlur={()=>setIsInputFocused(false)} onFocus={()=>setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({target})=>setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
+        </div>
+        <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
+            {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
+            {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
+            {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
+            {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
+            {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
+            {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
+            <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
+            </svg>
+            {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
+            {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
+                {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
+                {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебрянный</p>}
+                {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
+                {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
+                {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
+            </div>}
+        </div>
+    </div>)
+}
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
 export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     const [deletedNumbers, setDeletedNumbers] = useState([]);
-    console.log(deletedNumbers)
+    const [showNumbers, setShowNumbers] = useState(false);
+    const [chosenNumber, setChosenNumber] = useState([]);
+    const [inputNumber, setInputNumber] = useState("");
+    const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
     const {position, tariffId} = payload;
     useEscapeKey(() => dispatch({type: HIDE_MODAL}));
@@ -268,50 +317,65 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
-                {buy ?
-                <>
-                    <h1>Приобретение номера</h1>
-                    <section>
-                        <p>Выберете тарифы для номера</p>
-                        <div className="ModalNumbers">
-                            {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
-                                <span key={number.ctn} className="number">
-                                    <span className="left">{spacer(number.ctn)}</span>
-                                    <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
-                                </span>
-                            ))}
-                        </div>
-                    </section>
-                </>
-                :
-                <>
-                    <h1>Подключение тарифа</h1>
-                    <TariffsDropDown position={position} tariffId={tariffId} />
-                    <section>
-                        <p>Дополнительные опции</p>
-                        <Switches>
-                            <FourGSwitch modal={true} title="Безлимитный 4G" />
-                            <FourGSwitch modal={true} title="Раздача интернета" />
-                        </Switches>
-                    </section>
-                    <section>
-                        <p>Способ получения</p>
-                        <div className="options first">
-                            {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
-                        </div>
-                    </section>
-                    <section>
-                        <p>Выберете номер</p>
-                        <div className="выберете_номер">
-                            <Cleave className="input" options={{
-                                    phone: true,
-                                    phoneRegionCode: 'RU'
-                                }} type="tel" placeholder="Ваш новый номер" />
-                            <button>Найти</button>
-                        </div>
-                    </section>
-                </>}
-                <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
+                { showNumbers ? 
+                    <> 
+                        <div onClick={()=>setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
+                        <NumbersDropDown inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
+                        <NumbersMobile
+                            selectedCategoryID={selectedCategoryID}
+                            inputValue={inputNumber}
+                            selectedNumbers={[chosenNumber]}
+                            handleCtnClick={(number) => {console.log(number);setChosenNumber(number); setShowNumbers(false)}}
+                            darkTheme={{val: false}}
+                        />
+                    </> : 
+                    <>
+                        {buy ?
+                        <>
+                            <h1>Приобретение номера</h1>
+                            <section>
+                                <p>Выберете тарифы для номера</p>
+                                <div className="ModalNumbers">
+                                    {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
+                                        <span key={number.ctn} className="number">
+                                            <span className="left">{spacer(number.ctn)}</span>
+                                            <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        </>
+                        :
+                        <>
+                            <h1>Подключение тарифа</h1>
+                            <TariffsDropDown position={position} tariffId={tariffId} />
+                            <section>
+                                <p>Дополнительные опции</p>
+                                <Switches>
+                                    <FourGSwitch modal={true} title="Безлимитный 4G" />
+                                    <FourGSwitch modal={true} title="Раздача интернета" />
+                                </Switches>
+                            </section>
+                            <section>
+                                <p>Способ получения</p>
+                                <div className="options first">
+                                    {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
+                                </div>
+                            </section>
+                            <section>
+                                <p>Выберете номер</p>
+                                <div className="выберете_номер">
+                                    <Cleave className="input" options={{
+                                            phone: true,
+                                            phoneRegionCode: 'RU'
+                                        }} type="tel" placeholder="Ваш новый номер" value={chosenNumber.ctn} />
+                                    <button onClick={()=>setShowNumbers(true)}>Найти</button>
+                                </div>
+                            </section>
+                        </>}
+                        <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
+                    </> 
+                }
             </Modal>
         </Wrapper>,
         document.getElementById("modal")
