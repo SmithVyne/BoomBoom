@@ -3,7 +3,6 @@ import { GlobalContext } from '../../App';
 import { useParams } from 'react-router-dom';
 import Header from './Header'
 import Section from './Section'
-import Footer from '../../globals/Footer/Footer';
 import duck from "../../assets/images/duck.png";
 import star from "../../assets/images/star.png";
 import light from "../../assets/images/light.png";
@@ -82,7 +81,6 @@ export default function TariffePage() {
     <div>
       <Header darkTheme={darkTheme} tariff={selectedTrariff}/>
       <Section darkTheme={darkTheme} tariff={selectedTrariff} />
-      <Footer />
     </div>
   );
 };

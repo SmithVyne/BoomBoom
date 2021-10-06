@@ -1,4 +1,3 @@
-import Footer from "../globals/Footer/Footer";
 import styled from "styled-components/macro";
 import TariffCard from "../globals/TariffCard";
 import Tariffs from "../components/Tariffs";
@@ -60,7 +59,6 @@ export default function TariffPage() {
                     </Tariffs>
                 </div>
             </Div>
-            <Footer />
         </>
     )
 }

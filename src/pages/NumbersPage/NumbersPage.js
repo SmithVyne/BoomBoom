@@ -1,4 +1,3 @@
-import Footer from '../../globals/Footer/Footer';
 import Numbers from '../../components/Numbers/Numbers'
 import { BUY_NUMBER} from '../../globals/utils'
 import { useDispatch } from 'react-redux';
@@ -24,7 +23,6 @@ export default function NumbersPage() {
     return (
         <>
             <Numbers buyNumbers={buyNumbers} transferNumber={transferNumber} buyEsim={buyEsim} />
-            <Footer />
         </>
     )
 }
