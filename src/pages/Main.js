@@ -110,7 +110,7 @@ export default function Main() {
             </Carousel> */}
             <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только <span>самое необходимое</span></p>
             <Tariffs>
-                {tariffTypesArray.map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
+                {tariffTypesArray.map((tariff, id) => <TariffCard key={tariff.title} tariffId={id} tariff={tariff} />)}
             </Tariffs>
             <NumbersForMain buyNumber={buyNumber} />
 

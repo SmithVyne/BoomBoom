@@ -8,7 +8,8 @@ import './Numbers.css';
 
 
 export default function NumbersMobile(props) {
-    const { darkTheme } = useContext(GlobalContext);
+    let { darkTheme } = useContext(GlobalContext);
+    darkTheme =  props.darkTheme ? props.darkTheme.val : darkTheme;
     const [preloaderVisible, setPreloaderVisible] = React.useState(true);
     const [apiError, setApiError] = React.useState('');
     React.useEffect(() => {

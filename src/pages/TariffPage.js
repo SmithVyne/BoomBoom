@@ -50,13 +50,13 @@ export default function TariffPage() {
                 <div>
                     <SubTitle>Для смартфонов для планшетов</SubTitle>
                     <Tariffs>
-                        {tariffTypesArray.map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
+                        {tariffTypesArray.map((tariff, id) => <TariffCard key={tariff.title} tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
                 <div>
                     <SubTitle>Для планшетов и модемов</SubTitle>
                     <Tariffs>
-                        {tariffTypesArray.slice(0, 2).map((tariff, id) => <TariffCard tariffId={id} tariff={tariff} />)}
+                        {tariffTypesArray.slice(0, 2).map((tariff, id) => <TariffCard key={tariff.title} tariffId={id} tariff={tariff} />)}
                     </Tariffs>
                 </div>
             </Div>
