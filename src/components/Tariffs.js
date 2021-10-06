@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
@@ -110,12 +110,19 @@ export default function Tariffs({children}) {
 
     useLayoutEffect(() => {
         const {current} = ref;
-        setShowScroll(current.scrollWidth > current.offsetWidth);
-        setOffSetWidth(current.offsetWidth);
-        setScrollWidth(current.scrollWidth);
-        current.addEventListener("scroll", () => {
-            setScrollLeft(current.scrollLeft);
-        })
+        function init () {
+            setShowScroll(current.scrollWidth > current.offsetWidth);
+            setOffSetWidth(current.offsetWidth);
+            setScrollWidth(current.scrollWidth);
+        }
+        init();
+        window.addEventListener("resize", init)
+        const initScroller = () => setScrollLeft(current.scrollLeft);
+        current.addEventListener("scroll", initScroller)
+        return () => {
+            document.removeEventListener("resize", init);
+            current.removeEventListener("scroll", initScroller);
+        }
     }, [])
 
     useEffect(() => {

@@ -42,9 +42,10 @@ a:active, a:hover {
     outline: 0;
 }
 
-.img-phone{
+.img-phone {
     margin: -51px 0 91px -20px !important;
 }
+
 a {
     display: inline-block;
     text-decoration: none;
@@ -110,9 +111,15 @@ input[placeholder], textarea[placeholder] {
     overflow: hidden;
 }
 
-.wrap {
-    max-width: 1743px;
+.organisations-wrap {
     margin: 0 auto;
+}
+
+.head-title {
+    margin-bottom: 38px;
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
 }
 
 .after-clear:after {
@@ -192,7 +199,6 @@ p:last-child {
 
 .logo-t {
     display: block;
-    margin-bottom: 20px;
 }
 
 .header-t {
@@ -200,9 +206,10 @@ p:last-child {
 }
 
 .title {
-    margin-bottom: 38px;
+    margin: 0 0 0 29px;
+    font-style: normal;
     font-weight: bold;
-    font-size: 80px;
+    font-size: 60px;
     line-height: 100%;
     color: #121212;
     font-family: Circe, Arial, sans-serif;
@@ -214,6 +221,7 @@ p:last-child {
 }
 
 .btn {
+    font-family: Circe;
     display: table;
     box-sizing: border-box;
     border-radius: 31px;
@@ -259,12 +267,12 @@ p:last-child {
 
 .block-pr .col {
     width: 33.333%;
-    margin-bottom: 20px;
+    margin-bottom: 70px;
 }
 
 .block-pr__wrap {
     box-sizing: border-box;
-    height: 100%;
+    height: 110%;
     background: #FFFFFF;
     border-radius: 36px;
     padding: 32px;
@@ -282,6 +290,7 @@ p:last-child {
 }
 
 .card-title {
+    font-family: Circe;
     font-style: normal;
     margin-bottom: 24px;
     font-weight: bold;
@@ -296,8 +305,9 @@ p:last-child {
 }
 
 .card-text {
+    font-family: Circe;
     font-style: normal;
-    font-weight: 400;
+    font-weight: normal;
     font-size: 24px;
     line-height: 100%;
     margin-bottom: 60px;
@@ -320,22 +330,9 @@ p:last-child {
     position: absolute;
     bottom: 30px;
     left: 32px;
-}
-
-.more:before {
-    content: '';
-    width: 14px;
-    height: 23px;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    background: url('../../assets/images/gl.svg') no-repeat;
-    -webkit-transform: translate(0, -50%);
-    -moz-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    -o-transform: translate(0, -50%);
-    transform: translate(0, -50%);
+    background: rgba(75, 108, 253, 0.16);
+    border-radius: 49px;
+    padding: 12px 24px;
 }
 
 .content-style {
@@ -367,7 +364,7 @@ p:last-child {
     .block-pr .col {
         width: 50%;
     }
-    .img-phone{
+    .img-phone {
         margin: 0 0 18px !important;
     }
 }
@@ -389,26 +386,45 @@ p:last-child {
         max-width: 530px;
         margin-bottom: 22px;
     }
+    .title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 100%;
+    }
+    .logo-t {
+        width: 72px;
+        height: 72px;
+    }
 }
 
 @media screen and (max-width: 700px) {
     .block-pr .col {
         width: 100%;
     }
-    .d-flex{
-        flex-direction: column;
-    }
     .btn {
-        margin-bottom: 12px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 130%;
+    }
+    .d-flex {
+        display: grid !important;
+        grid-template-columns: 112px 125px ;
+        grid-template-rows: max-content;
+        grid-auto-rows: max-content;
+        row-gap: 8px;
+        column-gap: 8px;
+    } 
+    .btn {
         width: fit-content;
     }
     .btn2 {
         margin-left: 0;
-        margin-bottom: 12px;
     }
-    .btn2:last-of-type{
+    .btn2:last-of-type {
         margin: 0;
-    }
+    } 
     .block-pr__wrap p {
         font-size: 16px;
         margin-bottom: 55px;

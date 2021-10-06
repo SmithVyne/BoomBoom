@@ -277,6 +277,7 @@ p:last-child {
 .box-logo img {
   margin-right: 27px;
   width: 80px;
+  height: 80px;
 }
 
 .section-holder {
@@ -656,7 +657,9 @@ p:last-child {
     line-height: 58px;
   }
   .box-logo img {
-    max-width: 41px;
+
+    width: 41px;
+    height: 41px;
     margin-right: 12px;
   }
   .blok-data h2 {

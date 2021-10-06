@@ -1,6 +1,8 @@
 import {useContext, useState} from 'react'
-import { CgClose } from 'react-icons/cg'
-import styled from 'styled-components'
+import { CgClose, CgInfinity } from 'react-icons/cg'
+import { RiDeleteBin6Fill} from 'react-icons/ri'
+import { BsArrowLeft} from 'react-icons/bs'
+import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
 import SimCardInfo from './SimCardInfo'
@@ -8,14 +10,15 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { useEscapeKey } from '../hooks'
 import { useDispatch } from 'react-redux'
-import { HIDE_MODAL, CATEGORIES } from '../globals/utils';
-import duck from "../assets/images/duck.png";
-import star from "../assets/images/star.png";
-import goblet from "../assets/images/goblet.png";
+import { HIDE_MODAL, tariffTypesArray } from '../globals/utils';
+import { FourGSwitch } from '../globals/TariffCard'
+import Cleave from 'cleave.js/react';
+import NumbersMobile from './Numbers/NumbersMobile'
+import searchIcon_black from '../assets/images/search-black.svg'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.3)"};
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"};
     top: 0;
     left: 0;
     bottom: 0;
@@ -50,14 +53,12 @@ const Modal = styled.div`
     font-size: 24px;
     border-radius: 32px;
     margin: 20px;
+    @media(max-width: 601px) {
+        padding: 16px;
+    }
     & h1 {
         font-weight: bold;
         font-size: 32px;
-    }
-    & h1 span {
-        @media(max-width: 601px) {
-        display: block;
-        }
     }
     & .options {
         display: flex;
@@ -76,91 +77,74 @@ const Modal = styled.div`
             align-items: flex-start;
         }
     }
-    & .left {
-        span {
-            display: flex;
-            align-items: center;
-            font-family: "Circe";
-            .number{
-                font-weight: 600;
-                font-size: 36px;
-            }
-            @media(max-width: 500px){
-                flex-direction: column-reverse;
-                align-items: flex-start;
-            }
+    section {
+        margin-bottom: 44px;
+        p {
+            margin-bottom: 15px; 
+            color: inherit;
+        }
+        :nth-of-type(2n){
+            margin-bottom: 64px;
         }
     }
-    & .left h1 {
-        color: #0E5EF8;
-        margin-bottom: 10px;
+    .выберете_номер {
+        font-size: 20px;
     }
-    .right {
-        font-size: 36px;
+    .выберете_номер .input {
+        width: 300px;
+        height: 50px;
+        border-radius: 13px;
+        padding: 0 15px;
+        margin-right: 16px;
+        outline: none;
+        border: 2px solid rgba(1, 1, 1, 0.16);
         font-weight: 500;
-        @media(max-width: 600px) {
-            display: none;
+        font-family: Circe;
+        :active, :focus {
+            border-color: #0E5EF8;
+        }
+        @media(max-width: 601px) {
+            margin-bottom: 16px;
         }
     }
-    & .buyNumberTop {
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        margin-bottom: 40px;
-        @media(max-width: 600px){
-            margin-bottom: 20px;
-        }
+    .выберете_номер button {
+        height: 50px;
+        width: 176px;
+        border-radius: 13px;
+        border: none;
+        cursor: pointer;
+        background: #0E5EF8;
+        color: #fff;
+        font-weight: 500;
     }
-    & .options.buyOptions {
-        width: 70%;
-        flex-wrap: wrap;
-        .tariffs {
-            font-size: 28px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            @media(max-width: 600px){
-                font-size: 12px;
-                img {
-                    width: 28px;
-                }
-            }
-        }
-        @media(max-width: 700px){
-            width: 100%
-        }
-    }
-    & .Доступные_тарифы {
-        font-size: 24px;
-        font-weight: normal;
-    }
-    & .desktopPrices {
+    .ModalNumbers {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
-        font-weight: bold;
-        .discount {
-            font-size: 20px;
-        }
-    }
-    & .mobilePrices {
-        display: none;
-        @media(max-width: 600px){
-            display: block;
-            margin-bottom: 20px;
-        }
-        div {
+        gap: 12px;
+        .number {
             display: flex;
-            gap: 10px;
-            height: fit-content;
+            gap: 8px;
+            align-items: center;
+            .left {
+                width: 600px;
+                max-width: 100%;
+                padding: 10px;
+                border: 3px solid #FF0202;
+                border-radius: 12px;
+            }
         }
     }
-    del.discount {
-        color: red;
+    .goBack {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 24px;
     }
-    @media(max-width: 960px) {
-        padding: 28px 12px;
+    .showNumbers-top {
+        width: fit-content;
+        margin: 10px auto;
     }
 `
 
@@ -176,42 +160,163 @@ const Option = styled.span`
             max-width: 296px;
         }
     }
-    &.purchaseType {
+`
+
+const Switches = styled.span`
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    font-size: 20px;
+    line-height: 29px;
+    font-family: Circe, Arial, sans-serif;
+    width: 70%;
+    @media(max-width: 600px) {
+        font-size: 16px;
+        width: 100%;
+    }
+`
+const Dropdown = styled.div`    
+    border: 2px solid #4B75FC;
+    border-radius: 14px;
+    height: fit-content;
+    width: 300px;
+    max-width: 100%;
+    margin-bottom: 44px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .top {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        font-size: 20px;
+        font-weight: bold;
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        svg {
+            margin-bottom: 9px;
+            transform: ${({drop}) => drop && "rotate(180deg)"};
+            transition: ease 0.3s;
+        }
+    }
+    border: ${({selected})=> selected && "2px solid #4B75FC"};
+    .bottom {
+        font-size: 20px;
+        color: black;
+    }
+    .bottom.first {
+        color: #4B75FC;
+    }
+    .dropdown {
+        margin-top: 20px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 10px;
-        font-size: 16px;
-        min-height: 100%;
-        span {
-            font-size: 20px;
-            font-weight: bold;
-        }
+        gap: 20px;
+        width: fit-content;
     }
 `
 
-const Tag = styled.span`
-    padding: 10px;
-    border-radius: calc(height);
-    font-size: 16px;
-    border-radius: 36px;
-    background-color: ${({bg}) => bg};
-    margin-right: 10px;
-    height: fit-content;
-    cursor: pointer;
-`
+const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill='#010101' />
+</svg>);
+
 const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
+
+const TariffsDropDown = memo(({tariffId, position}) => {
+    const tariff = tariffTypesArray[tariffId];
+    const [drop, setDrop] = useState(false);
+    const [selected, setSelected] = useState(position);
+    return (
+        <Dropdown drop={drop} onClick={()=>setDrop(val => !val)}>
+            <span className="top">
+                <img alt="tariffIcon" src={tariff.icon} />
+                {tariff.title}
+                {downArrow}
+            </span>
+            <span className="bottom first">
+                <span>{tariff.positions[selected].min}мин , </span>
+                <span>{tariff.positions[selected].gb === Infinity ? <CgInfinity />: tariff.positions[selected].gb}гб , </span>
+                <span>{tariff.positions[selected].sms}смс</span>
+            </span>
+            {drop && 
+            <div className="dropdown">
+                {tariff.positions.map((position, index) => (
+                    <span key={index} onClick={() => setSelected(index)} className="bottom">
+                        <span>{position.min}мин , </span>
+                        <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
+                        <span>{position.sms}смс</span>
+                    </span>
+                ))}
+            </div>}
+        </Dropdown>
+    )
+})
+
+const GarbageCan = styled(RiDeleteBin6Fill)`
+    cursor: pointer;
+    min-width: 24px;
+    min-height: 24px;
+    &:hover {
+        color: #FF0202;
+    }
+`;
+
+const NumbersDropDown = ({setShowNumbers, inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
+    const [isSelectCategoryOpen, setIsSelectCategoryOpen] = useState(false);
+    const [isInputFocused, setIsInputFocused] = useState(false);
+    function handleCategoryChange(e, category) {
+        e.stopPropagation();
+        setIsSelectCategoryOpen(false);
+        setSelectedCategoryID(category);
+    }
+    return (
+    <div className="showNumbers-top">
+        <div onClick={()=>setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
+        <div className="numbers-for-mobile__inputs modal">
+            <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
+                <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
+                <input onBlur={()=>setIsInputFocused(false)} onFocus={()=>setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({target})=>setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
+            </div>
+            <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
+                {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
+                {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
+                {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
+                {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
+                {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
+                {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
+                <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
+                </svg>
+                {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
+                {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
+                    {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
+                    {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебрянный</p>}
+                    {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
+                    {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
+                    {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
+                </div>}
+            </div>
+        </div>
+    </div>
+    )
+}
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-const tariffOptions = [
-    {name: "Базовый", icon: duck}, {name: "Яркий", icon: star}, {name: "Расширенный", icon: goblet}, {name: "Бизнес", icon: star}, {name: "VIP", icon: goblet}
-];
-export default memo(function BuyNumberModal({name, buy, number}) {
+export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
-    const [purchaseType, setPurchaseType] = useState(0);
+    const [deletedNumbers, setDeletedNumbers] = useState([]);
+    const [showNumbers, setShowNumbers] = useState(false);
+    const [chosenNumber, setChosenNumber] = useState([]);
+    const [inputNumber, setInputNumber] = useState("");
+    const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
-    useEscapeKey(() => dispatch({type: HIDE_MODAL}))
+    const {position, tariffId} = payload;
+    useEscapeKey(() => dispatch({type: HIDE_MODAL}));
     
     return ReactDOM.createPortal (
         <Wrapper
@@ -222,55 +327,64 @@ export default memo(function BuyNumberModal({name, buy, number}) {
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
-                {buy ?
-                <>
-                    <div className="buyNumberTop">
-                        <span className="left">
-                            <h1>Оформить номер</h1>
-                            <span>
-                                <Tag bg={CATEGORIES[number.category].bg}>{CATEGORIES[number.category].name}</Tag>
-                                <span className="number">{spacer(number.ctn)}</span>
-                            </span>
-                        </span>
-                        <span className="right">
-                            <span className="desktopPrices">
-                                {number.category === 1 && <del className="discount">10 000 руб.</del>}
-                                {CATEGORIES[number.category].rentPrice}
-                            </span>
-                        </span>
-                    </div>
-
-                    <div className="mobilePrices">
-                        Способ покупки
-                        <div>
-                            <Option className="purchaseType" selected={purchaseType} idx={0} onClick={()=>setPurchaseType(0)}>
-                                Арендовать 
-                                <span>{CATEGORIES[number.category].rentPrice}</span>
-                                {number.category === 1 && <del className="discount">10 000 руб.</del>}
-                            </Option>
-                            <Option className="purchaseType" selected={purchaseType} idx={1} onClick={()=>setPurchaseType(1)}>
-                                Выкупить
-                                <span>{CATEGORIES[number.category].purchasePrice}</span>
-                            </Option>
-                        </div>
-                    </div>
-
-                    <h2 className="Доступные_тарифы">Доступные тарифы</h2>
-                    <div className="options buyOptions">
-                        {tariffOptions.map(({name, icon}, idx) => <Option className="tariffs" key={name} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>
-                            <img alt="tariffIcon" src={icon} />
-                            {name}
-                        </Option>)}
-                    </div>
-                </>
-                :
-                <>
-                    <h1>Подключение <span>тарифа "{name}"</span></h1>
-                    <div className="options first">
-                        {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
-                    </div>
-                </>}
-                <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
+                { showNumbers ? 
+                    <> 
+                        <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
+                        <NumbersMobile
+                            selectedCategoryID={selectedCategoryID}
+                            inputValue={inputNumber}
+                            selectedNumbers={[chosenNumber]}
+                            handleCtnClick={(number) => {console.log(number);setChosenNumber(number); setShowNumbers(false)}}
+                            darkTheme={{val: false}}
+                        />
+                    </> : 
+                    <>
+                        {buy ?
+                        <>
+                            <h1>Приобретение номера</h1>
+                            <section>
+                                <p>Выберете тарифы для номера</p>
+                                <div className="ModalNumbers">
+                                    {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
+                                        <span key={number.ctn} className="number">
+                                            <span className="left">{spacer(number.ctn)}</span>
+                                            <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        </>
+                        :
+                        <>
+                            <h1>Подключение тарифа</h1>
+                            <TariffsDropDown position={position} tariffId={tariffId} />
+                            <section>
+                                <p>Дополнительные опции</p>
+                                <Switches>
+                                    <FourGSwitch modal={true} title="Безлимитный 4G" />
+                                    <FourGSwitch modal={true} title="Раздача интернета" />
+                                </Switches>
+                            </section>
+                            <section>
+                                <p>Способ получения</p>
+                                <div className="options first">
+                                    {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
+                                </div>
+                            </section>
+                            <section>
+                                <p>Выберете номер</p>
+                                <div className="выберете_номер">
+                                    <Cleave className="input" options={{
+                                            phone: true,
+                                            phoneRegionCode: 'RU'
+                                        }} type="tel" placeholder="Ваш новый номер" value={chosenNumber.ctn} />
+                                    <button onClick={()=>setShowNumbers(true)}>Найти</button>
+                                </div>
+                            </section>
+                        </>}
+                        <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
+                    </> 
+                }
             </Modal>
         </Wrapper>,
         document.getElementById("modal")

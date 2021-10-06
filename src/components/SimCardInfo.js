@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { DatePicker, TimePicker, Input } from "antd";
 import { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
 import { IoIosSearch } from 'react-icons/io';
@@ -174,7 +174,7 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
-export default function SimCardInfo({selected, Option, buy}) { 
+export default function SimCardInfo({selected, Option}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [checked, setChecked] = useState(false);
@@ -184,12 +184,10 @@ export default function SimCardInfo({selected, Option, buy}) {
                 <div className="Способ_получения">
                         Способ получения
                         <div className="options">
-                        {buy ? options.slice(0, 2).map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)
-                        :
-                        options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
+                        {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
                         </div>
                         <small>Только Москва и МО</small>
-                    </div>
+                </div>
                 {selectedOption === 0 && 
                     <><div className="orderDates">
                         <div className="Способ_получения">

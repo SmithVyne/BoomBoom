@@ -1,20 +1,12 @@
-import Footer from '../../globals/Footer/Footer';
 import Numbers from '../../components/Numbers/Numbers'
-// import { BUY_NUMBER} from '../../globals/utils'
-
-// import { useDispatch } from 'react-redux';
+import { BUY_NUMBER} from '../../globals/utils'
+import { useDispatch } from 'react-redux';
 import './NumbersPage.css';
 
 export default function NumbersPage() {
-    // const dispatch = useDispatch();
-    function buyNumbers(selectedNumbersArray) {
-
-        // !!!CONNECT Buy numbers POP UP HERE!!!
-
-        // dispatch({ type: BUY_NUMBER, number: selectedNumber })
-
-        console.log('Buy numbers Triggered')
-        console.log(selectedNumbersArray)
+    const dispatch = useDispatch();
+    function buyNumbers(numbers){      
+        dispatch({ type: BUY_NUMBER, numbers  })
     }
     function transferNumber({ date, transferredNumber, contactNumber }) {
 
@@ -31,7 +23,6 @@ export default function NumbersPage() {
     return (
         <>
             <Numbers buyNumbers={buyNumbers} transferNumber={transferNumber} buyEsim={buyEsim} />
-            <Footer />
         </>
     )
 }

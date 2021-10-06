@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';

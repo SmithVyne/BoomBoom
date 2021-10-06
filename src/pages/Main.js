@@ -1,22 +1,16 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Slide from '../components/Slide';
 import girl_with_phone from "../assets/images/girl_with_phone_banner.png";
 import hand_banner from "../assets/images/hand_banner.png";
 import Tariffs from '../components/Tariffs';
-import Footer from '../globals/Footer/Footer';
 import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
 import MainCards from '../components/MainCards/MainCards';
 import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
-import duck from "../assets/images/duck.png";
-import light from "../assets/images/light.png";
-import star from "../assets/images/star.png";
-import jula from "../assets/images/jula.png";
-import goblet from "../assets/images/goblet.png";
-import { tariffAdvanced, tariffBase, tariffBiz, tariffBright, tariffVip } from '../globals/utils';
-
+import { BUY_NUMBER, tariffTypesArray } from '../globals/utils';
+import { useDispatch } from 'react-redux';
 
 const slides = [
     {
@@ -27,7 +21,7 @@ const slides = [
     },
     {
         title: "БУМ! БУМ!, И ты в бизнесе!",
-        subtitle: "Премиальные тарифы для связи, от 1500 руб. в месяц",
+subtitle: "Премиальные тарифы для связи, от 1500 руб. в месяц",
         imgUrl: hand_banner,
         url: '/tariff-info/:Бизнес'
     }
@@ -48,7 +42,7 @@ const WrapCtrls = styled.span`
     gap: 31px;
     @media(max-width: 1000px) {
         left: 48px;
-    bottom: 32px;
+        bottom: 32px;
     }
     @media(max-width: 540px) {
         left: 20px;
@@ -93,6 +87,8 @@ export default function Main() {
         setIndex(count % slides.length)
     }
 
+    const dispatch = useDispatch();
+    
     useEffect(() => {
         const id = setTimeout(() => {
             setCount(count + 1)
@@ -102,11 +98,8 @@ export default function Main() {
         return () => clearTimeout(id)
     }, [count])
 
-    function buyNumber(selectedNumberArray) {
-
-        // !!CONNECT POP UP HERE!!
-
-        console.log(selectedNumberArray)
+    function buyNumber(numbers) {
+        dispatch({type: BUY_NUMBER, numbers})
     }
 
     return (
@@ -115,20 +108,15 @@ export default function Main() {
                 <Slide slide={slides[index]} />
                 <Controls move={move} />
             </Carousel>
-            <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Платите только за необходимое</p>
+            <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только <span>самое необходимое</span></p>
             <Tariffs>
-                <TariffCard tariff={tariffBase} scrolling="true" title="Базовый" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={duck} />
-                <TariffCard tariff={tariffBright} scrolling="true" title="Яркий" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" hit icon={light} />
-                <TariffCard tariff={tariffAdvanced} scrolling="true" title="Расширенный" background="linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)" icon={jula} />
-                <TariffCard tariff={tariffBiz} scrolling="true" title="Бизнес" background="radial-gradient(ellipse at center, #324E69 0%, #242424 100%)" icon={star} />
-                <TariffCard tariff={tariffVip} scrolling="true" title="VIP" background="radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)" icon={goblet} />
+                {tariffTypesArray.map((tariff, id) => <TariffCard key={tariff.title} tariffId={id} tariff={tariff} />)}
             </Tariffs>
             <MainCards />
             <NumbersForMain buyNumber={buyNumber} />
 
             <СoverageMap />
             {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}
-            <Footer />
         </>
     )
 }

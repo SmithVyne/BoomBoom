@@ -4,12 +4,10 @@ import { GlobalContext } from '../../App';
 import './Organisations.css';
 import logo from '../../assets/images/logo.png'
 import box from '../../assets/images/box.png'
-import car from '../../assets/images/car.png'
+import beeline from '../../assets/images/beeline-org.png'
 import bucket from '../../assets/images/bucket.png'
 import anchor from '../../assets/images/anchor.png'
 import link from '../../assets/images/link.png'
-import phone_1 from '../../assets/images/phone_1.png'
-import phone_2 from '../../assets/images/phone_2.png'
 import globe_icon from '../../assets/images/globe_icon.png'
 import folder from '../../assets/images/folder.png'
 import blub from '../../assets/images/blub.png'
@@ -19,6 +17,7 @@ import red_book from '../../assets/images/red-book.png'
 import thermometer from '../../assets/images/Thermometer.png'
 import magic_hat from '../../assets/images/Magic-hat.png'
 import clapperboard from '../../assets/images/clapperboard.png'
+import pcFace from '../../assets/images/pc-face.png'
 
 const cardsMalBiz = [
     {
@@ -27,7 +26,7 @@ const cardsMalBiz = [
         text: `Высокоскоростной интернет в офисе со скидкой, корпоративная мобильная связьи облачная АТС бесплатно`
     },
     {
-        img: car,
+        img: pcFace,
         title: 'Мобильное предприятие',
         text: `CRM-система со встроенной облачной
         телефонией для ведения клиентской базы,
@@ -52,9 +51,9 @@ const cardsMalBiz = [
     }
     ,
     {
-        img: window.innerWidth > 1023 ? phone_2 : phone_1,
+        img: beeline,
         title: 'ОФД “Билайн”',
-        text: `Облачная телефония, Статистика эффективностирекламы CRM-система и СМС-рассылки`
+        text: `Касса +ФН + ОФД + Интернет + Настройка кассы - с рассрочкой 12 месяцев`
     }
 ]
 
@@ -123,7 +122,7 @@ const cardsGosSector = [
         title: 'Инструменты для принятия решений и эффективного управления',
         text: `Планирование социальной инфраструктуры Оптимизация транспортной инфраструктуры`
     },
-    
+
 
 ]
 
@@ -140,15 +139,19 @@ export default function Organisations() {
     return (
         <>
             <div className="header-t base-container">
-                <div className="wrap">
-                    <Link className="logo-t" to="/">
-                        <img src={logo} alt="Логотип" />
-                    </Link>
+                <div className="organisations-wrap">
+                    <div className="head-title">
+                        <Link className="logo-t" to="/">
+                            <img src={logo} alt="Логотип" />
+                        </Link>
+                        <h1 className={`title ${darkTheme ? 'title_dark' : ''}`}>Решения для организаций</h1>
+                    </div>
+
                 </div>
             </div>
             <section className="base-container content-style">
-                <div className="wrap">
-                    <h1 className={`title ${darkTheme ? 'title_dark' : ''}`}>решения для организайций от boom telecom</h1>
+                <div className="organisations-wrap">
+
                     <div className="btn-group d-flex">
                         <button onClick={() => handleCategoryChange('Малый бизнес')} className={`btn ${selectedCategory === 'Малый бизнес' ? 'btn_active' : ''} ${darkTheme ? 'btn_dark' : ''}`}>Малый бизнес</button>
                         <button onClick={() => handleCategoryChange('Крупный бизнес')} className={`btn btn2 ${selectedCategory === 'Крупный бизнес' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Крупный бизнес</button>
@@ -161,7 +164,7 @@ export default function Organisations() {
                                     cardsMalBiz.map((item, i) => (
                                         <div className="col" key={i + Math.random() + item.title}>
                                             <div className={`block-pr__wrap ${darkTheme ? 'block-pr__wrap_dark' : ''}`}>
-                                                <div className={`img-w ${item.title === 'ОФД “Билайн”' ? 'img-phone' : ''}`}>
+                                                <div className={`img-w `}>
                                                     <img src={item.img} alt="" />
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>

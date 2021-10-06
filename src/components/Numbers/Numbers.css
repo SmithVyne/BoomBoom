@@ -837,6 +837,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     flex-direction: row;
     justify-content: space-between;
 }
+.numbers-for-mobile__inputs.modal {
+    width: 100%;
+    gap: 0 29px;
+    justify-content: center;
+}
 
 .numbers-for-mobile__select-button {
     width: 251px;
@@ -848,6 +853,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     align-items: center;
     justify-content: space-between;
     position: relative;
+    cursor: pointer;
 }
 
 .numbers-for-mobile__select-button-tick {
