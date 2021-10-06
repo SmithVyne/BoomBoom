@@ -140,6 +140,11 @@ const Modal = styled.div`
         gap: 5px;
         cursor: pointer;
         font-weight: 500;
+        font-size: 24px;
+    }
+    .showNumbers-top {
+        width: fit-content;
+        margin: 10px auto;
     }
 `
 
@@ -211,6 +216,7 @@ const Dropdown = styled.div`
         display: flex;
         flex-direction: column;
         gap: 20px;
+        width: fit-content;
     }
 `
 
@@ -259,7 +265,7 @@ const GarbageCan = styled(RiDeleteBin6Fill)`
     }
 `;
 
-const NumbersDropDown = ({inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
+const NumbersDropDown = ({setShowNumbers, inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
     const [isSelectCategoryOpen, setIsSelectCategoryOpen] = useState(false);
     const [isInputFocused, setIsInputFocused] = useState(false);
     function handleCategoryChange(e, category) {
@@ -268,31 +274,35 @@ const NumbersDropDown = ({inputNumber, setInputNumber, selectedCategoryID, setSe
         setSelectedCategoryID(category);
     }
     return (
-    <div className="numbers-for-mobile__inputs modal">
-        <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
-            <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
-            <input onBlur={()=>setIsInputFocused(false)} onFocus={()=>setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({target})=>setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
+    <div className="showNumbers-top">
+        <div onClick={()=>setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
+        <div className="numbers-for-mobile__inputs modal">
+            <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
+                <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
+                <input onBlur={()=>setIsInputFocused(false)} onFocus={()=>setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({target})=>setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
+            </div>
+            <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
+                {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
+                {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
+                {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
+                {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
+                {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
+                {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
+                <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
+                </svg>
+                {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
+                {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
+                    {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
+                    {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебрянный</p>}
+                    {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
+                    {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
+                    {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
+                </div>}
+            </div>
         </div>
-        <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
-            {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
-            {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
-            {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
-            {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
-            {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
-            {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
-            <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
-            </svg>
-            {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
-            {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
-                {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
-                {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебрянный</p>}
-                {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
-                {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
-                {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
-            </div>}
-        </div>
-    </div>)
+    </div>
+    )
 }
 
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
@@ -319,8 +329,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
                 { showNumbers ? 
                     <> 
-                        <div onClick={()=>setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
-                        <NumbersDropDown inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
+                        <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
                         <NumbersMobile
                             selectedCategoryID={selectedCategoryID}
                             inputValue={inputNumber}
