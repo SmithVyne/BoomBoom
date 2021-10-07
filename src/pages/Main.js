@@ -7,7 +7,7 @@ import Banner from '../components/Banner/Banner';
 import Tariffs from '../components/Tariffs';
 import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
 import MainCards from '../components/MainCards/MainCards';
-import СoverageMap from '../components/СoverageMap/СoverageMap';
+// import СoverageMap from '../components/СoverageMap/СoverageMap';
 import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
 import { BUY_NUMBER, tariffTypesArray } from '../globals/utils';
