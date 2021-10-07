@@ -38,25 +38,25 @@ export default function Section(props) {
                   <img className="blok-data__icon" src={icon1} alt="Иконка" />
                   <h2>Пакеты</h2>
                   <div className={`blok-data__info d-flex-wrap ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
-                    <div className={`tarrif-page__info-container`}>
+                    <div className={`tarrif-page__info-container ${props.darkTheme ? 'blok-data__info-container_dark' : ''}`}>
                       Минуты <span>&ensp;&#183;&ensp;{props.tariff.positions[positionValue].min}</span>
                     </div>
-                    <div className={`tarrif-page__info-container`}>
+                    <div className={`tarrif-page__info-container ${props.darkTheme ? 'blok-data__info-container_dark' : ''}`}>
                       Интернет (гб) <span>&ensp;&#183;&ensp;{props.tariff.positions[positionValue].gb === Infinity ? <CgInfinity /> : props.tariff.positions[positionValue].gb} </span>
                     </div>
-                    <div className={`tarrif-page__info-container`}>
+                    <div className={`tarrif-page__info-container ${props.darkTheme ? 'blok-data__info-container_dark' : ''}`}>
                       SMS и MMS <span>&ensp;&#183;&ensp;{props.tariff.positions[positionValue].sms}</span>
                     </div>
                   </div>
-                  <div className={`tarrif-page__bar-container`}>
-                    <p className={`tarrif-page__bar-title`}>Настройте тариф под себя</p>
+                  <div className={`tarrif-page__bar-container ${props.darkTheme ? 'blok-data__info-container_dark' : ''}`}>
+                    <p className={`tarrif-page__bar-title ${props.darkTheme ? 'tarrif-page__bar-title_dark' : ''}`}>Настройте тариф под себя</p>
                     <TariffPageBar vip={props.tariff.title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                   </div>
                   <div className={`tarrif-page__button`}>
                     <div onClick={() => dispatch({ type: SHOW_MODAL, payload })} className="main-data__button">
                       <p className="main-data__button-text">Подключить</p>
                     </div>
-                    <div className={`tarrif-page__subscription`}>
+                    <div className={`tarrif-page__subscription ${props.darkTheme ? 'tarrif-page__subscription_dark' : ''}`}>
                       Абонентская плата &#183;<span className={`tarrif-page__subscription_span`}> {props.tariff.price} руб.</span>
                     </div>
                   </div>
