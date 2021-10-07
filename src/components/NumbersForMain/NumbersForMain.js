@@ -854,11 +854,11 @@ function NumbersForMain(props) {
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_bronz`}>Бронзовый</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>1 000 ₽</p>
-                                <p className={`numbers-for-main__card-price_now`}>Бесплатно</p>
+                                <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>Бесплатно</p>
                             </div>
                         </div>
                         <div className={`numbers-for-main__card-row`}>
-                            <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? `${numbersByCategories.category_bronz[0].ctn.substring(0, 3)} ${numbersByCategories.category_bronz[0].ctn.substring(3, 6)} ${numbersByCategories.category_bronz[0].ctn.substring(6, 8)} ${numbersByCategories.category_bronz[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
+                            <p className={`numbers-for-main__card-number ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>{(numbersByCategories && numbersByCategories.category_bronz.length > 0) ? `${numbersByCategories.category_bronz[0].ctn.substring(0, 3)} ${numbersByCategories.category_bronz[0].ctn.substring(3, 6)} ${numbersByCategories.category_bronz[0].ctn.substring(6, 8)} ${numbersByCategories.category_bronz[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
 
                             <div onClick={() => {
                                 if (numbersByCategories && numbersByCategories.category_bronz.length > 0){
@@ -876,11 +876,11 @@ function NumbersForMain(props) {
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_silver`}>Серебрянный</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>5 000 ₽</p>
-                                <p className={`numbers-for-main__card-price_now`}>300 ₽/мес</p>
+                                <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>300 ₽/мес</p>
                             </div>
                         </div>
                         <div className={`numbers-for-main__card-row`}>
-                            <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_silver.length > 0) ? `${numbersByCategories.category_silver[0].ctn.substring(0, 3)} ${numbersByCategories.category_silver[0].ctn.substring(3, 6)} ${numbersByCategories.category_silver[0].ctn.substring(6, 8)} ${numbersByCategories.category_silver[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
+                            <p className={`numbers-for-main__card-number ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>{(numbersByCategories && numbersByCategories.category_silver.length > 0) ? `${numbersByCategories.category_silver[0].ctn.substring(0, 3)} ${numbersByCategories.category_silver[0].ctn.substring(3, 6)} ${numbersByCategories.category_silver[0].ctn.substring(6, 8)} ${numbersByCategories.category_silver[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
 
                             <div onClick={() => {
                                 if (numbersByCategories && numbersByCategories.category_silver.length > 0){
@@ -898,11 +898,11 @@ function NumbersForMain(props) {
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_gold`}>Золотой</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>35 000 ₽</p>
-                                <p className={`numbers-for-main__card-price_now`}>500 ₽/мес</p>
+                                <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>500 ₽/мес</p>
                             </div>
                         </div>
                         <div className={`numbers-for-main__card-row`}>
-                            <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_gold.length > 0) ? `${numbersByCategories.category_gold[0].ctn.substring(0, 3)} ${numbersByCategories.category_gold[0].ctn.substring(3, 6)} ${numbersByCategories.category_gold[0].ctn.substring(6, 8)} ${numbersByCategories.category_gold[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
+                            <p className={`numbers-for-main__card-number ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>{(numbersByCategories && numbersByCategories.category_gold.length > 0) ? `${numbersByCategories.category_gold[0].ctn.substring(0, 3)} ${numbersByCategories.category_gold[0].ctn.substring(3, 6)} ${numbersByCategories.category_gold[0].ctn.substring(6, 8)} ${numbersByCategories.category_gold[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
 
                             <div onClick={() => {
                                 if (numbersByCategories && numbersByCategories.category_gold.length > 0){
@@ -920,11 +920,11 @@ function NumbersForMain(props) {
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_platina`}>Платиновый</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>200 000 ₽</p>
-                                <p className={`numbers-for-main__card-price_now`}>1000 ₽/мес</p>
+                                <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>1000 ₽/мес</p>
                             </div>
                         </div>
                         <div className={`numbers-for-main__card-row`}>
-                            <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_plat.length > 0) ? `${numbersByCategories.category_plat[0].ctn.substring(0, 3)} ${numbersByCategories.category_plat[0].ctn.substring(3, 6)} ${numbersByCategories.category_plat[0].ctn.substring(6, 8)} ${numbersByCategories.category_plat[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
+                            <p className={`numbers-for-main__card-number ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>{(numbersByCategories && numbersByCategories.category_plat.length > 0) ? `${numbersByCategories.category_plat[0].ctn.substring(0, 3)} ${numbersByCategories.category_plat[0].ctn.substring(3, 6)} ${numbersByCategories.category_plat[0].ctn.substring(6, 8)} ${numbersByCategories.category_plat[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
 
                             <div onClick={() => {
                                 if (numbersByCategories && numbersByCategories.category_plat.length > 0){
@@ -942,11 +942,11 @@ function NumbersForMain(props) {
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_briliant`}>Бриллиантовый</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>500 000 ₽</p>
-                                <p className={`numbers-for-main__card-price_now`}>1500 ₽/мес</p>
+                                <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>1500 ₽/мес</p>
                             </div>
                         </div>
                         <div className={`numbers-for-main__card-row`}>
-                            <p className={`numbers-for-main__card-number`}>{(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? `${numbersByCategories.category_briliant[0].ctn.substring(0, 3)} ${numbersByCategories.category_briliant[0].ctn.substring(3, 6)} ${numbersByCategories.category_briliant[0].ctn.substring(6, 8)} ${numbersByCategories.category_briliant[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
+                            <p className={`numbers-for-main__card-number ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>{(numbersByCategories && numbersByCategories.category_briliant.length > 0) ? `${numbersByCategories.category_briliant[0].ctn.substring(0, 3)} ${numbersByCategories.category_briliant[0].ctn.substring(3, 6)} ${numbersByCategories.category_briliant[0].ctn.substring(6, 8)} ${numbersByCategories.category_briliant[0].ctn.substring(8, 10)}` : 'Нет в наличии'}</p>
 
                             <div onClick={() => {
                                 if (numbersByCategories && numbersByCategories.category_briliant.length > 0){

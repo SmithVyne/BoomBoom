@@ -1,7 +1,7 @@
 import React from 'react';
 import './MainCards.css';
-import firstBg from '../../assets/images/main-cards/first-bg.svg'
-import rightBg from '../../assets/images/main-cards/right-bg.svg'
+import firstBg from '../../assets/images/main-cards/first-bg.png'
+import rightBg from '../../assets/images/main-cards/right-bg.png'
 import headphones from '../../assets/images/main-cards/headphones.png'
 import blurCylinder from '../../assets/images/main-cards/blur-cylinder.png'
 import wave from '../../assets/images/main-cards/wave.png'

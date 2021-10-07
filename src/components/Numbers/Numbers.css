@@ -1131,6 +1131,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     padding: 0;
     margin: 62px 0 0;
 }
+.numbers__selected-price_dark{
+    color: #FFFFFF !important;
+}
 @media (max-width: 1900px) {
     .numbers__contacts {
         column-gap: 24px;
