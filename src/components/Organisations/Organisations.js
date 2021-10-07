@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../App';
+import { useParams , useHistory } from 'react-router-dom';
 import './Organisations.css';
 import logo from '../../assets/images/logo.png'
 import box from '../../assets/images/box.png'
@@ -127,10 +128,13 @@ const cardsGosSector = [
 ]
 
 export default function Organisations() {
-
+    const history = useHistory();
+    let { type } = useParams();
     const { darkTheme } = useContext(GlobalContext);
-    const [selectedCategory, setSelectedCategory] = React.useState('Малый бизнес');
-
+    const [selectedCategory, setSelectedCategory] = React.useState(`${type && (type === ':small-biz'|| type === ':big-biz' || type === ':gos-sector') ? type.split(':')[1] : 'small-biz'}`);
+    React.useEffect(() => {
+        setSelectedCategory(`${type && (type === ':small-biz'|| type === ':big-biz' || type === ':gos-sector') ? type.split(':')[1] : 'small-biz'}`)
+      }, [type])
     function handleCategoryChange(category) {
         console.log(category)
         setSelectedCategory(category)
@@ -153,14 +157,21 @@ export default function Organisations() {
                 <div className="organisations-wrap">
 
                     <div className="btn-group d-flex">
-                        <button onClick={() => handleCategoryChange('Малый бизнес')} className={`btn ${selectedCategory === 'Малый бизнес' ? 'btn_active' : ''} ${darkTheme ? 'btn_dark' : ''}`}>Малый бизнес</button>
-                        <button onClick={() => handleCategoryChange('Крупный бизнес')} className={`btn btn2 ${selectedCategory === 'Крупный бизнес' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Крупный бизнес</button>
-                        <button onClick={() => handleCategoryChange('Госсектор')} className={`btn btn2 ${selectedCategory === 'Госсектор' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Госсектор</button>
+                        <button onClick={() => {
+                            history.push(':small-biz')
+                            handleCategoryChange('small-biz')}
+                            } className={`btn ${selectedCategory === 'small-biz' ? 'btn_active' : ''} ${darkTheme ? 'btn_dark' : ''}`}>Малый бизнес</button>
+                        <button onClick={() => {
+                            history.push(':big-biz')
+                            handleCategoryChange('big-biz')}} className={`btn btn2 ${selectedCategory === 'big-biz' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Крупный бизнес</button>
+                        <button onClick={() => {
+                            history.push(':gos-sector')
+                            handleCategoryChange('gos-sector')}} className={`btn btn2 ${selectedCategory === 'gos-sector' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Госсектор</button>
                     </div>
                     <div className="block-pr">
                         <div className="row">
                             {
-                                selectedCategory === 'Малый бизнес' ?
+                                selectedCategory === 'small-biz' ?
                                     cardsMalBiz.map((item, i) => (
                                         <div className="col" key={i + Math.random() + item.title}>
                                             <div className={`block-pr__wrap ${darkTheme ? 'block-pr__wrap_dark' : ''}`}>
@@ -175,7 +186,7 @@ export default function Organisations() {
                                     ))
                                     : <></>}
                             {
-                                selectedCategory === 'Крупный бизнес' ?
+                                selectedCategory === 'big-biz' ?
                                     cardsBigBiz.map((item, i) => (
                                         <div className="col" key={i + Math.random() + item.title}>
                                             <div className={`block-pr__wrap ${darkTheme ? 'block-pr__wrap_dark' : ''}`}>
@@ -191,7 +202,7 @@ export default function Organisations() {
                                     : <></>}
 
                             {
-                                selectedCategory === 'Госсектор' ?
+                                selectedCategory === 'gos-sector' ?
                                     cardsGosSector.map((item, i) => (
                                         <div className="col" key={i + Math.random() + item.title}>
                                             <div className={`block-pr__wrap ${darkTheme ? 'block-pr__wrap_dark' : ''}`}>

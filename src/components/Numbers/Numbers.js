@@ -756,6 +756,9 @@ export default function Numbers(props) {
         }
     }, [selectedNumbers]);
     const [selectedButton, setSelectedButton] = React.useState(`${button && (button === ':все'|| button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`);
+    React.useEffect(() => {
+        setSelectedButton(`${button && (button === ':все'|| button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`)
+      }, [button])
     const [isSelectCategoryOpen, setSelectCategoryOpen] = React.useState(false);
     function handeleCategoryOpen() {
         if (isSelectCategoryOpen) {
@@ -1002,7 +1005,7 @@ export default function Numbers(props) {
                                                 <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 10) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
                                                 <div className={`numbers__selected-number-prices`}>
                                                     <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 10) ? '500 000 ₽' : ''}`}</p>
-                                                    <p className={`numbers__selected-number-price`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
+                                                    <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
                                                 </div>
                                                 <div onClick={() => handleItemDelite(item)} className={`numbers__selected-number-trash`}>
                                                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1024,7 +1027,7 @@ export default function Numbers(props) {
 
                                     </div>
 
-                                    <p className={`numbers__selected-fullprice`}>Итого: {fullPrice} ₽</p>
+                                    <p className={`numbers__selected-fullprice ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>Итого: {fullPrice} ₽</p>
 
 
                                 </>
@@ -1033,7 +1036,7 @@ export default function Numbers(props) {
                                     {preloaderVisible ? <Loader /> : apiError ? <p className={`numbers__contact ${darkTheme ? 'numbers__contact_dark' : ''}`}>{apiError}</p> :
 
                                         <NumbersTablePages
-
+                                            darkTheme={darkTheme}
                                             page={page}
                                             preloaderVisible={preloaderVisible}
                                             inputValue={inputValue}
@@ -1096,7 +1099,7 @@ export default function Numbers(props) {
                                         <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 10) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
                                         <div className={`numbers__selected-number-prices`}>
                                             <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 10) ? '500 000 ₽' : ''}`}</p>
-                                            <p className={`numbers__selected-number-price`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
+                                            <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
                                         </div>
                                         <div onClick={() => handleItemDelite(item)} className={`numbers__selected-number-trash`}>
                                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1118,7 +1121,7 @@ export default function Numbers(props) {
 
                             </div>
 
-                            <p className={`numbers__selected-fullprice`}>Итого: {fullPrice} ₽</p>
+                            <p className={`numbers__selected-fullprice  ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>Итого: {fullPrice} ₽</p>
                             <button onClick={handleSubmit} type="button" className={`numbers__submit-button-inselect  ${selectedNumbers && selectedNumbers.length > 0 ? "numbers__submit-button_active" : "numbers__submit-button_disabled"} `} disabled={selectedNumbers && selectedNumbers.length > 0 ? false : true}>{selectedNumbers.length > 0 ? `Оформить номера ${selectedNumbers.length}/5` : 'Выберите номера'}</button>
 
                         </> :

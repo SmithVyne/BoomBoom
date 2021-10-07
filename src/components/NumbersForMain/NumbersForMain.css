@@ -36,7 +36,7 @@
 }
 
 .numbers-for-main__title_dark {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .numbers-for-main__title_link {
@@ -264,7 +264,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .numbers-for-main__category-price_dark {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .numbers-for-main__category-name_active {

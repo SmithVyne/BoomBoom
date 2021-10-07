@@ -48,7 +48,9 @@
 
   text-decoration: none;
 }
-
+.not-found__text_dark{
+  color: #FFFFFF;
+}
 @media (max-width: 1175px){
   .not-found{
     padding: 408px 0 222px;
