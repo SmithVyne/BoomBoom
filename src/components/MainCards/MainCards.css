@@ -168,14 +168,7 @@
     right: -50px;
 }
 
-img {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    pointer-events: none
-}
+
 
 @media screen and (max-width: 1250px) {
     .main__card {
