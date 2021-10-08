@@ -128,10 +128,12 @@ const Modal = styled.div`
             align-items: center;
             .left {
                 width: 600px;
-                max-width: 100%;
                 padding: 10px;
                 border: 3px solid #FF0202;
                 border-radius: 12px;
+                @media(max-width: 800px) {
+                    width: 100%;
+                }
             }
         }
     }
