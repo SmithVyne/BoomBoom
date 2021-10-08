@@ -11,6 +11,9 @@ const Wrapper = styled.aside`
     position: sticky;
     top: 50px;
     height: fit-content;
+    @media(max-width: 1100px) {
+        display: none;
+    }
 `;
 const Items = styled.a`
     text-decoration: none;
@@ -35,7 +38,7 @@ const itemslist = [
     "Детализация",
 ];
 export default function Aside() {
-    const [clicked, setClicked] = useState(null);
+    const [clicked, setClicked] = useState(0);
     return (
         <Wrapper>
             {itemslist.map((it, idx) =>

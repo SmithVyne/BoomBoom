@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
@@ -8,7 +8,7 @@ import burgerMenuWhite from '../assets/images/burgerMenuWhite.png'
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import MobileNav from "../components/MobileNav";
 import Menu from "../components/Menu";
 
@@ -50,7 +50,7 @@ const Wrappper = styled.nav`
         @media(max-width: 1325px) {
             margin-right: auto;
         }
-        &  img {
+        & img {
             height: 84px;
             width: 187px;
             @media (max-width: 1400px) {
@@ -83,7 +83,7 @@ const Wrappper = styled.nav`
     
 `
 
-const DashboardBtn = styled(Link)`
+const DashboardBtn = styled(motion.button)`
     font-size: 24px;
     background-color: #4B75FC;
     color: #fff;
@@ -131,13 +131,18 @@ const MenuBtn = styled.img`
 
 export default function Nav() {
     const {darkTheme, setLoginForm, userSession, setUserSession, isMobile} = useContext(GlobalContext);
+    const [showMobileNav, setShowMobileNav] = useState(false);
     const {pathname} = useLocation();
-    const logged_in = pathname === "/dashboard" && userSession;
+    const [logged_in, setLogged_in] = useState(false);
+    useEffect(() => {
+        setLogged_in(pathname === "/dashboard" && !!userSession);
+    }, [pathname, userSession]);
+
     const handleButton = () => {
-        if(logged_in) setUserSession(null)
+        if(logged_in) {setUserSession(null); setLoginForm(false)}
         else setLoginForm(true)
     }
-    const [showMobileNav, setShowMobileNav] = useState(false);
+    
     return (
         <Wrappper>
             <Link className="logo" to="/"><img alt="logo" src={darkTheme ? logo1 : logo2} /></Link>
@@ -147,7 +152,7 @@ export default function Nav() {
             <a id="helpCenter" href="tel:+7 495 795 95 66">+7 495 795 95 66</a>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
-                <DashboardBtn to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
+                <DashboardBtn as={Link} to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
             <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
             <AnimatePresence>

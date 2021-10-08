@@ -11,6 +11,13 @@ import mailbox from "../assets/images/services/mailbox.png"
 import radio from "../assets/images/services/radio.png"
 import shield from "../assets/images/services/shield.png"
 import lock from "../assets/images/services/lock.png"
+import firework from "../assets/images/services/firework.png"
+import robot from "../assets/images/services/robot 1 blue head.png"
+import drum from "../assets/images/services/drum.png"
+import umbrella from "../assets/images/services/umbrella.png"
+import telescope from "../assets/images/services/telescope.png"
+import wifi from "../assets/images/services/wifi.png"
+import telephone from "../assets/images/services/telephone.png"
 
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
@@ -205,13 +212,13 @@ export const services = {
             title: `Пакет безлимитного 
             интернета в сети 4G`,
             desc: `Интернет никогда не закончится в сети 4G`,
-            img: box,
+            img: firework,
             price: "150 ₽ / месяц"
         },
         {
             title: `Автоответчик`,
             desc: `Включите Автоответчик, и вы не пропустите ни одного звонка, даже если телефон будет выключен или окажется  вне зоны обслуживания.`,
-            img: box,
+            img: robot,
             price: "50 ₽ / месяц"
         },
         {
@@ -219,32 +226,32 @@ export const services = {
             desc: `Установите вместо скучных гудков
             музыку, шутки и приколы! Каталог мелодий 
             и управление услугой - 0770`,
-            img: box,
+            img: drum,
             price: "100 ₽ / месяц"
         },
         {
             title: `Антиопределитель номера`,
             desc: `Антиопределитель сохранит 
             ваш номер в секрете во время разговора, даже если у собеседника подключе определитель номера.`,
-            img: box,
+            img: umbrella,
             price: "200 ₽ / месяц"
         },
         {
             title: `Суперопределитель номера`,
             desc: `Чтобы всегда знать, кто вам звонит, даже если у них «Антиопределитель номера»`,
-            img: box,
+            img: telescope,
             price: "1800 ₽ / месяц"
         },
         {
             title: `Режим Модема`,
             desc: `Раздача интернета с устройвства в режиме модема.`,
-            img: box,
+            img: wifi,
             price: "50 ₽ / месяц"
         },
         {
             title: `Городская состовляющая (495)`,
             desc: `Выделение городского номера из пула нумерации города, в коде 495. Тарификация согласно местной телефонной связи. Все входящие звонки для абонента бесплатны.`,
-            img: box,
+            img: telephone,
             price: "750 ₽ / месяц"
         },
     ], 

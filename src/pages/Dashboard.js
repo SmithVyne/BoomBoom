@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
@@ -8,9 +8,9 @@ import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
 import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
-import Cleave from 'cleave.js/react';
 import html2pdf from "html2pdf.js";
-// import { jsPDF } from "jspdf";
+import { spacer } from "../components/BuyNumberModal";
+import { RiFileCopyLine } from "react-icons/ri";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -24,24 +24,12 @@ const MainSection = styled.div`
     row-gap: 20px;
     display: flex;
     flex-direction: column;
-`;
-const TopCards = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 31px;
-    width: 100%;
-`;
-const TopCard = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: ${({color, theme}) => color ? color : theme.textColor};
-    background: ${({background}) => background};
-    height: 250px;
-    max-height: fit-content;
-    border-radius: 32px;
-    padding: 20px;
-    padding-bottom: 15px;
+    @media(max-width: 1100px) {
+        padding-right: 0px;
+    }
+    #Детализация {
+        overflow-x: auto;
+    }
 `;
 const Button = styled.button`
     color: ${({color}) => color ? color : "#121212"};
@@ -58,41 +46,68 @@ const Button = styled.button`
     cursor: pointer;
     line-height: ${({fontSize}) => fontSize};
     gap: ${({gap}) => gap};
+    max-width: 100%;
+    max-height: fit-content;
 `;
-const TarifName = styled.span`
-    font-size: 25px;
-`
+
 const Small = styled.small`
-    font-size: 12px;
+    font-size: 16px;
     line-height: 50%;
     font-weight: 500;
 `;
-const SubsNumber = styled.span`
-    font-size: 40px;
-    display: flex;
-    flex-direction: column;
-    line-height: 50%;
-`
-const SubsBalance = styled(SubsNumber)`
-    font-size: 80px;
-    gap: 25px;
-`
-const Div = styled.div`
-    display: flex;
-    flex-direction: column;
+const Cards = styled.div`
+    display: grid;
     gap: 20px;
-`
-const SubCards = styled(TopCards)`
-    gap: 20px;
+    width: 100%;
     grid-template-columns: repeat(3, 1fr);
+    font-family: Circe;
+    @media(max-width: 1100px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media(max-width: 550px) {
+        grid-template-columns: 1fr;
+    }
+    #Абонентская_плата {
+        font-size: 24px;
+        height: 71px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 71px;
+        font-weight: 550;
+    }
 `
+const TopCard = styled.div` 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
+    height: 123px;
+    border-radius: 32px;
+    padding: 20px;
+    max-height: fit-content;
+    .topCardTitle {
+        font-size: 20px;
+        color: ${({darkTheme}) => darkTheme ? "#FFFFFFAD" : "#010101AD"};
+    }
+    .topCardBody {
+        font-size: 24px;
+        color: ${({color}) => color};
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: bold;
+    }
+`;
 const SubCard = styled(TopCard)`
     align-items: center;
-    justify-content: space-between;
     margin: 0;
     padding: 24px;
-    height: 266;
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"};
+    height: 266px;
+    gap: 20px;
 `
 const Span = styled.span`
     display: flex;
@@ -122,7 +137,7 @@ const Details = styled.section`
     flex-direction: column;
     height: fit-content;
     color: ${({theme}) => theme.textColor};
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"};
+    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
     border-radius: 28px;
     padding: 24px;
     gap: 26px;
@@ -133,6 +148,12 @@ const Dtitle = styled.span`
     font-size: 40px;
     line-height: 40px;
     font-weight: 650;
+    gap: 20px;
+    position: sticky;
+    left: 0;
+    @media(max-width: 850px) {
+        flex-direction: column;
+    }
 `
 const Dbody = styled.table`
     width: 100%;
@@ -166,33 +187,38 @@ const Trows = styled.tr`
         margin: -10px 3px -7px 0;
     }
 `
-const Ctn = styled(Cleave)`
-    background: transparent;
-    border: none;
-    outline: none;
+const Copier = styled(RiFileCopyLine)`
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.04);
+    }
 `
-
 const getDashboard = Promise.all([
     Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"}),
 ])
 
 export default function Dashboard() {
-    const {darkTheme, userSession} = useContext(GlobalContext);
+    const {darkTheme, userSession, setLoginForm} = useContext(GlobalContext);
     const userInfo = useSelector(store => store.auth.userInfo?.result);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
     const dispatch = useDispatch();
     useEffect(() => {
-        userSession && getDashboard
+        if (userSession) {
+            getDashboard
             .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))
-    }, [userSession, dispatch]);
+        } else setLoginForm(true)
+    }, [userSession, dispatch, setLoginForm]);
 
     const detailsRef = useRef();
     const handleDownload = () => {
-        html2pdf().from(detailsRef.current).save("Детализация.pdf")
-        // const pdf = new jsPDF();
-        // pdf.html(detailsRef.current, {callback: () => {
-        //     pdf.save('Детализация.pdf')
-        // }});
+        html2pdf().from(detailsRef.current).save("Детализация.pdf");
+    }
+    const [copied, setCopied] = useState(false);
+    const handleCopy = () => {
+        navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 60000);
+        });
     }
 
     return (
@@ -201,68 +227,69 @@ export default function Dashboard() {
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
-                    <TopCards>
-                        <TopCard color="white" background={darkTheme ? 
-                            "linear-gradient(148.41deg, #4B5AFD 0%, #4B38FE 100%)" : 
-                            "radial-gradient(78.33% 96.51% at 14.73% 63.17%, #324E69 0%, #000000 100%)"}>
-                                <Div>
-                                    <TarifName>Тариф: {userInfo.plan}</TarifName>
-                                    <SubsNumber>
-                                        <Small style={{paddingLeft: 10}}>Ваш номер</Small>
-                                        <Ctn disabled options={{phone: true,phoneRegionCode: 'RU'}} value={"+7"+userInfo.ctn} />
-                                    </SubsNumber>
-                                </Div>
-                                <Button background="white" fontSize="20px" fontWeight="bold" width="307px" height="44px" round >Улучшить</Button>
+                    <Cards>
+                        <TopCard darkTheme={darkTheme}>
+                            <span className="topCardTitle">Номер:</span>
+                            <span className="topCardBody">
+                                {"+7 "+spacer(userInfo.ctn)}
+                                <Copier onClick={handleCopy} color={copied ? "#4B75FC" : darkTheme ? "#fff" : "#010101AD"} size={23} />
+                            </span>
                         </TopCard>
-                        <TopCard background={darkTheme ? "rgba(255, 255, 255, 0.07)" : "#FFFFFF"}>
-                            <SubsBalance>
-                                <Small>Текущий баланс</Small>
-                                {replacePoints(userInfo.balance)} ₽
-                            </SubsBalance>
-                            <Button color="white" background="#4B75FC" fontWeight="bold" fontSize="20px" width="307px" height="44px" round >Пополнить баланс</Button>
+                        <TopCard color="#4B75FC" darkTheme={darkTheme}>
+                            <span className="topCardTitle">Тариф:</span>
+                            <span className="topCardBody">
+                                {userInfo.plan + " ₽"}
+                            </span>
                         </TopCard>
-                    </TopCards>
-                    <SubCards>
-                            <SubCard darkTheme={darkTheme}>
-                                <Small style={{fontWeight: 700}}>Минуты</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
-                            </SubCard>
-                            <SubCard darkTheme={darkTheme}>
-                                <Small style={{fontWeight: 700}}>Сообщения</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
-                            </SubCard>
-                            <SubCard darkTheme={darkTheme}>
-                                <Small style={{fontWeight: 700}}>Интернет</Small>
-                                <Progress strokeColor={darkTheme ? "#4B75FC" : {'100%':'#141DFF', '48.23%':'#3941FF','0%':'#9E19DD'}} width={181} strokeWidth={7} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
-                            </SubCard>
-                        </SubCards>
-                        <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Добавить номер или перенести старый +</Button>
-                        <Details id="Детализация" darkTheme={darkTheme}>
-                            <Dtitle>
-                                Детализация
-                                <Button onClick={handleDownload} gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
-                                    <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
-                                </Button>
-                            </Dtitle>
-                            <Dbody ref={detailsRef}>
-                                <thead>
-                                    <tr>
-                                        <th>Дата</th>
-                                        <th>Действие</th>
-                                        <th>Оператор</th>
-                                        <th>Длительность</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <Trows darkTheme={darkTheme}>
-                                        <td>Дата</td>
-                                        <td>Действие</td>
-                                        <td><img alt="mtc" src={mtc} /> MTC</td>
-                                        <td>Длительность</td>
-                                    </Trows>
-                                </tbody>
-                            </Dbody>
-                        </Details>
+                        <TopCard color="#32A43E" darkTheme={darkTheme}>
+                            <span className="topCardTitle">Баланс:</span>
+                            <span className="topCardBody">
+                                {replacePoints(userInfo.balance)+ " ₽"}
+                            </span>
+                        </TopCard>
+
+                        <SubCard darkTheme={darkTheme}>
+                            <Small style={{fontWeight: 700}}>Минуты</Small>
+                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
+                        </SubCard>
+                        <SubCard darkTheme={darkTheme}>
+                            <Small style={{fontWeight: 700}}>Сообщения</Small>
+                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
+                        </SubCard>
+                        <SubCard darkTheme={darkTheme}>
+                            <Small style={{fontWeight: 700}}>Интернет</Small>
+                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
+                        </SubCard>
+                        <Button fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>Изменить номер</Button>
+                        <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Сменить тариф</Button>
+                        <span id="Абонентская_плата">Абонентская плата в месяц: </span>
+                    </Cards>
+                    <Details id="Детализация" darkTheme={darkTheme}>
+                        <Dtitle>
+                            Детализация
+                            <Button style={{padding: "30px 0"}} onClick={handleDownload} gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
+                                <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
+                            </Button>
+                        </Dtitle>
+                        <Dbody ref={detailsRef}>
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Действие</th>
+                                    <th>Оператор</th>
+                                    <th>Длительность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <Trows darkTheme={darkTheme}>
+                                    <td>Дата</td>
+                                    <td>Действие</td>
+                                    <td><img alt="mtc" src={mtc} /> MTC</td>
+                                    <td>Длительность</td>
+                                </Trows>
+                            </tbody>
+                        </Dbody>
+                    </Details>
                 </MainSection>
                 </Wrapper>}
             </>
