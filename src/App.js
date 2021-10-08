@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
 import { useLocalStorage } from "./hooks";
 import NumbersPage from "./pages/NumbersPage/NumbersPage";
+import AboutCompany from "./pages/AboutCompany/AboutCompany";
 import RoamingPage from "./pages/RoamingPage/RoamingPage";
 import OrganisationsPage from "./pages/OrganisationsPage/OrganisationsPage";
 import TariffePage from "./pages/TariffePage/TariffePage";
@@ -88,6 +89,7 @@ export default function App() {
               <Route path="/services/:id" component={Services} />
               <Route path="/organisations/:type" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
+              <Route path="/support/about-us" component={AboutCompany} />
               <Route path="*" component={PageNotFound} />
             </Switch>
           </Mainml>
