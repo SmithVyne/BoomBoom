@@ -86,6 +86,8 @@ export const tariffBase = {
         gb: 10,
         sms: 100,
     }],
+    infinitInternet: 150,
+    modem: 50,
     price: 350,
     background:"linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)"
 }
@@ -109,6 +111,8 @@ export const tariffBright = {
         gb: 25,
         sms: 500,
     }],
+    infinitInternet: 150,
+    modem: 50,
     price: 500,
     background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);",
     hit: true,
@@ -134,6 +138,8 @@ export const tariffAdvanced = {
         gb: 35,
         sms: 1000,
     }],
+    infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
+    modem: 50,
     price: 800,
     background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)" 
 }
@@ -158,6 +164,8 @@ export const tariffBiz = {
         gb: 50,
         sms: 1000,
     }],
+    infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
+    modem: 50,
     price: 1000,
     background:"radial-gradient(ellipse at center, #324E69 0%, #242424 100%)"
 }
@@ -176,6 +184,8 @@ export const tariffVip = {
         sms: 1000,
         internet: Infinity,
     }],
+    infinitInternet: 'Включено в тариф',
+    modem: 'Включено в тариф',
     price: 1500,
     background:"radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"
 }

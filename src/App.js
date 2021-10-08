@@ -86,7 +86,7 @@ export default function App() {
               <Route path="/numbers/:button" component={NumbersPage} />
               <Route path="/roaming" component={RoamingPage} />
               <Route path="/services" component={Services} />
-              <Route path="/organisations" component={OrganisationsPage} />
+              <Route path="/organisations/:type" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
               <Route path="*" component={PageNotFound} />
             </Switch>

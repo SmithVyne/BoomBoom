@@ -24,6 +24,7 @@ const Wrappper = styled.nav`
         margin-right: auto;
     }
     & .nav-right {
+        margin: 14px 0 0;
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
@@ -88,6 +89,7 @@ const DashboardBtn = styled(Link)`
     color: #fff;
     font-weight: 500;
     height: 52px;
+
     border-radius: 26px;
     display: flex;
     align-items: center;

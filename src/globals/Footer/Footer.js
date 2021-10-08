@@ -95,7 +95,7 @@ export default function Footer() {
                             </div>
                             <div className={`footer__nav-column`}>
                                 <li className={`footer__nav-item`}>
-                                    <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/organisations">Организациям</Link>
+                                    <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/organisations/:small-biz">Организациям</Link>
                                 </li>
                                 <li className={`footer__nav-item`}>
                                     <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/services">Услуги</Link>
@@ -161,7 +161,7 @@ export default function Footer() {
                                 </div>
                                 <div className={`footer__nav-column`}>
                                     <li className={`footer__nav-item`}>
-                                        <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/organisations">Организациям</Link>
+                                        <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/organisations/:small-biz">Организациям</Link>
                                     </li>
                                     <li className={`footer__nav-item`}>
                                         <Link className={`footer__nav-item ${darkTheme? 'footer__text_dark':''}`} to="/services">Услуги</Link>

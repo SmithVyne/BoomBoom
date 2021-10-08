@@ -41,7 +41,7 @@ export default function Esim(props) {
                             </div>
                             <div className={`esim__faq-cards`}>
                                 {faqData && faqData.map((item, i) => (
-                                    <FaqCard item={item} setFaqOpend={setFaqOpend} faqOpend={faqOpend} setDropdownOpend={setDropdownOpend} dropdownOpend={dropdownOpend} />
+                                    <FaqCard item={item} key={`esim${i}`} setFaqOpend={setFaqOpend} faqOpend={faqOpend} setDropdownOpend={setDropdownOpend} dropdownOpend={dropdownOpend} />
                                 ))}
 
 
@@ -143,7 +143,7 @@ export default function Esim(props) {
                         </div>
                         <div className={`esim__faq-cards`}>
                             {faqData && faqData.map((item, i) => (
-                                <FaqCard item={item} setFaqOpend={setFaqOpend} faqOpend={faqOpend} setDropdownOpend={setDropdownOpend} dropdownOpend={dropdownOpend} />
+                                <FaqCard item={item} key={`esim-mobile${i}`} setFaqOpend={setFaqOpend} faqOpend={faqOpend} setDropdownOpend={setDropdownOpend} dropdownOpend={dropdownOpend} />
                             ))}
 
 
