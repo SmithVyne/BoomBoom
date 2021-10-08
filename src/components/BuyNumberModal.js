@@ -12,7 +12,7 @@ import { memo } from 'react'
 import { useEscapeKey } from '../hooks'
 import { useDispatch } from 'react-redux'
 import { HIDE_MODAL, tariffTypesArray } from '../globals/utils';
-import { FourGSwitch } from '../globals/TariffCard'
+import { FourGSwitch, switchTypes } from '../globals/TariffCard'
 import Cleave from 'cleave.js/react';
 import NumbersMobile from './Numbers/NumbersMobile'
 import searchIcon_black from '../assets/images/search-black.svg'
@@ -242,10 +242,9 @@ const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xml
 
 export const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
 
-const TariffsDropDown = memo(({tariffId, position}) => {
+const TariffsDropDown = memo(({tariffId, modalPosition, setModalPosition}) => {
     const tariff = tariffTypesArray[tariffId];
     const [drop, setDrop] = useState(false);
-    const [selected, setSelected] = useState(position);
     return (
         <Dropdown drop={drop} onClick={()=>setDrop(val => !val)}>
             <span className="top">
@@ -254,14 +253,14 @@ const TariffsDropDown = memo(({tariffId, position}) => {
                 {downArrow}
             </span>
             <span className="bottom first">
-                <span>{tariff.positions[selected].min}мин , </span>
-                <span>{tariff.positions[selected].gb === Infinity ? <CgInfinity />: tariff.positions[selected].gb}гб , </span>
-                <span>{tariff.positions[selected].sms}смс</span>
+                <span>{tariff.positions[modalPosition].min}мин , </span>
+                <span>{tariff.positions[modalPosition].gb === Infinity ? <CgInfinity />: tariff.positions[modalPosition].gb}гб , </span>
+                <span>{tariff.positions[modalPosition].sms}смс</span>
             </span>
             {drop && 
             <div className="dropdown">
                 {tariff.positions.map((position, index) => (
-                    <span style={selected === index ? {opacity: 0.2} : {}} key={index} onClick={() => setSelected(index)} className="bottom">
+                    <span style={position === index ? {opacity: 0.2} : {}} key={index} onClick={() => setModalPosition(index)} className="bottom">
                         <span>{position.min}мин , </span>
                         <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
                         <span>{position.sms}смс</span>
@@ -372,9 +371,10 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const [submit, setSubmit] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
-    const {position, tariffId, service} = payload;
+    const {position, tariffId, service, switches} = payload;
+    const [modalSwitches, setModalSwitches] = useState(switches);
+    const [modalPosition, setModalPosition] = useState(position);
     useEscapeKey(() => dispatch({type: HIDE_MODAL}));
-
     const handleSubmit = () => {
         setSubmit(true);
     }
@@ -431,12 +431,11 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                         </> :
                         <>
                             <h1>Подключение тарифа</h1>
-                            <TariffsDropDown position={position} tariffId={tariffId} />
+                            <TariffsDropDown modalPosition={modalPosition} setModalPosition={setModalPosition} tariffId={tariffId} />
                             <section>
                                 <p>Дополнительные опции</p>
                                 <Switches>
-                                    <FourGSwitch modal={true} title="Безлимитный 4G" />
-                                    <FourGSwitch modal={true} title="Раздача интернета" />
+                                    {switchTypes.map(title => <FourGSwitch key={title} modal={true} checked={modalSwitches[title]} setSwitches={setModalSwitches} title={title} price={tariffTypesArray[tariffId].positions[modalPosition][title]} />)}
                                 </Switches>
                             </section>
                             <section>

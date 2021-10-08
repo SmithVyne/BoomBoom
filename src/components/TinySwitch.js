@@ -44,9 +44,9 @@ const SwitchBg = styled.img`
     z-index: 1;
 `
 
-export default function TinySwitch({checked, setChecked}) {
+export default function TinySwitch({checked, setSwitches, title}) {
     return (
-        <Tinyswitch onClick={()=>setChecked(checked => !checked)} checked={checked}>
+        <Tinyswitch onClick={()=>setSwitches(obj => ({...obj, [title]: !obj[title]}))} checked={checked}>
             <Flick checked={checked} />
             <SwitchBg src={cool} />
         </Tinyswitch>

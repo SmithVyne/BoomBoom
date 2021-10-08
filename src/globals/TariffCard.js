@@ -245,8 +245,7 @@ const FourGSwitchStyles = styled.span`
     }
 `
 
-export const FourGSwitch = memo(({title, price, modal=false}) => {
-    const [checked, setChecked] = useState(false);
+export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=false}) => {
     return (
     <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
         {title}
@@ -254,21 +253,23 @@ export const FourGSwitch = memo(({title, price, modal=false}) => {
         (title === "Безлимитный 4G" ? <CgInfinity size={60} /> : <TiWiFi size={60} /> )
         :
         <span>
-            <TinySwitch checked={checked} setChecked={setChecked} />
+            <TinySwitch title={title} checked={checked} setSwitches={setSwitches} />
             +{title === "Безлимитный 4G" ? "150" : "50"} ₽
         </span> }
     </FourGSwitchStyles>)
 })
 
-
+export const switchTypes = ["Безлимитный 4G", "Раздача интернета"];
 export default memo(function TariffCard({ tariff, tariffId }) {
     const [showDropdown, setShowDropDown] = useState(false);
     const [positionValue, setPositionValue] = useState(0);
+    const [switches, setSwitches] = useState({"Безлимитный 4G": false, "Раздача интернета": false});
     const dispatch = useDispatch();
     const {title, icon, background, hit } = tariff;
     const payload = {
         position: positionValue, 
-        tariffId
+        tariffId,
+        switches
     }
     function handlePositionChange(position) {
         setPositionValue(position)
@@ -291,8 +292,7 @@ export default memo(function TariffCard({ tariff, tariffId }) {
                 </span>
                 <TariffBar vip={title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                 <Switches>
-                    <FourGSwitch title="Безлимитный 4G" price={tariff.positions[positionValue].fourG} />
-                    <FourGSwitch title="Раздача интернета" price={tariff.positions[positionValue].internet} />
+                    {switchTypes.map(title => <FourGSwitch key={title} checked={switches[title]} setSwitches={setSwitches} title={title} price={tariff.positions[positionValue][title]} />)}
                 </Switches>
                 <span className="detailsWrapper" >
                     <Details>
