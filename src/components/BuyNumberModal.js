@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
 import { RiDeleteBin6Fill} from 'react-icons/ri'
 import { BsArrowLeft} from 'react-icons/bs'
@@ -261,7 +261,7 @@ const TariffsDropDown = memo(({tariffId, position}) => {
             {drop && 
             <div className="dropdown">
                 {tariff.positions.map((position, index) => (
-                    <span key={index} onClick={() => setSelected(index)} className="bottom">
+                    <span style={selected === index ? {opacity: 0.2} : {}} key={index} onClick={() => setSelected(index)} className="bottom">
                         <span>{position.min}мин , </span>
                         <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
                         <span>{position.sms}смс</span>
@@ -367,7 +367,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const [selectedOption, setSelectedOption] = useState(0);
     const [deletedNumbers, setDeletedNumbers] = useState([]);
     const [showNumbers, setShowNumbers] = useState(false);
-    const [chosenNumber, setChosenNumber] = useState([]);
+    const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
     const [submit, setSubmit] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
@@ -378,6 +378,10 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const handleSubmit = () => {
         setSubmit(true);
     }
+
+    useEffect(() => {
+        chosenNumber.ctn && setInputNumber(chosenNumber.ctn)
+    }, [chosenNumber])
     
     return ReactDOM.createPortal (
         <Wrapper
@@ -441,16 +445,16 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                                     {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)}>{option}</Option>)}
                                 </div>
                             </section>
-                            <section>
+                            {selectedOption === 0 && <section>
                                 <p>Выберете номер</p>
                                 <div className="выберете_номер">
                                     <Cleave className="input" options={{
-                                            phone: true,
-                                            phoneRegionCode: 'RU'
-                                        }} type="tel" placeholder="Ваш новый номер" value={chosenNumber.ctn} />
+                                        phone: true,
+                                        phoneRegionCode: 'RU'
+                                    }} type="tel" placeholder="Ваш новый номер" value={inputNumber} onChange={({target}) => setInputNumber(target.value.replace(" ", ""))} />
                                     <button onClick={()=>setShowNumbers(true)}>Найти</button>
                                 </div>
-                            </section>
+                            </section>}
                         </>
                         }
                         <SimCardInfo handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />

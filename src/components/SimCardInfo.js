@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components/macro";
 import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
+import { HiOutlineLocationMarker } from 'react-icons/hi';
 const { RangePicker } = TimePicker;
 
 const Wrapper = styled.div`
@@ -11,6 +12,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     margin-top: ${({service}) => service || "36px"};
     gap: 52px;
+    font-family: Circe;
     & small {
         font-size: 14px;
         color: rgba(1, 1, 1, 0.68);
@@ -20,6 +22,10 @@ const Wrapper = styled.div`
     & .Способ_получения {
         display: flex;
         flex-direction: column;
+        font-size: 24px;
+        @media(max-width: 1060px) {
+            font-size: 18px;
+        }
         .options {
             margin-top: 12px;
         }
@@ -105,20 +111,53 @@ const Bottom = styled.div`
             transform: rotate(-90deg)
         }
     }
-    & > div {
-        margin-top: 20px;
+    & div {
         display: flex;
         flex-direction: column;
+    }
+    div.first {
+        font-size: 32px;
+        font-weight: bold;
+        color: #121212;
+        margin-bottom: 10px;
+        small {
+            color: #121212;
+            font-weight: bold;
+        }
+    }
+    div.last {
+        margin-top: 20px;
         font-size: 16px;
         font-weight: 500;
         small {
             margin-top: 15px;
         }
     }
+    
 `
 const Pickup = styled.div`
     display: flex;
     flex-direction: column;
+    background: #F8F8F8;
+    border-radius: 12px;
+    padding: 18px;
+    gap: 5px;
+    font-size: 24px;
+    width: fit-content;
+    @media(max-width: 1060px) {
+        font-size: 18px;
+    }
+    span {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #4B75FC;
+        a {
+            color: inherit;
+            text-decoration: underline;
+            line-height: 27px;
+        }
+    }
 `
 
 const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +201,11 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                         }
                         {selectedOption === 1 && 
                             <Pickup>
-                                
+                                Вы можете получить свою сим карту в любом офисе Beeline
+                                <span>
+                                    <HiOutlineLocationMarker /> 
+                                    <a target="_blank" href="https://www.google.com/maps/search/%D0%BE%D1%84%D0%B8%D1%81%D1%8B+beeline+%D0%B2+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/@55.7112608,37.428036,11z/data=!3m1!4b1" rel="noreferrer" >Найти салон связи на карте</a>
+                                </span>
                             </Pickup>
                         } 
                     </>
@@ -186,14 +229,19 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                 }
             </>}
             <Bottom>
-                {(selected === 0 || service) && <span>
-                    <Cleave className="input" options={{
+                <div className="first">
+                    <small>Итоговая абонентская плата в месяц:</small>
+                    500 ₽ / мес 
+                </div>
+                 <span>
+                    {(selected === 0 || service) &&
+                        <Cleave className="input" options={{
                             phone: true,
                             phoneRegionCode: 'RU'
-                        }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
+                        }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />}
                     <button onClick={handleSubmit}>Оформить заказ <Arrow /></button>
-                </span>}
-                <div>
+                </span>
+                <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.
                     <small>Оставляя контактный номер, вы подтверждаете, что ввели свой номер самостоятельно и соглашаетесь с передачей ваших персональных данных.</small>
                 </div>
