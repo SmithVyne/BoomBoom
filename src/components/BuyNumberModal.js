@@ -2,6 +2,7 @@ import {useContext, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
 import { RiDeleteBin6Fill} from 'react-icons/ri'
 import { BsArrowLeft} from 'react-icons/bs'
+import { FaCheckCircle } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
 import { GlobalContext } from '../App'
@@ -145,6 +146,19 @@ const Modal = styled.div`
     .showNumbers-top {
         width: fit-content;
         margin: 10px auto;
+    }
+    .servicesModal {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        span {
+            font-size: 20px;
+            color: #010101AD;
+        }
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+        }
     }
 `
 
@@ -305,6 +319,46 @@ const NumbersDropDown = ({setShowNumbers, inputNumber, setInputNumber, selectedC
     )
 }
 
+const Thanks = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .thanksTop {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .thanksBody {
+        margin-bottom: 24px;
+    }
+    button {
+        background: #010101;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: 60px;
+        border-radius: 60px;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+`
+const ThankYouModal = () => {
+    const dispatch = useDispatch();
+    return (
+        <Thanks>
+            <div className="thanksTop">
+                <h2>Спасибо за заявку</h2>
+                <FaCheckCircle size={32} color="#79FFD7" />
+            </div>
+            <span className="thanksBody">Мы с вами свяжемся в ближайшее время</span>
+            <button onClick={() => dispatch({type: HIDE_MODAL})}>Хорошо</button>
+        </Thanks>
+    )
+}
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
 export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
@@ -313,10 +367,15 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState([]);
     const [inputNumber, setInputNumber] = useState("");
+    const [submit, setSubmit] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
-    const {position, tariffId} = payload;
+    const {position, tariffId, service} = payload;
     useEscapeKey(() => dispatch({type: HIDE_MODAL}));
+
+    const handleSubmit = () => {
+        setSubmit(true);
+    }
     
     return ReactDOM.createPortal (
         <Wrapper
@@ -327,19 +386,21 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
-                { showNumbers ? 
-                    <> 
-                        <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
-                        <NumbersMobile
-                            selectedCategoryID={selectedCategoryID}
-                            inputValue={inputNumber}
-                            selectedNumbers={[chosenNumber]}
-                            handleCtnClick={(number) => {console.log(number);setChosenNumber(number); setShowNumbers(false)}}
-                            darkTheme={{val: false}}
-                        />
-                    </> : 
+                { submit ? 
+                    <ThankYouModal /> : 
                     <>
-                        {buy ?
+                        { showNumbers ? 
+                        <> 
+                            <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
+                            <NumbersMobile
+                                selectedCategoryID={selectedCategoryID}
+                                inputValue={inputNumber}
+                                selectedNumbers={[chosenNumber]}
+                                handleCtnClick={(number) => {console.log(number);setChosenNumber(number); setShowNumbers(false)}}
+                                darkTheme={{val: false}}
+                            />
+                        </> : 
+                        buy ?
                         <>
                             <h1>Приобретение номера</h1>
                             <section>
@@ -355,6 +416,13 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                             </section>
                         </>
                         :
+                        service ? 
+                        <>
+                            <div className="servicesModal">
+                                <span>Подключение услуги</span>
+                                <h2>{service.title}</h2>
+                            </div>
+                        </> :
                         <>
                             <h1>Подключение тарифа</h1>
                             <TariffsDropDown position={position} tariffId={tariffId} />
@@ -381,9 +449,10 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                                     <button onClick={()=>setShowNumbers(true)}>Найти</button>
                                 </div>
                             </section>
-                        </>}
-                        <SimCardInfo selected={buy ? 0 : selectedOption} Option={Option} buy={buy} />
-                    </> 
+                        </>
+                        }
+                        <SimCardInfo handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
+                    </>
                 }
             </Modal>
         </Wrapper>,

@@ -120,7 +120,6 @@ const DashboardBtn = styled(Link)`
     }
 `;
 const MenuBtn = styled.img`
-
     cursor: pointer;
     display: none;
     @media (max-width: 1325px) {

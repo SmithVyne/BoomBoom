@@ -17,6 +17,7 @@ import BuyNumberModal from "./components/BuyNumberModal";
 import Footer from "./globals/Footer/Footer";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
+import Services from "./pages/Services";
 
 export const GlobalContext = createContext();
 
@@ -54,11 +55,13 @@ export default function App() {
       return {
         background: "#010101",
         textColor: "#ffffff",
+        darkTheme
       }
     } else {
       return {
         background: "#F8F8F8",
         textColor: "#121212",
+        darkTheme
       }
     }
   }
@@ -82,6 +85,7 @@ export default function App() {
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/numbers/:button" component={NumbersPage} />
               <Route path="/roaming" component={RoamingPage} />
+              <Route path="/services" component={Services} />
               <Route path="/organisations" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
               <Route path="*" component={PageNotFound} />

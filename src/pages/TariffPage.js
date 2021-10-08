@@ -4,8 +4,8 @@ import Tariffs from "../components/Tariffs";
 import {  tariffTypesArray} from "../globals/utils";
 
 const SiteHeader = styled.h1`
-color: ${props => props.theme.textColor};
-font-family: Circe, Arial, sans-serif;
+    color: ${props => props.theme.textColor};
+    font-family: Circe, Arial, sans-serif;
     font-size: 3%;
     font-weight: bold;
     line-height: 100%;

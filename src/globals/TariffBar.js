@@ -7,7 +7,7 @@ const Line = styled.div`
     height: 5px;
     width: 100%;
     margin: 30px auto 30px;
-    background: rgba(255, 255, 255, 0.44);
+    background: ${({service}) => service ? "rgba(75, 108, 253, 0.4)" : "rgba(255, 255, 255, 0.44)"};;
     display: flex;
     align-items: center;
     position: relative;
@@ -22,7 +22,7 @@ const Thumb = styled(motion.div)`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: white;
+  background: ${({service}) => service ? "#4B75FC" : "#fff"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,10 +48,9 @@ const Breakpoints = styled.div`
 const Breakpoint = styled.span`
   width: 12px;
   height: 12px;
-  background: white;
+  background: ${({service}) => service ? "#4B75FC" : "#fff"};;
   border: 1px solid;
   border-radius: 50%;
-  background: white;
   border: none;
 `;
 
@@ -60,11 +59,11 @@ const Level = styled(motion.div)`
   top: 0;
   bottom: 0;
   height: 100%;
-  background: white;
+  background: ${({service}) => service ? "#4B75FC" : "#fff"};;
   border-radius: 2.5px;
 `;
 
-const TariffBar = ({vip, handlePositionChange}) => {
+const TariffBar = ({vip, handlePositionChange, service}) => {
   const [location, setLocation] = useState("0px");
   const moveTo = (e) => {
     const { clientX, currentTarget } = e;
@@ -99,27 +98,29 @@ const TariffBar = ({vip, handlePositionChange}) => {
   };
 
   return (
-    <Line onClick={moveTo}>
+    <Line service={service} onClick={moveTo}>
         <Level
             animate={{ width: location }}
             transition={{ duration: 0.7, type: "spring" }}
             location={location}
+            service={service}
         />
         <Thumb
             animate={{ x: location }}
             transition={{ duration: 0.7, type: "spring" }}
             onClick={(e) => e.stopPropagation()}
             location={location}
+            service={service}
         >
-            <MdKeyboardArrowLeft size={20} color="#4B74FC"/>
-            <MdKeyboardArrowRight size={20} color="#4B74FC"/>
+            <MdKeyboardArrowLeft size={20} color={service ? "#fff" : "#4B74FC"} />
+            <MdKeyboardArrowRight size={20} color={service ? "#fff" : "#4B74FC"} />
         </Thumb>
         <Breakpoints>
-            <Breakpoint />
-            <Breakpoint />
+            <Breakpoint service={service} />
+            <Breakpoint service={service} />
             {vip || 
-            <><Breakpoint />
-            <Breakpoint /></>}
+            <><Breakpoint service={service} />
+            <Breakpoint service={service} /></>}
         </Breakpoints>
     </Line>
   );
