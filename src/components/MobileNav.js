@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { CgClose } from 'react-icons/cg'
 import styled from 'styled-components/macro'
+import { FooterSocials } from '../globals/Footer/Footer'
 import { useEscapeKey } from '../hooks'
 import Menu from './Menu'
 import ThemeSwitch from './ThemeSwitch';
@@ -39,6 +40,7 @@ export default memo(function MobileNav({setShowMobileNav}) {
             <Content>
                 <Menu setShowMobileNav={setShowMobileNav} />
                 <ThemeSwitch />
+                <FooterSocials />
             </Content>
             <span><CgClose onClick={()=>setShowMobileNav(false)} strokeWidth={1.5} size={35} /></span>
         </Wrapper>

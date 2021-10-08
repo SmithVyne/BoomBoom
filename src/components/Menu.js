@@ -7,7 +7,7 @@ import { GlobalContext } from "../App"
 const Items = [
     {name: "тарифы", subItems: ["для телефонов", "для других устройств"], route: "tariffs"},
     {name: "номера", subItems: ["перенести свой", "подключить eSIM"], route: "numbers/:все"},
-    {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"], route: "roaming"},
+    {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"], route: "services"},
     {name: "организациям", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"], route: "organisations"},
     {name: "поддержка", subItems: ["f.a.q", "карта покрытия", "контакты"], route: "поддержка"},
 ];
@@ -67,7 +67,8 @@ export default function Menu({setShowMobileNav}) {
                 <AnimatePresence>
                     {selected === idx && 
                     <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map(subItem => <Item onClick={()=>setShowMobileNav && setShowMobileNav(false)} key={subItem} as={Link} to={`${route}`}>{subItem}</Item>)}
+                        {subItems.map((subItem, id) => <Item as={Link} onClick={()=>setShowMobileNav && setShowMobileNav(false)} key={subItem}  
+                        to={name === "услуги" ? `/${route}/${id}` : `/${route}`} >{subItem}</Item>)}
                     </SubItems>}
                 </AnimatePresence>
             </Item>)}

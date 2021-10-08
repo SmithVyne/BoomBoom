@@ -1,20 +1,30 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
 import { useLocation } from "react-router";
-
 import { Link } from "react-router-dom";
-
 import ThemeSwitch from "../../components/ThemeSwitch";
-
 import footer_call from '../../assets/images/footer-call.svg'
 import footer_whatsapp from '../../assets/images/footer-whatsapp.svg'
 import footer_telegram from '../../assets/images/footer-telegram.svg'
 import footer_instagram from '../../assets/images/footer-instagram.svg'
-
-
-
 import './Footer.css';
 
+export const FooterSocials = () => (
+    <div className={`footer__socials`}>
+        <Link to="/" className={`footer__social-link footer__social_type_phone`}>
+            <img src={footer_call} className={`footer__social-img`} alt="Телефон"></img>
+        </Link>
+        <Link to="/" className={`footer__social-link footer__social_type_whatsapp`}>
+            <img src={footer_whatsapp} className={`footer__social-img`} alt="WhatsApp"></img>
+        </Link>
+        <Link to="/" className={`footer__social-link footer__social_type_telegram`}>
+            <img src={footer_telegram} className={`footer__social-img footer__social-img_type_telegram`} alt="Telegram"></img>
+        </Link>
+        <Link to="/" className={`footer__social-link footer__social_type_instagram`}>
+            <img src={footer_instagram} className={`footer__social-img`} alt="Telegram"></img>
+        </Link>
+    </div>
+)
 
 export default function Footer() {
     const { darkTheme } = useContext(GlobalContext);
@@ -60,20 +70,7 @@ export default function Footer() {
                         <p className={`footer__copyright ${darkTheme? 'footer__text_dark':''}`}>&#169; 2021 ПАО «ААПТЕЛЕКОМ»<br />Все права защищены</p>
                     </div>
                     <div className={`footer__column`}>
-                        <div className={`footer__socials`}>
-                            <Link to="/" className={`footer__social-link footer__social_type_phone`}>
-                                <img src={footer_call} className={`footer__social-img`} alt="Телефон"></img>
-                            </Link>
-                            <Link to="/" className={`footer__social-link footer__social_type_whatsapp`}>
-                                <img src={footer_whatsapp} className={`footer__social-img`} alt="WhatsApp"></img>
-                            </Link>
-                            <Link to="/" className={`footer__social-link footer__social_type_telegram`}>
-                                <img src={footer_telegram} className={`footer__social-img footer__social-img_type_telegram`} alt="Telegram"></img>
-                            </Link>
-                            <Link to="/" className={`footer__social-link footer__social_type_instagram`}>
-                                <img src={footer_instagram} className={`footer__social-img`} alt="Telegram"></img>
-                            </Link>
-                        </div>
+                        <FooterSocials />
                         <p className={`footer__greeting ${darkTheme? 'footer__text_dark':''}`}>Ваша команда <span className={`footer__greeting-span`}>boom telecom</span></p>
                     </div>
                     <div className={`footer__column`}>

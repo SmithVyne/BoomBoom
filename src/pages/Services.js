@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useParams } from "react-router"
 import styled from "styled-components/macro"
 import bomb from "../assets/images/services/bomb.png"
 import Roaming from "../components/Roaming/Roaming"
@@ -145,8 +146,9 @@ const ServiceComponent = ({service}) => {
 
 const tabs = ["Платные", "Бесплатные", "Роуминг"]
 export default function Services() {
-    const [type, settype] = useState("Платные");
-    const [roaming, setRoaming] = useState(false);
+    const {id} = useParams();
+    const [type, settype] = useState(tabs[id]);
+    const [roaming, setRoaming] = useState(type === "Роуминг");
     return (
         <Wrapper>
             <Top>

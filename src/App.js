@@ -83,9 +83,9 @@ export default function App() {
               <Route exact path="/" component={Main} />
               <Route path="/tariffs" component={TariffPage} />
               <Route path="/dashboard" component={Dashboard} />
-              <Route path="/numbers/:button" component={NumbersPage} />
               <Route path="/roaming" component={RoamingPage} />
-              <Route path="/services" component={Services} />
+              <Route path="/numbers/:button" component={NumbersPage} />
+              <Route path="/services/:id" component={Services} />
               <Route path="/organisations/:type" component={OrganisationsPage} />
               <Route path="/tariff-info/:tariff" component={TariffePage} />
               <Route path="*" component={PageNotFound} />
