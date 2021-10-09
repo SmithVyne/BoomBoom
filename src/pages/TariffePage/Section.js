@@ -17,12 +17,14 @@ export default function Section(props) {
   const [smsWrap, setSmsWrap] = useState(false);
   const [internetWrap, setInternetWrap] = useState(false);
   const [positionValue, setPositionValue] = useState(0);
+  
   function handlePositionChange(position) {
     setPositionValue(position)
   }
   const payload = {
     position: positionValue,
-    tariffId: props.selectedTrariffId
+    tariffId: props.selectedTrariffId,
+    switches: {"Безлимитный 4G": false, "Раздача интернета": false}
   }
   function handleEsimBuy(){
     console.log("ESIM BUY TRIGGERD")
@@ -57,7 +59,7 @@ export default function Section(props) {
                       <p className="main-data__button-text">Подключить</p>
                     </div>
                     <div className={`tarrif-page__subscription ${props.darkTheme ? 'tarrif-page__subscription_dark' : ''}`}>
-                      Абонентская плата &#183;<span className={`tarrif-page__subscription_span`}> {props.tariff.price} руб.</span>
+                      Абонентская плата &#183;<span className={`tarrif-page__subscription_span ${props.darkTheme ? 'tarrif-page__subscription_dark' : ''}`}> {props.tariff.price} руб.</span>
                     </div>
                   </div>
 

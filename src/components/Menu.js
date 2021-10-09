@@ -5,11 +5,77 @@ import styled from "styled-components/macro"
 import { GlobalContext } from "../App"
 
 const Items = [
-    {name: "тарифы", subItems: ["для телефонов", "для других устройств"], route: "tariffs"},
-    {name: "номера", subItems: ["перенести свой", "подключить eSIM"], route: "numbers/:все"},
-    {name: "услуги", subItems: ["бесплатные", "платные", "роуминг"], route: "services"},
-    {name: "организациям", subItems: ["наши партнеры", "малый бизнес", "крупный бизнес"], route: "organisations"},
-    {name: "поддержка", subItems: ["f.a.q", "карта покрытия", "контакты"], route: "поддержка"},
+    {
+        name: "тарифы", subItems: [
+            {
+                subname: "- все тарифы",
+                link: "/tariffs/:all"
+            },
+            {
+                subname: "- для телефонов",
+                link: "/tariffs/:phone"
+            },
+            {
+                subname: "- для устройств",
+                link: "/tariffs/:another-devices"
+            }]
+    },
+    {
+        name: "номера", subItems: [
+            {
+                subname: "- все номера",
+                link: "/numbers/:все"
+            },
+            {
+                subname: "- перенести свой",
+                link: "/numbers/:перенести"
+            },
+            {
+                subname: "- подключить eSIM",
+                link: "/numbers/:esim"
+            },
+        ]
+    },
+    {
+        name: "услуги", subItems: [
+            {
+                subname: "- платные",
+                link: "/services/:paid"
+            },
+            {
+                subname: "- бесплатные",
+                link: "/services/:free"
+            },
+            {
+                subname: "- роуминг",
+                link: "/services/:roaming"
+            }
+        ]
+    },
+    {
+        name: "организациям", subItems: [
+            {
+                subname: "- малый бизнес",
+                link: "/organisations/:small-biz"
+            },
+            {
+                subname: "- крупный бизнес",
+                link: "/organisations/:big-biz"
+            },
+            {
+                subname: "- госсектор",
+                link: "/organisations/:gos-sector"
+            },
+        ]
+    },
+    {
+        name: "поддержка", subItems: [
+            {
+                subname: "- о нас",
+                link: "/support/about-us"
+            },
+        ]
+    },
 ];
 const Item = styled.div`
     display: flex;
@@ -20,8 +86,23 @@ const Item = styled.div`
     cursor: pointer;
     position: relative;
     color: inherit;
+    & span{
+        font-family: Circe;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 29px;
+margin: 0;
+@media (max-width: 1325px) {
+    font-family: Circe;
+font-style: normal;
+font-weight: bold;
+font-size: 28px;
+line-height: 41px;
+}
+    }
     & svg {
-        transform: ${({selected, idx}) => selected === idx && "rotate(180deg)"};
+        transform: ${({ selected, idx }) => selected === idx && "rotate(180deg)"};
         transition: ease 0.3s;
         margin-left: 5px;
     }
@@ -46,18 +127,18 @@ const SubItems = styled(motion.div)`
         top: 0px;
     }
 `
-export default function Menu({setShowMobileNav}) {
+export default function Menu({ setShowMobileNav }) {
     const [selected, setSelected] = useState(null);
-    const {darkTheme, isMobile} = useContext(GlobalContext);
+    const { darkTheme, isMobile } = useContext(GlobalContext);
     const Gesture = (idx) => {
-        return isMobile ? 
-            {onClick: () => {setSelected(id => id === idx ? null : idx)}} : 
-            {onMouseEnter: () => setSelected(idx)}
+        return isMobile ?
+            { onClick: () => { setSelected(id => id === idx ? null : idx) } } :
+            { onMouseEnter: () => setSelected(idx) }
     }
     return (
         <>
-            {Items.map(({name, subItems, route}, idx) => <Item idx={idx} selected={selected}
-            onMouseLeave={() => setSelected(null)} {...Gesture(idx)} key={name}>
+            {Items.map(({ name, subItems }, idx) => <Item idx={idx} selected={selected}
+                onMouseLeave={() => setSelected(null)} {...Gesture(idx)} key={name}>
                 <span>
                     {name}
                     <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,11 +146,14 @@ export default function Menu({setShowMobileNav}) {
                     </svg>
                 </span>
                 <AnimatePresence>
-                    {selected === idx && 
-                    <SubItems onClick={(e)=>e.stopPropagation()} darkTheme={darkTheme} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                        {subItems.map((subItem, id) => <Item as={Link} onClick={()=>setShowMobileNav && setShowMobileNav(false)} key={subItem}  
-                        to={name === "услуги" ? `/${route}/${id}` : `/${route}`} >{subItem}</Item>)}
-                    </SubItems>}
+                    {selected === idx &&
+                        <SubItems onClick={(e) => e.stopPropagation()} darkTheme={darkTheme} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                            {subItems.map((subItem, id) => <Item as={Link} onClick={(e) => {
+                                if (setShowMobileNav) setShowMobileNav(false)
+                                else e.stopPropagation()
+                            }} key={`nav-${subItem.subname}`}
+                                to={subItem.link} >{subItem.subname}</Item>)}
+                        </SubItems>}
                 </AnimatePresence>
             </Item>)}
         </>

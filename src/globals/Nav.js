@@ -13,7 +13,9 @@ import MobileNav from "../components/MobileNav";
 import Menu from "../components/Menu";
 
 const Wrappper = styled.nav`
+margin: 14px 0 0 ;
     display: flex;
+    flex-direction:row;
     justify-content: space-between;
     align-items: center;
     color: ${props => props.theme.textColor};
@@ -24,14 +26,14 @@ const Wrappper = styled.nav`
         margin-right: auto;
     }
     & .nav-right {
-        margin: 14px 0 0;
+        
         display: flex;
         gap: 20px;
         flex-wrap: wrap;
-        justify-content: flex-end;
+        justify-content: center;
     }
     @media (max-width: 1325px) {
-        justify-content: flex-start;
+        justify-content: center;
         & .menu {
             display: none;
         }
@@ -60,6 +62,7 @@ const Wrappper = styled.nav`
         }
     }
     & #helpCenter {
+
         position: absolute;
         top: 15px;
         right: 80px;
@@ -130,19 +133,19 @@ const MenuBtn = styled.img`
 `;
 
 export default function Nav() {
-    const {darkTheme, setLoginForm, userSession, setUserSession, isMobile} = useContext(GlobalContext);
+    const { darkTheme, setLoginForm, userSession, setUserSession, isMobile } = useContext(GlobalContext);
     const [showMobileNav, setShowMobileNav] = useState(false);
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const [logged_in, setLogged_in] = useState(false);
     useEffect(() => {
         setLogged_in(pathname === "/dashboard" && !!userSession);
     }, [pathname, userSession]);
 
     const handleButton = () => {
-        if(logged_in) {setUserSession(null); setLoginForm(false)}
+        if (logged_in) { setUserSession(null); setLoginForm(false) }
         else setLoginForm(true)
     }
-    
+
     return (
         <Wrappper>
             <Link className="logo" to="/"><img alt="logo" src={darkTheme ? logo1 : logo2} /></Link>

@@ -1,11 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import  React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+
 import styled from 'styled-components/macro';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
 
 
-const WrapScroller  = styled.div`
+const WrapScroller = styled.div`
+
     position: relative;
     display: flex;
     align-items: center;
@@ -64,14 +66,14 @@ const Tracker = styled.div`
     left: calc(50% - 46px);
     width: 92px;
     height: 6px;
-    background: ${({darkTheme})=> darkTheme ? "rgba(255, 255, 255, 0.24)" : "#D6D6D6"};
+    background: ${({ darkTheme }) => darkTheme ? "rgba(255, 255, 255, 0.24)" : "#D6D6D6"};
     border-radius: 6px;
     & div {
         height: 6px;
         width: 50%;
         background: #0E5EF8;
         border-radius: inherit;
-        margin-left: ${({percentage})=>percentage + "%"};
+        margin-left: ${({ percentage }) => percentage + "%"};
     }
     @media(max-width: 600px){
         display: none;
@@ -92,25 +94,25 @@ const MobileTracker = styled.div`
 const Ellipses = styled.div`
     height: 8px;
     width: 8px;
-    background: ${({position, idx})=>position === idx ? "#0E5EF8" : "transparent"};
+    background: ${({ position, idx }) => position === idx ? "#0E5EF8" : "transparent"};
     border: 1px solid #0E5EF8;
     border-radius: 100%;
 `
 
 
-export default function Tariffs({children}) {
+export default function Tariffs({ children }) {
     const ref = useRef();
-    const {darkTheme} = useContext(GlobalContext);
+    const { darkTheme } = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
     const [scrollWidth, setScrollWidth] = useState(2);
-    const percentage = (scrollLeft/(scrollWidth-offsetWidth)) * 50;
+    const percentage = (scrollLeft / (scrollWidth - offsetWidth)) * 50;
     const [position, setPosition] = useState(0);
 
     useLayoutEffect(() => {
-        const {current} = ref;
-        function init () {
+        const { current } = ref;
+        function init() {
             setShowScroll(current.scrollWidth > current.offsetWidth);
             setOffSetWidth(current.offsetWidth);
             setScrollWidth(current.scrollWidth);
@@ -126,26 +128,29 @@ export default function Tariffs({children}) {
     }, [])
 
     useEffect(() => {
-        setPosition(Math.floor(scrollLeft/offsetWidth))
+        setPosition(Math.floor(scrollLeft / offsetWidth))
     }, [scrollLeft, offsetWidth])
 
+
     const handleScroll = (type) => {
-        const {current} =  ref;
-        const {scrollLeft} = current;
+        const { current } = ref;
+        const { scrollLeft } = current;
         let pixels = window.innerWidth < 720 ? 500 : 800;
-        switch(type) {
+        switch (type) {
             case "back":
-                current.scroll({left: scrollLeft - pixels,  behavior: 'smooth'});
+                current.scroll({ left: scrollLeft - pixels, behavior: 'smooth' });
                 break;
             default:
-                current.scroll({left: scrollLeft + pixels,  behavior: 'smooth'});
+                current.scroll({ left: scrollLeft + pixels, behavior: 'smooth' });
         }
     }
     return (
+        <>
+            
             <WrapScroller>
-                {  showScroll &&
+                {showScroll &&
                     <>
-                        <Ctrl onClick={() => handleScroll("back")} style={{marginLeft: "-45px", marginRight: "6px"}} >
+                        <Ctrl onClick={() => handleScroll("back")} style={{ marginLeft: "-45px", marginRight: "6px" }} >
                             <IoIosArrowBack strokeLinecap="square" size={26} />
                         </Ctrl>
                         <WrapCtrl>
@@ -158,14 +163,15 @@ export default function Tariffs({children}) {
                         {children}
                     </WrapTariffs>
                 </Scroller>
-                { showScroll && 
+                {showScroll &&
                     <>
-                    <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker>
-                    <MobileTracker>
-                        {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
-                    </MobileTracker>
+                        <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker>
+                        <MobileTracker>
+                            {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
+                        </MobileTracker>
                     </>
                 }
             </WrapScroller>
+        </>
     )
 }

@@ -765,12 +765,16 @@ p span {
   align-items: center;
 }
 .blok-data__info-container_dark{
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)), #010101;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)), #010101 !important;
 }
 .tarrif-page__bar-title_dark{
   color: #ffffff;
 }
 .tarrif-page__subscription_dark{
+  color: #ffffff;
+}
+
+.tarrif-page__text_dark{
   color: #ffffff;
 }
 

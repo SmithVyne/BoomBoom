@@ -107,8 +107,8 @@
 }
 
 .footer__greeting {
-    font-family: Caveat;
-    font-style: normal;
+    font-family: Caveat !important;
+    font-style: normal ;
     font-weight: normal;
     font-size: 36px;
     line-height: 130%;
@@ -118,6 +118,11 @@
 }
 
 .footer__greeting-span {
+    font-family: Caveat !important;
+    font-style: normal ;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 130%;
     background: linear-gradient(135deg, #3941FF 0%, #9E19DD 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -271,6 +276,12 @@
         font-size: 24px;
         line-height: 130%;
     }
+    .footer__greeting-span {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 130%;
+    }
     .footer__contact-text {
         font-style: normal;
         font-weight: normal;
@@ -301,13 +312,13 @@
         line-height: 100%;
     }
     .footer__copyright {
-        text-align: left;
+        text-align: center;
     }
     .footer__greeting {
-        text-align: left;
+        text-align: center;
     }
     .footer__contacts {
-        margin: 12px 0 0;
+        margin: 12px auto 0;
     }
     .footer {
         padding-bottom: 120px;

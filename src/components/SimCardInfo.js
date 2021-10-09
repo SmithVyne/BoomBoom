@@ -10,6 +10,7 @@ const { RangePicker } = TimePicker;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    
     margin-top: ${({service}) => service || "36px"};
     gap: 52px;
     font-family: Circe;

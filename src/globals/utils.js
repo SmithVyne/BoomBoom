@@ -200,7 +200,7 @@ export const tariffVip = {
 export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tariffBiz, tariffVip ]
 
 export const services = {
-    Платные: [
+    paid: [
         {
             desc: `Интернет закончился раньше, чем 
             вы планировали ? Докупите еще гигабайт 
@@ -255,7 +255,7 @@ export const services = {
             price: "750 ₽ / месяц"
         },
     ], 
-    Бесплатные: [
+    free: [
         {
             title: `Запрет мобильного интернета`,
             desc: `Интернет никогда не закончится в сети 4G`,

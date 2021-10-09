@@ -19,7 +19,7 @@ import searchIcon_black from '../assets/images/search-black.svg'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
-    background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"};
+    background: rgba(0, 0, 0, 0.5);
     top: 0;
     left: 0;
     bottom: 0;
@@ -29,7 +29,9 @@ const Wrapper = styled(motion.div)`
     z-index: 20;
     display: flex;
     justify-content: center;
+
     overflow-y: scroll;
+    
     &::-webkit-scrollbar {
         width: 0;
     }

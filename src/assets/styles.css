@@ -382,3 +382,9 @@ body, #root {
         font-size: 24px;
     }
 }
+.app{
+  background: #F8F8F8;
+}
+.app_dark{
+  background: #010101;
+}
