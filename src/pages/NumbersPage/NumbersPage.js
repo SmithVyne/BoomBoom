@@ -3,6 +3,7 @@ import { BUY_NUMBER} from '../../globals/utils'
 import { useDispatch } from 'react-redux';
 import './NumbersPage.css';
 
+
 export default function NumbersPage() {
     const dispatch = useDispatch();
     function buyNumbers(numbers){      

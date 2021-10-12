@@ -123,7 +123,9 @@
 .esim__faq-card-container:first-of-type {
     margin: 0;
 }
-
+.esim__li{
+    list-style-type: none;
+}
 .esim__faq-answer {
     position: relative;
     display: flex;

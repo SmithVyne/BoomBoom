@@ -183,13 +183,20 @@ input {
     justify-content: center;
     height: 100%;
     background: #FFFFFF;
-    border: 2px solid #010101;
+    border: 2px solid #010101 ;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
     overflow: hidden;
     width: 288px;
     height: 76px;
     border-radius: 13px;
 }
-
+.personal-number__phone-input:active{
+    border-color:#000000;
+}
+.personal-number__phone-input:focus{
+    border-color:#000000;
+}
 .personal-number__input-and-button:last-of-type {
     margin-top: 24px;
 }

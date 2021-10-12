@@ -53,7 +53,7 @@ export default function FaqCard(props) {
                                     {props.dropdownOpend === `${item.title}${item.subtitle}` ?
                                         item.items.map((itm, i) => (
 
-                                            <li key={`faq-li${i}`}>{itm}</li>
+                                            <li className={`esim__li`} key={`faq-li${i}`}>{itm}</li>
 
                                         ))
 
