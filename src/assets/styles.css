@@ -247,6 +247,7 @@ body, #root {
 .main-text span {
   color: #4B75FC;
   display: block;
+  font-size: inherit;
 }
 .main-text_dark{
     color: #FFFFFF;

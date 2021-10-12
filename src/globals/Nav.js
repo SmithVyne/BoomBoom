@@ -142,8 +142,8 @@ export default function Nav() {
     }, [pathname, userSession]);
 
     const handleButton = () => {
-        if (logged_in) { setUserSession(null); setLoginForm(false) }
-        else setLoginForm(true)
+        if (logged_in) { setUserSession(null); setLoginForm(false); }
+        else setLoginForm(true);
     }
 
     return (
@@ -155,7 +155,7 @@ export default function Nav() {
             <a id="helpCenter" href="tel:+7 495 795 95 66">+7 495 795 95 66</a>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
-                <DashboardBtn as={Link} to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
+                <DashboardBtn as={Link} to={logged_in ? "/" : userSession ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
             <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
             <AnimatePresence>

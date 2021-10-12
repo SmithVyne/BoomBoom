@@ -11,6 +11,7 @@ import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
 import html2pdf from "html2pdf.js";
 import { spacer } from "../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
+import { useLocalStorage } from "../hooks";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -193,8 +194,8 @@ const Copier = styled(RiFileCopyLine)`
         transform: scale(1.04);
     }
 `
-const getDashboard = Promise.all([
-    Fetcher({method: "getCtnInfo", params:{ctn: "9030034826"}, id:"9030034826"}),
+const getDashboard = (ctn) => Promise.all([
+    Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
 ])
 
 export default function Dashboard() {
@@ -202,12 +203,14 @@ export default function Dashboard() {
     const userInfo = useSelector(store => store.auth.userInfo?.result);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
     const dispatch = useDispatch();
+    const [ctn] = useLocalStorage("ctn");
+
     useEffect(() => {
         if (userSession) {
-            getDashboard
+            getDashboard(ctn)
             .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))
         } else setLoginForm(true)
-    }, [userSession, dispatch, setLoginForm]);
+    }, [userSession, dispatch, setLoginForm, ctn]);
 
     const detailsRef = useRef();
     const handleDownload = () => {

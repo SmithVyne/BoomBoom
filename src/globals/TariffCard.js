@@ -28,6 +28,10 @@ const Wrapper = styled.div`
     font-size: initial;
     position: relative;
     overflow: hidden;
+    margin-right: 40px;
+    &:last-of-type{
+        margin-right: 0;
+    }
     @media(max-width: 600px) {
         width: 90vw;
     }
@@ -165,17 +169,6 @@ const MiniIcon = styled.img`
         cursor: ${({ pointer }) => pointer && "pointer"}
     }
 `
-const Switches = styled.span`
-    display: flex;
-    align-items: stretch;
-    gap: 20px;
-    font-size: 20px;
-    line-height: 29px;
-    font-family: Circe, Arial, sans-serif;
-    @media(max-width: 450px) {
-    font-size: 16px;
-    }
-`
 const More = styled(Link)`
     font-family: Circe, Arial, sans-serif;
     font-style: normal;
@@ -197,6 +190,16 @@ const More = styled(Link)`
         line-height: 100%;
     }
 `
+const Switches = styled.span`
+    display: flex;
+    align-items: stretch;
+    font-size: 20px;
+    line-height: 29px;
+    font-family: Circe, Arial, sans-serif;
+    @media(max-width: 450px) {
+    font-size: 12px;
+    }
+`
 
 const FourGSwitchStyles = styled.span`
     display: flex;
@@ -204,13 +207,20 @@ const FourGSwitchStyles = styled.span`
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 12px;
+    gap: 10px;
+    border-radius: 14px;
+    width: 50%;
+    padding: 13px;
+    font-weight: bold;
+    &:first-of-type {
+        margin-right: 20px;
+    }
     @media (max-width: 500px) {
         flex-wrap: wrap;
     }
     ${({price}) => {
         return price === Infinity && {
-            flexDirection: "row",
+            gap: "0",
         }
     }}
     background: ${({modal, checked}) => {
@@ -225,10 +235,6 @@ const FourGSwitchStyles = styled.span`
             return checked && "#121212"
         }
     }};
-    border-radius: 14px;
-    width: 50%;
-    padding: 13px;
-    font-weight: bold;
     border: ${({modal, checked}) => {
         if(modal) {
             return checked ? "3px solid #0E5EF8" : "3px solid rgba(1, 1, 1, 0.16)";
@@ -241,6 +247,7 @@ const FourGSwitchStyles = styled.span`
         font-weight: normal;
         @media(max-width: 450px) {
             font-size: 16px;
+            gap: 3px;
         }
     }
 `
@@ -250,11 +257,11 @@ export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=fals
     <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
         {title}
         {price === Infinity ? 
-        (title === "Безлимитный 4G" ? <CgInfinity size={60} /> : <TiWiFi size={60} /> )
+        (title === "Безлимитный 4G" ? <CgInfinity size={42} /> : <TiWiFi size={42} /> )
         :
         <span>
             <TinySwitch title={title} checked={checked} setSwitches={setSwitches} />
-            +{title === "Безлимитный 4G" ? "150" : "50"} ₽
+            +{title === "Безлимитный 4G" ? "150" : "50"}₽
         </span> }
     </FourGSwitchStyles>)
 })
@@ -301,7 +308,7 @@ export default memo(function TariffCard({ tariff, tariffId }) {
                             setShowDropDown(true)
                         }} pointer src={info} />
                     </Details>
-                    <Details style={{ opacity: `${positionValue === 2 ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
+                    <Details style={{ opacity: `${(tariff.beeline && positionValue === 2) ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
                     <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>
                 </span>
                 <More to={`/tariff-info/:${title}`}>Подробнее про тариф</More>

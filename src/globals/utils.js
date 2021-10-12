@@ -76,6 +76,7 @@ export async function GetNumbers() {
 export const tariffBase = {
     title: 'Базовый',
     icon: duck,
+    beeline: true,
     positions: [{
         min: 300,
         gb: 40,
@@ -101,6 +102,7 @@ export const tariffBase = {
 export const tariffBright = {
     title: 'Яркий',
     icon: light,
+    beeline: true,
     positions: [{
         min: 600,
         gb: 50,
@@ -127,6 +129,7 @@ export const tariffBright = {
 export const tariffAdvanced = {
     title: 'Расширенный',
     icon: star,
+    beeline: true,
     positions: [{
         min: 1000,
         gb: Infinity,

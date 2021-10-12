@@ -4,29 +4,31 @@ import styled from 'styled-components/macro';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
+import { motion } from "framer-motion";
 
 
 const WrapScroller = styled.div`
-
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     
 `
-const Scroller = styled.div`
+const Scroller = styled(motion.div)`
     height: fit-content;
     width: 100%;
     overflow-x: scroll;
     ::-webkit-scrollbar {
         width: 0px;
     }
+    @media(max-width: 600px){
+        touch-action: none;
+    }
 `
 
 const WrapTariffs = styled.div`
     display: flex;
     width: max-content;
-    gap: 40px;
 `;
 
 const WrapCtrl = styled.span`
@@ -88,7 +90,6 @@ const MobileTracker = styled.div`
     display: none;
     @media(max-width: 600px) {
         display: flex;
-        gap: 7px;
     }
 `
 const Ellipses = styled.div`
@@ -97,6 +98,10 @@ const Ellipses = styled.div`
     background: ${({ position, idx }) => position === idx ? "#0E5EF8" : "transparent"};
     border: 1px solid #0E5EF8;
     border-radius: 100%;
+    margin-right: 7px;
+    &:last-of-type {
+        margin-right: 0;
+    }
 `
 
 
@@ -131,9 +136,8 @@ export default function Tariffs({ children }) {
         setPosition(Math.floor(scrollLeft / offsetWidth))
     }, [scrollLeft, offsetWidth])
 
-
+    const { current } = ref;
     const handleScroll = (type) => {
-        const { current } = ref;
         const { scrollLeft } = current;
         let pixels = window.innerWidth < 720 ? 500 : 800;
         switch (type) {
@@ -142,6 +146,16 @@ export default function Tariffs({ children }) {
                 break;
             default:
                 current.scroll({ left: scrollLeft + pixels, behavior: 'smooth' });
+        }
+    }
+
+    const handlePan = (event, info) => {
+        // console.log(info.offset.x, info.offset.y)
+        console.log(current.offsetWidth)
+        if(info.offset.x < 0) {
+            current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
+        } else {
+            current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
         }
     }
     return (
@@ -158,7 +172,7 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller ref={ref} className="scroller">
+                <Scroller onPanEnd={handlePan} ref={ref} className="scroller">
                     <WrapTariffs>
                         {children}
                     </WrapTariffs>

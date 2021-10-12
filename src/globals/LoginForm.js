@@ -8,7 +8,7 @@ import { GlobalContext } from "../App";
 import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import { FaCheck } from "react-icons/fa";
-import {useEscapeKey} from "../hooks";
+import {useEscapeKey, useLocalStorage} from "../hooks";
 
 
 const Wrapper = styled(motion.div)`
@@ -125,6 +125,7 @@ export default function LoginForm() {
     const form_status = useSelector(store => store.form_status);
     const apiUsername = username.slice(2, username.length).replaceAll(" ", "");
     useEscapeKey(setLoginForm);
+    const [, saveCtn] = useLocalStorage("ctn");
 
     const body = {
         method: "login",
@@ -136,8 +137,8 @@ export default function LoginForm() {
         e.preventDefault()
         Fetcher(body)
         .then(data => {
-            if(data.error) {console.warn(data.error); dispatch({type: LOGIN_FAILED})}
-            else setUserSession(data.result)
+            if(data.error) {dispatch({type: LOGIN_FAILED})}
+            else setUserSession(data.result); saveCtn(apiUsername);
         })
         .catch(err => console.log(err))
     }
@@ -174,8 +175,8 @@ export default function LoginForm() {
                         <Field as={Cleave} options={{
                             phone: true,
                             phoneRegionCode: 'RU'
-                        }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} />
-                        <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" />
+                        }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} autoComplete="username" />
+                        <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" autoComplete="current-password" />
                         <GetPassword>Нет пароля? <span onClick={handleGetPassword}>Получить пароль</span></GetPassword>
                     </>
                     }
