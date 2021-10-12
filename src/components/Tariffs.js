@@ -24,8 +24,6 @@ const Scroller = styled(motion.div)`
     }
     @media(max-width: 600px){
         touch-action: none;
-        /* overflow-x: hidden; */
-        -webkit-overflow-scrolling: touch;
     }
 `
 
