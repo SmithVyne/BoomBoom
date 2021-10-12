@@ -18,6 +18,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
+    "react-meta-tags": "^1.0.1",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
@@ -32,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build &&  scp -r ./build/*  miketogo66@130.193.52.199:/home/miketogo66/profi-ru"
+    "deploy": "npm run build &&  scp -r ./build/*  miketogo66@62.84.123.91:/home/miketogo66/boom-frontend"
   },
   "eslintConfig": {
     "extends": [

@@ -256,8 +256,8 @@
     }
     .main__card-headphones {
         transform: scale(0.6);
-        top: -95px;
-        left: -111px;
+        top: -107px;
+        left: -131px;
     }
     .main__card-text {
         font-size: 22px;
@@ -280,9 +280,9 @@
         right: -60px;
     }
     .main__card-map {
-        transform: scale(0.7);
-        bottom: -51px;
-        left: -105px;
+        transform: scale(0.6);
+        bottom: -101px;
+        left: -179px;
     }
     .main__card-clock {
         transform: scale(0.6);
@@ -318,9 +318,9 @@
         right: -205px;
     }
     .main__card-planes {
-        transform: scale(0.8);
-        bottom: -41px;
-        left: -30px;
+        transform: scale(0.6);
+        bottom: -81px;
+        left: -110px;
     }
 }
 @media screen and (max-width: 703px) {
@@ -339,8 +339,8 @@
 
     .main__card-headphones {
         transform: scale(0.6);
-        top: -95px;
-        left: -111px;
+        top: -107px;
+        left: -131px;
     }
     .main__card-text {
         font-size: 22px;
@@ -363,9 +363,9 @@
         right: -60px;
     }
     .main__card-map {
-        transform: scale(0.7);
-        bottom: -51px;
-        left: -105px;
+        transform: scale(0.6);
+        bottom: -101px;
+        left: -179px;
     }
     .main__card-clock {
         transform: scale(0.5);
@@ -401,8 +401,8 @@
         right: -205px;
     }
     .main__card-planes {
-        transform: scale(0.8);
-        bottom: -41px;
-        left: -30px;
+        transform: scale(0.6);
+        bottom: -81px;
+        left: -110px;
     }
 }

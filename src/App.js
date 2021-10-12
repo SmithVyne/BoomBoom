@@ -1,24 +1,32 @@
-import React, { createContext, useEffect, useState } from "react";
-import Nav from "./globals/Nav";
-import Main from "./pages/Main";
+import React, { createContext, useEffect, useState, Suspense } from "react";
 import styled, { ThemeProvider } from "styled-components/macro";
-import { Switch, Route, Redirect } from "react-router-dom";
-import TariffPage from "./pages/TariffPage/TariffPage";
-import LoginForm from "./globals/LoginForm";
-import { AnimatePresence } from "framer-motion";
-import Dashboard from "./pages/Dashboard";
-import { useLocalStorage } from "./hooks";
-import NumbersPage from "./pages/NumbersPage/NumbersPage";
-import AboutCompany from "./pages/AboutCompany/AboutCompany";
-
-import OrganisationsPage from "./pages/OrganisationsPage/OrganisationsPage";
-import TariffePage from "./pages/TariffePage/TariffePage";
-import PageNotFound from './components/PageNotFound/PageNotFound'
-import BuyNumberModal from "./components/BuyNumberModal";
-import Footer from "./globals/Footer/Footer";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
-import Services from "./pages/Services/Services";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { useLocalStorage } from "./hooks";
+
+import Preloader from "./globals/Preloader/Preloader"
+import LoginForm from "./globals/LoginForm";
+import Nav from "./globals/Nav";
+import Main from "./pages/Main";
+
+
+
+
+import BuyNumberModal from "./components/BuyNumberModal";
+import Footer from "./globals/Footer/Footer";
+
+
+const TariffPage = React.lazy(() => import('./pages/TariffPage/TariffPage'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const NumbersPage = React.lazy(() => import('./pages/NumbersPage/NumbersPage'));
+const AboutCompany = React.lazy(() => import('./pages/AboutCompany/AboutCompany'));
+const OrganisationsPage = React.lazy(() => import('./pages/OrganisationsPage/OrganisationsPage'));
+const TariffePage = React.lazy(() => import('./pages/TariffePage/TariffePage'));
+const PageNotFound = React.lazy(() => import('./components/PageNotFound/PageNotFound'));
+const Services = React.lazy(() => import('./pages/Services/Services'));
+
 
 export const GlobalContext = createContext();
 
@@ -41,6 +49,7 @@ position: relative;
   }
 `;
 const Mainml = styled.main`
+
   display: flex;
   flex-direction: column;
   color:  ${props => props.theme.textColor};
@@ -81,37 +90,80 @@ export default function App() {
 
     <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, userSession, setUserSession, isMobile }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
-        <div className={`app ${darkTheme? 'app_dark': ''}`}>
+        <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper>
             <Nav />
             <Mainml>
               <Switch>
                 <Route exact path="/" component={Main} />
-                <Route path="/tariffs/:type" component={TariffPage} />
+
+                <Route path="/tariffs/:type">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <TariffPage />
+                  </Suspense>
+                </Route>
+
                 <Route path="/tariffs">
                   <Redirect to="/tariffs/:all" />
                 </Route>
-                <Route path="/dashboard" component={Dashboard} />
 
-                <Route path="/numbers/:button" component={NumbersPage} />
+                <Route path="/dashboard" >
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <Dashboard />
+                  </Suspense>
+                </Route>
+
+                <Route path="/numbers/:button">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <NumbersPage />
+                  </Suspense>
+                </Route>
+
                 <Route path="/numbers">
                   <Redirect to="/numbers/:все" />
                 </Route>
-                <Route path="/services/:type" component={Services} />
+
+                <Route path="/services/:type">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <Services />
+                  </Suspense>
+                </Route>
+
                 <Route path="/services">
                   <Redirect to="/services/:paid" />
                 </Route>
-                <Route path="/organisations/:type" component={OrganisationsPage} />
+
+                <Route path="/organisations/:type">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <OrganisationsPage />
+                  </Suspense>
+                </Route>
+
                 <Route path="/organisations">
                   <Redirect to="/organisations/:small-biz" />
                 </Route>
-                <Route path="/tariff-info/:tariff" component={TariffePage} />
 
-                <Route path="/support/about-us" component={AboutCompany} />
+                <Route path="/tariff-info/:tariff">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <TariffePage />
+                  </Suspense>
+                </Route>
+
+                <Route path="/support/about-us" >
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <AboutCompany />
+                  </Suspense>
+                </Route>
+
                 <Route path="/support">
                   <Redirect to="/support/about-us" />
                 </Route>
-                <Route path="*" component={PageNotFound} />
+
+                <Route path="*">
+                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                    <PageNotFound />
+                  </Suspense>
+                </Route>
               </Switch>
             </Mainml>
             <Footer />

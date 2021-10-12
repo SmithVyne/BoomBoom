@@ -4,7 +4,6 @@ import moment from 'moment';
 import 'moment/locale/ru'
 import { DatePicker } from "antd";
 import { GoCalendar } from 'react-icons/go';
-import Cleave from 'cleave.js/react';
 import oneIcon from '../../../assets/images/numbers/one.png'
 import twoIcon from '../../../assets/images/numbers/two.png'
 import threeIcon from '../../../assets/images/numbers/three.png'
@@ -81,10 +80,7 @@ export default function PersonalNumber(props) {
                     <div className="personal-number__transfer-phone">
                         <label className={`personal-number__phone-input-title`}>Переносимый номер</label>
                         <div className="personal-number__input-and-button">
-                            <Cleave className="personal-number__phone-input" options={{
-                                phone: true,
-                                phoneRegionCode: 'RU'
-                            }} value={phoneNumber} onChange={({ target }) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={() => phoneNumber || setPhoneNumber("+7")} />
+                            <input className="personal-number__phone-input"  value={phoneNumber} onChange={({ target }) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={() => phoneNumber || setPhoneNumber("+7")} />
                             {checked && props.screenWidth > 1020 &&
                                 <button onClick={handleSubmit} className={`personal-number_submit-button ${checked ? phoneNumber && phoneNumber.length >= 16 && selectedDate ? "personal-number_submit-button_active" : "personal-number_submit-button_disabled" : phoneNumber && phoneNumber.length >= 16 && contactNumber && contactNumber.length >= 16 && selectedDate ? "personal-number_submit-button_active" : "personal-number_submit-button_disabled"} `} disabled={checked ? phoneNumber && phoneNumber.length >= 16 && selectedDate ? false : true : phoneNumber && phoneNumber.length >= 16 && contactNumber && contactNumber.length >= 16 && selectedDate ? false : true}>
                                     <p className={`personal-number_submit-button-text`}>Оставить заявку</p>
@@ -101,10 +97,7 @@ export default function PersonalNumber(props) {
                             Совпадает с контактным</label>
                         {!checked && <>
                             <div className="personal-number__input-and-button">
-                                <Cleave className="personal-number__phone-input" options={{
-                                    phone: true,
-                                    phoneRegionCode: 'RU'
-                                }} onChange={({ target }) => {
+                                <input  className="personal-number__phone-input" onChange={({ target }) => {
                                     if (target.value === phoneNumber) {
                                         setChecked(true)
                                     }

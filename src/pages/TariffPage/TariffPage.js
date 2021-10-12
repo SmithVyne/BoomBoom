@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
 import { useParams, useHistory } from 'react-router-dom';
-
+import MetaTags from 'react-meta-tags';
 import TariffCard from "../../globals/TariffCard";
 import Tariffs from "../../components/Tariffs";
 import { tariffTypesArray } from "../../globals/utils";
@@ -22,6 +22,9 @@ export default function TariffPage() {
     }, [type])
     return (
         <section className={`tariffs`}>
+            <MetaTags>
+                <title>{selectedType === "all" ? 'Все тарифы' : ''}{selectedType === "phone" ? 'Тарифы для телефонов' : ''}{selectedType === "another-devices" ? 'Тарифы для устройств' : ''}</title>
+            </MetaTags>
             <div className={`tariffs__head-container`}>
                 <img className={`tariffs__head-logo`} src={headBox} alt="Тарифы" />
                 <h2 className={`tariffs__head-title ${darkTheme ? 'tariffs__text_dark' : ''}`}>Тарифы</h2>

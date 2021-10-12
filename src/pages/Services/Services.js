@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import MetaTags from 'react-meta-tags';
 import { useDispatch } from "react-redux"
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
@@ -115,6 +116,9 @@ export default function Services() {
     }, [type])
     return (
         <section className={`services`}>
+            <MetaTags>
+                <title>{selectedType === "paid" ? 'Платные услуги' : ''}{selectedType === "free" ? 'Бесплатные услуги' : ''}{selectedType === "roaming" ? 'Роуминг' : ''}</title>
+            </MetaTags>
             <Wrapper>
                 <div className={`services__head-container`}>
                     <img className={`services__head-logo`} src={bomb} alt="Услуги" />
