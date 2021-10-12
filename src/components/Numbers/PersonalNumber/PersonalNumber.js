@@ -4,7 +4,6 @@ import moment from 'moment';
 import 'moment/locale/ru'
 import { DatePicker } from "antd";
 import { GoCalendar } from 'react-icons/go';
-import Cleave from 'cleave.js/react';
 import oneIcon from '../../../assets/images/numbers/one.png'
 import twoIcon from '../../../assets/images/numbers/two.png'
 import threeIcon from '../../../assets/images/numbers/three.png'
