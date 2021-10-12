@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import MetaTags from 'react-meta-tags';
 import { GlobalContext } from '../../App';
 import { useParams } from 'react-router-dom';
 import Header from './Header'
@@ -33,6 +34,9 @@ export default function TariffePage() {
   }, [tariff])
   return (
     <div>
+      <MetaTags>
+        <title>Тариф {selectedTrariff.title ? selectedTrariff.title : 'Неизвестный тариф'}</title>
+      </MetaTags>
       <Header darkTheme={darkTheme} tariff={selectedTrariff} />
       <Section darkTheme={darkTheme} tariff={selectedTrariff} selectedTrariffId={selectedTrariffId} />
     </div>

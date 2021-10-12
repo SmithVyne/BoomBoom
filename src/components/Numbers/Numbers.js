@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
+import MetaTags from 'react-meta-tags';
 import { GlobalContext } from '../../App';
-import { useParams , useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import './Numbers.css';
 
 import PersonalNumber from './PersonalNumber/PersonalNumber';
@@ -663,16 +664,16 @@ export default function Numbers(props) {
     function handleCtnClick(item) {
 
         if (selectedNumbers && selectedNumbers.length === 5) {
-            if (selectedNumbers.filter((itm)=>{
+            if (selectedNumbers.filter((itm) => {
                 if (itm === item) return true
                 return false
-            }).length === 0){
+            }).length === 0) {
 
                 setMaxLengthError(true)
-    
+
                 setTimeout(setMaxLengthError, 300, false)
             } else {
-            
+
             }
         }
         if (selectedNumbers && selectedNumbers.length <= 4 && selectedNumbers.filter((itm) => {
@@ -755,10 +756,10 @@ export default function Numbers(props) {
             setFullPrice(firstPrice + secondPrice + thirdPrice + fourthPrice + fifthPrice)
         }
     }, [selectedNumbers]);
-    const [selectedButton, setSelectedButton] = React.useState(`${button && (button === ':все'|| button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`);
+    const [selectedButton, setSelectedButton] = React.useState(`${button && (button === ':все' || button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`);
     React.useEffect(() => {
-        setSelectedButton(`${button && (button === ':все'|| button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`)
-      }, [button])
+        setSelectedButton(`${button && (button === ':все' || button === ':перенести' || button === ':esim') ? button.split(':')[1] : 'все'}`)
+    }, [button])
     const [isSelectCategoryOpen, setSelectCategoryOpen] = React.useState(false);
     function handeleCategoryOpen() {
         if (isSelectCategoryOpen) {
@@ -783,6 +784,9 @@ export default function Numbers(props) {
     return (
 
         <>
+            <MetaTags>
+                <title>{selectedButton === "все" ? 'Все номера': ''}{selectedButton === "перенести" ? 'Перенести свой': ''}{selectedButton === "esim" ? 'Подключить eSIM': ''}</title>
+            </MetaTags>
             <div className={`numbers__headtitle`}>
                 <img className={`numbers__headtitle-icon`} src={numbersIcon} alt="Телефон" />
                 <h2 className={`numbers__headtitle-text ${darkTheme ? 'numbers__headtitle-text_dark' : ''}`}>Выберете<br />номер</h2>
@@ -791,30 +795,32 @@ export default function Numbers(props) {
                 <button onClick={() => {
                     history.push(':все')
                     setSelectedButton('все')
-                    }} className={`numbers__head-button ${selectedButton === "все" ? "numbers__head-button_active" : ''} `}>
+                }} className={`numbers__head-button ${selectedButton === "все" ? "numbers__head-button_active" : ''} `}>
                     <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "все" ? "numbers__head-button-text_active" : ''} `}>Все номера</p>
                 </button>
                 <button onClick={() => {
                     history.push(':перенести')
-                    setSelectedButton('перенести')}} className={`numbers__head-button ${selectedButton === "перенести" ? "numbers__head-button_active" : ''} `}>
+                    setSelectedButton('перенести')
+                }} className={`numbers__head-button ${selectedButton === "перенести" ? "numbers__head-button_active" : ''} `}>
                     <p className={`numbers__head-button-text ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "перенести" ? "numbers__head-button-text_active" : ''} `}>Перенести свой</p>
                 </button>
                 <button onClick={() => {
                     history.push(':esim')
-                    setSelectedButton('esim')}} className={`numbers__head-button ${selectedButton === "esim" ? "numbers__head-button_active" : ''} `}>
+                    setSelectedButton('esim')
+                }} className={`numbers__head-button ${selectedButton === "esim" ? "numbers__head-button_active" : ''} `}>
                     <p className={`numbers__head-button-text  ${darkTheme ? 'numbers__head-button-text_dark' : ''} ${selectedButton === "esim" ? "numbers__head-button-text_active" : ''}`}>Подключить eSIM</p>
                 </button>
             </div>
-            {selectedButton === "перенести"? 
-            <PersonalNumber transferNumber={props.transferNumber} screenWidth={screenWidth}/>
-            :
-            <>
-            </>}
-            {selectedButton === "esim"? 
-            <Esim  screenWidth={screenWidth} buyEsim={props.buyEsim} />
-            :
-            <>
-            </>}
+            {selectedButton === "перенести" ?
+                <PersonalNumber transferNumber={props.transferNumber} screenWidth={screenWidth} />
+                :
+                <>
+                </>}
+            {selectedButton === "esim" ?
+                <Esim screenWidth={screenWidth} buyEsim={props.buyEsim} />
+                :
+                <>
+                </>}
             {screenWidth > 930 ?
                 selectedButton === "все" &&
                 <>

@@ -1,13 +1,15 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 // import styled from 'styled-components/macro';
 // import Slide from '../components/Slide';
 // import girl_with_phone from "../assets/images/girl_with_phone_banner.png";
 // import hand_banner from "../assets/images/hand_banner.png";
+import MetaTags from 'react-meta-tags';
 import Banner from '../components/Banner/Banner';
 import Tariffs from '../components/Tariffs';
 import NumbersForMain from '../components/NumbersForMain/NumbersForMain';
 import MainCards from '../components/MainCards/MainCards';
 // import СoverageMap from '../components/СoverageMap/СoverageMap';
+import CityPopup from '../components/CityPopup/CityPopup';
 import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
 import { BUY_NUMBER, tariffTypesArray } from '../globals/utils';
@@ -69,42 +71,37 @@ import { useDispatch } from 'react-redux';
 
 
 export default function Main() {
-    // const [count, setCount] = useState(1);
-    // const [index, setIndex] = useState(0);
-    // const [timerId, setTimerId] = useState();
+    const [isCityPopupVisible, setCityPopupVisible] = React.useState(false);
+    const [isCityPopupChecked, setCityPopupChecked] = React.useState(false);
+    React.useEffect(() => {
+        const InMoscow = localStorage.getItem("InMoscow");
+        if (!InMoscow) {
+            setTimeout(setCityPopupVisible, 1000, true)
+        } else {
+            setCityPopupChecked(true)
+        }
+
+    }, [])
+
     const { darkTheme } = useContext(GlobalContext);
-    // const move = (direction = "next") => {
-    //     clearTimeout(timerId);
-    //     if (direction === "next") {
-    //         setCount(count + 1)
-    //     } else {
-    //         if (count === 0) {
-    //             setCount(slides.length - 1)
-    //         }
-    //         else {
-    //             setCount(count - 1)
-    //         }
-    //     }
-    //     setIndex(count % slides.length)
-    // }
 
     const dispatch = useDispatch();
-    
-    // useEffect(() => {
-    //     const id = setTimeout(() => {
-    //         setCount(count + 1)
-    //         setIndex(count % slides.length)
-    //     }, 5000)
-    //     setTimerId(id);
-    //     return () => clearTimeout(id)
-    // }, [count])
+
+    function handleCityPopup(chose) {
+        localStorage.setItem('InMoscow', chose);
+        setCityPopupVisible(false)
+    }
 
     function buyNumber(numbers) {
-        dispatch({type: BUY_NUMBER, numbers})
+        dispatch({ type: BUY_NUMBER, numbers })
     }
 
     return (
         <>
+            <MetaTags>
+                <title>Главная</title>
+            </MetaTags>
+            {isCityPopupChecked ? <></> : <CityPopup isCityPopupVisible={isCityPopupVisible} handleCityPopup={handleCityPopup} />}
             <Banner />
             <p className={`main-text ${darkTheme ? 'main-text_dark' : ''}`}>Выбирайте только <span>самое необходимое</span></p>
             <Tariffs>
