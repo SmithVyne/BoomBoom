@@ -1,12 +1,13 @@
-import  React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-
+import  React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from 'styled-components/macro';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useContext } from "react";
 import { GlobalContext } from "../App";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { debounce } from "lodash";
+import smoothscroll from 'smoothscroll-polyfill';
 
-
+smoothscroll.polyfill();
 const WrapScroller = styled.div`
     position: relative;
     display: flex;
@@ -23,6 +24,8 @@ const Scroller = styled(motion.div)`
     }
     @media(max-width: 600px){
         touch-action: none;
+        /* overflow-x: hidden; */
+        -webkit-overflow-scrolling: touch;
     }
 `
 
@@ -112,8 +115,11 @@ export default function Tariffs({ children }) {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
     const [scrollWidth, setScrollWidth] = useState(2);
-    const percentage = (scrollLeft / (scrollWidth - offsetWidth)) * 50;
+    const [percentage, setPercentage] = useState(0);
+    
+    // console.log(percentage)
     const [position, setPosition] = useState(0);
+    const [mobile, setMobile] = useState(false);
 
     useLayoutEffect(() => {
         const { current } = ref;
@@ -121,23 +127,26 @@ export default function Tariffs({ children }) {
             setShowScroll(current.scrollWidth > current.offsetWidth);
             setOffSetWidth(current.offsetWidth);
             setScrollWidth(current.scrollWidth);
+            setMobile(window.innerWidth <= 600)
         }
         init();
         window.addEventListener("resize", init)
-        const initScroller = () => setScrollLeft(current.scrollLeft);
-        current.addEventListener("scroll", initScroller)
         return () => {
             document.removeEventListener("resize", init);
-            current.removeEventListener("scroll", initScroller);
         }
     }, [])
 
+    const func = useMemo(() => debounce((scrollLeft, scrollWidth, offsetWidth) => setPercentage(scrollLeft / (scrollWidth - offsetWidth) * 50), 50), [])
+    useEffect(() => {
+       func(scrollLeft, scrollWidth, offsetWidth)
+    }, [scrollLeft, scrollWidth, offsetWidth, func])
+    
     useEffect(() => {
         setPosition(Math.floor(scrollLeft / offsetWidth))
     }, [scrollLeft, offsetWidth])
 
-    const { current } = ref;
     const handleScroll = (type) => {
+        const { current } = ref;
         const { scrollLeft } = current;
         let pixels = window.innerWidth < 720 ? 500 : 800;
         switch (type) {
@@ -149,18 +158,19 @@ export default function Tariffs({ children }) {
         }
     }
 
-    const handlePan = (event, info) => {
-        // console.log(info.offset.x, info.offset.y)
-        console.log(current.offsetWidth)
-        if(info.offset.x < 0) {
-            current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
-        } else {
-            current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
+    const handlePan = (e, info) => {
+        const { current } = ref;
+        if(mobile) {
+            if(info.offset.x < 0) {
+                current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
+            } else {
+                current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
+            }
         }
     }
+
     return (
         <>
-            
             <WrapScroller>
                 {showScroll &&
                     <>
@@ -172,19 +182,21 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller onPanEnd={handlePan} ref={ref} className="scroller">
+                <Scroller onPanStart={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
                     <WrapTariffs>
-                        {children}
+                        <AnimatePresence>
+                            {children}
+                        </AnimatePresence>
                     </WrapTariffs>
                 </Scroller>
                 {showScroll &&
                     <>
                         <Tracker darkTheme={darkTheme} percentage={percentage}><div></div></Tracker>
-                        <MobileTracker>
-                            {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
-                        </MobileTracker>
                     </>
                 }
+                <MobileTracker>
+                    {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
+                </MobileTracker>
             </WrapScroller>
         </>
     )

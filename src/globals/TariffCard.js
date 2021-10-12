@@ -11,12 +11,12 @@ import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
 import { memo, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import TariffBar from "./TariffBar";
 import { SHOW_MODAL } from "./utils";
 import { useDispatch } from "react-redux";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     background: ${({ background }) => background};
     background-size: ${({ title }) => title === "VIP" && "600%"};
     width: 520px;
@@ -282,7 +282,8 @@ export default memo(function TariffCard({ tariff, tariffId }) {
         setPositionValue(position)
     }
     return (
-        <Wrapper title={title} background={background}>
+        <Wrapper title={title} background={background} 
+        >
             <AnimatePresence>
                 {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
