@@ -160,6 +160,9 @@ const Details = styled.span`
             font-size: 16px;
         }
     }
+    @media(max-width: 450px) {
+        
+    }
 `
 
 const MiniIcon = styled.img`

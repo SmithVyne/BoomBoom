@@ -24,6 +24,7 @@ const Scroller = styled(motion.div)`
     }
     @media(max-width: 600px){
         touch-action: none;
+        overflow-x: hidden;
     }
 `
 
@@ -115,7 +116,6 @@ export default function Tariffs({ children }) {
     const [scrollWidth, setScrollWidth] = useState(2);
     const [percentage, setPercentage] = useState(0);
     
-    // console.log(percentage)
     const [position, setPosition] = useState(0);
     const [mobile, setMobile] = useState(false);
 
