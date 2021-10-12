@@ -37,6 +37,9 @@ const Wrapper = styled(motion.div)`
     }
     .detailsWrapper {
         width: 70%;
+        @media(max-width: 450px) {
+            width: 100%;
+        }
     }
     .card-top {
         display: flex;
@@ -142,14 +145,20 @@ const Sub = styled.small`
 const Details = styled.span`
     display: flex;
     gap: 10px;
-    align-items: flex-start;
+    align-items: center;
     margin-top: 24px;
     font-size: 20px;
     opacity: 0.3;
     transition: opacity 0.3s ease-in-out;
+    @media(max-width: 450px) {
+        margin-top: 18px;
+    }
     &:first-of-type {
         opacity: 1;
         margin-top: 28px;
+        @media(max-width: 450px) {
+            margin-top: 2px;
+        }
     }
     .text-body {
         font-family: Circe, Arial, sans-serif;
@@ -159,9 +168,6 @@ const Details = styled.span`
         @media (max-width: 450px) {
             font-size: 16px;
         }
-    }
-    @media(max-width: 450px) {
-        
     }
 `
 
@@ -218,8 +224,9 @@ const FourGSwitchStyles = styled.span`
     &:first-of-type {
         margin-right: 20px;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 450px) {
         flex-wrap: wrap;
+        padding: 8px;
     }
     ${({price}) => {
         return price === Infinity && {
@@ -285,8 +292,7 @@ export default memo(function TariffCard({ tariff, tariffId }) {
         setPositionValue(position)
     }
     return (
-        <Wrapper title={title} background={background} 
-        >
+        <Wrapper title={title} background={background} >
             <AnimatePresence>
                 {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
