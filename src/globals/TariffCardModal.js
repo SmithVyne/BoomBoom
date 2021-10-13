@@ -19,7 +19,7 @@ import instagram from "../assets/images/instagram.png";
 import groupniki from "../assets/images/groupniki.png";
 import googlemaps from "../assets/images/googlemaps.png";
 import gmail from "../assets/images/gmail.png";
-import { useEffect, memo } from "react";
+import { useEffect, memo, useState } from "react";
 
 const Wrapper = styled(motion.div)`
     position: absolute;
@@ -53,7 +53,6 @@ const Section = styled.section`
     height: fit-content;
     background: #FFFFFF;
     border-radius: 20px;
-    
     padding: 16px;
 `
 const Div = styled.div`
@@ -69,12 +68,12 @@ const Thumb = styled.div`
     border-radius: 4.5px;
 `
 const Media = styled.span`
-font-family: Circe, Arial, sans-serif;
-font-style: normal;
-font-weight: normal;
-font-size: 20px;
-line-height: 100%;
-color: #010101;
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 100%;
+    color: #010101;
     display: flex;
     gap: 8px;
     padding: 4px 6px 4px 0px;
@@ -88,11 +87,11 @@ color: #010101;
     }
 `
 const Title = styled.p`
-font-family: Circe, Arial, sans-serif;
-font-style: normal;
-font-weight: normal;
-font-size: 20px;
-line-height: 100%;
+    font-family: Circe, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 100%;
     color: rgba(18,18,18,0.6);
     font-size: 15px;
     margin: 0;
@@ -104,6 +103,14 @@ const MiniIcon = styled.img`
 
 
 export default memo(function TariffCardModal({setShowDropDown}) {
+    const [mobile, setMobile] = useState(window.innerWidth <= 600);
+
+    useEffect(() => {
+        function init() {setMobile(window.innerWidth <= 600)}
+        window.addEventListener("resize", init)
+        return () => window.removeEventListener("resize", init)
+    }, [])
+    
     useEffect(()=>{
         const remover = () => setShowDropDown(false);
         document.addEventListener("mouseover", remover)
@@ -113,11 +120,13 @@ export default memo(function TariffCardModal({setShowDropDown}) {
     return (
         <Wrapper
             initial={{y: '-100%'}}
-            animate={{y: 0}}
+            animate={{y: "0"}}
             exit={{y: '-100%'}}
             transition={{duration: 1, type: 'spring'}}
             onMouseLeave={()=>setShowDropDown(false)}
             onMouseOver={(e)=>e.stopPropagation()}
+            onPointerMove={(e)=>e.stopPropagation()}
+            onPointerUp={(e) => {mobile && setShowDropDown(false)}}
         >
             <Sections>
                 <Section>

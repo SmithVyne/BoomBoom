@@ -49,6 +49,7 @@ const Button = styled.button`
     gap: ${({gap}) => gap};
     max-width: 100%;
     max-height: fit-content;
+    padding: 20px 16px;
 `;
 
 const Small = styled.small`
@@ -152,12 +153,11 @@ const Dtitle = styled.span`
     gap: 20px;
     position: sticky;
     left: 0;
-    @media(max-width: 850px) {
-        flex-direction: column;
-    }
+    flex-wrap: wrap;
 `
 const Dbody = styled.table`
     width: 100%;
+    min-width: 1000px;
     font-size: 24px;
     text-align: left;
     border-collapse: separate;
@@ -194,6 +194,36 @@ const Copier = styled(RiFileCopyLine)`
         transform: scale(1.04);
     }
 `
+
+const DownloadBtn = styled.button`
+    width: fit-content;
+    height: 52px;
+    max-width: 100%;
+    max-height: fit-content;
+    padding: 12px 24px 16px 24px;
+    background: #4B75FC1F;
+    color: #4B75FC;
+    font-size: 24px;
+    border: none;
+    border-radius: 69px;
+    line-height: 24px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+    @media(max-width: 720px) {
+        padding: 12px 12px 16px 12px;
+        font-size: 16px;
+        line-height: 16px;
+        width: fit-content;
+        max-width: fit-content;
+        height: fit-content;
+    }
+`
+
 const getDashboard = (ctn) => Promise.all([
     Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
 ])
@@ -204,6 +234,8 @@ export default function Dashboard() {
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
+    const [copied, setCopied] = useState(false);
+    const detailsRef = useRef();
 
     useEffect(() => {
         if (userSession) {
@@ -212,11 +244,9 @@ export default function Dashboard() {
         } else setLoginForm(true)
     }, [userSession, dispatch, setLoginForm, ctn]);
 
-    const detailsRef = useRef();
     const handleDownload = () => {
         html2pdf().from(detailsRef.current).save("Детализация.pdf");
     }
-    const [copied, setCopied] = useState(false);
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
             setCopied(true);
@@ -270,9 +300,7 @@ export default function Dashboard() {
                     <Details id="Детализация" darkTheme={darkTheme}>
                         <Dtitle>
                             Детализация
-                            <Button style={{padding: "30px 0"}} onClick={handleDownload} gap="5px" fontWeight="600" fontSize="24px" color="#4B75FC" background="rgba(75,117,252, 0.12)" width="426px" height="52px" round>
-                                <HiDownload style={{transform: "translateY(2px)"}} /> получите полную детализацию
-                            </Button>
+                            <DownloadBtn onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
                         <Dbody ref={detailsRef}>
                             <thead>

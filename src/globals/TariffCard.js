@@ -159,6 +159,9 @@ const Details = styled.span`
         @media(max-width: 450px) {
             margin-top: 2px;
         }
+        img {
+            /* margin-top: 10px; */
+        }
     }
     .text-body {
         font-family: Circe, Arial, sans-serif;
@@ -172,8 +175,7 @@ const Details = styled.span`
 `
 
 const MiniIcon = styled.img`
-    width: 14px;
-    margin: 5px 0;
+    width: 16px;
     &:hover {
         cursor: ${({ pointer }) => pointer && "pointer"}
     }
@@ -271,7 +273,7 @@ export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=fals
         :
         <span>
             <TinySwitch title={title} checked={checked} setSwitches={setSwitches} />
-            +{title === "Безлимитный 4G" ? "150" : "50"}₽
+            +{title === "Безлимитный 4G" ? "150" : "50"} ₽
         </span> }
     </FourGSwitchStyles>)
 })
@@ -291,10 +293,15 @@ export default memo(function TariffCard({ tariff, tariffId }) {
     function handlePositionChange(position) {
         setPositionValue(position)
     }
+    function handleInfo(e) {
+        e.stopPropagation()
+        setShowDropDown(true)
+    }
+    
     return (
         <Wrapper title={title} background={background} >
             <AnimatePresence>
-                {showDropdown && <TariffCardModal showDropdown={showDropdown} setShowDropDown={setShowDropDown} />}
+                {showDropdown && <TariffCardModal setShowDropDown={setShowDropDown} />}
             </AnimatePresence>
             <span className="card-top">
                 <img alt="card-icon" className='card-title-icon' src={icon} />
@@ -313,10 +320,7 @@ export default memo(function TariffCard({ tariff, tariffId }) {
                 </Switches>
                 <span className="detailsWrapper" >
                     <Details>
-                        <MiniIcon src={infinity} /><p className='text-body'>безлимитные соц сети и мессенджеры</p><MiniIcon onMouseOver={(e) => {
-                            e.stopPropagation()
-                            setShowDropDown(true)
-                        }} pointer src={info} />
+                        <MiniIcon src={infinity} /><p className='text-body'>безлимитные соц сети и мессенджеры</p><MiniIcon onClick={handleInfo} onMouseOver={handleInfo} pointer src={info} />
                     </Details>
                     <Details style={{ opacity: `${(tariff.beeline && positionValue === 2) ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
                     <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>

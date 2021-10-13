@@ -158,11 +158,17 @@ export default function Tariffs({ children }) {
 
     const handlePan = (e, info) => {
         const { current } = ref;
+        const {x, y} = info.offset;
         if(mobile) {
-            if(info.offset.x < 0) {
-                current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
+            if(Math.abs(y) < Math.abs(x)) {
+                if(x < 0) {
+                    current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
+                } else {
+                    current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
+                }
             } else {
-                current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
+                const val = y < 0 ? 350 : -350;
+                window.scrollBy({ top: val, behavior: 'smooth' });
             }
         }
     }

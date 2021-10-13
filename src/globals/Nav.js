@@ -92,10 +92,10 @@ const DashboardBtn = styled(motion.button)`
     color: #fff;
     font-weight: 500;
     height: 52px;
-
     border-radius: 26px;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;   
     border: none;
     padding: 0 24px 5px;
