@@ -10,7 +10,6 @@ const { RangePicker } = TimePicker;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    
     margin-top: ${({service}) => service || "36px"};
     gap: 52px;
     font-family: Circe;
@@ -129,12 +128,27 @@ const Bottom = styled.div`
     div.last {
         margin-top: 20px;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: bold;
         small {
             margin-top: 15px;
         }
     }
-    
+    small.свой_номер {
+        font-size: 16px;
+        font-weight: 500;
+        display: inline;
+    }
+    .omo {
+        width: 300px;
+        height: 60px;
+        border-radius: 13px;
+        padding: 0 15px;
+        outline: none;
+        border: 2px solid rgba(1, 1, 1, 0.16);
+    }
+    .omo:focus, .omo:active {
+        border-color: ${({service}) => service && service.eSim ? "#010101" : "#0E5EF8"};
+    }
 `
 const Pickup = styled.div`
     display: flex;
@@ -187,7 +201,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                             <><div className="orderDates">
                                 <div className="Способ_получения">
                                     Дата доставки
-                                    <DatePicker suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
+                                    <DatePicker allowClear={false} suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
                                 </div>
                                 <div className="Способ_получения">
                                     Времия доставки
@@ -229,17 +243,19 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                     </div>
                 }
             </>}
-            <Bottom>
-                <div className="first">
+            <Bottom service={service}>
+                {service ? null : <div className="first">
                     <small>Итоговая абонентская плата в месяц:</small>
                     500 ₽ / мес 
-                </div>
-                 <span>
-                    {(selected === 0 || service) &&
-                        <Cleave className="input" options={{
+                </div>}
+                {service && service.eSim && <small class="свой_номер">Введите свой номер телефона</small>}
+                <span>
+                    {(selected === 0 || !!service) &&
+                        <Cleave className="omo" options={{
                             phone: true,
                             phoneRegionCode: 'RU'
-                        }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />}
+                        }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
+                    }
                     <button onClick={handleSubmit}>Оформить заказ <Arrow /></button>
                 </span>
                 <div className="last">

@@ -134,7 +134,7 @@ export default function Tariffs({ children }) {
         }
     }, [])
 
-    const func = useMemo(() => debounce((scrollLeft, scrollWidth, offsetWidth) => setPercentage(scrollLeft / (scrollWidth - offsetWidth) * 50), 50), [])
+    const func = useMemo(() => debounce((scrollLeft, scrollWidth, offsetWidth) => setPercentage(scrollLeft / (scrollWidth - offsetWidth) * 50), 20), [])
     useEffect(() => {
        func(scrollLeft, scrollWidth, offsetWidth)
     }, [scrollLeft, scrollWidth, offsetWidth, func])
@@ -169,6 +169,7 @@ export default function Tariffs({ children }) {
             } else {
                 const val = y < 0 ? 350 : -350;
                 window.scrollBy({ top: val, behavior: 'smooth' });
+                console.log(info.velocity)
             }
         }
     }

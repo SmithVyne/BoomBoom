@@ -76,6 +76,7 @@ const Service = styled.div`
             border: none;
             cursor: pointer;
             margin-top: 27px;
+            outline: none;
         }
     }
 `

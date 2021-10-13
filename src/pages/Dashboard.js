@@ -223,24 +223,40 @@ const DownloadBtn = styled.button`
         height: fit-content;
     }
 `
+const Name = styled.div`
+    font-weight: 700;
+    font-size: 44px;
+    color: inherit;
+    line-height: 100%;
+    @media(max-width: 1280px) {
+        font-size: 32px;
+    }
+    @media(max-width: 600px) {
+        font-size: 20px;
+    }
+`
 
-const getDashboard = (ctn) => Promise.all([
+const getDashboard = (ctn, accessToken) => Promise.all([
     Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
+    Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, accessToken)
 ])
 
 export default function Dashboard() {
     const {darkTheme, userSession, setLoginForm} = useContext(GlobalContext);
-    const userInfo = useSelector(store => store.auth.userInfo?.result);
-    if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo?.rests;
+    const {userInfo, userData} = useSelector(store => store.auth);
+    console.log(userInfo, userData)
+    if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
 
+
     useEffect(() => {
         if (userSession) {
-            getDashboard(ctn)
-            .then(([userInfo]) => dispatch({type: USER_INFO, userInfo}))
+            getDashboard(ctn, userSession.accessToken)
+            .then(([userInfo, userData]) => dispatch({type: USER_INFO, user: {userInfo: userInfo.result, userData}}))
+            .catch((err) => console.warn(err))
         } else setLoginForm(true)
     }, [userSession, dispatch, setLoginForm, ctn]);
 
@@ -260,6 +276,7 @@ export default function Dashboard() {
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
+                    <Name>{userData.owner}</Name>
                     <Cards>
                         <TopCard darkTheme={darkTheme}>
                             <span className="topCardTitle">Номер:</span>
@@ -274,7 +291,7 @@ export default function Dashboard() {
                                 {userInfo.plan + " ₽"}
                             </span>
                         </TopCard>
-                        <TopCard color="#32A43E" darkTheme={darkTheme}>
+                        <TopCard color={userInfo.balance < 0 ? "#FF0202" : "#32A43E"} darkTheme={darkTheme}>
                             <span className="topCardTitle">Баланс:</span>
                             <span className="topCardBody">
                                 {replacePoints(userInfo.balance)+ " ₽"}

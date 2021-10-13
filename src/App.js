@@ -79,6 +79,7 @@ export default function App() {
     }
   }
 
+  console.log(userSession);
 
   useEffect(() => {
     const watcher = () => setIsMobile(window.innerWidth < 1100);

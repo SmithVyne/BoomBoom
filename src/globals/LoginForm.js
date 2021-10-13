@@ -116,6 +116,29 @@ const GetPassword = styled(Error)`
         cursor: pointer;
     }
 `
+const handlePhone = ({target}, updaterFunction) => {
+    const {value} = target
+    if(value.length === 1) {
+        if(value === "+" || value === "8") {
+            updaterFunction("+7")
+        } else if(value === "9") {
+            updaterFunction("+79")
+        }
+    } else {
+        updaterFunction(value)
+    }
+}
+
+const handlePhoneForApi = (number) => {
+    number = number.replaceAll(" ", "");
+    if(number.slice(0, 2) === "+7") {
+        return number.slice(2)
+    } else if(number[0] === "8") {
+        return number.slice(1)
+    } else if(number[0] === "9") {
+        return number
+    }
+}
 
 export default function LoginForm() {
     const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
@@ -123,10 +146,12 @@ export default function LoginForm() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const form_status = useSelector(store => store.form_status);
-    const apiUsername = username.slice(2, username.length).replaceAll(" ", "");
+    const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
     const [, saveCtn] = useLocalStorage("ctn");
 
+    console.log(apiUsername)
+    
     const body = {
         method: "login",
         params: { username: apiUsername, password },
@@ -175,7 +200,7 @@ export default function LoginForm() {
                         <Field as={Cleave} options={{
                             phone: true,
                             phoneRegionCode: 'RU'
-                        }} value={username} onChange={({target}) => setUsername(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} autoComplete="username" />
+                        }} value={username} onChange={(e)=>handlePhone(e, setUsername)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} autoComplete="username" />
                         <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" autoComplete="current-password" />
                         <GetPassword>Нет пароля? <span onClick={handleGetPassword}>Получить пароль</span></GetPassword>
                     </>

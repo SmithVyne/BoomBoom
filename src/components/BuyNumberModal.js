@@ -370,10 +370,10 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
-    const [submit, setSubmit] = useState(false);
+    const {position, tariffId, service, switches, toSubmit} = payload;
+    const [submit, setSubmit] = useState(toSubmit);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
-    const {position, tariffId, service, switches} = payload;
     const [modalSwitches, setModalSwitches] = useState(switches);
     const [modalPosition, setModalPosition] = useState(position);
     useEscapeKey(() => dispatch({type: HIDE_MODAL}));
@@ -427,8 +427,8 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                         service ? 
                         <>
                             <div className="servicesModal">
-                                <span>Подключение услуги</span>
-                                <h2>{service.title}</h2>
+                                {service.eSim || <span>Подключение услуги</span>}
+                                <h2>{service.eSim ? "Подключение eSim" : service.title}</h2>
                             </div>
                         </> :
                         <>

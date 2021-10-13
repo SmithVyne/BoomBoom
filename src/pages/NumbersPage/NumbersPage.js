@@ -1,5 +1,5 @@
 import Numbers from '../../components/Numbers/Numbers'
-import { BUY_NUMBER} from '../../globals/utils'
+import { BUY_NUMBER, SHOW_MODAL} from '../../globals/utils'
 import { useDispatch } from 'react-redux';
 import './NumbersPage.css';
 
@@ -10,16 +10,10 @@ export default function NumbersPage() {
         dispatch({ type: BUY_NUMBER, numbers  })
     }
     function transferNumber({ date, transferredNumber, contactNumber }) {
-
-        // !!!CONNECT Transfer Number POP UP HERE!!!
-        console.log('Transfer Number Triggered')
-        console.log(date, transferredNumber, contactNumber)
+        dispatch({ type: SHOW_MODAL, payload: {toSubmit: true}  })
     }
     function buyEsim() {
-
-        // !!!CONNECT Buy Esim POP UP HERE!!!
-        console.log('EsimBUY Triggered')
-
+        dispatch({ type: SHOW_MODAL, payload: { service: {eSim: true} } })
     }
     return (
         <>

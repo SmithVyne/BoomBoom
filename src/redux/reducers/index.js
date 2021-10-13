@@ -31,7 +31,8 @@ const FormReducer = (store = null, action) => {
 const AuthReducer = (store = {}, action) => {
     switch(action.type) {
         case USER_INFO:
-            return {...store, userInfo: action.userInfo}
+            const {user} = action;
+            return user
         default:
             return store
     }
