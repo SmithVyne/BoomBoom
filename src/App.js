@@ -4,7 +4,7 @@ import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { useLocalStorage } from "./hooks";
+import { useCookieStorage, useLocalStorage } from "./hooks";
 
 import Preloader from "./globals/Preloader/Preloader"
 import LoginForm from "./globals/LoginForm";
@@ -58,6 +58,9 @@ const Mainml = styled.main`
 export default function App() {
   const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
   const [userSession, setUserSession] = useLocalStorage("userSession");
+  const [accessToken, setAccessToken] = useCookieStorage("accessToken");
+  const [refreshToken, setRefreshToken] = useCookieStorage("refreshToken");
+  
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
@@ -79,7 +82,7 @@ export default function App() {
     }
   }
 
-  console.log(userSession);
+  // console.log(userSession.refreshTokenExpire * 1000 < Date.parse(Date()));
 
   useEffect(() => {
     const watcher = () => setIsMobile(window.innerWidth < 1100);

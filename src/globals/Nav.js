@@ -132,6 +132,10 @@ const MenuBtn = styled.img`
     }
 `;
 
+const handleUserTokens = (tokens) => {
+    
+}
+
 export default function Nav() {
     const { darkTheme, setLoginForm, userSession, setUserSession, isMobile } = useContext(GlobalContext);
     const [showMobileNav, setShowMobileNav] = useState(false);

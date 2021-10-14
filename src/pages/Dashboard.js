@@ -244,18 +244,18 @@ const getDashboard = (ctn, accessToken) => Promise.all([
 export default function Dashboard() {
     const {darkTheme, userSession, setLoginForm} = useContext(GlobalContext);
     const {userInfo, userData} = useSelector(store => store.auth);
-    console.log(userInfo, userData)
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
-
+    
+    console.log(userInfo, userData)
 
     useEffect(() => {
         if (userSession) {
             getDashboard(ctn, userSession.accessToken)
-            .then(([userInfo, userData]) => dispatch({type: USER_INFO, user: {userInfo: userInfo.result, userData}}))
+            .then(([userInfo, userData]) => dispatch({type: USER_INFO, user: {userInfo: userInfo.result, userData: userData.result}}))
             .catch((err) => console.warn(err))
         } else setLoginForm(true)
     }, [userSession, dispatch, setLoginForm, ctn]);
@@ -276,7 +276,7 @@ export default function Dashboard() {
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
-                    <Name>{userData.owner}</Name>
+                    <Name>{"userData.owner"}</Name>
                     <Cards>
                         <TopCard darkTheme={darkTheme}>
                             <span className="topCardTitle">Номер:</span>
