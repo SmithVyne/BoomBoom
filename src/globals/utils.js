@@ -73,6 +73,23 @@ export async function GetNumbers() {
         .then(res => res.json())
 }
 
+export async function OrderService(serviceName, userPhone, fromMosсow) {
+    return fetch('https://boomtele.com/api/order-service/', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "serviceName": serviceName,
+            "userPhone": userPhone,
+            "fromMosсow": fromMosсow
+        }
+        )
+    })
+        .then(res => res.json())
+}
+
 export const tariffBase = {
     title: 'Базовый',
     icon: duck,
