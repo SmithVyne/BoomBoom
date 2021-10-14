@@ -10,6 +10,7 @@ import beeline from '../../assets/images/beeline-org.png'
 import bucket from '../../assets/images/bucket.png'
 import anchor from '../../assets/images/anchor.png'
 import link from '../../assets/images/link.png'
+import car from '../../assets/images/car.png'
 import globe_icon from '../../assets/images/globe_icon.png'
 import folder from '../../assets/images/folder.png'
 import blub from '../../assets/images/blub.png'
@@ -25,58 +26,58 @@ const cardsMalBiz = [
     {
         img: box,
         title: 'Яркий микс',
-        text: `Высокоскоростной интернет в офисе со скидкой, корпоративная мобильная связьи облачная АТС бесплатно`
+        text: `Высокоскоростной интернет в офисе со скидкой, корпоративная мобильная связь и облачная АТС бесплатно`
     },
     {
         img: pcFace,
         title: 'Мобильное предприятие',
         text: `CRM-система со встроенной облачной
         телефонией для ведения клиентской базы,
-        контроля продаж и управления проектами.`
+        контроля продаж и управления проектами`
     },
     {
         img: bucket,
         title: 'Для ИП и самозанятых',
-        text: `Облачная телефония, Статистика эффективностирекламы CRM-система и СМС-рассылки`
+        text: `Облачная телефония, статистика эффективности рекламы, CRM-система и SMS-рассылки`
     }
     ,
     {
         img: anchor,
         title: 'Номер 8800',
-        text: `Звонки по всей россии и бесплатное подключение`
+        text: `Звонки по всей России и бесплатное подключение`
     }
     ,
     {
         img: link,
         title: 'Интернет для бизнеса',
-        text: `CRM-система со встроенной облачной телефонией для ведения клиентской базы, контроля продаж и управления проектами`
+        text: `Скорость до 100 Мбит/с. При подключении Вы получаете техподдержку, бесплатный домен, почтовые ящики и доступ к статическим и динамическим IP-адресам`
     }
     ,
     {
         img: beeline,
         title: 'ОФД “Билайн”',
-        text: `Касса +ФН + ОФД + Интернет + Настройка кассы - с рассрочкой 12 месяцев`
+        text: `Касса + ФН + ОФД + Интернет + Настройка кассы — с рассрочкой на 12 месяцев`
     }
 ]
 
 const cardsBigBiz = [
     {
         img: globe_icon,
-        title: 'BOOM Геоаналитика',
-        text: `Исследование аудитории пользователей ваших сервисов. Отчеты по потенциальновый выручке. Сезонные исследования за 2 недели.`
+        title: 'BOOM геоаналитика',
+        text: `Исследование аудитории пользователей Ваших сервисов. Отчеты по потенциальновый выручке. Сезонные исследования за 2 недели`
     },
     {
         img: folder,
-        title: 'BOOMCLOUD цифровое решение',
+        title: 'BOOM CLOUD (цифровое решение)',
         text: `Универсальная облачная платформа 
-        для цифровой устойчивости вашего бизнеса`
+        для цифровой устойчивости Вашего бизнеса`
     },
     {
         img: blub,
-        title: 'BOOMSMART',
+        title: 'BOOM SMART',
         text: `Комплексное решение для прокачки 
         всех отделов бизнеса (Маркетинг, IT,  Продажи, 
-        Обслуживание, Логистики, Финансов и тд)`
+        Обслуживание, Логистика, Финансы и т.д.)`
     },
     {
         img: computer,
@@ -87,27 +88,25 @@ const cardsBigBiz = [
     },
     {
         img: floppy,
-        title: 'Системная интеграция: (Цифровизация бизнеса)',
+        title: 'Системная интеграция (цифровизация бизнеса)',
         text: `Применение комплексных IT-решений 
         для внедрения новых технологий, сокращения 
-        расходов и создания сервисов.`
+        расходов и создания сервисов`
     },
 
 ]
 
 const cardsGosSector = [
     {
-        img: globe_icon,
+        img: car,
         title: 'Управление общесвенным транспортом и городским трафиком',
-        text: `Единая интеллектуальная трансопртная
+        text: `Единая интеллектуальная транспортная
         система`
     },
     {
         img: red_book,
         title: 'Цифровизация образовательных учреждений',
-        text: `Роббо - классы
-        VR/AR обучение 
-        Интерактивные классы`
+        text: `РОББО Классы — занятия по робототехнике, VR/AR обучение, интерактивные классы`
     },
     {
         img: thermometer,
@@ -117,12 +116,12 @@ const cardsGosSector = [
     {
         img: magic_hat,
         title: 'Технологичные инструменты для городских коммунальных служб и горуправления',
-        text: `Умное ЖКХ Энергоэффективное городское освещение`
+        text: `Умное ЖКХ, энергоэффективное городское освещение`
     },
     {
         img: clapperboard,
         title: 'Инструменты для принятия решений и эффективного управления',
-        text: `Планирование социальной инфраструктуры Оптимизация транспортной инфраструктуры`
+        text: `Планирование социальной инфраструктуры, оптимизация транспортной инфраструктуры`
     },
 
 
@@ -187,7 +186,7 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Оставить заявку</a>
+                                                <a className="more" href="/#">Подключить</a>
                                             </div>
                                         </div>
                                     ))
@@ -202,7 +201,7 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Оставить заявку</a>
+                                                <a className="more" href="/#">Подключить</a>
                                             </div>
                                         </div>
                                     ))
@@ -218,7 +217,7 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Оставить заявку</a>
+                                                <a className="more" href="/#">Подключить</a>
                                             </div>
                                         </div>
                                     ))

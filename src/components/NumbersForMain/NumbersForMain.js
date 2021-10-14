@@ -742,7 +742,9 @@ function NumbersForMain(props) {
 
                 <>
                     <form autoComplete="off" onSubmit={handleSubmit} className={`numbers-for-main ${darkTheme ? 'numbers-for-main_dark' : ''}`}>
-                        <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
+                        <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span onClick={() => {
+                     props.history.push("/numbers/:перенести");
+                }} className='numbers-for-main__title_link'>переходите со своим</span></h2>
                         <div className='numbers-for-main__controllers'>
                             <div className={`numbers-for-main__input-container ${isInputFocused ? "numbers-for-main__input-container_focused" : ''}`}>
                                 <img className="numbers-for-main__input-search-icon" src={searchIcon} alt="Иконка поиска" />
@@ -848,7 +850,9 @@ function NumbersForMain(props) {
                 </>
                 :
                 <>
-                    <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
+                    <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span onClick={() => {
+                     props.history.push("/numbers/:перенести");
+                }} className='numbers-for-main__title_link'>переходите со своим</span></h2>
                     <div className={`numbers-for-main__card`}>
                         <div className={`numbers-for-main__card-row`}>
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_bronz`}>Бронзовый</h2>

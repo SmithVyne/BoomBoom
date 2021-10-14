@@ -216,7 +216,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, ph
                         }
                         {selectedOption === 1 && 
                             <Pickup>
-                                Вы можете получить свою сим карту в любом офисе Beeline
+                                Вы можете получить свою сим-карту в любом офисе Beeline
                                 <span>
                                     <HiOutlineLocationMarker /> 
                                     <a target="_blank" href="https://www.google.com/maps/search/%D0%BE%D1%84%D0%B8%D1%81%D1%8B+beeline+%D0%B2+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/@55.7112608,37.428036,11z/data=!3m1!4b1" rel="noreferrer" >Найти салон связи на карте</a>

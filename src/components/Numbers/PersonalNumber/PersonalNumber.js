@@ -159,7 +159,7 @@ export default function PersonalNumber(props) {
                         <h2 className={`personal-number_important-title ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Важно</h2>
                         <img className={`personal-number_important-exclamation`} alt="!" src={exclamationMark} />
                     </div>
-                        <p className={`personal-number_important-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Деньги с вашего баланса не перенесутся в Boom Telecom.  Для их возврата обратитесь к прежнему оператору.</p>
+                        <p className={`personal-number_important-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Деньги с Вашего баланса не перенесутся в Boom Telecom.  Для их возврата обратитесь к прежнему оператору.</p>
                 </div>
 
             </div>

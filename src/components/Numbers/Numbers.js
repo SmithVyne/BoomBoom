@@ -826,7 +826,10 @@ export default function Numbers(props) {
                 <>
 
                     <form autoComplete="off" onSubmit={handleSubmit} className={`numbers ${darkTheme ? 'numbers_dark' : ''}`}>
-                        <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров или<br /><span className='numbers__title_link'>переходите со своим</span></h2>
+                        <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров или<br /><span onClick={() => {
+                    history.push(':перенести')
+                    setSelectedButton('перенести')
+                }} className='numbers__title_link'>переходите со своим</span></h2>
                         <p onClick={() => { if (selectedNumbers && selectedNumbers.length > 0) setSelectedNumbersOpen(!selectedNumbersOpen) }} className={`numbers__selected-numbers-button ${darkTheme ? 'numbers__selected-numbers-button_dark' : ''}`}>{selectedNumbers && selectedNumbers.length === 0 ? 'Ничего не выбрано' : selectedNumbersOpen ? 'Вернуться к поиску' : 'Посмотреть выбраные номера'}</p>
 
                         <div className='numbers__controllers'>
@@ -1066,7 +1069,10 @@ export default function Numbers(props) {
 
                 : selectedButton === "все" &&
                 <div className="numbers-for-mobile">
-                    <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров<br />или <span className='numbers__title_link'>переходите со своим</span></h2>
+                    <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров<br />или <span onClick={() => {
+                    history.push(':перенести')
+                    setSelectedButton('перенести')
+                }} className='numbers__title_link'>переходите со своим</span></h2>
                     <p onClick={() => { if (selectedNumbers && selectedNumbers.length > 0) setSelectedNumbersOpen(!selectedNumbersOpen) }} className={`numbers__selected-numbers-button ${darkTheme ? 'numbers__selected-numbers-button_dark' : ''}`}>{selectedNumbers && selectedNumbers.length === 0 ? 'Ничего не выбрано' : selectedNumbersOpen ? 'Вернуться к поиску' : 'Посмотреть выбраные номера'}</p>
                     <div className="numbers-for-mobile__inputs">
                         <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
