@@ -237,7 +237,7 @@ export default function NumbersMobile(props) {
                         {props.selectedCategoryID === 'all' || props.selectedCategoryID === 2 ?
                             <div className={`numbers__table-mobile`}>
                                 <div className={`numbers__table-mobile-titles`}>
-                                    <h2 className={`numbers__table-mobile-name numbers__table-mobile-name_silver`}>Серебрянный</h2>
+                                    <h2 className={`numbers__table-mobile-name numbers__table-mobile-name_silver`}>Серебряный</h2>
                                     <div className={`numbers__table-mobile-prices`}>
                                         <p className={`numbers__table-mobile-lastprice`}>5 000 ₽</p>
                                         <p className={`numbers__table-mobile-price ${darkTheme? 'numbers__table-mobile-price_dark': ''}`}>300 ₽/мес</p>

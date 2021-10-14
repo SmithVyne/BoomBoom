@@ -701,7 +701,7 @@ function NumbersForMain(props) {
             setSelectedNumber({})
 
         }
-        if (category === 'Серебрянный') {
+        if (category === 'Серебряный') {
 
             setSelectedCategoryID(2)
             setSelectedNumber({})
@@ -742,7 +742,7 @@ function NumbersForMain(props) {
 
                 <>
                     <form autoComplete="off" onSubmit={handleSubmit} className={`numbers-for-main ${darkTheme ? 'numbers-for-main_dark' : ''}`}>
-                        <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберете номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
+                        <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
                         <div className='numbers-for-main__controllers'>
                             <div className={`numbers-for-main__input-container ${isInputFocused ? "numbers-for-main__input-container_focused" : ''}`}>
                                 <img className="numbers-for-main__input-search-icon" src={searchIcon} alt="Иконка поиска" />
@@ -765,11 +765,11 @@ function NumbersForMain(props) {
 
                                 </div>
                                 <div className="numbers-for-main__category-container">
-                                    <button type='button' className={`numbers-for-main__category numbers-for-main__category_with-name ${darkTheme ? 'numbers-for-main__category_dark' : ''}  `} onClick={() => handleCategoryChange('Серебрянный')} >
-                                        <p className={`numbers-for-main__category-name ${darkTheme ? 'numbers-for-main__category-name_dark' : ''} ${selectedCategory === 'Серебрянный' ? ' numbers-for-main__category_selver_active' : ''} ${selectedCategory === 'Серебрянный' ? ' numbers-for-main__category-name_active' : ''}`}>Серебрянный</p>
+                                    <button type='button' className={`numbers-for-main__category numbers-for-main__category_with-name ${darkTheme ? 'numbers-for-main__category_dark' : ''}  `} onClick={() => handleCategoryChange('Серебряный')} >
+                                        <p className={`numbers-for-main__category-name ${darkTheme ? 'numbers-for-main__category-name_dark' : ''} ${selectedCategory === 'Серебряный' ? ' numbers-for-main__category_selver_active' : ''} ${selectedCategory === 'Серебряный' ? ' numbers-for-main__category-name_active' : ''}`}>Серебряный</p>
                                     </button>
                                     {
-                                        selectedCategory === 'Серебрянный' ?
+                                        selectedCategory === 'Серебряный' ?
                                             <p className={`numbers-for-main__category-price ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}><span className="numbers-for-main__category-lastprice">5 000 ₽</span> 300 ₽/мес</p>
                                             : <></>
 
@@ -848,7 +848,7 @@ function NumbersForMain(props) {
                 </>
                 :
                 <>
-                    <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберете номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
+                    <h2 className={`numbers-for-main__title ${darkTheme ? 'numbers-for-main__title_dark' : ''}`}>Выберите номер или&nbsp;<br /><span className='numbers-for-main__title_link'>переходите со своим</span></h2>
                     <div className={`numbers-for-main__card`}>
                         <div className={`numbers-for-main__card-row`}>
                             <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_bronz`}>Бронзовый</h2>
@@ -873,7 +873,7 @@ function NumbersForMain(props) {
                     </div>
                     <div className={`numbers-for-main__card`}>
                         <div className={`numbers-for-main__card-row`}>
-                            <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_silver`}>Серебрянный</h2>
+                            <h2 className={`numbers-for-main__card-name numbers-for-main__card-name_type_silver`}>Серебряный</h2>
                             <div className={`numbers-for-main__card-price`}>
                                 <p className={`numbers-for-main__card-price_last`}>5 000 ₽</p>
                                 <p className={`numbers-for-main__card-price_now ${darkTheme ? 'numbers-for-main__category-price_dark' : ''}`}>300 ₽/мес</p>

@@ -17,16 +17,16 @@ export default function Section(props) {
   const [smsWrap, setSmsWrap] = useState(false);
   const [internetWrap, setInternetWrap] = useState(false);
   const [positionValue, setPositionValue] = useState(0);
-  
+
   function handlePositionChange(position) {
     setPositionValue(position)
   }
   const payload = {
     position: positionValue,
     tariffId: props.selectedTrariffId,
-    switches: {"Безлимитный 4G": false, "Раздача интернета": false}
+    switches: { "Безлимитный 4G": false, "Раздача интернета": false }
   }
-  function handleEsimBuy(){
+  function handleEsimBuy() {
     console.log("ESIM BUY TRIGGERD")
   }
   return (
@@ -68,7 +68,7 @@ export default function Section(props) {
                   <img className={`tarrif-page__esim-icon`} src={esimQr} alt="eSIM" />
                   <div className={`tarrif-page__esim-button-container`}>
                     <p className={`tarrif-page__esim-text`}>Подключите с eSIM!</p>
-                    <button onClick={()=>handleEsimBuy()} className={`tarrif-page__esim-button`}>
+                    <button onClick={() => handleEsimBuy()} className={`tarrif-page__esim-button`}>
                       <p className={`tarrif-page__esim-button-text`}>Подключить</p>
                       <svg className={`tarrif-page__esim-button-arrow`} width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5607 12.5607C13.1464 11.9749 13.1464 11.0251 12.5607 10.4393L3.01472 0.893396C2.42894 0.30761 1.47919 0.307609 0.893401 0.893396C0.307614 1.47918 0.307614 2.42893 0.893401 3.01472L9.37868 11.5L0.893396 19.9853C0.307609 20.5711 0.307609 21.5208 0.893396 22.1066C1.47918 22.6924 2.42893 22.6924 3.01472 22.1066L12.5607 12.5607ZM10.5 13L11.5 13L11.5 10L10.5 10L10.5 13Z" fill="#121212" />
@@ -85,7 +85,7 @@ export default function Section(props) {
                     <h2>Звонки</h2>
                     <div className={`blok-data__info ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                       <div className="d-i">
-                        <i>Звонки на все номера России (мин.)&emsp;</i>
+                        <i>Звонки на все номера России (мин)&emsp;</i>
                         <span>&#183;&emsp;</span> <span> {props.tariff.positions[positionValue].min}</span>
                       </div>
                       <div className="select-block">
@@ -103,19 +103,19 @@ export default function Section(props) {
                         {callWrap && (
                           <div onClick={() => setCallWrap(!callWrap)} className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
                             <h3>
-                              Тарификация сверх включенных в пакет объемов услуг
+                              Тарификация сверхвключённых  в пакет объемов услуг
                             </h3>
                             <p>
                               <i>
                                 Исходящие вызовы в сети «Билайн» на номера всех
-                                операторов всей РФ, кроме Билайн (за 1 минуту) -&ensp;<span>{` 2 ₽`}</span>
+                                операторов на территории РФ, кроме Билайн (за 1 минуту) —&ensp;<span>{`2 ₽`}</span>
                               </i>
 
                             </p>
                             <p>
                               <i>
                                 Исходящие вызовы в сети «Билайн» на все номера
-                                «Билайн» (за 1 минуту) -&ensp;<span>{` 0 ₽`}</span>
+                                «Билайн» (за 1 минуту) —&ensp;<span>{`0 ₽`}</span>
                               </i>
 
                             </p>
@@ -145,16 +145,16 @@ export default function Section(props) {
                         {smsWrap && (
                           <div onClick={() => setSmsWrap(!smsWrap)} className={`select-block__wrap ${props.darkTheme ? 'select-block__wrap_dark' : ''}`}>
                             <h3>
-                              Тарификация сверх включенных в пакет объемов услуг
+                              Тарификация сверхвключённых в пакет объемов услуг
                             </h3>
                             <p>
                               <i>
-                                SMS в сети «Билайн» (за 1 SMS) -&ensp;<span>{` 2 ₽`}</span>
+                                SMS в сети «Билайн» (за 1 SMS) —&ensp;<span>{`2 ₽`}</span>
                               </i>
                             </p>
                             <p>
                               <i>
-                                MMS в сети «Билайн» (за 1 MMS) -&ensp;<span>{` 6,45 ₽`}</span>
+                                MMS в сети «Билайн» (за 1 MMS) —&ensp;<span>{`6,45 ₽`}</span>
                               </i>
 
 
@@ -172,12 +172,11 @@ export default function Section(props) {
                 <h2>Интернет</h2>
                 <div className={`blok-data__info d-int-wrap ${props.darkTheme ? 'blok-data__info_dark' : ''}`}>
                   <div className="d-i">
-                    <i>Мобильный интернет (Гб) по РФ&emsp;</i><span>&#183;&emsp;</span> <span>{props.tariff.positions[positionValue].gb === Infinity ? <CgInfinity /> : props.tariff.positions[positionValue].gb}</span>
+                    <i>Мобильный интернет (гб) по РФ&emsp;</i><span>&#183;&emsp;</span> <span>{props.tariff.positions[positionValue].gb === Infinity ? <CgInfinity /> : props.tariff.positions[positionValue].gb}</span>
                   </div>
                   <div className="d-i">
                     <i>Безлимит на интернет-сервисы&emsp;</i><span>&#183;&emsp;</span> <span>
-                      Безлимит на мессенджеры, соц. сети, карты, почтовые сервисы,
-                      музыка, видео
+                      мессенджеры, соц. сети, карты, почтовые сервисы, музыка, видео
                     </span>
                   </div>
                 </div>
@@ -197,13 +196,13 @@ export default function Section(props) {
                       <h3>Дополнительные услуги</h3>
                       <p>
                         <i>
-                          Раздача интернета на другие устройства -&ensp;<span>{isNumber(props.tariff.modem) ? ` ${props.tariff.modem} ₽` : ` ${props.tariff.modem}`}</span>
+                          Раздача интернета на другие устройства —&ensp;<span>{isNumber(props.tariff.modem) ? `${props.tariff.modem} ₽` : `${props.tariff.modem}`}</span>
                         </i>
 
                       </p>
                       <p>
                         <i>
-                          Безлимитный интернет 4G -&ensp;<span>{isNumber(props.tariff.infinitInternet) ? ` ${props.tariff.infinitInternet} ₽` : ` ${props.tariff.infinitInternet}`}</span>
+                          Безлимитный интернет 4G —&ensp;<span>{isNumber(props.tariff.infinitInternet) ? `${props.tariff.infinitInternet} ₽` : `${props.tariff.infinitInternet}`}</span>
                         </i>
 
                       </p>
