@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import MobileNav from "../components/MobileNav";
 import Menu from "../components/Menu";
+import { useDispatch, useSelector } from "react-redux";
+import { DELETE_AUTH } from "./utils";
 
 const Wrappper = styled.nav`
 margin: 14px 0 0 ;
@@ -132,21 +134,19 @@ const MenuBtn = styled.img`
     }
 `;
 
-const handleUserTokens = (tokens) => {
-    
-}
-
 export default function Nav() {
-    const { darkTheme, setLoginForm, userSession, setUserSession, isMobile } = useContext(GlobalContext);
+    const { darkTheme, setLoginForm, isMobile } = useContext(GlobalContext);
     const [showMobileNav, setShowMobileNav] = useState(false);
+    const {accessToken} = useSelector(store => store.auth);
     const { pathname } = useLocation();
+    const dispatch = useDispatch();
     const [logged_in, setLogged_in] = useState(false);
     useEffect(() => {
-        setLogged_in(pathname === "/dashboard" && !!userSession);
-    }, [pathname, userSession]);
+        setLogged_in(pathname === "/dashboard" && accessToken);
+    }, [pathname, accessToken]);
 
     const handleButton = () => {
-        if (logged_in) { setUserSession(null); setLoginForm(false); }
+        if (logged_in) { dispatch({type: DELETE_AUTH}); setLoginForm(false); }
         else setLoginForm(true);
     }
 
@@ -159,7 +159,7 @@ export default function Nav() {
             <a id="helpCenter" href="tel:+7 495 795 95 66">+7 495 795 95 66</a>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
-                <DashboardBtn as={Link} to={logged_in ? "/" : userSession ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
+                <DashboardBtn as={Link} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
             <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
             <AnimatePresence>

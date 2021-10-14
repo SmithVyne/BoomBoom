@@ -14,25 +14,6 @@ export function useLocalStorage(name) {
     return [state, setItem]
 }
 
-const cookieValue = (name) => (
-    document.cookie
-    .split('; ')
-    .find(row => row.startsWith(`${name}=`))
-    .split('=')[1]
-)
-
-export function useCookieStorage(name) {
-    const [state, setstate] = useState(cookieValue(name));
-    const setItem = (value, maxAge) => {
-        if(typeof value === "function") {
-            value = value(cookieValue(name))
-        }
-        document.cookie = `${name}=${value}; max-age=${maxAge}; SameSite=Strict; Secure`
-        setstate(value)
-    }
-    return [state, setItem]
-}
-
 export function useEscapeKey (updaterFunction) {
     useEffect(() => {
         const ifEscape = (e) => e.key === "Escape" && updaterFunction(false)

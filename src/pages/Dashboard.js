@@ -7,7 +7,7 @@ import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
-import {Fetcher, percentage, replacePoints, USER_INFO } from "../globals/utils";
+import {CREATE_AUTH, Fetcher, percentage, replacePoints, USER } from "../globals/utils";
 import html2pdf from "html2pdf.js";
 import { spacer } from "../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
@@ -236,14 +236,18 @@ const Name = styled.div`
     }
 `
 
-const getDashboard = (ctn, accessToken) => Promise.all([
-    Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
-    Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, accessToken)
-])
+const getDashboard = (ctn, accessToken, dispatch) => { 
+    Promise.all([
+        Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
+        Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken})
+    ])
+    .then(([userInfo, userData]) => dispatch({type: USER, user: {userInfo, userData}}))
+}
 
 export default function Dashboard() {
-    const {darkTheme, userSession, setLoginForm} = useContext(GlobalContext);
-    const {userInfo, userData} = useSelector(store => store.auth);
+    const {darkTheme, setLoginForm} = useContext(GlobalContext);
+    const {userInfo, userData} = useSelector(store => store.auth.user);
+    const {accessToken, refreshToken} = useSelector(store => store.auth);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
@@ -253,12 +257,23 @@ export default function Dashboard() {
     console.log(userInfo, userData)
 
     useEffect(() => {
-        if (userSession) {
-            getDashboard(ctn, userSession.accessToken)
-            .then(([userInfo, userData]) => dispatch({type: USER_INFO, user: {userInfo: userInfo.result, userData: userData.result}}))
-            .catch((err) => console.warn(err))
-        } else setLoginForm(true)
-    }, [userSession, dispatch, setLoginForm, ctn]);
+        if (accessToken) {
+            console.log("accessToken")
+            console.log(accessToken)
+            getDashboard(ctn, accessToken, dispatch)
+        } 
+        else if(refreshToken) {
+            console.log("refreshToken")
+            Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
+                .then(result => {
+                    console.log("accessToken", "+", "refreshToken")
+                    console.log(result)
+                    const {accessToken, refreshToken} = result;
+                    dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
+                })
+        } 
+        else setLoginForm(true)
+    }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
         html2pdf().from(detailsRef.current).save("Детализация.pdf");

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
-import {Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
+import {CREATE_AUTH, Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import { FaCheck } from "react-icons/fa";
 import {useEscapeKey, useLocalStorage} from "../hooks";
@@ -141,7 +141,8 @@ const handlePhoneForApi = (number) => {
 }
 
 export default function LoginForm() {
-    const {darkTheme, setLoginForm, userSession, setUserSession} = useContext(GlobalContext);
+    const {darkTheme, setLoginForm} = useContext(GlobalContext);
+    const {accessToken} = useSelector(store => store.auth);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
@@ -149,8 +150,6 @@ export default function LoginForm() {
     const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
     const [, saveCtn] = useLocalStorage("ctn");
-
-    console.log(apiUsername)
     
     const body = {
         method: "login",
@@ -160,12 +159,12 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        Fetcher(body)
-        .then(data => {
-            if(data.error) {dispatch({type: LOGIN_FAILED})}
-            else setUserSession(data.result); saveCtn(apiUsername);
+        Fetcher(body, {errorDispatch: () => dispatch({type: LOGIN_FAILED})})
+        .then(result => {
+            const {accessToken, refreshToken} = result;
+            dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
+            saveCtn(apiUsername)
         })
-        .catch(err => console.log(err))
     }
 
     const handleGetPassword = (e) => {
@@ -175,7 +174,7 @@ export default function LoginForm() {
     }
     return (
         <>
-        {userSession ? 
+        {accessToken ? 
             <Redirect to="/dashboard" /> :
             <Wrapper
             initial={{opacity: 0}}

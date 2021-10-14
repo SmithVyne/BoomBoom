@@ -22,10 +22,13 @@ import telephone from "../assets/images/services/telephone.png"
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
 export const GET_PASSWORD = "GET_PASSWORD";
-export const USER_INFO = "USER_INFO";
 export const SHOW_MODAL = "SHOW_MODAL";
 export const HIDE_MODAL = "HIDE_MODAL";
 export const BUY_NUMBER = "BUY_NUMBER";
+export const USER = "USER";
+export const CREATE_AUTH = "CREATE_AUTH";
+export const DELETE_AUTH = "DELETE_AUTH";
+
 export const CATEGORIES = {
     1: {name: "Бронзовый", bg: "#CD7F32", rentPrice: "Бесплатно!", purchasePrice: "1000 руб."},
     2: {name: "Серебряный", bg: "#C0C0C0", rentPrice: "300 руб.", purchasePrice: "5000 руб."},
@@ -40,7 +43,8 @@ const getAuth = (accessToken) => {
     }
     else return {}
 }
-export async function Fetcher (body, accessToken) {
+export async function Fetcher (body, options = {}) {
+    const {accessToken, errorDispatch} = options;
     return  fetch(BASE_URL, {
                 method: "POST",
                 headers: {
@@ -51,6 +55,16 @@ export async function Fetcher (body, accessToken) {
                 body: JSON.stringify(body)
             })
             .then(res => res.json())
+            .then(data => {
+                if(data.error) {
+                    if(errorDispatch) {
+                        errorDispatch()
+                    } else {
+                        throw data.error
+                    }
+                } else return data.result
+            })
+            .catch(err => console.warn(err))
 }
 
 export const replacePoints = (text) => text.toString().replace(".", ",");

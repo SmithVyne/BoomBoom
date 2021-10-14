@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../App';
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,6 +8,8 @@ import footer_whatsapp from '../../assets/images/footer-whatsapp.svg'
 import footer_telegram from '../../assets/images/footer-telegram.svg'
 import footer_instagram from '../../assets/images/footer-instagram.svg'
 import './Footer.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_AUTH } from '../utils';
 
 export const FooterSocials = () => (
     <div className={`footer__socials`}>
@@ -27,8 +29,22 @@ export const FooterSocials = () => (
 )
 
 export default function Footer() {
-    const { darkTheme } = useContext(GlobalContext);
+    const { darkTheme, setLoginForm } = useContext(GlobalContext);
     const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+    const {accessToken} = useSelector(store => store.auth);
+    const { pathname } = useLocation();
+    const dispatch = useDispatch();
+    const [logged_in, setLogged_in] = useState(false);
+
+    useEffect(() => {
+        setLogged_in(pathname === "/dashboard" && accessToken);
+    }, [pathname, accessToken]);
+
+    const handleButton = () => {
+        if (logged_in) { dispatch({type: DELETE_AUTH}); setLoginForm(false); }
+        else setLoginForm(true);
+    }
+    
     function handleResize() {
         setScreenWidth(window.innerWidth)
         window.removeEventListener('resize', handleResize);
@@ -39,15 +55,9 @@ export default function Footer() {
             window.removeEventListener('resize', handleResize);
         };
     });
+    
+    
 
-
-    const { setLoginForm, userSession, setUserSession } = useContext(GlobalContext);
-    const { pathname } = useLocation();
-    const logged_in = pathname === "/dashboard" && userSession;
-    const handleButton = () => {
-        if (logged_in) setUserSession(null)
-        else setLoginForm(true)
-    }
     return (
         <footer className={`footer ${darkTheme ? 'footer_dark' : ''}`}>
             {screenWidth > 1155 ?
@@ -97,7 +107,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>
@@ -183,7 +193,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>
