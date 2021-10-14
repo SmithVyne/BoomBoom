@@ -26,7 +26,7 @@ export default function Esim(props) {
                     <div className={`esim__first-column`}>
                         <div className={`esim__about-container`}>
                             <img className={`esim__about-container-img`} alt="Телефон" src={phone} />
-                            <p className={`esim__about-container-text`}>eSIM — крошечная микросхема, которая полностью заменяет пластиковую сим-карту</p>
+                            <p className={`esim__about-container-text`}>eSIM — крошечная микросхема, которая полностью заменяет пластиковую SIM-карту</p>
                             <button onClick={()=> handleBuyEsim()} className={`esim__about-container-button`}>
                                 <p className={`esim__about-container-button-text`}>Оформить eSIM</p>
                                 <svg className={`esim__about-container-button-arrow`} width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,7 @@ export default function Esim(props) {
                         <div className={`esim__propositions ${darkTheme? 'esim__propositions_dark' : ''}`}>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Огонь" src={fire} />
-                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
+                                <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Оформление<br />eSIM бесплатно</p>
                             </div>
                             <div className={`esim__proposition`}>
                                 <img className={`esim__proposition-img`} alt="Песочные часы" src={hourglass} />
@@ -91,7 +91,7 @@ export default function Esim(props) {
                     <div className={`esim__about-container`}>
                         <img className={`esim__about-container-img`} alt="Телефон" src={phone} />
                         <div>
-                            <p className={`esim__about-container-text`}>eSIM — крошечная микросхема, которая полностью заменяет пластиковую сим-карту</p>
+                            <p className={`esim__about-container-text`}>eSIM — крошечная микросхема, которая полностью заменяет пластиковую SIM-карту</p>
                             <button onClick={()=> handleBuyEsim()} className={`esim__about-container-button`}>
                                 <p className={`esim__about-container-button-text`}>Оформить eSIM</p>
                                 <svg className={`esim__about-container-button-arrow`} width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@ export default function Esim(props) {
                     <div className={`esim__propositions ${darkTheme? 'esim__propositions_dark' : ''}`}>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Огонь" src={fire} />
-                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Получение<br />за 5 минут</p>
+                            <p className={`esim__proposition-text ${darkTheme? 'esim__proposition-text_dark' : ''}`}>Оформление<br />eSIM бесплатно</p>
                         </div>
                         <div className={`esim__proposition`}>
                             <img className={`esim__proposition-img`} alt="Песочные часы" src={hourglass} />
