@@ -259,7 +259,6 @@ export default function Dashboard() {
     useEffect(() => {
         if (accessToken) {
             console.log("accessToken")
-            console.log(accessToken)
             getDashboard(ctn, accessToken, dispatch)
         } 
         else if(refreshToken) {
@@ -267,12 +266,11 @@ export default function Dashboard() {
             Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
                 .then(result => {
                     console.log("accessToken", "+", "refreshToken")
-                    console.log(result)
                     const {accessToken, refreshToken} = result;
                     dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
                 })
         } 
-        else setLoginForm(true)
+        else {setLoginForm(true); console.log("duh")}
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {

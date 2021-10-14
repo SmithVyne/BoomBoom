@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -31,18 +31,15 @@ export const FooterSocials = () => (
 export default function Footer() {
     const { darkTheme, setLoginForm } = useContext(GlobalContext);
     const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
-    const {accessToken} = useSelector(store => store.auth);
+    const {accessToken, refreshToken} = useSelector(store => store.auth);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
-    const [logged_in, setLogged_in] = useState(false);
-
-    useEffect(() => {
-        setLogged_in(pathname === "/dashboard" && accessToken);
-    }, [pathname, accessToken]);
+    const logged_in = pathname === "/dashboard" && accessToken
 
     const handleButton = () => {
         if (logged_in) { dispatch({type: DELETE_AUTH}); setLoginForm(false); }
-        else setLoginForm(true);
+        else if(refreshToken) {setLoginForm(false) }
+        else setLoginForm(true)
     }
     
     function handleResize() {
@@ -107,7 +104,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>
@@ -193,7 +190,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>

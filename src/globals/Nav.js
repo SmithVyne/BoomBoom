@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
@@ -137,17 +137,15 @@ const MenuBtn = styled.img`
 export default function Nav() {
     const { darkTheme, setLoginForm, isMobile } = useContext(GlobalContext);
     const [showMobileNav, setShowMobileNav] = useState(false);
-    const {accessToken} = useSelector(store => store.auth);
+    const {accessToken, refreshToken} = useSelector(store => store.auth);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
-    const [logged_in, setLogged_in] = useState(false);
-    useEffect(() => {
-        setLogged_in(pathname === "/dashboard" && accessToken);
-    }, [pathname, accessToken]);
+    const logged_in = pathname === "/dashboard" && accessToken
 
     const handleButton = () => {
         if (logged_in) { dispatch({type: DELETE_AUTH}); setLoginForm(false); }
-        else setLoginForm(true);
+        else if(refreshToken) {setLoginForm(false) }
+        else setLoginForm(true)
     }
 
     return (
@@ -159,7 +157,7 @@ export default function Nav() {
             <a id="helpCenter" href="tel:+7 495 795 95 66">+7 495 795 95 66</a>
             <div className="nav-right">
                 {isMobile || <ThemeSwitch />}
-                <DashboardBtn as={Link} to={logged_in ? "/" : accessToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
+                <DashboardBtn as={Link} to={logged_in ? "/" : refreshToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</DashboardBtn>
             </div>
             <MenuBtn onClick={() => setShowMobileNav(true)} src={darkTheme ? burgerMenuWhite : burgerMenu} />
             <AnimatePresence>
