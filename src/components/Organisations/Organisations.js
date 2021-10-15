@@ -153,6 +153,7 @@ export default function Organisations() {
         <section className={`organisations`}>
             <MetaTags>
                 <title>{selectedCategory === 'small-biz' ? 'Малый бизнес' : ''}{selectedCategory === 'big-biz' ? 'Крупный бизнес' : ''}{selectedCategory === 'gos-sector' ? 'Госсектор' : ''}</title>
+                <meta property="og:title" content={`Boom - ${selectedCategory === 'small-biz' ? 'Малый бизнес' : ''}${selectedCategory === 'big-biz' ? 'Крупный бизнес' : ''}${selectedCategory === 'gos-sector' ? 'Госсектор' : ''}`} />
             </MetaTags>
             <div className={`organisations__head-container`}>
                 <img className={`organisations__head-logo`} src={logo} alt="Услуги" />

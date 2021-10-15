@@ -36,6 +36,7 @@ export default function TariffePage() {
     <div>
       <MetaTags>
         <title>Тариф {selectedTrariff.title ? selectedTrariff.title : 'Неизвестный тариф'}</title>
+        <meta property="og:title" content={`Boom - Тариф ${selectedTrariff.title ? selectedTrariff.title : 'Неизвестный тариф'}`} />
       </MetaTags>
       <Header darkTheme={darkTheme} tariff={selectedTrariff} />
       <Section darkTheme={darkTheme} tariff={selectedTrariff} selectedTrariffId={selectedTrariffId} />

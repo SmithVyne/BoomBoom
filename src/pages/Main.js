@@ -100,6 +100,7 @@ export default function Main() {
         <>
             <MetaTags>
                 <title>Главная</title>
+                <meta property="og:title" content="Boom - Главная" />
             </MetaTags>
             {isCityPopupChecked ? <></> : <CityPopup isCityPopupVisible={isCityPopupVisible} handleCityPopup={handleCityPopup} />}
             <Banner />

@@ -13,6 +13,7 @@ export default function AboutCompany() {
         <section className={`about-company`}>
             <MetaTags>
                 <title>Про компанию</title>
+                <meta property="og:title" content="Boom - Про компанию" />
             </MetaTags>
             <h2 className={`about-company__title ${darkTheme ? 'about-company__text_dark' : ''}`}>Про компанию</h2>
             <div className={`about-company__main-container ${darkTheme ? 'about-company__container_dark' : ''}`}>

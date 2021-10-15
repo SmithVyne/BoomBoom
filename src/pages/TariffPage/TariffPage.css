@@ -1,3 +1,42 @@
+
+
+
+
+
+.tariffs__title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 63px;
+    display: flex;
+    align-items: center;
+    margin: 36px 0 24px 0;
+    color: #121212;
+}
+
+.tariffs__text_dark {
+    color: #FFFFFF;
+}
+
+
+@media screen and (max-width: 865px) {
+    .tariffs__title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 29px;
+    }
+    
+}
+@media screen and (max-width: 565px) {
+    .tariffs__title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+}
+
 .tariffs {
     padding: 48px 0 74px;
 }

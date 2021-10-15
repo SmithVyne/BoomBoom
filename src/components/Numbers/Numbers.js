@@ -786,6 +786,7 @@ export default function Numbers(props) {
         <>
             <MetaTags>
                 <title>{selectedButton === "все" ? 'Все номера': ''}{selectedButton === "перенести" ? 'Перенести свой': ''}{selectedButton === "esim" ? 'Подключить eSIM': ''}</title>
+                <meta property="og:title" content={`Boom - ${selectedButton === "все" ? 'Все номера': ''}${selectedButton === "перенести" ? 'Перенести свой': ''}${selectedButton === "esim" ? 'Подключить eSIM': ''}`} />
             </MetaTags>
             <div className={`numbers__headtitle`}>
                 <img className={`numbers__headtitle-icon`} src={numbersIcon} alt="Телефон" />

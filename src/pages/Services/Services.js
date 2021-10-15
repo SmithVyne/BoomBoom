@@ -142,6 +142,7 @@ export default function Services() {
         <section className={`services`}>
             <MetaTags>
                 <title>{selectedType === "paid" ? 'Платные услуги' : ''}{selectedType === "free" ? 'Бесплатные услуги' : ''}{selectedType === "roaming" ? 'Роуминг' : ''}</title>
+                <meta property="og:title" content={`Boom - ${selectedType === "paid" ? 'Платные услуги' : ''}${selectedType === "free" ? 'Бесплатные услуги' : ''}${selectedType === "roaming" ? 'Роуминг' : ''}`} />
             </MetaTags>
             <Wrapper>
                 <div className={`services__head-container`}>
