@@ -100,7 +100,7 @@ const DashboardBtn = styled(motion.button)`
     justify-content: center;
     text-align: center;   
     border: none;
-    padding: 0 24px 5px;
+    padding: 0 24px 0;
     cursor: pointer;
     width: max-content;
     @media(max-width: 1325px) {
@@ -114,7 +114,7 @@ const DashboardBtn = styled(motion.button)`
         font-size: 16px;
     }
     @media(max-width: 400px) {
-        padding: 0 10px 5px;
+        padding: 0 10px 0;
         font-weight: 500;
         font-size: 16px;
         line-height: 100%;

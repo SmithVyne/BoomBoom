@@ -24,6 +24,7 @@ export default function TariffPage() {
         <section className={`tariffs`}>
             <MetaTags>
                 <title>{selectedType === "all" ? 'Все тарифы' : ''}{selectedType === "phone" ? 'Тарифы для телефонов' : ''}{selectedType === "another-devices" ? 'Тарифы для устройств' : ''}</title>
+                <meta property="og:title" content={`Boom - ${selectedType === "all" ? 'Все тарифы' : ''}${selectedType === "phone" ? 'Тарифы для телефонов' : ''}${selectedType === "another-devices" ? 'Тарифы для устройств' : ''}`} />
             </MetaTags>
             <div className={`tariffs__head-container`}>
                 <img className={`tariffs__head-logo`} src={headBox} alt="Тарифы" />
