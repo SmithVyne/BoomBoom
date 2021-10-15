@@ -470,7 +470,7 @@ const BuyNumbersDropdown = memo(({toggleOpen, setToggleOpen, modalPosition, setM
     
     return (
         <div className={`buyNumbersDropdown ${toggleOpen ? 'alignTop' : ''}`} >
-            <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onMouseLeave={setToggleOpen} onClick={setToggleOpen}>
+            <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onClick={setToggleOpen}>
                 <DownArrow classname="dropIcon" />
                 <span className="top">
                     {(typeof selectedTariff === "number") ? <img className="tariffIcon" alt="tariffIcon" src={tariffTypesArray[selectedTariff].icon} /> : null}
@@ -589,7 +589,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         transition={{duration: 0.3}}
         submit={submit} service={service}
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
-            <Modal onClick={(e)=>e.stopPropagation()}>
+            <Modal onClick={(e)=>{e.stopPropagation(); setClickedNumber({})}}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
                 { submit ? 
                     <ThankYouModal /> : 
@@ -612,7 +612,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                                 <p>Выберете тарифы для номера</p>
                                 <div className="ModalNumbers">
                                     {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map((number) => (
-                                        <BuyNumbersDropdown key={number.ctn} setBoughtNumbers={setBoughtNumbers} buy={buy} number={number} modalPosition={modalPosition} setModalPosition={setModalPosition} setDeletedNumbers={setDeletedNumbers} toggleOpen={number.ctn === clickedNumber.ctn} setToggleOpen={() => openCloseNumbers(number)} />
+                                        <BuyNumbersDropdown key={number.ctn} setBoughtNumbers={setBoughtNumbers} buy={buy} number={number} modalPosition={modalPosition} setModalPosition={setModalPosition} setDeletedNumbers={setDeletedNumbers} toggleOpen={number.ctn === clickedNumber.ctn} setToggleOpen={(e) => {e.stopPropagation(); openCloseNumbers(number)}} />
                                     ))}
                                 </div>
                             </section>

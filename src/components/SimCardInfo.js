@@ -326,7 +326,7 @@ function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, 
                     <small>Итоговая абонентская плата в месяц:</small>
                     {totalPrice} ₽ / мес 
                 </div>}
-                <small class="свой_номер">Введите свой номер телефона</small>
+                <small className="свой_номер">Введите свой номер телефона</small>
                 <span>
                     {(selected === 0 || !!service) &&
                         <Cleave className="omo" options={{
