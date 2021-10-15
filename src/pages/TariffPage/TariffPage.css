@@ -18,7 +18,7 @@
     font-family: Circe;
     font-style: normal;
     font-weight: bold;
-    font-size: 80px;
+    font-size: 60px;
     line-height: 100%;
     margin: 0;
     color: #121212;
@@ -26,7 +26,8 @@
 
 .tariffs__head-buttons {
     display: flex;
-    margin-top: 44px;
+
+    margin: 44px 0 36px;
     flex-wrap: wrap;
     z-index: 3;
 }
@@ -52,12 +53,12 @@
 }
 
 .tariffs__head-button-text {
+    margin: 0;
     font-family: Circe;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 130%;
-    margin: 0;
     /* identical to box height, or 26px */
     display: flex;
     align-items: center;
@@ -68,17 +69,7 @@
     color: #FFFFFF;
 }
 
-.tariffs__title {
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 52px;
-    line-height: 63px;
-    display: flex;
-    align-items: center;
-    margin: 36px 0 24px 0;
-    color: #121212;
-}
+
 
 .tariffs__text_dark {
     color: #FFFFFF;
@@ -88,7 +79,7 @@
     color: #FFFFFF !important;
 }
 
-@media screen and (max-width: 865px) {
+/* @media screen and (max-width: 965px) {
     .tariffs__title {
         font-style: normal;
         font-weight: 600;
@@ -96,7 +87,7 @@
         line-height: 29px;
     }
     .tariffs__head-buttons {
-        margin-top: 28px;
+        margin: 28px 0 32px;
     }
     .tariffs__head-title {
         font-style: normal;
@@ -129,7 +120,54 @@
         line-height: 100%;
     }
     .tariffs__head-buttons {
-        margin-top: 4px;
+        margin: 8px 0 40px;
     }
 
+} */
+
+
+
+
+
+
+
+@media (max-width: 680px) {
+    .tariffs__head-button {
+        padding: 8px 12px;
+        height: min-content;
+    }
+    .tariffs__head-button-text {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 130%;
+    }
+}
+
+@media (max-width: 581px) {
+
+    .tariffs__headtitle {
+        margin-top: 40px;
+        align-items: center;
+    }
+    .tariffs__head-logo {
+        height: 72px;
+        width: 72px;
+        margin: 0 8px 0 0;
+    }
+    .tariffs__head-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .tariffs__head-buttons {
+        margin: 26px 0;
+    }
+    .tariffs__head-button {
+        margin-top: 8px ! important;
+    }
 }
