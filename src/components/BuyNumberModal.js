@@ -61,8 +61,13 @@ const Modal = styled.div`
         padding: 16px;
     }
     & h1 {
+        font-family: Circe, Arial, sans-serif;
         font-weight: bold;
         font-size: 32px;
+        @media(max-width: 601px) {
+            margin-top: 40px;
+            font-size: 28px;
+        }
     }
     & .options {
         display: flex;
@@ -84,6 +89,8 @@ const Modal = styled.div`
     section {
         margin-bottom: 44px;
         p {
+            font-family: Circe, Arial, sans-serif;
+            font-size: 20px;
             margin-bottom: 15px; 
             color: inherit;
         }
@@ -154,12 +161,19 @@ const Modal = styled.div`
         flex-direction: column;
         align-items: flex-start;
         span {
+            font-family: Circe, Arial, sans-serif;
             font-size: 20px;
             color: #010101AD;
         }
         h2 {
+            font-family: Circe, Arial, sans-serif;
+            margin-bottom: 24px;
             font-size: 32px;
             font-weight: bold;
+
+            @media(max-width: 601px) {
+                font-size: 28px;
+            }
         }
     }
 `
@@ -607,7 +621,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                         service ? 
                         <>
                             <div className="servicesModal">
-                                {service.eSim || <span>Подключение услуги</span>}
+                                {(service.eSim || <span>Подключение услуги</span>)}
                                 <h2>{service.eSim ? "Подключение eSim" : service.title}</h2>
                             </div>
                         </> :
