@@ -538,8 +538,13 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             contract = {...contract, boughtNumbers}
         } else if(tariff) {
             const selectedNumber = {...chosenNumber, price: totalPrice}
-            contract = {...contract, tariff, selectedNumber, 
-                productionMethod: options[selectedOption], ...modalSwitches }
+            contract = {
+                    ...contract, tariff, selectedNumber, 
+                    tariffOptions: `${tariff.positions[modalPosition].min}мин
+                        ${tariff.positions[modalPosition].gb === Infinity ? "Бесплатно" : tariff.positions[modalPosition].gb}гб 
+                        ${tariff.positions[modalPosition].sms}смс`,
+                    productionMethod: options[selectedOption],
+                    ...modalSwitches }
         } else if(service) {
             handleServiceSubmit(contract.phoneNumber)
         }

@@ -101,13 +101,13 @@ const Bottom = styled.div`
         gap: 16px;
     }
     & button {
-        background: ${({enableButton}) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
+        background: ${({enableButton, service}) => (enableButton || service) ? "#010101" : "rgba(1, 1, 1, 0.7)"};
         width: 300px;
         height: 60px;
         border-radius: 60px;
         border: none;
         color: white;
-        cursor: ${({enableButton}) => enableButton ? "pointer" : "not-allowed"};
+        cursor: ${({enableButton, service}) => (enableButton || service) ? "pointer" : "not-allowed"};
         svg {
             transform: rotate(-90deg)
         }
