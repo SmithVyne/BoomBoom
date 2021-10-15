@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import MetaTags from 'react-meta-tags';
-import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux"
+import { SHOW_MODAL } from "../../globals/utils"
 import { GlobalContext } from '../../App';
 import { useParams, useHistory } from 'react-router-dom';
 import './Organisations.css';
@@ -140,40 +141,45 @@ export default function Organisations() {
         setSelectedCategory(category)
     }
 
+    const dispatch = useDispatch();
+    function handleSubmit(service) {
+        if (!service.title) {
+            service = { desc: service.text }
+        }
+        service.type = "organisations"
+        dispatch({ type: SHOW_MODAL, payload: { service } })
+    }
     return (
-        <>
+        <section className={`organisations`}>
             <MetaTags>
-                <title>{selectedCategory === 'small-biz' ? 'Малый бизнес': ''}{selectedCategory === 'big-biz' ? 'Крупный бизнес': ''}{selectedCategory === 'gos-sector' ? 'Госсектор': ''}</title>
+                <title>{selectedCategory === 'small-biz' ? 'Малый бизнес' : ''}{selectedCategory === 'big-biz' ? 'Крупный бизнес' : ''}{selectedCategory === 'gos-sector' ? 'Госсектор' : ''}</title>
             </MetaTags>
-            <div className="header-t base-container">
-                <div className="organisations-wrap">
-                    <div className="head-title">
-                        <Link className="logo-t" to="/">
-                            <img src={logo} alt="Логотип" />
-                        </Link>
-                        <h1 className={`title ${darkTheme ? 'title_dark' : ''}`}>Решения для организаций</h1>
-                    </div>
-
-                </div>
+            <div className={`organisations__head-container`}>
+                <img className={`organisations__head-logo`} src={logo} alt="Услуги" />
+                <h2 className={`organisations__head-title ${darkTheme ? 'organisations__text_dark' : ''}`}>Решения для<br />организаций</h2>
             </div>
-            <section className="base-container content-style">
+            <div className={`organisations__head-buttons`}>
+                <button onClick={() => {
+                    history.push(':small-biz')
+                    handleCategoryChange('small-biz')
+                }} className={`organisations__head-button ${selectedCategory === "small-biz" ? "organisations__head-button_active" : ''} `}>
+                    <p className={`organisations__head-button-text ${darkTheme ? 'organisations__head-button-text_dark' : ''} ${selectedCategory === "small-biz" ? "organisations__head-button-text_active" : ''} `}>Малый бизнес</p>
+                </button>
+                <button onClick={() => {
+                    history.push(':big-biz')
+                    handleCategoryChange('big-biz')
+                }} className={`organisations__head-button ${selectedCategory === "big-biz" ? "organisations__head-button_active" : ''} `}>
+                    <p className={`organisations__head-button-text  ${darkTheme ? 'organisations__head-button-text_dark' : ''} ${selectedCategory === "big-biz" ? "organisations__head-button-text_active" : ''}`}>Крупный бизнес</p>
+                </button>
+                <button onClick={() => {
+                    history.push(':gos-sector')
+                    handleCategoryChange('gos-sector')
+                }} className={`organisations__head-button ${selectedCategory === "gos-sector" ? "organisations__head-button_active" : ''} `}>
+                    <p className={`organisations__head-button-text ${darkTheme ? 'organisations__head-button-text_dark' : ''} ${selectedCategory === "gos-sector" ? "organisations__head-button-text_active" : ''} `}>Госсектор</p>
+                </button>
+            </div>
+            <div className="base-container content-style">
                 <div className="organisations-wrap">
-
-                    <div className="btn-group d-flex">
-                        <button onClick={() => {
-                            history.push(':small-biz')
-                            handleCategoryChange('small-biz')
-                        }
-                        } className={`btn ${selectedCategory === 'small-biz' ? 'btn_active' : ''} ${darkTheme ? 'btn_dark' : ''}`}>Малый бизнес</button>
-                        <button onClick={() => {
-                            history.push(':big-biz')
-                            handleCategoryChange('big-biz')
-                        }} className={`btn btn2 ${selectedCategory === 'big-biz' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Крупный бизнес</button>
-                        <button onClick={() => {
-                            history.push(':gos-sector')
-                            handleCategoryChange('gos-sector')
-                        }} className={`btn btn2 ${selectedCategory === 'gos-sector' ? 'btn_active' : ''}  ${darkTheme ? 'btn_dark' : ''}`}>Госсектор</button>
-                    </div>
                     <div className="block-pr">
                         <div className="row">
                             {
@@ -186,7 +192,12 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Подключить</a>
+                                                <div className="more" onClick={() => {
+                                                    handleSubmit({
+                                                        title: item.title,
+                                                        desc: item.text
+                                                    })
+                                                }}>Подключить</div>
                                             </div>
                                         </div>
                                     ))
@@ -201,7 +212,12 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Подключить</a>
+                                                <div className="more" onClick={() => {
+                                                    handleSubmit({
+                                                        title: item.title,
+                                                        desc: item.text
+                                                    })
+                                                }}>Подключить</div>
                                             </div>
                                         </div>
                                     ))
@@ -217,7 +233,12 @@ export default function Organisations() {
                                                 </div>
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
-                                                <a className="more" href="/#">Подключить</a>
+                                                <div className="more" onClick={() => {
+                                                    handleSubmit({
+                                                        title: item.title,
+                                                        desc: item.text
+                                                    })
+                                                }}>Подключить</div>
                                             </div>
                                         </div>
                                     ))
@@ -227,8 +248,8 @@ export default function Organisations() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-        </>
+        </section>
     )
 }

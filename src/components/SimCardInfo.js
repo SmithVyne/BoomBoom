@@ -27,6 +27,9 @@ const Wrapper = styled.div`
         @media(max-width: 1060px) {
             font-size: 18px;
         }
+        @media(max-width: 736px) {
+            width: 100%;
+        }
         .options {
             margin-top: 12px;
         }
@@ -37,9 +40,13 @@ const Wrapper = styled.div`
             height: 50px;
             font-size: 20px;
             margin-top: 12px;
+            @media(max-width: 736px) {
+                width: 100%;
+            }
             input {
                 font-size: 17px;
             }
+            
         }
         .timePickers:focus, timePickers:focus {
             border-color: #0E5EF8;
@@ -53,6 +60,9 @@ const Wrapper = styled.div`
             outline: none;
             font-size: 19px;
             margin-top: 12px;
+            @media(max-width: 736px) {
+                width: 100%;
+            }
         }
         .address:focus, .address:active{
             border-color: #0E5EF8;
@@ -72,9 +82,14 @@ const Wrapper = styled.div`
         padding: 0 15px;
         outline: none;
         border: 2px solid rgba(1, 1, 1, 0.16);
+        transition: border-color 0.3s ease-in-out;
+        @media(max-width: 736px) {
+            width: 100%;
+        }
     }
     & .input:active, .input:focus {
         border-color: #0E5EF8;
+        transition: border-color 0.3s ease-in-out;
     }
     .Переносимый_номер {
         display: flex;
@@ -95,10 +110,15 @@ const Bottom = styled.div`
     display: flex;
     flex-direction: column;
     & > span {
+
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 16px;
+        @media(max-width: 736px) {
+            justify-content:center;
+        }
+        
     }
     & button {
         background: ${({enableButton}) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
@@ -110,6 +130,9 @@ const Bottom = styled.div`
         cursor: ${({enableButton}) => enableButton ? "pointer" : "not-allowed"};
         svg {
             transform: rotate(-90deg)
+        }
+        @media(max-width: 736px) {
+            width: 100%;
         }
     }
     & div {
@@ -127,6 +150,7 @@ const Bottom = styled.div`
         }
     }
     div.last {
+        font-family: Circe;
         margin-top: 20px;
         font-size: 16px;
         font-weight: bold;
@@ -135,9 +159,19 @@ const Bottom = styled.div`
         }
     }
     small.свой_номер {
+        margin: 0 0 4px;
+        font-family: Circe;
         font-size: 16px;
         font-weight: 500;
         display: inline;
+    }
+    small.last-small {
+        font-family: Circe;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 100%;
+        color: rgba(1, 1, 1, 0.68);
     }
     .omo {
         width: 300px;
@@ -146,6 +180,10 @@ const Bottom = styled.div`
         padding: 0 15px;
         outline: none;
         border: 2px solid rgba(1, 1, 1, 0.16);
+        transition: border-color 0.3s ease-in-out;
+        @media(max-width: 736px) {
+            width: 100%;
+        }
     }
     .omo:focus, .omo:active {
         border-color: ${({service}) => service && service.eSim ? "#010101" : "#0E5EF8"};
@@ -230,7 +268,7 @@ function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, 
                                     <DatePicker onChange={(_, dateStr) => setDeliveryDate(dateStr)} disabledDate={(current) => current && current < moment().startOf('day')} allowClear={false} suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
                                 </div>
                                 <div className="Способ_получения">
-                                    Времия доставки
+                                    Время доставки
                                     <RangePicker onChange={(_, timeStr) => setDeliveryTime(timeStr)} placeholder={["с", "до"]} className="timePickers" defaultValue={[moment("10:00", 'HH:mm'), moment("14:00", 'HH:mm')]} picker="time" format={'HH:mm'} />
                                 </div>
                             </div>
@@ -274,7 +312,7 @@ function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, 
                     <small>Итоговая абонентская плата в месяц:</small>
                     {totalPrice} ₽ / мес 
                 </div>}
-                {service && service.eSim && <small class="свой_номер">Введите свой номер телефона</small>}
+                <small class="свой_номер">Введите свой номер телефона</small>
                 <span>
                     {(selected === 0 || !!service) &&
                         <Cleave className="omo" options={{
@@ -282,11 +320,11 @@ function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, 
                             phoneRegionCode: 'RU'
                         }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
                     }
-                    <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>Оформить заказ <Arrow /></button>
+                    <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>{service ? service.eSim ?  "Оставить заявку" : "Подключить"  : 'Оформить заказ'} <Arrow /></button>
                 </span>
                 <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.
-                    <small>Оставляя контактный номер, Вы подтверждаете, что ввели свой номер самостоятельно и соглашаетесь с передачей Ваших персональных данных.</small>
+                    <small className="last-small">Оставляя контактный номер, Вы подтверждаете, что ввели свой номер самостоятельно и соглашаетесь с передачей Ваших персональных данных.</small>
                 </div>
             </Bottom>
         </Wrapper>
