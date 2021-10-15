@@ -220,12 +220,12 @@ const FourGSwitchStyles = styled.span`
     text-align: center;
     gap: 10px;
     border-radius: 14px;
-    width: ${(buy) => buy ? "100%" : "50%"};
+    width: ${({buy}) => buy ? "100%" : "50%"};
     padding: 13px;
     font-weight: bold;
     font-size: 20px;
     &:first-of-type {
-        margin-right: ${(buy) => buy || "20px"};
+        margin-right: ${({buy}) => buy || "20px"};
     }
     @media (max-width: 450px) {
         flex-wrap: wrap;
