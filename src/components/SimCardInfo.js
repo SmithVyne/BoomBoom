@@ -1,10 +1,11 @@
 import moment from 'moment';
 import { DatePicker, TimePicker } from "antd";
-import { useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components/macro";
 import { GoCalendar } from 'react-icons/go';
 import Cleave from 'cleave.js/react';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
+import _ from 'lodash';
 const { RangePicker } = TimePicker;
 
 const Wrapper = styled.div`
@@ -100,13 +101,13 @@ const Bottom = styled.div`
         gap: 16px;
     }
     & button {
-        background: #010101;
+        background: ${({enableButton}) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
         width: 300px;
         height: 60px;
         border-radius: 60px;
         border: none;
         color: white;
-        cursor: pointer;
+        cursor: ${({enableButton}) => enableButton ? "pointer" : "not-allowed"};
         svg {
             transform: rotate(-90deg)
         }
@@ -181,24 +182,34 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
 
-export default function SimCardInfo({selected, Option, service, handleSubmit, totalPrice}) { 
+function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, tariff, enableButton, boughtNumbers, chosenNumber, setEnableButton}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [contactPhoneNumber, setContactPhoneNumber] = useState("");
     const [deliveryDate, setDeliveryDate] = useState(moment().format("DD/MM/YYYY"));
-    const [deliveryTime, setDeliveryTime] = useState([]);
+    const [deliveryTime, setDeliveryTime] = useState(["10:00", "14:00"]);
     const [deliveryAddress, setDeliveryAddress] = useState("");
     const [checked, setChecked] = useState(false);
 
-    const contract = {
+    const contract = useMemo(() => ({
         deliveryDate,
         deliveryTime,
         deliveryMethod: options[selectedOption],
         deliveryAddress,
         phoneNumber,
-        contactPhoneNumber
-    }
-    console.log()
+    }), [deliveryDate, deliveryTime, deliveryAddress, phoneNumber, selectedOption])
+
+    if(selected===1 && !checked) contract["contactPhoneNumber"] = contactPhoneNumber
+    
+    useEffect(() => {
+        const truthy = Object.values(contract).every(item => item)
+        if(buy) {
+            setEnableButton(!!_.size(boughtNumbers) && truthy)
+        } else if(tariff) {
+            setEnableButton(!!_.size(chosenNumber.length) && truthy)
+        }
+    }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract])
+
     return (
         <Wrapper service={service}>
             {service ? null :
@@ -258,7 +269,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, to
                     </div>
                 }
             </>}
-            <Bottom service={service}>
+            <Bottom enableButton={enableButton} service={service}>
                 {service ? null : <div className="first">
                     <small>Итоговая абонентская плата в месяц:</small>
                     {totalPrice} ₽ / мес 
@@ -271,7 +282,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, to
                             phoneRegionCode: 'RU'
                         }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
                     }
-                    <button onClick={() => handleSubmit(contract)}>Оформить заказ <Arrow /></button>
+                    <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>Оформить заказ <Arrow /></button>
                 </span>
                 <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.
@@ -281,3 +292,5 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, to
         </Wrapper>
     )
 }
+
+export default memo(SimCardInfo)

@@ -483,6 +483,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const [boughtNumbers, setBoughtNumbers] = useState({});
     const [tariffDropDown, setTariffDropDown] = useState(false);
     const tariff = (typeof tariffId === "number") && tariffTypesArray[tariffId];
+    const [enableButton, setEnableButton] = useState(false);
 
     useEffect(() => {
         setBoughtNumbers(numbers => {
@@ -495,7 +496,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     }, [deletedNumbers])
 
 
-    const handleServiceSubmit = () => {
+    const handleServiceSubmit = (phoneNumber) => {
         const inMoscow = localStorage.getItem('InMoscow');
         let serviceName = service.eSim ? "Подключение eSim" : service.title.replace(/\s+/g, ' ')
             .replace(/^\s/, '')
@@ -517,7 +518,6 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             .catch((err)=> console.log(err))
         }
 
-
     }
 
     useEffect(() => {
@@ -537,8 +537,11 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         if(buy) {
             contract = {...contract, boughtNumbers}
         } else if(tariff) {
-            contract = {...contract, selectedNumber: chosenNumber, 
+            const selectedNumber = {...chosenNumber, price: totalPrice}
+            contract = {...contract, tariff, selectedNumber, 
                 productionMethod: options[selectedOption], ...modalSwitches }
+        } else if(service) {
+            handleServiceSubmit(contract.phoneNumber)
         }
         console.log(contract)
     }
@@ -617,7 +620,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                             </section>}
                         </>
                         }
-                        <SimCardInfo totalPrice={totalPrice} handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
+                        <SimCardInfo tariff={tariff} boughtNumbers={boughtNumbers} chosenNumber={chosenNumber} enableButton={enableButton} setEnableButton={setEnableButton} totalPrice={totalPrice} handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
                     </>
                 }
             </Modal>
