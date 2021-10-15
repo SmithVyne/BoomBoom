@@ -344,9 +344,16 @@ const Dropdown = styled.div`
         margin-top: 20px;
         display: flex;
         flex-direction: column;
-        width: fit-content;
+        width: 100%;
         .bottom {
             padding-bottom: 20px;
+        }
+        .dropDownSwitches {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7px;
+            width: 100%;
         }
     }
 `
@@ -402,9 +409,6 @@ const BuyNumbersDropdownStyles = styled.div`
                 font-weight: normal;
             }
         }
-        @media(max-width: 800px) {
-            /* gap: 13px 8px; */
-        }
     }
     .body {
         margin-top: 13px;
@@ -422,6 +426,7 @@ const BuyNumbersDropdownStyles = styled.div`
 
 const TariffsDropDown = memo(({modalPosition, selected = true, setModalPosition, tariff, buy, handleOpen, setSelectedTariff, drop, number, setBoughtNumbers}) => {
     const [dropDownPosition, setDropDownPosition] = useState(0)
+    const [localSwitches, setLocalSwitches] = useState({"Безлимитный 4G": false, "Раздача интернета": false})
     const handleChoose = (index) => {
         if(buy) {
             setSelectedTariff()
@@ -429,7 +434,8 @@ const TariffsDropDown = memo(({modalPosition, selected = true, setModalPosition,
             setBoughtNumbers(boughtNumbers => ({...boughtNumbers, [number.ctn]: {
                 ...number, tariffName: tariff.title, 
                 tariffOptions: `${tariff.positions[index].min}мин ${tariff.positions[index].gb === Infinity ? "Бесплатно" : tariff.positions[index].gb}гб ${tariff.positions[index].sms}смс`,
-                price: tariff.price + CATEGORIES[number.category].price
+                price: tariff.price + CATEGORIES[number.category].price,
+                ...localSwitches
             } }))
         } else setModalPosition(index)
     }
@@ -454,6 +460,9 @@ const TariffsDropDown = memo(({modalPosition, selected = true, setModalPosition,
                         <span>{position.sms}смс</span>
                     </span>
                 ))}
+                {buy && <div className="dropDownSwitches">
+                    {switchTypes.map(title => <FourGSwitch key={title} buy={buy} modal={true} checked={localSwitches[title]} setSwitches={setLocalSwitches} title={title} price={tariff.positions[dropDownPosition][title]} />)}
+                </div>}
             </div>}
         </Dropdown>
     )

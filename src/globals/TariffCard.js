@@ -220,11 +220,12 @@ const FourGSwitchStyles = styled.span`
     text-align: center;
     gap: 10px;
     border-radius: 14px;
-    width: 50%;
+    width: ${(buy) => buy ? "100%" : "50%"};
     padding: 13px;
     font-weight: bold;
+    font-size: 20px;
     &:first-of-type {
-        margin-right: 20px;
+        margin-right: ${(buy) => buy || "20px"};
     }
     @media (max-width: 450px) {
         flex-wrap: wrap;
@@ -264,9 +265,9 @@ const FourGSwitchStyles = styled.span`
     }
 `
 
-export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=false}) => {
+export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=false, buy=false}) => {
     return (
-    <FourGSwitchStyles price={price} checked={price ? true : checked} modal={modal}>
+    <FourGSwitchStyles buy={buy} onClick={(e) => e.stopPropagation()} price={price} checked={price ? true : checked} modal={modal}>
         {title}
         {price === Infinity ? 
         (title === "Безлимитный 4G" ? <CgInfinity size={42} /> : <TiWiFi size={42} /> )
