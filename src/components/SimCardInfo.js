@@ -101,13 +101,13 @@ const Bottom = styled.div`
         gap: 16px;
     }
     & button {
-        background: ${({enableButton, service}) => (enableButton || service) ? "#010101" : "rgba(1, 1, 1, 0.7)"};
+        background: ${({enableButton}) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
         width: 300px;
         height: 60px;
         border-radius: 60px;
         border: none;
         color: white;
-        cursor: ${({enableButton, service}) => (enableButton || service) ? "pointer" : "not-allowed"};
+        cursor: ${({enableButton}) => enableButton ? "pointer" : "not-allowed"};
         svg {
             transform: rotate(-90deg)
         }
@@ -191,24 +191,38 @@ function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, 
     const [deliveryAddress, setDeliveryAddress] = useState("");
     const [checked, setChecked] = useState(false);
 
-    const contract = useMemo(() => ({
-        deliveryDate,
-        deliveryTime,
-        deliveryMethod: options[selectedOption],
-        deliveryAddress,
-        phoneNumber,
-    }), [deliveryDate, deliveryTime, deliveryAddress, phoneNumber, selectedOption])
+    const contract = useMemo(() => {
+        const local = {phoneNumber}
+        if(selected === 0) {
+            if(selectedOption === 0) {
+                return {
+                    ...local,
+                    deliveryDate,
+                    deliveryTime,
+                    deliveryMethod: options[selectedOption],
+                    deliveryAddress,
+                }
+            } else if(selectedOption === 1 || selectedOption === 2) {
+                return local
+            }
+        }
+        else if(selected===1) {
+            if(checked) return local
+            else return {...local, contactPhoneNumber}
+        }
+    }, [deliveryDate, deliveryTime, deliveryAddress, phoneNumber, selectedOption, checked, selected, contactPhoneNumber])
 
-    if(selected===1 && !checked) contract["contactPhoneNumber"] = contactPhoneNumber
+    // console.log(contract)
     
     useEffect(() => {
         const truthy = Object.values(contract).every(item => item)
         if(buy) {
             setEnableButton(!!_.size(boughtNumbers) && truthy)
         } else if(tariff) {
-            setEnableButton(!!_.size(chosenNumber.length) && truthy)
-        }
-    }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract])
+            if(selected === 0) setEnableButton(!!_.size(chosenNumber) && truthy)
+            else setEnableButton(truthy)
+        } else if(service) setEnableButton(!!phoneNumber)
+    }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract, service, phoneNumber, selected])
 
     return (
         <Wrapper service={service}>
