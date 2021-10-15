@@ -159,7 +159,7 @@ export default function Roaming() {
         <div className={`roaming `}>
 
             {/* <h2 className={`roaming__title ${darkTheme ? 'roaming__title_dark' : ''}`}>Роуминг</h2> */}
-            <p className={`roaming__info-text ${darkTheme ? 'roaming__info-text_dark' : ''}`}>Выберите страну, в которую собираетесь поехать и ваш тариф</p>
+            <p className={`roaming__info-text ${darkTheme ? 'roaming__info-text_dark' : ''}`}>Выберите страну, в которую собираетесь поехать, и Ваш тариф</p>
             <form onSubmit={(e) => {
                 e.preventDefault()
                 if (countryValue) {

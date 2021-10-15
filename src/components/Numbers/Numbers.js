@@ -643,7 +643,7 @@ export default function Numbers(props) {
 
 
         }
-        if (category === 'Серебрянный') {
+        if (category === 'Серебряный') {
 
             setSelectedCategoryID(2)
 
@@ -789,7 +789,7 @@ export default function Numbers(props) {
             </MetaTags>
             <div className={`numbers__headtitle`}>
                 <img className={`numbers__headtitle-icon`} src={numbersIcon} alt="Телефон" />
-                <h2 className={`numbers__headtitle-text ${darkTheme ? 'numbers__headtitle-text_dark' : ''}`}>Выберете<br />номер</h2>
+                <h2 className={`numbers__headtitle-text ${darkTheme ? 'numbers__headtitle-text_dark' : ''}`}>Выберите<br />номер</h2>
             </div>
             <div className={`numbers__head-buttons`}>
                 <button onClick={() => {
@@ -826,7 +826,10 @@ export default function Numbers(props) {
                 <>
 
                     <form autoComplete="off" onSubmit={handleSubmit} className={`numbers ${darkTheme ? 'numbers_dark' : ''}`}>
-                        <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберете до пяти номеров или<br /><span className='numbers__title_link'>переходите со своим</span></h2>
+                        <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров или<br /><span onClick={() => {
+                    history.push(':перенести')
+                    setSelectedButton('перенести')
+                }} className='numbers__title_link'>переходите со своим</span></h2>
                         <p onClick={() => { if (selectedNumbers && selectedNumbers.length > 0) setSelectedNumbersOpen(!selectedNumbersOpen) }} className={`numbers__selected-numbers-button ${darkTheme ? 'numbers__selected-numbers-button_dark' : ''}`}>{selectedNumbers && selectedNumbers.length === 0 ? 'Ничего не выбрано' : selectedNumbersOpen ? 'Вернуться к поиску' : 'Посмотреть выбраные номера'}</p>
 
                         <div className='numbers__controllers'>
@@ -851,11 +854,11 @@ export default function Numbers(props) {
 
                                 </div>
                                 <div className="numbers__category-container">
-                                    <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${selectedNumbersOpen ? '' : selectedCategory === 'Серебрянный' ? ' numbers__category_selver_active' : ''}`} onClick={() => handleCategoryChange('Серебрянный')} >
-                                        <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedNumbersOpen ? '' : selectedCategory === 'Серебрянный' ? ' numbers__category-name_active' : ''}`}>Серебрянный</p>
+                                    <button type='button' className={`numbers__category numbers__category_with-name ${darkTheme ? 'numbers__category_dark' : ''}  ${selectedNumbersOpen ? '' : selectedCategory === 'Серебряный' ? ' numbers__category_selver_active' : ''}`} onClick={() => handleCategoryChange('Серебряный')} >
+                                        <p className={`numbers__category-name ${darkTheme ? 'numbers__category-name_dark' : ''} ${selectedNumbersOpen ? '' : selectedCategory === 'Серебряный' ? ' numbers__category-name_active' : ''}`}>Серебряный</p>
                                     </button>
                                     {
-                                        selectedNumbersOpen ? '' : selectedCategory === 'Серебрянный' ?
+                                        selectedNumbersOpen ? '' : selectedCategory === 'Серебряный' ?
                                             <p className={`numbers__category-price ${darkTheme ? 'numbers__category-price_dark' : ''}`}><span className="numbers__category-lastprice">5 000 ₽</span> 300 ₽/мес</p>
                                             : <></>
 
@@ -1066,7 +1069,10 @@ export default function Numbers(props) {
 
                 : selectedButton === "все" &&
                 <div className="numbers-for-mobile">
-                    <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберете до пяти номеров<br />или <span className='numbers__title_link'>переходите со своим</span></h2>
+                    <h2 className={`numbers__title ${darkTheme ? 'numbers__title_dark' : ''}`}>Выберите до пяти номеров<br />или <span onClick={() => {
+                    history.push(':перенести')
+                    setSelectedButton('перенести')
+                }} className='numbers__title_link'>переходите со своим</span></h2>
                     <p onClick={() => { if (selectedNumbers && selectedNumbers.length > 0) setSelectedNumbersOpen(!selectedNumbersOpen) }} className={`numbers__selected-numbers-button ${darkTheme ? 'numbers__selected-numbers-button_dark' : ''}`}>{selectedNumbers && selectedNumbers.length === 0 ? 'Ничего не выбрано' : selectedNumbersOpen ? 'Вернуться к поиску' : 'Посмотреть выбраные номера'}</p>
                     <div className="numbers-for-mobile__inputs">
                         <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
@@ -1078,7 +1084,7 @@ export default function Numbers(props) {
                         <div onClick={handeleCategoryOpen} className={`numbers-for-mobile__select-button`}>
                             {selectedCategory === "Все" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
                             {selectedCategory === "Бронзовый" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
-                            {selectedCategory === "Серебрянный" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
+                            {selectedCategory === "Серебряный" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебряный</h2> : <></>}
                             {selectedCategory === "Золотой" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
                             {selectedCategory === "Платиновый" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
                             {selectedCategory === "Бриллиантовый" ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
@@ -1088,7 +1094,7 @@ export default function Numbers(props) {
                             <div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''} ${darkTheme ? 'numbers-for-mobile__select-items_dark' : ''}`}>
                                 {selectedCategory === 'Все' ? <></> : <p onClick={() => handleCategoryChange('Все')} className={`numbers-for-mobile__select-item ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Все</p>}
                                 {selectedCategory === 'Бронзовый' ? <></> : <p onClick={() => handleCategoryChange('Бронзовый')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Бронзовый</p>}
-                                {selectedCategory === 'Серебрянный' ? <></> : <p onClick={() => handleCategoryChange('Серебрянный')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Серебрянный</p>}
+                                {selectedCategory === 'Серебряный' ? <></> : <p onClick={() => handleCategoryChange('Серебряный')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Серебряный</p>}
                                 {selectedCategory === 'Золотой' ? <></> : <p onClick={() => handleCategoryChange('Золотой')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Золотой</p>}
                                 {selectedCategory === 'Платиновый' ? <></> : <p onClick={() => handleCategoryChange('Платиновый')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina ${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Платиновый</p>}
                                 {selectedCategory === 'Бриллиантовый' ? <></> : <p onClick={() => handleCategoryChange('Бриллиантовый')} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_briliant${darkTheme ? 'numbers-for-mobile__select-item_dark' : ''}`}>Бриллиантовый</p>}

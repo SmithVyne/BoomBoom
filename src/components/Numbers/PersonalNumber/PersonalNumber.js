@@ -54,7 +54,7 @@ export default function PersonalNumber(props) {
                     <p className={`personal-number__container-text`}>
                         Сохраняйте привычный номер для своих родных и друзей.
                         <br />
-                        Ни одна цифра в номере не поменяются.
+                        Ни одна цифра в номере не поменяется
                         <br /><br />
                         Все останется как раньше:
                         данные в аккаунте Гугла, в банке и рассылке любимого магазина
@@ -126,19 +126,19 @@ export default function PersonalNumber(props) {
             </div>
             <div className={`personal-number_сonditions`}>
                 <h2 className={`personal-number_сonditions-title ${darkTheme?'personal-number_сonditions-title_dark' :''}`}>Какие условия переноса своего номера в Boom Telecom?</h2>
-                <p className={`personal-number_сonditions-subtitle ${darkTheme?'personal-number_сonditions-subtitle_dark' :''}`}>Если все 6 условий соблюдаются, мы перенесем ваш номер в нашу<br/>сеть и пришлем 300₽ на баланс</p>
+                <p className={`personal-number_сonditions-subtitle ${darkTheme?'personal-number_сonditions-subtitle_dark' :''}`}>Если все 6 условий соблюдаются, мы перенесем Ваш номер в нашу<br/>сеть и пришлем 300₽ на баланс</p>
                 <div className={`personal-number_сondition-cards`}>
                     <div className={`personal-number_сondition-card ${darkTheme?'personal-number_сondition-card_dark' :''}`}>
                         <img className={`personal-number_сondition-card-number $`} alt="1" src={oneIcon} />
-                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Сим-карта с переносимым номером должна быть из региона обращения</p>
+                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>SIM-карта с переносимым номером должна быть из региона обращения</p>
                     </div>
                     <div className={`personal-number_сondition-card ${darkTheme?'personal-number_сondition-card_dark' :''}`}>
                         <img className={`personal-number_сondition-card-number`} alt="2" src={twoIcon} />
-                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Если вы раньше переносили номер, то с момента прошлого переноса должно пройти 60 дней</p>
+                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Если Вы раньше переносили номер, то с момента прошлого переноса должно пройти 60 дней</p>
                     </div>
                     <div className={`personal-number_сondition-card ${darkTheme?'personal-number_сondition-card_dark' :''}`}>
                         <img className={`personal-number_сondition-card-number`} alt="3" src={threeIcon} />
-                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>У текущего оператора должны быть ваши актуальные паспортные данные</p>
+                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>У текущего оператора должны быть Ваши актуальные паспортные данные</p>
                     </div>
                     <div className={`personal-number_сondition-card ${darkTheme?'personal-number_сondition-card_dark' :''}`}>
                         <img className={`personal-number_сondition-card-number`} alt="4" src={fourIcon} />
@@ -150,7 +150,7 @@ export default function PersonalNumber(props) {
                     </div>
                     <div className={`personal-number_сondition-card ${darkTheme?'personal-number_сondition-card_dark' :''}`}>
                         <img className={`personal-number_сondition-card-number`} alt="6" src={sixIcon} />
-                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Номер должен быть<br />оформлен на вас</p>
+                        <p className={`personal-number_сondition-card-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Номер должен быть<br />оформлен на Вас</p>
                     </div>
 
                 </div>
@@ -159,7 +159,7 @@ export default function PersonalNumber(props) {
                         <h2 className={`personal-number_important-title ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Важно</h2>
                         <img className={`personal-number_important-exclamation`} alt="!" src={exclamationMark} />
                     </div>
-                        <p className={`personal-number_important-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Деньги с вашего баланса не перенесутся в Boom Telecom.  Для их возврата обратитесь к прежнему оператору.</p>
+                        <p className={`personal-number_important-text ${darkTheme?'personal-number_сondition-card-text_dark' :''}`}>Деньги с Вашего баланса не перенесутся в Boom Telecom.  Для их возврата обратитесь к прежнему оператору.</p>
                 </div>
 
             </div>

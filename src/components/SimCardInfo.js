@@ -180,6 +180,7 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
+
 export default function SimCardInfo({selected, Option, service, handleSubmit, totalPrice}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -230,7 +231,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, to
                         }
                         {selectedOption === 1 && 
                             <Pickup>
-                                Вы можете получить свою сим карту в любом офисе Beeline
+                                Вы можете получить свою сим-карту в любом офисе Beeline
                                 <span>
                                     <HiOutlineLocationMarker /> 
                                     <a target="_blank" href="https://www.google.com/maps/search/%D0%BE%D1%84%D0%B8%D1%81%D1%8B+beeline+%D0%B2+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/@55.7112608,37.428036,11z/data=!3m1!4b1" rel="noreferrer" >Найти салон связи на карте</a>
@@ -274,7 +275,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit, to
                 </span>
                 <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.
-                    <small>Оставляя контактный номер, вы подтверждаете, что ввели свой номер самостоятельно и соглашаетесь с передачей ваших персональных данных.</small>
+                    <small>Оставляя контактный номер, Вы подтверждаете, что ввели свой номер самостоятельно и соглашаетесь с передачей Ваших персональных данных.</small>
                 </div>
             </Bottom>
         </Wrapper>

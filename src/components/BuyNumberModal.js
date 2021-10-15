@@ -1,7 +1,7 @@
 import {useContext, useEffect, useMemo, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
-import { RiDeleteBin6Fill} from 'react-icons/ri'
-import { BsArrowLeft} from 'react-icons/bs'
+import { RiDeleteBin6Fill } from 'react-icons/ri'
+import { BsArrowLeft } from 'react-icons/bs'
 import { FaCheckCircle } from 'react-icons/fa'
 import styled from 'styled-components/macro'
 import ReactDOM from 'react-dom'
@@ -16,6 +16,7 @@ import { FourGSwitch, switchTypes } from '../globals/TariffCard'
 import Cleave from 'cleave.js/react';
 import NumbersMobile from './Numbers/NumbersMobile'
 import searchIcon_black from '../assets/images/search-black.svg'
+import { OrderService } from '../globals/utils'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
@@ -159,7 +160,7 @@ const Modal = styled.div`
 
 const Option = styled.span`
     padding: 19.5px 16px;
-    border: 3px solid ${({selected, idx}) => selected === idx ? "#0E5EF8" : "rgba(1, 1, 1, 0.16)"};
+    border: 3px solid ${({ selected, idx }) => selected === idx ? "#0E5EF8" : "rgba(1, 1, 1, 0.16)"};
     border-radius: 12px;
     cursor: pointer;
     &.first {
@@ -200,34 +201,34 @@ const NumbersDropDown = memo(({setShowNumbers, inputNumber, setInputNumber, sele
         setSelectedCategoryID(category);
     }
     return (
-    <div className="showNumbers-top">
-        <div onClick={()=>setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
-        <div className="numbers-for-mobile__inputs modal">
-            <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
-                <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
-                <input onBlur={()=>setIsInputFocused(false)} onFocus={()=>setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({target})=>setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
-            </div>
-            <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
-                {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
-                {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
-                {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебрянный</h2> : <></>}
-                {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
-                {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
-                {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
-                <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
-                </svg>
-                {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
-                {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
-                    {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
-                    {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебрянный</p>}
-                    {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
-                    {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
-                    {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
-                </div>}
+        <div className="showNumbers-top">
+            <div onClick={() => setShowNumbers(false)} className="goBack"><BsArrowLeft /> Назад</div>
+            <div className="numbers-for-mobile__inputs modal">
+                <div className={`numbers__input-container ${isInputFocused ? "numbers__input-container_focused" : ''}`}>
+                    <img className="numbers__input-search-icon" src={searchIcon_black} alt="Иконка поиска" />
+                    <input onBlur={() => setIsInputFocused(false)} onFocus={() => setIsInputFocused(true)} className="numbers__input" name="number" type="text" value={inputNumber} onChange={({ target }) => setInputNumber(target.value)} placeholder='Поиск номера' maxLength="10"></input>
+                </div>
+                <div onClick={() => setIsSelectCategoryOpen(val => !val)} className={`numbers-for-mobile__select-button`}>
+                    {selectedCategoryID === "all" ? <h2 className={`numbers-for-mobile__select-button-category`}>Все</h2> : <></>}
+                    {selectedCategoryID === 1 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_bronz`}>Бронзовый</h2> : <></>}
+                    {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебряный</h2> : <></>}
+                    {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
+                    {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
+                    {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
+                    <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
+                    </svg>
+                    {selectedCategoryID === 'all' ? <></> : <p onClick={(e) => handleCategoryChange(e, 'all')} className={`numbers-for-mobile__select-item`}>Все</p>}
+                    {<div className={`numbers-for-mobile__select-items ${isSelectCategoryOpen ? 'numbers-for-mobile__select-items_visible' : ''}`}>
+                        {selectedCategoryID === 1 ? <></> : <p onClick={(e) => handleCategoryChange(e, 1)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_bronz`}>Бронзовый</p>}
+                        {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебряный</p>}
+                        {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
+                        {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
+                        {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
+                    </div>}
+                </div>
             </div>
         </div>
-    </div>
     )
 })
 
@@ -266,7 +267,7 @@ const ThankYouModal = () => {
                 <FaCheckCircle size={32} color="#79FFD7" />
             </div>
             <span className="thanksBody">Мы с вами свяжемся в ближайшее время</span>
-            <button onClick={() => dispatch({type: HIDE_MODAL})}>Хорошо</button>
+            <button onClick={() => dispatch({ type: HIDE_MODAL })}>Хорошо</button>
         </Thanks>
     )
 }
@@ -465,14 +466,14 @@ const BuyNumbersDropdown = memo(({modalPosition, setModalPosition, number, buy, 
 })
 
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
-export default memo(function BuyNumberModal({numbers, buy, payload}) {
-    const {darkTheme} = useContext(GlobalContext);
+export default memo(function BuyNumberModal({ numbers, buy, payload }) {
+    const { darkTheme } = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     const [deletedNumbers, setDeletedNumbers] = useState([]);
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
-    const {position, tariffId, service, switches, toSubmit} = payload;
+    const { position, tariffId, service, switches, toSubmit } = payload;
     const [submit, setSubmit] = useState(toSubmit);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
@@ -492,6 +493,32 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
             return rep
         })
     }, [deletedNumbers])
+
+
+    const handleServiceSubmit = () => {
+        const inMoscow = localStorage.getItem('InMoscow');
+        let serviceName = service.eSim ? "Подключение eSim" : service.title.replace(/\s+/g, ' ')
+            .replace(/^\s/, '')
+            .replace(/\s$/, '');
+        let userPhone = phoneNumber
+        let fromMosсow
+        if (inMoscow !== "false") {
+            if (inMoscow === null) fromMosсow = "не указано"
+            else fromMosсow = "из Москвы"
+        } else {
+            fromMosсow = "не из Москвы"
+
+        }
+        console.log(serviceName)
+        if (fromMosсow && userPhone && serviceName){
+            OrderService(serviceName, userPhone, fromMosсow).then(()=>{
+                setSubmit(true);
+            })
+            .catch((err)=> console.log(err))
+        }
+
+
+    }
 
     useEffect(() => {
         chosenNumber.ctn && setInputNumber(chosenNumber.ctn)
