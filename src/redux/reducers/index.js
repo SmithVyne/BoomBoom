@@ -49,7 +49,7 @@ const AuthReducer = (store = initialAuth, action) => {
             return {...store, user}
         case CREATE_AUTH:
             const {accessToken, refreshToken} = action.payload;
-            setCookieValue("accessToken", accessToken, 2)
+            setCookieValue("accessToken", accessToken, 600)
             setCookieValue("refreshToken", refreshToken, 2592000)
             return {...store, accessToken, refreshToken}
         case DELETE_AUTH:

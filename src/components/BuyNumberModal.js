@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useMemo, useState} from 'react'
 import { CgClose, CgInfinity } from 'react-icons/cg'
 import { RiDeleteBin6Fill} from 'react-icons/ri'
 import { BsArrowLeft} from 'react-icons/bs'
@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 import { memo } from 'react'
 import { useEscapeKey } from '../hooks'
 import { useDispatch } from 'react-redux'
-import { HIDE_MODAL, tariffTypesArray } from '../globals/utils';
+import { CATEGORIES, HIDE_MODAL, tariffTypesArray } from '../globals/utils';
 import { FourGSwitch, switchTypes } from '../globals/TariffCard'
 import Cleave from 'cleave.js/react';
 import NumbersMobile from './Numbers/NumbersMobile'
@@ -28,8 +28,8 @@ const Wrapper = styled(motion.div)`
     min-height: 100vh;
     z-index: 20;
     display: flex;
+    align-items: ${({submit, service}) => (submit || service) && "center" };
     justify-content: center;
-
     overflow-y: scroll;
     
     &::-webkit-scrollbar {
@@ -124,19 +124,10 @@ const Modal = styled.div`
         display: flex;
         flex-direction: column;
         gap: 12px;
-        .number {
+        .buyNumbersDropdown {
             display: flex;
             gap: 8px;
             align-items: center;
-            .left {
-                width: 600px;
-                padding: 10px;
-                border: 3px solid #FF0202;
-                border-radius: 12px;
-                @media(max-width: 800px) {
-                    width: 100%;
-                }
-            }
         }
     }
     .goBack {
@@ -193,96 +184,14 @@ const Switches = styled.span`
         width: 100%;
     }
 `
-const Dropdown = styled.div`    
-    border: 2px solid #4B75FC;
-    border-radius: 14px;
-    height: fit-content;
-    width: 300px;
-    max-width: 100%;
-    margin-bottom: 44px;
-    padding: 12px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    .top {
-        display: flex;
-        gap: 10px;
-        align-items: flex-end;
-        font-size: 20px;
-        font-weight: bold;
-        img {
-            width: 24px;
-            height: 24px;
-        }
-        svg {
-            margin-bottom: 9px;
-            transform: ${({drop}) => drop && "rotate(180deg)"};
-            transition: ease 0.3s;
-        }
-    }
-    border: ${({selected})=> selected && "2px solid #4B75FC"};
-    .bottom {
-        font-size: 20px;
-        color: black;
-    }
-    .bottom.first {
-        color: #4B75FC;
-    }
-    .dropdown {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        width: fit-content;
-    }
-`
 
-const downArrow = (<svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+const DownArrow = ({classname}) => (<svg className={classname} width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill='#010101' />
 </svg>);
 
 export const spacer = (number) => `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8, 10)}`
 
-const TariffsDropDown = memo(({tariffId, modalPosition, setModalPosition}) => {
-    const tariff = tariffTypesArray[tariffId];
-    const [drop, setDrop] = useState(false);
-    return (
-        <Dropdown drop={drop} onClick={()=>setDrop(val => !val)}>
-            <span className="top">
-                <img alt="tariffIcon" src={tariff.icon} />
-                {tariff.title}
-                {downArrow}
-            </span>
-            <span className="bottom first">
-                <span>{tariff.positions[modalPosition].min}мин , </span>
-                <span>{tariff.positions[modalPosition].gb === Infinity ? <CgInfinity />: tariff.positions[modalPosition].gb}гб , </span>
-                <span>{tariff.positions[modalPosition].sms}смс</span>
-            </span>
-            {drop && 
-            <div className="dropdown">
-                {tariff.positions.map((position, index) => (
-                    <span style={position === index ? {opacity: 0.2} : {}} key={index} onClick={() => setModalPosition(index)} className="bottom">
-                        <span>{position.min}мин , </span>
-                        <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
-                        <span>{position.sms}смс</span>
-                    </span>
-                ))}
-            </div>}
-        </Dropdown>
-    )
-})
-
-const GarbageCan = styled(RiDeleteBin6Fill)`
-    cursor: pointer;
-    min-width: 24px;
-    min-height: 24px;
-    &:hover {
-        color: #FF0202;
-    }
-`;
-
-const NumbersDropDown = ({setShowNumbers, inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
+const NumbersDropDown = memo(({setShowNumbers, inputNumber, setInputNumber, selectedCategoryID, setSelectedCategoryID}) => {
     const [isSelectCategoryOpen, setIsSelectCategoryOpen] = useState(false);
     const [isInputFocused, setIsInputFocused] = useState(false);
     function handleCategoryChange(e, category) {
@@ -320,7 +229,7 @@ const NumbersDropDown = ({setShowNumbers, inputNumber, setInputNumber, selectedC
         </div>
     </div>
     )
-}
+})
 
 const Thanks = styled.div`
     display: flex;
@@ -362,6 +271,199 @@ const ThankYouModal = () => {
     )
 }
 
+const GarbageCan = styled(RiDeleteBin6Fill)`
+    cursor: pointer;
+    min-width: 24px;
+    min-height: 24px;
+    &:hover {
+        color: #FF0202;
+    }
+`;
+const Dropdown = styled.div`    
+    border: ${({buy}) => buy || "2px solid #4B75FC"};
+    background: #fff;
+    border-radius: 14px;
+    height: fit-content;
+    width: ${({buy}) => buy ? "100%" : "300px"};
+    max-width: 100%;
+    margin-bottom: ${({buy}) => buy || "44px"};
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    img.tariffIcon {
+        width: 24px;
+        height: 24px;
+    }
+    .top {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        font-size: 20px;
+        font-weight: bold;
+        svg.tariffsDropIcon {
+            margin-bottom: 9px;
+            transform: ${({drop}) => drop && "rotate(180deg)"};
+            transition: ease 0.3s;
+            position: static;
+        }
+    }
+    border: ${({selected})=> selected && "2px solid #4B75FC"};
+    .bottom {
+        font-size: 20px;
+        color: black;
+    }
+    .bottom.first {
+        color: ${({buy}) => buy ? "#010101AD" : "#4B75FC" };
+    }
+    .dropdown {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        .bottom {
+            padding-bottom: 20px;
+        }
+    }
+`
+const BuyNumbersDropdownStyles = styled.div`
+    width: 600px;
+    padding: 10px;
+    border: 3px solid ${({selectedTariff}) => (typeof selectedTariff === "number") ? "#4B75FC": "#FF0202"};
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    background: #F8F8F8;
+    position: relative;
+    padding: 16px 12px;
+    cursor: pointer;
+    img.tariffIcon {
+        width: 24px;
+        height: 24px;
+    }
+    svg.dropIcon {
+        position: absolute;
+        transform: ${({toggleOpen}) => toggleOpen && "rotate(180deg)"};
+        transition: ease 0.3s;
+        top: 16px;
+        right: 12px;
+    }
+    .top {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        .ctn {
+            margin-right: 5px;
+        }
+        .badge {
+            background: ${({bg}) => bg};
+            padding: 8px;
+            font-size: 12px;
+            line-height: 14px;
+            font-weight: 400;
+            border-radius: 30px;
+            font-weight: bold;
+            height: fit-content;
+        }
+        .prices {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-weight: 700;
+            font-size: 14px;
+            del {
+                color: #FF0202;
+                font-weight: normal;
+            }
+        }
+    }
+    .body {
+        margin-top: 13px;
+        display: grid;
+        grid-gap: 13px;
+        grid-template-columns: 1fr 1fr;
+        @media(max-width: 450px) {
+            grid-template-columns: 1fr;
+        }
+    }
+    @media(max-width: 800px) {
+        width: 100%;
+    }
+`
+
+const TariffsDropDown = memo(({modalPosition, setModalPosition, tariff, buy, handleOpen, setSelectedTariff, drop, number, setBoughtNumbers}) => {
+    const [dropDownPosition, setDropDownPosition] = useState(0)
+    const handleChoose = (index) => {
+        if(buy) {
+            setSelectedTariff()
+            setDropDownPosition(index);
+            setBoughtNumbers(boughtNumbers => ({...boughtNumbers, [number.ctn]: {
+                ...number, tariffName: tariff.title, 
+                tariffOptions: `${tariff.positions[index].min}мин ${tariff.positions[index].gb}гб ${tariff.positions[index].sms}смс`,
+                price: tariff.price + CATEGORIES[number.category].price
+            } }))
+        } else setModalPosition(index)
+    }
+    return (
+        <Dropdown buy={buy} drop={drop} onClick={handleOpen}>
+            <span className="top">
+                <img className="tariffIcon" alt="tariffIcon" src={tariff.icon} />
+                {tariff.title}
+                <DownArrow classname="tariffsDropIcon" />
+            </span>
+            <span className="bottom first">
+                <span>{tariff.positions[buy ? dropDownPosition: modalPosition].min}мин , </span>
+                <span>{tariff.positions[buy ? dropDownPosition: modalPosition].gb === Infinity ? <CgInfinity />: tariff.positions[buy ? dropDownPosition: modalPosition].gb}гб , </span>
+                <span>{tariff.positions[buy ? dropDownPosition: modalPosition].sms}смс</span>
+            </span>
+            {drop && 
+            <div className="dropdown">
+                {tariff.positions.map((position, index) => (
+                    <span key={index} onClick={() => handleChoose(index)} className="bottom">
+                        <span>{position.min}мин , </span>
+                        <span>{position.gb === Infinity ? <CgInfinity />: position.gb}гб , </span>
+                        <span>{position.sms}смс</span>
+                    </span>
+                ))}
+            </div>}
+        </Dropdown>
+    )
+})
+const BuyNumbersDropdown = memo(({modalPosition, setModalPosition, number, buy, setBoughtNumbers}) => {
+    const [toggleOpen, setToggleOpen] = useState(false)
+    const category = CATEGORIES[number.category]
+    
+    const [clickedTariff, setClickedTariff] = useState(null);
+    const [selectedTariff, setSelectedTariff] = useState(null);
+    const handleOpen = (index) => {
+        if(index === clickedTariff) setClickedTariff(null)
+        else setClickedTariff(index)
+    }
+    
+    return (
+            <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onClick={() => setToggleOpen(val => !val)}>
+                <DownArrow classname="dropIcon" />
+                <span className="top">
+                    {(typeof selectedTariff === "number") ? <img className="tariffIcon" alt="tariffIcon" src={tariffTypesArray[selectedTariff].icon} /> : null}
+                    <span className="ctn">{spacer(number.ctn)}</span>
+                    <span className="badge">{category.name}</span>
+                    <span className="prices">
+                        <del>{category.prevPrice} ₽</del>
+                        {category.price ? category.price + " ₽/мес" : "Бесплатно!"} 
+                    </span>
+                </span>
+                {toggleOpen && <div onClick={(e)=>e.stopPropagation()} className="body">
+                    {tariffTypesArray.slice(category.exclude).map((tariff, index) => 
+                        <TariffsDropDown drop={clickedTariff === index} setSelectedTariff={()=>setSelectedTariff(index)} handleOpen={()=>handleOpen(index)} buy={buy} key={tariff.title} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} setBoughtNumbers={setBoughtNumbers} number={number} />
+                    )}
+                </div>}
+            </BuyNumbersDropdownStyles>
+    )
+})
+
 const options = ["Купить новую SIM", "Перенести номер в BOOM"]
 export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const {darkTheme} = useContext(GlobalContext);
@@ -375,15 +477,44 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
     const [modalSwitches, setModalSwitches] = useState(switches);
-    const [modalPosition, setModalPosition] = useState(position);
+    const [modalPosition, setModalPosition] = useState(position || 0);
     useEscapeKey(() => dispatch({type: HIDE_MODAL}));
-    const handleSubmit = () => {
-        setSubmit(true);
-    }
+    const [boughtNumbers, setBoughtNumbers] = useState({});
+    const [tariffDropDown, setTariffDropDown] = useState(false);
+    const tariff = (typeof tariffId === "number") && tariffTypesArray[tariffId];
+
+    useEffect(() => {
+        setBoughtNumbers(numbers => {
+            const rep = numbers;
+            for (const ctn in rep) {
+                deletedNumbers.includes(ctn) && delete rep[ctn]
+            }
+            return rep
+        })
+    }, [deletedNumbers])
 
     useEffect(() => {
         chosenNumber.ctn && setInputNumber(chosenNumber.ctn)
     }, [chosenNumber])
+
+    const totalPrice = useMemo(() => {
+        if(buy) {
+            return Object.values(boughtNumbers).reduce((prev, currentNum) => prev + currentNum.price, 0)
+        } else if(tariff) {
+            return chosenNumber.price ? chosenNumber.price + tariff.price : tariff.price
+        } else return 0
+    }, [boughtNumbers, buy, tariff, chosenNumber])
+
+    const handleSubmit = (contract) => {
+        setSubmit(true);
+        if(buy) {
+            contract = {...contract, boughtNumbers}
+        } else if(tariff) {
+            contract = {...contract, selectedNumber: chosenNumber, 
+                productionMethod: options[selectedOption], ...modalSwitches }
+        }
+        console.log(contract)
+    }
     
     return ReactDOM.createPortal (
         <Wrapper
@@ -391,6 +522,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
         animate={{opacity: 1}}
         exit={{opacity: 0}}
         transition={{duration: 0.3}}
+        submit={submit} service={service}
         onClick={()=>dispatch({type: HIDE_MODAL})} darkTheme={darkTheme}>
             <Modal onClick={(e)=>e.stopPropagation()}>
                 <Close onClick={()=>dispatch({type: HIDE_MODAL})}><CgClose strokeWidth={1.5} size={29} /></Close>
@@ -404,7 +536,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                                 selectedCategoryID={selectedCategoryID}
                                 inputValue={inputNumber}
                                 selectedNumbers={[chosenNumber]}
-                                handleCtnClick={(number) => {console.log(number);setChosenNumber(number); setShowNumbers(false)}}
+                                handleCtnClick={(number) => {setChosenNumber(number); setShowNumbers(false)}}
                                 darkTheme={{val: false}}
                             />
                         </> : 
@@ -414,11 +546,11 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                             <section>
                                 <p>Выберете тарифы для номера</p>
                                 <div className="ModalNumbers">
-                                    {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map(number => (
-                                        <span key={number.ctn} className="number">
-                                            <span className="left">{spacer(number.ctn)}</span>
+                                    {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map((number) => (
+                                        <div className="buyNumbersDropdown" key={number.ctn}>
+                                            <BuyNumbersDropdown setBoughtNumbers={setBoughtNumbers} buy={buy} number={number} modalPosition={modalPosition} setModalPosition={setModalPosition} />
                                             <GarbageCan onClick={()=>setDeletedNumbers(numbers => [...numbers, number.ctn])} />
-                                        </span>
+                                        </div>
                                     ))}
                                 </div>
                             </section>
@@ -433,11 +565,11 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                         </> :
                         <>
                             <h1>Подключение тарифа</h1>
-                            <TariffsDropDown modalPosition={modalPosition} setModalPosition={setModalPosition} tariffId={tariffId} />
+                            <TariffsDropDown drop={tariffDropDown} handleOpen={() => setTariffDropDown(val => !val)} setChosenNumber={setChosenNumber} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} />
                             <section>
                                 <p>Дополнительные опции</p>
                                 <Switches>
-                                    {switchTypes.map(title => <FourGSwitch key={title} modal={true} checked={modalSwitches[title]} setSwitches={setModalSwitches} title={title} price={tariffTypesArray[tariffId].positions[modalPosition][title]} />)}
+                                    {switchTypes.map(title => <FourGSwitch key={title} modal={true} checked={modalSwitches[title]} setSwitches={setModalSwitches} title={title} price={tariff.positions[modalPosition][title]} />)}
                                 </Switches>
                             </section>
                             <section>
@@ -458,7 +590,7 @@ export default memo(function BuyNumberModal({numbers, buy, payload}) {
                             </section>}
                         </>
                         }
-                        <SimCardInfo handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
+                        <SimCardInfo totalPrice={totalPrice} handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
                     </>
                 }
             </Modal>

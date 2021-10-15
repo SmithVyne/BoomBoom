@@ -169,7 +169,6 @@ export default function Tariffs({ children }) {
             } else {
                 const val = y < 0 ? 350 : -350;
                 window.scrollBy({ top: val, behavior: 'smooth' });
-                console.log(info.velocity)
             }
         }
     }

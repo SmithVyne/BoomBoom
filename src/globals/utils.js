@@ -30,11 +30,13 @@ export const CREATE_AUTH = "CREATE_AUTH";
 export const DELETE_AUTH = "DELETE_AUTH";
 
 export const CATEGORIES = {
-    1: {name: "Бронзовый", bg: "#CD7F32", rentPrice: "Бесплатно!", purchasePrice: "1000 руб."},
-    2: {name: "Серебряный", bg: "#C0C0C0", rentPrice: "300 руб.", purchasePrice: "5000 руб."},
-    3: {name: "Золотой", bg: "#FFD700", rentPrice: "500 руб.", purchasePrice: "35 000 руб."},
-    6: {name: "Платиновый", bg: "#e5e4e2", rentPrice: "1000 руб.", purchasePrice: "200 000 руб."},
-    10: {name: "Бриллиантовый", bg: "#FFB02E", rentPrice: "1500 руб.", purchasePrice: "500 000 руб."}
+    1: {name: "Бронзовый", bg: "#CD7F32", price: 0, prevPrice: "1000", exclude: 0},
+    2: {name: "Серебряный", bg: "#C0C0C0", price: 300, prevPrice: "5000", exclude: 1},
+    3: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
+    4: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
+    5: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
+    6: {name: "Платиновый", bg: "#e5e4e2", price: 1000, prevPrice: "200 000", exclude: 3},
+    10: {name: "Бриллиантовый", bg: "#FFB02E", price: 1500, prevPrice: "500 000", exclude: 4}
 }
 
 const getAuth = (accessToken) => {

@@ -254,23 +254,18 @@ export default function Dashboard() {
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
     
-    console.log(userInfo, userData)
-
     useEffect(() => {
         if (accessToken) {
-            console.log("accessToken")
             getDashboard(ctn, accessToken, dispatch)
         } 
         else if(refreshToken) {
-            console.log("refreshToken")
             Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
                 .then(result => {
-                    console.log("accessToken", "+", "refreshToken")
                     const {accessToken, refreshToken} = result;
                     dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
                 })
         } 
-        else {setLoginForm(true); console.log("duh")}
+        else setLoginForm(true)
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
@@ -289,7 +284,7 @@ export default function Dashboard() {
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
-                    <Name>{"userData.owner"}</Name>
+                    <Name>{userData.owner}</Name>
                     <Cards>
                         <TopCard darkTheme={darkTheme}>
                             <span className="topCardTitle">Номер:</span>

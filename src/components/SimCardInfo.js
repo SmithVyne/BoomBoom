@@ -180,10 +180,24 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
-export default function SimCardInfo({selected, Option, service, handleSubmit}) { 
+export default function SimCardInfo({selected, Option, service, handleSubmit, totalPrice}) { 
     const [selectedOption, setSelectedOption] = useState(0);
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [contactPhoneNumber, setContactPhoneNumber] = useState("");
+    const [deliveryDate, setDeliveryDate] = useState(moment().format("DD/MM/YYYY"));
+    const [deliveryTime, setDeliveryTime] = useState([]);
+    const [deliveryAddress, setDeliveryAddress] = useState("");
     const [checked, setChecked] = useState(false);
+
+    const contract = {
+        deliveryDate,
+        deliveryTime,
+        deliveryMethod: options[selectedOption],
+        deliveryAddress,
+        phoneNumber,
+        contactPhoneNumber
+    }
+    console.log()
     return (
         <Wrapper service={service}>
             {service ? null :
@@ -201,16 +215,16 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                             <><div className="orderDates">
                                 <div className="Способ_получения">
                                     Дата доставки
-                                    <DatePicker allowClear={false} suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
+                                    <DatePicker onChange={(_, dateStr) => setDeliveryDate(dateStr)} disabledDate={(current) => current && current < moment().startOf('day')} allowClear={false} suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
                                 </div>
                                 <div className="Способ_получения">
                                     Времия доставки
-                                    <RangePicker placeholder={["с", "до"]} className="timePickers" defaultValue={[moment("10:00", 'HH:mm'), moment("14:00", 'HH:mm')]} picker="time" format={'HH:mm'} />
+                                    <RangePicker onChange={(_, timeStr) => setDeliveryTime(timeStr)} placeholder={["с", "до"]} className="timePickers" defaultValue={[moment("10:00", 'HH:mm'), moment("14:00", 'HH:mm')]} picker="time" format={'HH:mm'} />
                                 </div>
                             </div>
                             <div className="Способ_получения">
                                 Адрес доставки в городе Москва
-                                <input className="address" type="text" />
+                                <input value={deliveryAddress} onChange={({target}) => setDeliveryAddress(target.value)} className="address" type="text" />
                                 <small>Доставка 350 Р по МСК / <br /> За МКАД каждый 1 КМ - 50 Р</small>
                             </div></>
                         }
@@ -238,7 +252,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                             <Cleave className="input" options={{
                                 phone: true,
                                 phoneRegionCode: 'RU'
-                            }} type="tel" placeholder="+7 (000) 000 00 00"  />
+                            }} value={contactPhoneNumber} onChange={({target}) => setContactPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>contactPhoneNumber || setContactPhoneNumber("+7")} />
                         </>}
                     </div>
                 }
@@ -246,7 +260,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
             <Bottom service={service}>
                 {service ? null : <div className="first">
                     <small>Итоговая абонентская плата в месяц:</small>
-                    500 ₽ / мес 
+                    {totalPrice} ₽ / мес 
                 </div>}
                 {service && service.eSim && <small class="свой_номер">Введите свой номер телефона</small>}
                 <span>
@@ -256,7 +270,7 @@ export default function SimCardInfo({selected, Option, service, handleSubmit}) {
                             phoneRegionCode: 'RU'
                         }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
                     }
-                    <button onClick={handleSubmit}>Оформить заказ <Arrow /></button>
+                    <button onClick={() => handleSubmit(contract)}>Оформить заказ <Arrow /></button>
                 </span>
                 <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.
