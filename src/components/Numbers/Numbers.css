@@ -498,6 +498,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 .numbers__headtitle-text {
+    font-family: Circe;
     font-style: normal;
     font-weight: bold;
     font-size: 60px;

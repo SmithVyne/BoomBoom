@@ -49,6 +49,18 @@ const Service = styled.div`
     .serviceTop img {
         width: 160px;
         height: 160px;
+        @media(max-width: 1266px) {
+            width: 120px;
+            height: 120px;
+        }
+        @media(max-width: 829px) {
+            width: 80px;
+            height: 80px;
+        }
+        @media(max-width: 520px) {
+            width: 52px;
+            height: 52px;
+        }
     }
     .serviceBody {
         display: flex;
@@ -57,13 +69,24 @@ const Service = styled.div`
         justify-content: space-between;
         align-items: flex-start;
         h3 {
+            font-family: Circe;
             font-size: 32px;
             font-weight: bold;
             color: inherit;
+            @media(max-width: 829px) {
+                font-size: 28px;
+            }
+            @media(max-width: 520px) {
+                font-size: 24px;
+            }
         }
         .desc {
+            font-family: Circe;
             font-size: 20px;
             margin-bottom: auto;
+            @media(max-width: 520px) {
+                font-size: 16px;
+            }
         }
         button {
             padding: 12px 24px;
@@ -123,7 +146,7 @@ export default function Services() {
             <Wrapper>
                 <div className={`services__head-container`}>
                     <img className={`services__head-logo`} src={bomb} alt="Услуги" />
-                    <h2 className={`services__head-title ${darkTheme ? 'services__text_dark' : ''}`}>Бомбезные услуги</h2>
+                    <h2 className={`services__head-title ${darkTheme ? 'services__text_dark' : ''}`}>Бомбезные<br/>услуги</h2>
                 </div>
                 <div className={`services__head-buttons`}>
                     <button onClick={() => {
