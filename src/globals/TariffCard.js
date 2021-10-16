@@ -34,6 +34,7 @@ const Wrapper = styled(motion.div)`
     }
     @media(max-width: 600px) {
         width: 90vw;
+        padding: 20px 12px;
     }
     .detailsWrapper {
         width: 70%;
@@ -213,6 +214,7 @@ const Switches = styled.span`
 `
 
 const FourGSwitchStyles = styled.span`
+font-family: Circe;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -224,12 +226,17 @@ const FourGSwitchStyles = styled.span`
     padding: 13px;
     font-weight: bold;
     font-size: 20px;
+    line-height: 18px;
     &:first-of-type {
         margin-right: ${({buy}) => buy || "20px"};
     }
+    @media(max-width: 736px) {
+        font-size: 12px;
+        gap: 3px;
+    }
     @media (max-width: 450px) {
         flex-wrap: wrap;
-        padding: 8px;
+        padding: 8px 11px;
     }
     ${({price}) => {
         return price === Infinity && {
@@ -254,14 +261,19 @@ const FourGSwitchStyles = styled.span`
         }
     }};
     span {
+        font-family: Circe;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
         display: flex;
         align-items: center;
         gap: 8px;
-        font-weight: normal;
-        @media(max-width: 450px) {
-            font-size: 16px;
+        @media(max-width: 736px) {
+            font-size: 12px;
             gap: 3px;
         }
+        
     }
 `
 

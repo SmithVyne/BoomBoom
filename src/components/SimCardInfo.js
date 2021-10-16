@@ -11,7 +11,7 @@ const { RangePicker } = TimePicker;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: ${({service}) => service || "36px"};
+    margin-top: ${({ service }) => service || "36px"};
     gap: 52px;
     font-family: Circe;
     & small {
@@ -121,13 +121,14 @@ const Bottom = styled.div`
         
     }
     & button {
-        background: ${({enableButton}) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
+        background: ${({ enableButton }) => enableButton ? "#010101" : "rgba(1, 1, 1, 0.7)"};
+        transition: background-color 0.3s ease-in-out;
         width: 300px;
         height: 60px;
         border-radius: 60px;
         border: none;
         color: white;
-        cursor: ${({enableButton}) => enableButton ? "pointer" : "not-allowed"};
+        cursor: ${({ enableButton }) => enableButton ? "pointer" : "not-allowed"};
         svg {
             transform: rotate(-90deg)
         }
@@ -186,7 +187,7 @@ const Bottom = styled.div`
         }
     }
     .omo:focus, .omo:active {
-        border-color: ${({service}) => service && service.eSim ? "#010101" : "#0E5EF8"};
+        border-color: ${({ service }) => service && service.eSim ? "#010101" : "#0E5EF8"};
     }
 `
 const Pickup = styled.div`
@@ -215,126 +216,299 @@ const Pickup = styled.div`
 `
 
 const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill="#F8F8F8" />
+    <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill="#F8F8F8" />
 </svg>;
 
 const options = ["Доставка", "Самовывоз", "eSIM"]
 
-function SimCardInfo({selected, Option, service, handleSubmit, totalPrice, buy, tariff, enableButton, boughtNumbers, chosenNumber, setEnableButton}) { 
+function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy, tariff, enableButton, boughtNumbers, chosenNumber, setEnableButton }) {
     const [selectedOption, setSelectedOption] = useState(0);
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [contactPhoneNumber, setContactPhoneNumber] = useState("");
+    
+
     const [deliveryDate, setDeliveryDate] = useState(moment().format("DD/MM/YYYY"));
     const [deliveryTime, setDeliveryTime] = useState(["10:00", "14:00"]);
     const [deliveryAddress, setDeliveryAddress] = useState("");
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(true);
+
+    const [phoneValue, setPhoneValue] = useState('');
+    const [phoneValidity, setPhoneValidity] = useState({});
+
+    function handlePhoneChange(e) {
+
+        let inputValue = e.target.value.replace(/\D/g, '')
+        let formattedInputValue = '';
+        if (!inputValue) {
+            setPhoneValue('')
+            setPhoneValidity({
+                errorMassage: 'Можно вводить только цифры',
+                validState: false
+            })
+        }
+        else {
+            if (['7', '8', '9'].indexOf(inputValue[0]) > -1) {
+                setPhoneValidity({
+                    errorMassage: '',
+                    validState: false
+                })
+                if (inputValue[0] === '9') inputValue = '7' + inputValue;
+
+                let firstSimbols = (inputValue[0] === '8') ? '8' : '+7';
+                formattedInputValue = firstSimbols + ' '
+
+                if (inputValue.length > 1) {
+                    formattedInputValue += '(' + inputValue.substring(1, 4)
+                }
+                if (inputValue.length >= 5) {
+                    formattedInputValue += ') ' + inputValue.substring(4, 7)
+                }
+                if (inputValue.length >= 8) {
+                    formattedInputValue += '-' + inputValue.substring(7, 9)
+                }
+                if (inputValue.length >= 10) {
+                    formattedInputValue += '-' + inputValue.substring(9, 11)
+                }
+                if (inputValue.length >= 11) {
+                    setPhoneValidity({
+                        errorMassage: '',
+                        validState: true
+                    });
+                } else {
+                    setPhoneValidity({
+                        errorMassage: '',
+                        validState: false
+                    });
+                }
+            } else {
+                formattedInputValue = '+' + inputValue.substring(0, 16)
+                if (inputValue.length >= 11) {
+                    setPhoneValidity({
+                        errorMassage: '',
+                        validState: true
+                    });
+                } else {
+                    setPhoneValidity({
+                        errorMassage: '',
+                        validState: false
+                    });
+                }
+            }
+
+            setPhoneValue(formattedInputValue)
+        }
+
+
+
+
+    }
+
+
+    function handlePhoneDelite(e) {
+        if (e.keyCode === 8 && e.target.value.replace(/\D/g, '').length === 1) {
+            setPhoneValue('')
+        }
+        if (e.keyCode === 8 && e.target.value.replace(/\D/g, '').length < 11) {
+            setPhoneValidity({
+                errorMassage: '',
+                validState: false
+            });
+        }
+
+    }
+
+    const [contactPhoneNumber, setContactPhoneNumber] = useState("");
+    const [contactPhoneValidity, setContactPhoneValidity] = useState({});
+    function handleContctPhoneChange(e) {
+        
+        let inputValue = e.target.value.replace(/\D/g, '')
+        let formattedInputValue = '';
+        if (!inputValue) {
+            setContactPhoneNumber('')
+            setContactPhoneValidity({
+                errorMassage: 'Можно вводить только цифры',
+                validState: false
+            })
+        }
+        else {
+            if (['7', '8', '9'].indexOf(inputValue[0]) > -1) {
+                setContactPhoneValidity({
+                    errorMassage: '',
+                    validState: false
+                })
+                if (inputValue[0] === '9') inputValue = '7' + inputValue;
+
+                let firstSimbols = (inputValue[0] === '8') ? '8' : '+7';
+                formattedInputValue = firstSimbols + ' '
+
+                if (inputValue.length > 1) {
+                    formattedInputValue += '(' + inputValue.substring(1, 4)
+                }
+                if (inputValue.length >= 5) {
+                    formattedInputValue += ') ' + inputValue.substring(4, 7)
+                }
+                if (inputValue.length >= 8) {
+                    formattedInputValue += '-' + inputValue.substring(7, 9)
+                }
+                if (inputValue.length >= 10) {
+                    formattedInputValue += '-' + inputValue.substring(9, 11)
+                }
+                if (inputValue.length >= 11) {
+                    setContactPhoneValidity({
+                        errorMassage: '',
+                        validState: true
+                    });
+                } else {
+                    setContactPhoneValidity({
+                        errorMassage: '',
+                        validState: false
+                    });
+                }
+            } else {
+                formattedInputValue = '+' + inputValue.substring(0, 16)
+                if (inputValue.length >= 11) {
+                    setContactPhoneValidity({
+                        errorMassage: '',
+                        validState: true
+                    });
+                } else {
+                    setContactPhoneValidity({
+                        errorMassage: '',
+                        validState: false
+                    });
+                }
+            }
+
+            setContactPhoneNumber(formattedInputValue)
+        }
+
+
+
+
+    }
+
+
+    function handleContctPhoneDelite(e) {
+        if (e.keyCode === 8 && e.target.value.replace(/\D/g, '').length === 1) {
+            setContactPhoneNumber('')
+        }
+        if (e.keyCode === 8 && e.target.value.replace(/\D/g, '').length < 11) {
+            setContactPhoneValidity({
+                errorMassage: '',
+                validState: false
+            });
+        }
+
+    }
+
 
     const contract = useMemo(() => {
-        const local = {phoneNumber}
-        if(selected === 0) {
-            if(selectedOption === 0) {
+        const local = { phoneValue }
+        if (selected === 0) {
+            if (selectedOption === 0) {
                 return {
-                    ...local,
+                    ...local, contactPhoneNumber: phoneValue,
                     deliveryDate,
                     deliveryTime,
                     deliveryMethod: options[selectedOption],
                     deliveryAddress,
                 }
-            } else if(selectedOption === 1 || selectedOption === 2) {
-                return local
+            } else if (selectedOption === 1 || selectedOption === 2) {
+                return {...local, deliveryMethod: options[selectedOption], contactPhoneNumber: phoneValue}
             }
         }
-        else if(selected===1) {
-            if(checked) return local
-            else return {...local, contactPhoneNumber}
+        else if (selected === 1) {
+            if (checked) {
+                
+                return { ...local, contactPhoneNumber: phoneValue }
+            }
+            else return { ...local, contactPhoneNumber }
         }
-    }, [deliveryDate, deliveryTime, deliveryAddress, phoneNumber, selectedOption, checked, selected, contactPhoneNumber])
+    }, [deliveryDate, deliveryTime, deliveryAddress, phoneValue, selectedOption, checked, selected, contactPhoneNumber])
 
     // console.log(contract)
-    
     useEffect(() => {
+        if (phoneValue === contactPhoneNumber){
+            setChecked(true)
+            setContactPhoneNumber('')
+        }
+    }, [phoneValue, contactPhoneNumber])
+
+
+    useEffect(() => {
+        console.log(contract)
         const truthy = Object.values(contract).every(item => item)
-        if(buy) {
-            setEnableButton(!!_.size(boughtNumbers) && truthy)
-        } else if(tariff) {
-            if(selected === 0) setEnableButton(!!_.size(chosenNumber) && truthy)
-            else setEnableButton(truthy)
-        } else if(service) setEnableButton(!!phoneNumber)
-    }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract, service, phoneNumber, selected])
+        if (buy) {
+            
+            setEnableButton(checked? phoneValidity.validState && !!_.size(boughtNumbers) && truthy: phoneValidity.validState && contactPhoneValidity.validState && !!_.size(boughtNumbers) && truthy)
+        } else if (tariff) {
+            if (selected === 0) setEnableButton(phoneValidity.validState && !!_.size(chosenNumber) && truthy)
+            else setEnableButton(checked? phoneValidity.validState && truthy : phoneValidity.validState && contactPhoneValidity.validState && truthy)
+        } else if (service) setEnableButton(phoneValidity.validState)
+    }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract, checked, service, phoneValue, selected, phoneValidity, contactPhoneValidity.validState])
 
     return (
         <Wrapper service={service}>
             {service ? null :
-            <>
-                {selected === 0 ? 
-                    <>
-                        <div className="Способ_получения">
+                <>
+                    {selected === 0 ?
+                        <>
+                            <div className="Способ_получения">
                                 Способ получения
                                 <div className="options">
-                                {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={()=>setSelectedOption(idx)} className="option">{option}</Option>)}
+                                    {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)} className="option">{option}</Option>)}
                                 </div>
                                 <small>Только Москва и МО</small>
-                        </div>
-                        {selectedOption === 0 && 
-                            <><div className="orderDates">
-                                <div className="Способ_получения">
-                                    Дата доставки
-                                    <DatePicker onChange={(_, dateStr) => setDeliveryDate(dateStr)} disabledDate={(current) => current && current < moment().startOf('day')} allowClear={false} suffixIcon={<GoCalendar style={{color: "#0E5EF8"}} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
-                                </div>
-                                <div className="Способ_получения">
-                                    Время доставки
-                                    <RangePicker onChange={(_, timeStr) => setDeliveryTime(timeStr)} placeholder={["с", "до"]} className="timePickers" defaultValue={[moment("10:00", 'HH:mm'), moment("14:00", 'HH:mm')]} picker="time" format={'HH:mm'} />
-                                </div>
                             </div>
-                            <div className="Способ_получения">
-                                Адрес доставки в городе Москва
-                                <input value={deliveryAddress} onChange={({target}) => setDeliveryAddress(target.value)} className="address" type="text" />
-                                <small>Доставка 350 Р по МСК / <br /> За МКАД каждый 1 КМ - 50 Р</small>
-                            </div></>
-                        }
-                        {selectedOption === 1 && 
-                            <Pickup>
-                                Вы можете получить свою сим-карту в любом офисе Beeline
-                                <span>
-                                    <HiOutlineLocationMarker /> 
-                                    <a target="_blank" href="https://www.google.com/maps/search/%D0%BE%D1%84%D0%B8%D1%81%D1%8B+beeline+%D0%B2+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/@55.7112608,37.428036,11z/data=!3m1!4b1" rel="noreferrer" >Найти салон связи на карте</a>
-                                </span>
-                            </Pickup>
-                        } 
-                    </>
-                        : 
-                    <div className="Переносимый_номер">
-                        <label>Переносимый номер</label>
-                        <Cleave className="input" options={{
-                                phone: true,
-                                phoneRegionCode: 'RU'
-                            }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
-                        <label className="checker"><input onChange={()=>setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
-                        {checked  || 
-                        <>
-                            <label>Контактный номер</label>
-                            <Cleave className="input" options={{
-                                phone: true,
-                                phoneRegionCode: 'RU'
-                            }} value={contactPhoneNumber} onChange={({target}) => setContactPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>contactPhoneNumber || setContactPhoneNumber("+7")} />
-                        </>}
-                    </div>
-                }
-            </>}
+                            {selectedOption === 0 &&
+                                <><div className="orderDates">
+                                    <div className="Способ_получения">
+                                        Дата доставки
+                                        <DatePicker onChange={(_, dateStr) => setDeliveryDate(dateStr)} disabledDate={(current) => current && current < moment().startOf('day')} allowClear={false} suffixIcon={<GoCalendar style={{ color: "#0E5EF8" }} />} placeholder="Дата доставки" className="timePickers" defaultValue={moment()} format={'DD/MM/YYYY'} />
+                                    </div>
+                                    <div className="Способ_получения">
+                                        Время доставки
+                                        <RangePicker onChange={(_, timeStr) => setDeliveryTime(timeStr)} placeholder={["с", "до"]} className="timePickers" defaultValue={[moment("10:00", 'HH:mm'), moment("14:00", 'HH:mm')]} picker="time" format={'HH:mm'} />
+                                    </div>
+                                </div>
+                                    <div className="Способ_получения">
+                                        Адрес доставки в городе Москва
+                                        <input value={deliveryAddress} onChange={({ target }) => setDeliveryAddress(target.value)} className="address" type="text" />
+                                        <small>Доставка 350 Р по МСК / <br /> За МКАД каждый 1 КМ - 50 Р</small>
+                                    </div></>
+                            }
+                            {selectedOption === 1 &&
+                                <Pickup>
+                                    Вы можете получить свою сим-карту в любом офисе Beeline
+                                    <span>
+                                        <HiOutlineLocationMarker />
+                                        <a target="_blank" href="https://www.google.com/maps/search/%D0%BE%D1%84%D0%B8%D1%81%D1%8B+beeline+%D0%B2+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/@55.7112608,37.428036,11z/data=!3m1!4b1" rel="noreferrer" >Найти салон связи на карте</a>
+                                    </span>
+                                </Pickup>
+                            }
+                        </>
+                        :
+                        <div className="Переносимый_номер">
+                            <label>Переносимый номер</label>
+                            <input className="input" value={phoneValue}  onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handlePhoneDelite(e)} />
+                            <label className="checker"><input onChange={() => setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
+                            {checked ||
+                                <>
+                                    <label>Контактный номер</label>
+                                    <input className="input" value={contactPhoneNumber} onChange={(e) => handleContctPhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handleContctPhoneDelite(e)} />
+                                </>}
+                        </div>
+                    }
+                </>}
             <Bottom enableButton={enableButton} service={service}>
                 {service ? null : <div className="first">
                     <small>Итоговая абонентская плата в месяц:</small>
-                    {totalPrice} ₽ / мес 
+                    {totalPrice} ₽ / мес
                 </div>}
                 <small className="свой_номер">Введите свой номер телефона</small>
                 <span>
                     {(selected === 0 || !!service) &&
-                        <Cleave className="omo" options={{
-                            phone: true,
-                            phoneRegionCode: 'RU'
-                        }} value={phoneNumber} onChange={({target}) => setPhoneNumber(target.value)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>phoneNumber || setPhoneNumber("+7")} />
+                        <input className="omo" value={phoneValue} onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handlePhoneDelite(e)} />
                     }
-                    <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>{service ? service.eSim ?  "Оставить заявку" : "Подключить"  : 'Оформить заказ'} <Arrow /></button>
+                    <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>{service ? service.eSim ? "Оставить заявку" : "Подключить" : 'Оформить заказ'} <Arrow /></button>
                 </span>
                 <div className="last">
                     Перезвоним в ближайшее время или отправим SMS с подтверждением заказа.

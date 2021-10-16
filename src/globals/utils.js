@@ -30,13 +30,13 @@ export const CREATE_AUTH = "CREATE_AUTH";
 export const DELETE_AUTH = "DELETE_AUTH";
 
 export const CATEGORIES = {
-    1: {name: "Бронзовый", bg: "#CD7F32", price: 0, prevPrice: "1000", exclude: 0},
-    2: {name: "Серебряный", bg: "#C0C0C0", price: 300, prevPrice: "5000", exclude: 1},
-    3: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
-    4: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
-    5: {name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2},
-    6: {name: "Платиновый", bg: "#e5e4e2", price: 1000, prevPrice: "200 000", exclude: 3},
-    10: {name: "Бриллиантовый", bg: "#FFB02E", price: 1500, prevPrice: "500 000", exclude: 4}
+    1: { name: "Бронзовый", bg: "#CD7F32", price: 0, prevPrice: "1000", exclude: 0 },
+    2: { name: "Серебряный", bg: "#C0C0C0", price: 300, prevPrice: "5000", exclude: 1 },
+    3: { name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2 },
+    4: { name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2 },
+    5: { name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2 },
+    6: { name: "Платиновый", bg: "#e5e4e2", price: 1000, prevPrice: "200 000", exclude: 3 },
+    10: { name: "Бриллиантовый", bg: "#FFB02E", price: 1500, prevPrice: "500 000", exclude: 4 }
 }
 
 const getAuth = (accessToken) => {
@@ -45,28 +45,28 @@ const getAuth = (accessToken) => {
     }
     else return {}
 }
-export async function Fetcher (body, options = {}) {
-    const {accessToken, errorDispatch} = options;
-    return  fetch(BASE_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Client-Id": "7f543b97f8029e1ab7674232318c5bbf",
-                    ...getAuth(accessToken)
-                },
-                body: JSON.stringify(body)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.error) {
-                    if(errorDispatch) {
-                        errorDispatch()
-                    } else {
-                        throw data.error
-                    }
-                } else return data.result
-            })
-            .catch(err => console.warn(err))
+export async function Fetcher(body, options = {}) {
+    const { accessToken, errorDispatch } = options;
+    return fetch(BASE_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Client-Id": "7f543b97f8029e1ab7674232318c5bbf",
+            ...getAuth(accessToken)
+        },
+        body: JSON.stringify(body)
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                if (errorDispatch) {
+                    errorDispatch()
+                } else {
+                    throw data.error
+                }
+            } else return data.result
+        })
+        .catch(err => console.warn(err))
 }
 
 export const replacePoints = (text) => text.toString().replace(".", ",");
@@ -106,6 +106,95 @@ export async function OrderService(serviceName, userPhone, fromMosсow) {
         .then(res => res.json())
 }
 
+export async function TransferNumber({
+    transferDate,
+    transferredNumber,
+    userPhone,
+    fromMosсow}) {
+
+    return fetch('https://boomtele.com/api/transfer-number/', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            transferDate,
+            transferredNumber,
+            userPhone,
+            fromMosсow
+        }
+        )
+    })
+        .then(res => res.json())
+}
+
+export async function OrderTariff(tariffName,
+    tariffOptions,
+    unlimitedInternet,
+    modem,
+    productionMethod,
+    selectedNumber,
+    deliveryDate,
+    deliveryTime,
+    deliveryAddress,
+    transferredNumber,
+    deliveryMethod,
+    userPhone,
+    fromMosсow) {
+    return fetch('https://boomtele.com/api/order-tariff/', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            tariffName,
+            tariffOptions,
+            unlimitedInternet,
+            modem,
+            productionMethod,
+            selectedNumber,
+            deliveryDate,
+            deliveryTime,
+            deliveryAddress,
+            transferredNumber,
+            deliveryMethod,
+            userPhone,
+            fromMosсow
+        }
+        )
+    })
+        .then(res => res.json())
+}
+
+export async function BuyNumbers(deliveryDate,
+    deliveryTime,
+    deliveryAddress,
+    deliveryMethod,
+    numbersArray,
+    userPhone,
+    fromMosсow) {
+    return fetch('https://boomtele.com/api/buy-numbers/', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            deliveryDate,
+            deliveryTime,
+            deliveryAddress,
+            deliveryMethod,
+            numbersArray,
+            userPhone,
+            fromMosсow
+        }
+        )
+    })
+        .then(res => res.json())
+}
+
 export const tariffBase = {
     title: 'Базовый',
     icon: duck,
@@ -114,15 +203,15 @@ export const tariffBase = {
         min: 300,
         gb: 40,
         sms: 300,
-    },{
+    }, {
         min: 400,
         gb: 30,
         sms: 300,
-    },{
+    }, {
         min: 400,
         gb: 20,
         sms: 300,
-    },{
+    }, {
         min: 500,
         gb: 10,
         sms: 100,
@@ -130,7 +219,7 @@ export const tariffBase = {
     infinitInternet: 150,
     modem: 50,
     price: 350,
-    background:"linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)"
+    background: "linear-gradient(99.98deg, #4B74FC 0%, #3039FF 98.9%)"
 }
 export const tariffBright = {
     title: 'Яркий',
@@ -144,7 +233,7 @@ export const tariffBright = {
         min: 800,
         gb: 40,
         sms: 500,
-    },{
+    }, {
         min: 800,
         gb: 30,
         sms: 500,
@@ -156,7 +245,7 @@ export const tariffBright = {
     infinitInternet: 150,
     modem: 50,
     price: 500,
-    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);",
+    background: " linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%);",
     hit: true,
 }
 export const tariffAdvanced = {
@@ -168,15 +257,15 @@ export const tariffAdvanced = {
         gb: Infinity,
         sms: 1000,
         "Безлимитный 4G": Infinity,
-    },{
+    }, {
         min: 1500,
         gb: 50,
         sms: 1000,
-    },{
+    }, {
         min: 1500,
         gb: 40,
         sms: 1000,
-    },{
+    }, {
         min: 2000,
         gb: 35,
         sms: 1000,
@@ -184,7 +273,7 @@ export const tariffAdvanced = {
     infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
     modem: 50,
     price: 800,
-    background:" linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)" 
+    background: " linear-gradient(99.98deg, #4B40FE 0%, #3039FF 98.9%, #4B1EFF 98.9%)"
 }
 export const tariffBiz = {
     title: 'Бизнес',
@@ -194,15 +283,15 @@ export const tariffBiz = {
         gb: Infinity,
         sms: 1000,
         "Безлимитный 4G": Infinity,
-    },{
+    }, {
         min: 3000,
         gb: 60,
         sms: 1000,
-    },{
+    }, {
         min: 3000,
         gb: 50,
         sms: 1000,
-    },{
+    }, {
         min: 4000,
         gb: 50,
         sms: 1000,
@@ -210,7 +299,7 @@ export const tariffBiz = {
     infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
     modem: 50,
     price: 1000,
-    background:"radial-gradient(ellipse at center, #324E69 0%, #242424 100%)"
+    background: "radial-gradient(ellipse at center, #324E69 0%, #242424 100%)"
 }
 export const tariffVip = {
     title: 'VIP',
@@ -221,7 +310,7 @@ export const tariffVip = {
         sms: 1000,
         "Безлимитный 4G": Infinity,
         "Раздача интернета": Infinity,
-    },{
+    }, {
         min: 7000,
         gb: 150,
         sms: 1000,
@@ -230,10 +319,10 @@ export const tariffVip = {
     infinitInternet: 'Включено в тариф',
     modem: 'Включено в тариф',
     price: 1500,
-    background:"radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"
+    background: "radial-gradient(ellipse at center, #D79532 0%, #E1B470 50%, #1B240A 100%)"
 }
 
-export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tariffBiz, tariffVip ]
+export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tariffBiz, tariffVip]
 
 export const services = {
     paid: [
@@ -242,7 +331,7 @@ export const services = {
             Вы планировали? Докупите еще гигабайт 
             на максимальной скорости`,
             img: box,
-            positions: [{title: "Пакет 10 ГБ", price:"150 ₽"}, {title: "Пакет 20 ГБ", price:"250 ₽"}, {title: "Пакет 30 ГБ", price:"350 ₽"}, {title: "Пакет 40 ГБ", price:"550 ₽"}]
+            positions: [{ title: "Пакет 10 ГБ", price: "150 ₽" }, { title: "Пакет 20 ГБ", price: "250 ₽" }, { title: "Пакет 30 ГБ", price: "350 ₽" }, { title: "Пакет 40 ГБ", price: "550 ₽" }]
         },
         {
             title: `Пакет безлимитного 
@@ -290,7 +379,7 @@ export const services = {
             img: telephone,
             price: "750 ₽ / месяц"
         },
-    ], 
+    ],
     free: [
         {
             title: `Запрет мобильного интернета`,

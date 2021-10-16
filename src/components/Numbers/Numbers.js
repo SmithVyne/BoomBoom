@@ -703,6 +703,7 @@ export default function Numbers(props) {
         // dispatch({ type: BUY_NUMBER, number: selectedNumber })
         // console.log(selectedNumbers)
         props.buyNumbers(selectedNumbers)
+        setSelectedNumbers([])
     }
     function handleFocus(e) {
         if (isInputFocused) {
