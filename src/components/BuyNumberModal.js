@@ -268,13 +268,35 @@ const Thanks = styled.div`
     flex-direction: column;
     align-items: flex-start;
     .thanksTop {
+        margin-top: 24px;
         margin-bottom: 10px;
         display: flex;
         align-items: center;
         gap: 12px;
+        .thanksTitle{
+            margin: 0;
+            font-family: Circe;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 130%;
+            color: #010101;
+            @media(max-width: 736px) {
+                font-size: 27px;
+            }
+        }
     }
     .thanksBody {
+        font-family: Circe;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 130%;
         margin-bottom: 24px;
+        color: rgba(1, 1, 1, 0.68);
+        @media(max-width: 736px) {
+            font-size: 16px;
+        }
     }
     button {
         background: #010101;
@@ -297,10 +319,27 @@ const ThankYouModal = () => {
     return (
         <Thanks>
             <div className="thanksTop">
-                <h2>Спасибо за заявку</h2>
+                <h2 className="thanksTitle">Спасибо за заявку</h2>
                 <FaCheckCircle size={32} color="#79FFD7" />
             </div>
             <span className="thanksBody">Мы с вами свяжемся в ближайшее время</span>
+            <button onClick={() => dispatch({ type: HIDE_MODAL })}>Хорошо</button>
+        </Thanks>
+    )
+}
+
+const ErrorModal = () => {
+    const dispatch = useDispatch();
+    return (
+        <Thanks>
+            <div className="thanksTop">
+                <h2 className="thanksTitle">Что-то пошло не так</h2>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32ZM7.29289 7.29289C7.68342 6.90237 8.31658 6.90237 8.70711 7.29289L16 14.5858L23.2929 7.29289C23.6834 6.90237 24.3166 6.90237 24.7071 7.29289C25.0976 7.68342 25.0976 8.31658 24.7071 8.70711L17.4142 16L24.7071 23.2929C25.0976 23.6834 25.0976 24.3166 24.7071 24.7071C24.3166 25.0976 23.6834 25.0976 23.2929 24.7071L16 17.4142L8.70711 24.7071C8.31658 25.0976 7.68342 25.0976 7.29289 24.7071C6.90237 24.3166 6.90237 23.6834 7.29289 23.2929L14.5858 16L7.29289 8.70711C6.90237 8.31658 6.90237 7.68342 7.29289 7.29289Z" fill="#FF0202" />
+                </svg>
+
+            </div>
+            <span className="thanksBody">Попробуйте оставить заявку снова</span>
             <button onClick={() => dispatch({ type: HIDE_MODAL })}>Хорошо</button>
         </Thanks>
     )
@@ -534,6 +573,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const [inputNumber, setInputNumber] = useState("");
     const { position, tariffId, service, switches, toSubmit } = payload;
     const [submit, setSubmit] = useState(toSubmit);
+    const [error, setError] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
     const dispatch = useDispatch();
     const [modalSwitches, setModalSwitches] = useState(switches);
@@ -580,7 +620,11 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             OrderService(serviceName, userPhone, fromMosсow).then(() => {
                 setSubmit(true);
             })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    setSubmit(true);
+                    setError(true)
+                    console.log(err)
+                })
         }
 
     }
@@ -640,6 +684,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 console.log(res)
                 setSubmit(true);
             }).catch((err) => {
+                setSubmit(true);
+                setError(true)
                 console.log(err)
             })
     }
@@ -682,6 +728,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 console.log(res)
                 setSubmit(true);
             }).catch((err) => {
+                setSubmit(true);
+                setError(true)
                 console.log(err)
             })
     }
@@ -705,7 +753,9 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
 
 
             let numbersArray = []
+            // eslint-disable-next-line no-unused-vars
             for (const [key, value] of Object.entries(boughtNumbers)) {
+
                 numbersArray = [...numbersArray, value]
             }
             contract = { ...contract, numbersArray }
@@ -766,7 +816,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             <Modal onClick={(e) => { e.stopPropagation(); setClickedNumber({}) }}>
                 <Close onClick={() => dispatch({ type: HIDE_MODAL })}><CgClose strokeWidth={1.5} size={29} /></Close>
                 {submit ?
-                    <ThankYouModal /> :
+                    error ? <ErrorModal /> : <ThankYouModal /> :
                     <>
                         {showNumbers ?
                             <>

@@ -3,7 +3,7 @@ import { DatePicker, TimePicker } from "antd";
 import { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components/macro";
 import { GoCalendar } from 'react-icons/go';
-import Cleave from 'cleave.js/react';
+
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import _ from 'lodash';
 const { RangePicker } = TimePicker;
@@ -170,7 +170,7 @@ const Bottom = styled.div`
         font-family: Circe;
         font-style: normal;
         font-weight: normal;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 100%;
         color: rgba(1, 1, 1, 0.68);
     }
