@@ -27,7 +27,7 @@ export default function Section(props) {
     switches: { "Безлимитный 4G": false, "Раздача интернета": false }
   }
   function handleEsimBuy() {
-    console.log("ESIM BUY TRIGGERD")
+    dispatch({ type: SHOW_MODAL, payload: { service: { eSim: true } } })
   }
   return (
     <>
