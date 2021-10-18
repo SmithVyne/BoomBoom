@@ -480,9 +480,7 @@ const BuyNumbersDropdownStyles = styled.div`
     }
 `
 
-const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition, tariff, buy, handleOpen, setSelectedTariff, drop, number, setBoughtNumbers }) => {
-    const [dropDownPosition, setDropDownPosition] = useState(0)
-    const [localSwitches, setLocalSwitches] = useState({ "Безлимитный 4G": false, "Раздача интернета": false })
+const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition, tariff, buy, handleOpen, setSelectedTariff, drop, number, setBoughtNumbers, dropDownPosition, setDropDownPosition, localSwitches, setLocalSwitches }) => {
     const handleChoose = (index) => {
         if (buy) {
             setSelectedTariff()
@@ -491,12 +489,27 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
                 ...boughtNumbers, [number.ctn]: {
                     ...number, tariffName: tariff.title,
                     tariffOptions: `${tariff.positions[index].min} мин, ${tariff.positions[index].gb === Infinity ? "Безлимит" : tariff.positions[index].gb} гб, ${tariff.positions[index].sms} смс`,
-                    price: tariff.price + CATEGORIES[number.category].price,
-                    ...localSwitches
                 }
             }))
         } else setModalPosition(index)
     }
+
+    useEffect(() => {
+        if(buy && selected) {
+            const fourG = localSwitches["Безлимитный 4G"] ? 150 : 0;
+            const modem = localSwitches["Раздача интернета"] ? 50 : 0;
+            const price = tariff.price + CATEGORIES[number.category].price + fourG + modem;
+            setBoughtNumbers(boughtNumbers => ({
+                ...boughtNumbers, 
+                [number.ctn]: {
+                    ...number.ctn,
+                    ...localSwitches,
+                    price,
+                }
+            }))
+        }
+    }, [setBoughtNumbers, localSwitches, number, tariff, selected, buy])
+
     return (
         <Dropdown buy={buy} selected={selected} drop={drop} onClick={handleOpen}>
             <span className="top">
@@ -525,8 +538,16 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
         </Dropdown>
     )
 })
+
+
+
+
 const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, setModalPosition, number, buy, setBoughtNumbers, setDeletedNumbers }) => {
     const category = CATEGORIES[number.category]
+    const [dropDownPosition, setDropDownPosition] = useState(
+        tariffTypesArray.slice(category.exclude).reduce((total, tariff) => ({...total, [tariff.title]: 0}), {})
+    );
+    const [localSwitches, setLocalSwitches] = useState({ "Безлимитный 4G": false, "Раздача интернета": false })
 
     const [clickedTariff, setClickedTariff] = useState(null);
     const [selectedTariff, setSelectedTariff] = useState(null);
@@ -534,7 +555,6 @@ const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, set
         if (index === clickedTariff) setClickedTariff(null)
         else setClickedTariff(index)
     }
-
     return (
         <div className={`buyNumbersDropdown ${toggleOpen ? 'alignTop' : ''}`} >
             <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onClick={setToggleOpen}>
@@ -550,15 +570,11 @@ const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, set
                 </span>
                 {toggleOpen && <div onClick={(e) => e.stopPropagation()} className="body">
                     {tariffTypesArray.slice(category.exclude).map((tariff, index) =>
-                        <TariffsDropDown selected={selectedTariff === index} drop={clickedTariff === index} setSelectedTariff={() => setSelectedTariff(index)} handleOpen={() => handleOpen(index)} buy={buy} key={tariff.title} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} setBoughtNumbers={setBoughtNumbers} number={number} />
+                        <TariffsDropDown selected={selectedTariff === index} drop={clickedTariff === index} setSelectedTariff={() => setSelectedTariff(index)} handleOpen={() => handleOpen(index)} buy={buy} key={tariff.title} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} setBoughtNumbers={setBoughtNumbers} number={number} dropDownPosition={dropDownPosition[[tariff.title]]} setDropDownPosition={(position) => setDropDownPosition(values => ({...values, [tariff.title]: position}))} localSwitches={localSwitches} setLocalSwitches={setLocalSwitches} />
                     )}
                 </div>}
             </BuyNumbersDropdownStyles>
-            <GarbageCan onClick={() => {
-
-                setDeletedNumbers(numbers => [...numbers, number.ctn])
-            }
-            } />
+            <GarbageCan onClick={() => setDeletedNumbers(numbers => [...numbers, number.ctn])} />
         </div>
     )
 })
@@ -743,9 +759,12 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         if (buy) {
             return Object.values(boughtNumbers).reduce((prev, currentNum) => prev + currentNum.price, 0)
         } else if (tariff) {
-            return chosenNumber.category ? CATEGORIES[chosenNumber.category].price + tariff.price : tariff.price
+            const fourG = modalSwitches["Безлимитный 4G"] ? 150 : 0;
+            const modem = modalSwitches["Раздача интернета"] ? 50 : 0;
+            const basePrice = tariff.price + fourG + modem;
+            return chosenNumber.category ? CATEGORIES[chosenNumber.category].price + basePrice : basePrice
         } else return 0
-    }, [boughtNumbers, buy, tariff, chosenNumber])
+    }, [boughtNumbers, buy, tariff, chosenNumber, modalSwitches])
 
     const handleSubmit = (contract) => {
 

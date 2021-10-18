@@ -310,6 +310,10 @@ export default memo(function TariffCard({ tariff, tariffId }) {
         e.stopPropagation()
         setShowDropDown(true)
     }
+
+    const fourG = switches["Безлимитный 4G"] ? 150 : 0;
+    const modem = switches["Раздача интернета"] ? 50 : 0;
+    const totalPrice = tariff.price + fourG + modem;
     
     return (
         <Wrapper title={title} background={background} >
@@ -341,7 +345,7 @@ export default memo(function TariffCard({ tariff, tariffId }) {
                 <More to={`/tariff-info/:${title}`}>Подробнее про тариф</More>
             </span>
             <span className="priceInfo">
-                {tariff.price} руб./мес
+                {totalPrice} руб./мес
                 <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, payload})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
