@@ -3,18 +3,30 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
+import am4geodata_lang_RU from "@amcharts/amcharts4-geodata/lang/RU";
 
 import { GlobalContext } from '../../App';
 
 import './Roaming.css';
 import { roamingData, allCountrues } from './roamingData'
 
-am4core.useTheme(am4themes_animated);
-export default function Roaming() {
 
+
+am4core.useTheme(am4themes_animated);
+
+export default function Roaming() {
+    const { darkTheme } = useContext(GlobalContext);
+    const [isSelectTariffOpen, setSelectTariffOpen] = React.useState(false);
+    const [selectedTariff, setSelectedTariff] = React.useState('Базовый');
+    const [inputValue, setInputValue] = React.useState('');
+    const [isSuggestionsOpen, setSuggestionsOpen] = React.useState(false);
+    const [suggestionsValue, setSuggestionsValue] = React.useState(null);
+    const [polygon, setPolygon] = React.useState(null);
+    const [countryValue, setCountryValue] = React.useState('');
 
     useEffect(() => {
         const chart = am4core.create("chartdiv", am4maps.MapChart);
+        chart.preloader.disabled = true;
         // var interfaceColors = new am4core.InterfaceColorSet();
 
         // Set map definition
@@ -27,30 +39,91 @@ export default function Roaming() {
 
 
         // Set projection
+        chart.preloader.disabled = true;
+
         chart.projection = new am4maps.projections.Orthographic();
-        chart.panBehavior = "rotateLongLat";
+        chart.panBehavior = "rotateLong";
         chart.seriesContainer.draggable = false;
-        chart.seriesContainer.resizable = false;
+        chart.seriesContainer.resizable = true;
         chart.maxZoomLevel = 1;
+        chart.geodataNames = am4geodata_lang_RU;
 
         // chart.seriesContainer.cursorOverStyle = am4core.MouseCursorStyle.grab;
         // chart.seriesContainer.cursorDownStyle = am4core.MouseCursorStyle.grabbing;
 
         // Add zoom control
 
+        if (!darkTheme){
+            chart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#ffffff");
+            chart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+        } else{
+            chart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#121212");
+            chart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+        }
+       
 
-        chart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#ffffff");
-        chart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+        let graticuleSeries = chart.series.push(new am4maps.GraticuleSeries());
 
-        // Create map polygon series
+        graticuleSeries.mapLines.template.stroke = am4core.color("#4565FE");
+
+        graticuleSeries.mapLines.template.strokeOpacity = 1;
+        graticuleSeries.mapLines.template.strokeDasharray = "6,3";
+        graticuleSeries.mapLines.template.strokeWidth = 1;
+
+
+        graticuleSeries.fitExtent = false;
 
 
         var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+        setPolygon(polygonSeries)
         var polygonTemplate = polygonSeries.mapPolygons.template;
         polygonTemplate.tooltipText = "{name}";
         polygonTemplate.fill = am4core.color("#74B266");
-
         // Create hover state and set alternative fill color
+        polygonSeries.mapPolygons.template.events.on("hit", function (ev) {
+            setCountryValue('')
+            setInputValue('')
+            setInputValue(ev.target.dataItem.dataContext.name)
+            if (allCountrues.sort().filter((itm) => {
+                if (ev.target.dataItem.dataContext.name.toLowerCase() === '') {
+                    return false
+                }
+                if (itm.toLowerCase().startsWith(ev.target.dataItem.dataContext.name.toLowerCase())) {
+                    return true
+                }
+                return false
+            }).length === 1) {
+                console.log(ev.target.dataItem.dataContext.multiPolygon)
+                let cordsArray = []
+                for (let index = 0; index < ev.target.dataItem.dataContext.multiPolygon.length; index++) {
+                    cordsArray = [...cordsArray, ev.target.dataItem.dataContext.multiPolygon[index][0][0][0]]
+                }
+                let sum = cordsArray.reduce((a, b) => a + b, 0);
+                if(ev.target.dataItem.dataContext.name === "США"){
+                    chart.animate({
+                        property: "deltaLongitude",
+                        to: 100
+                    }, 1000);
+                } else {
+                    chart.animate({
+                        property: "deltaLongitude",
+                        to: (-1 * sum/cordsArray.length)
+                    }, 1000);
+                }
+                // let country = polygonSeries.getPolygonById(ev.target.dataItem.dataContext.id);
+                // chart.zoomToMapObject(country)
+                // Pre-zoom
+
+                // Set active state
+
+                setCountryValue(ev.target.dataItem.dataContext.name.toLowerCase())
+            }
+
+
+
+        });
+        let as = polygonTemplate.states.create("active");
+        as.properties.fill = am4core.color("#3C4FFF");
         var hs = polygonTemplate.states.create("hover");
         hs.properties.fill = am4core.color("#3C4FFF");
         polygonSeries.useGeodata = true;
@@ -59,20 +132,20 @@ export default function Roaming() {
         polygonSeries.mapPolygons.template.fill = am4core.color("#4B75FC");
         polygonSeries.mapPolygons.template.stroke = am4core.color("#4B75FC");
 
-        let graticuleSeries = chart.series.push(new am4maps.GraticuleSeries());
-        graticuleSeries.mapLines.template.stroke = false;
+        
 
-        graticuleSeries.fitExtent = false;
 
+        chart.deltaLongitude = -160;
         return () => {
             chart.dispose();
         };
-    },[]);
+    }, [darkTheme]);
 
-
-    const { darkTheme } = useContext(GlobalContext);
-    const [isSelectTariffOpen, setSelectTariffOpen] = React.useState(false);
-    const [selectedTariff, setSelectedTariff] = React.useState('Базовый');
+    useEffect(() => {
+        if (polygon && polygon.mapPolygons && polygon.mapPolygons.template )
+        console.log(polygon.mapPolygons.template)
+    }, [polygon]);
+  
 
     function handleTariffSelect(tariff) {
         setSelectedTariff(tariff)
@@ -86,10 +159,7 @@ export default function Roaming() {
             setSuggestionsOpen(false)
         }
     }
-    const [inputValue, setInputValue] = React.useState('');
-    const [isSuggestionsOpen, setSuggestionsOpen] = React.useState(false);
-    const [suggestionsValue, setSuggestionsValue] = React.useState(null);
-    const [countryValue, setCountryValue] = React.useState('');
+
     function handleInputChange(e) {
         let input = e.target.value
         setCountryValue('')
@@ -150,6 +220,10 @@ export default function Roaming() {
                 console.log('zone2')
                 setZoneValue(2)
             }
+        } else {
+            setZoneValue(null)
+            setCountryValue('')
+
         }
 
 
