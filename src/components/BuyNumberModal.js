@@ -17,6 +17,7 @@ import Cleave from 'cleave.js/react';
 import NumbersMobile from './Numbers/NumbersMobile'
 import searchIcon_black from '../assets/images/search-black.svg'
 import { OrderService, OrderTariff, BuyNumbers } from '../globals/utils'
+import Preloader from '../globals/Loader/index'
 
 const Wrapper = styled(motion.div)`
     position: fixed;
@@ -36,6 +37,13 @@ const Wrapper = styled(motion.div)`
     &::-webkit-scrollbar {
         width: 0;
     }
+`
+const Centered = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+
 `
 const Close = styled.span`
     position: absolute;
@@ -568,6 +576,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const { darkTheme } = useContext(GlobalContext);
     const [selectedOption, setSelectedOption] = useState(0);
     const [deletedNumbers, setDeletedNumbers] = useState([]);
+    const [showPreloader, setShowPreloader] = useState(false);
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
@@ -601,6 +610,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
 
 
     const handleServiceSubmit = (phoneValue) => {
+        setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
         let serviceName = service.eSim ? "Подключение eSim" : service.title.replace(/\s+/g, ' ')
             .replace(/^\s/, '')
@@ -619,10 +629,13 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             console.log(serviceName)
             OrderService(serviceName, userPhone, fromMosсow).then(() => {
                 setSubmit(true);
+                setShowPreloader(false)
             })
                 .catch((err) => {
+
                     setSubmit(true);
                     setError(true)
+                    setShowPreloader(false)
                     console.log(err)
                 })
         }
@@ -643,6 +656,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         deliveryMethod,
         userPhone
     }) => {
+        setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
         let fromMosсow
         if (inMoscow !== "false") {
@@ -683,9 +697,12 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow).then((res) => {
                 console.log(res)
                 setSubmit(true);
+                setShowPreloader(false)
             }).catch((err) => {
+
                 setSubmit(true);
                 setError(true)
+                setShowPreloader(false)
                 console.log(err)
             })
     }
@@ -699,6 +716,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         numbersArray,
         userPhone
     }) => {
+        setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
         let fromMosсow
         if (inMoscow !== "false") {
@@ -727,9 +745,11 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow).then((res) => {
                 console.log(res)
                 setSubmit(true);
+                setShowPreloader(false)
             }).catch((err) => {
                 setSubmit(true);
                 setError(true)
+                setShowPreloader(false)
                 console.log(err)
             })
     }
@@ -814,71 +834,78 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             submit={submit} service={service}
             onClick={() => dispatch({ type: HIDE_MODAL })} darkTheme={darkTheme}>
             <Modal onClick={(e) => { e.stopPropagation(); setClickedNumber({}) }}>
-                <Close onClick={() => dispatch({ type: HIDE_MODAL })}><CgClose strokeWidth={1.5} size={29} /></Close>
-                {submit ?
-                    error ? <ErrorModal /> : <ThankYouModal /> :
+                {showPreloader ? <Centered>
+                                    <Preloader />
+                                 </Centered> :
+
                     <>
-                        {showNumbers ?
+                        <Close onClick={() => dispatch({ type: HIDE_MODAL })}><CgClose strokeWidth={1.5} size={29} /></Close>
+                        {submit ?
+                            error ? <ErrorModal /> : <ThankYouModal /> :
                             <>
-                                <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
-                                <NumbersMobile
-                                    selectedCategoryID={selectedCategoryID}
-                                    inputValue={inputNumber}
-                                    selectedNumbers={[chosenNumber]}
-                                    handleCtnClick={(number) => { setChosenNumber(number); setShowNumbers(false) }}
-                                    darkTheme={{ val: false }}
-                                />
-                            </> :
-                            buy ?
-                                <>
-                                    <h1>Приобретение номера</h1>
-                                    <section>
-                                        <p>Выберете тарифы для номера</p>
-                                        <div className="ModalNumbers">
-                                            {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map((number) => (
-                                                <BuyNumbersDropdown key={number.ctn} setBoughtNumbers={setBoughtNumbers} buy={buy} number={number} modalPosition={modalPosition} setModalPosition={setModalPosition} setDeletedNumbers={setDeletedNumbers} toggleOpen={number.ctn === clickedNumber.ctn} setToggleOpen={(e) => { e.stopPropagation(); openCloseNumbers(number) }} />
-                                            ))}
-                                        </div>
-                                    </section>
-                                </>
-                                :
-                                service ?
+                                {showNumbers ?
                                     <>
-                                        <div className="servicesModal">
-                                            {(service.eSim || <span>Подключение услуги</span>)}
-                                            <h2>{service.eSim ? "Подключение eSim" : service.title}</h2>
-                                        </div>
+                                        <NumbersDropDown setShowNumbers={setShowNumbers} inputNumber={inputNumber} setInputNumber={setInputNumber} selectedCategoryID={selectedCategoryID} setSelectedCategoryID={setSelectedCategoryID} />
+                                        <NumbersMobile
+                                            selectedCategoryID={selectedCategoryID}
+                                            inputValue={inputNumber}
+                                            selectedNumbers={[chosenNumber]}
+                                            handleCtnClick={(number) => { setChosenNumber(number); setShowNumbers(false) }}
+                                            darkTheme={{ val: false }}
+                                        />
                                     </> :
-                                    <>
-                                        <h1>Подключение тарифа</h1>
-                                        <TariffsDropDown drop={tariffDropDown} handleOpen={() => setTariffDropDown(val => !val)} setChosenNumber={setChosenNumber} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} />
-                                        <section>
-                                            <p>Дополнительные опции</p>
-                                            <Switches>
-                                                {switchTypes.map(title => <FourGSwitch key={title} modal={true} checked={modalSwitches[title]} setSwitches={setModalSwitches} title={title} price={tariff.positions[modalPosition][title]} />)}
-                                            </Switches>
-                                        </section>
-                                        <section>
-                                            <p>Способ получения</p>
-                                            <div className="options first">
-                                                {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)}>{option}</Option>)}
-                                            </div>
-                                        </section>
-                                        {selectedOption === 0 && <section>
-                                            <p>Выберете номер</p>
-                                            <div className="выберете_номер">
-                                                <Cleave className="input" options={{
-                                                    phone: true,
-                                                    phoneRegionCode: 'RU'
-                                                }} type="tel" placeholder="Ваш новый номер" value={inputNumber} onChange={({ target }) => setInputNumber(target.value.replace(" ", ""))} />
-                                                <button onClick={() => setShowNumbers(true)}>Найти</button>
-                                            </div>
-                                        </section>}
-                                    </>
+                                    buy ?
+                                        <>
+                                            <h1>Приобретение номера</h1>
+                                            <section>
+                                                <p>Выберете тарифы для номера</p>
+                                                <div className="ModalNumbers">
+                                                    {numbers.filter(number => !deletedNumbers.includes(number.ctn)).map((number) => (
+                                                        <BuyNumbersDropdown key={number.ctn} setBoughtNumbers={setBoughtNumbers} buy={buy} number={number} modalPosition={modalPosition} setModalPosition={setModalPosition} setDeletedNumbers={setDeletedNumbers} toggleOpen={number.ctn === clickedNumber.ctn} setToggleOpen={(e) => { e.stopPropagation(); openCloseNumbers(number) }} />
+                                                    ))}
+                                                </div>
+                                            </section>
+                                        </>
+                                        :
+                                        service ?
+                                            <>
+                                                <div className="servicesModal">
+                                                    {(service.eSim || <span>Подключение услуги</span>)}
+                                                    <h2>{service.eSim ? "Подключение eSim" : service.title}</h2>
+                                                </div>
+                                            </> :
+                                            <>
+                                                <h1>Подключение тарифа</h1>
+                                                <TariffsDropDown drop={tariffDropDown} handleOpen={() => setTariffDropDown(val => !val)} setChosenNumber={setChosenNumber} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} />
+                                                <section>
+                                                    <p>Дополнительные опции</p>
+                                                    <Switches>
+                                                        {switchTypes.map(title => <FourGSwitch key={title} modal={true} checked={modalSwitches[title]} setSwitches={setModalSwitches} title={title} price={tariff.positions[modalPosition][title]} />)}
+                                                    </Switches>
+                                                </section>
+                                                <section>
+                                                    <p>Способ получения</p>
+                                                    <div className="options first">
+                                                        {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)}>{option}</Option>)}
+                                                    </div>
+                                                </section>
+                                                {selectedOption === 0 && <section>
+                                                    <p>Выберете номер</p>
+                                                    <div className="выберете_номер">
+                                                        <Cleave className="input" options={{
+                                                            phone: true,
+                                                            phoneRegionCode: 'RU'
+                                                        }} type="tel" placeholder="Ваш новый номер" value={inputNumber} onChange={({ target }) => setInputNumber(target.value.replace(" ", ""))} />
+                                                        <button onClick={() => setShowNumbers(true)}>Найти</button>
+                                                    </div>
+                                                </section>}
+                                            </>
+                                }
+                                <SimCardInfo tariff={tariff} boughtNumbers={boughtNumbers} chosenNumber={chosenNumber} enableButton={enableButton} setEnableButton={setEnableButton} totalPrice={totalPrice} handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
+                            </>
                         }
-                        <SimCardInfo tariff={tariff} boughtNumbers={boughtNumbers} chosenNumber={chosenNumber} enableButton={enableButton} setEnableButton={setEnableButton} totalPrice={totalPrice} handleSubmit={handleSubmit} selected={buy ? 0 : selectedOption} Option={Option} buy={buy} service={service} />
-                    </>
-                }
+                    </>}
+
             </Modal>
         </Wrapper>,
         document.getElementById("modal")
