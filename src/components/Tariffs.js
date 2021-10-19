@@ -6,14 +6,13 @@ import { GlobalContext } from "../App";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
+import Scrollbar from 'smooth-scrollbar';
 
-smoothscroll.polyfill();
 const WrapScroller = styled.div`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    
 `
 const Scroller = styled(motion.div)`
     height: fit-content;
@@ -105,7 +104,8 @@ const Ellipses = styled.div`
         margin-right: 0;
     }
 `
-
+smoothscroll.polyfill();
+const body = document.querySelector("body");
 
 export default function Tariffs({ children }) {
     const ref = useRef();
@@ -159,19 +159,21 @@ export default function Tariffs({ children }) {
     const handlePan = (e, info) => {
         const { current } = ref;
         const {x, y} = info.offset;
-        if(mobile) {
-            if(Math.abs(y) < Math.abs(x)) {
-                if(x < 0) {
-                    current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
-                } else {
-                    current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
-                }
+        if(mobile && Math.abs(x) > Math.abs(y)) {
+            if(x < 0) {
+                current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
             } else {
-                const val = y < 0 ? 350 : -350;
-                window.scrollBy({ top: val, behavior: 'smooth' });
+                current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
             }
         }
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        if(mobile) {
+            Scrollbar.init(body, {damping: 0.1})
+        }
+    }, [mobile])
 
     return (
         <>

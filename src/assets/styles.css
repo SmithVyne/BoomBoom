@@ -65,7 +65,11 @@ body::-webkit-scrollbar-thumb:hover {
     box-sizing: border-box;
 }
 
-body, #root {
+body {
+  height: 100vh;
+}
+
+#root {
     min-height: 100vh;
     height: fit-content;
 }
