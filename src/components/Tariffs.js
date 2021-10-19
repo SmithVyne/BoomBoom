@@ -8,13 +8,11 @@ import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
 import Scrollbar from 'smooth-scrollbar';
 
-smoothscroll.polyfill();
 const WrapScroller = styled.div`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    
 `
 const Scroller = styled(motion.div)`
     height: fit-content;
@@ -106,7 +104,8 @@ const Ellipses = styled.div`
         margin-right: 0;
     }
 `
-
+smoothscroll.polyfill();
+const body = document.querySelector("body");
 
 export default function Tariffs({ children }) {
     const ref = useRef();
@@ -169,14 +168,12 @@ export default function Tariffs({ children }) {
         }
     }
 
-    const handlePanEnd = (_, info) => {
-        const {x, y} = info.offset;
-        if(mobile && Math.abs(x) < Math.abs(y)) {
-            const body = document.querySelector("body");
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        if(mobile) {
             Scrollbar.init(body, {damping: 0.1})
-            body.scrollBy(0, -y)
         }
-    } 
+    }, [mobile])
 
     return (
         <>
@@ -191,7 +188,7 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller onPanStart={handlePan} onPanEnd={handlePanEnd} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
+                <Scroller onPanStart={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
                     <WrapTariffs>
                         <AnimatePresence>
                             {children}
