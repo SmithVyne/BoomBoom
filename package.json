@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && compress-cra",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build &&  scp -r ./build/*  miketogo66@62.84.123.91:/home/miketogo66/boom-frontend"
@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-macros": "^3.1.0"
+    "babel-plugin-macros": "^3.1.0",
+    "compress-create-react-app": "^1.1.3"
   }
 }
