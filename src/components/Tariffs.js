@@ -6,6 +6,7 @@ import { GlobalContext } from "../App";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
+import Scrollbar from 'smooth-scrollbar';
 
 smoothscroll.polyfill();
 const WrapScroller = styled.div`
@@ -159,19 +160,23 @@ export default function Tariffs({ children }) {
     const handlePan = (e, info) => {
         const { current } = ref;
         const {x, y} = info.offset;
-        if(mobile) {
-            if(Math.abs(y) < Math.abs(x)) {
-                if(x < 0) {
-                    current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
-                } else {
-                    current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
-                }
+        if(mobile && Math.abs(x) > Math.abs(y)) {
+            if(x < 0) {
+                current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
             } else {
-                const val = y < 0 ? 350 : -350;
-                window.scrollBy({ top: val, behavior: 'smooth' });
+                current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
             }
         }
     }
+
+    const handlePanEnd = (_, info) => {
+        const {x, y} = info.offset;
+        if(mobile && Math.abs(x) < Math.abs(y)) {
+            const body = document.querySelector("body");
+            Scrollbar.init(body, {damping: 0.1})
+            body.scrollBy(0, -y)
+        }
+    } 
 
     return (
         <>
@@ -186,7 +191,7 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller onPanStart={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
+                <Scroller onPanStart={handlePan} onPanEnd={handlePanEnd} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
                     <WrapTariffs>
                         <AnimatePresence>
                             {children}

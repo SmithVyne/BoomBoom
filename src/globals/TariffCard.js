@@ -10,7 +10,7 @@ import info from "../assets/images/info-icon.png";
 import beeline from "../assets/images/beeline.png";
 import TinySwitch from "../components/TinySwitch";
 import TariffCardModal from "./TariffCardModal";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TariffBar from "./TariffBar";
 import { SHOW_MODAL } from "./utils";
@@ -278,6 +278,12 @@ font-family: Circe;
 `
 
 export const FourGSwitch = memo(({title, price, checked, setSwitches, modal=false, buy=false}) => {
+    useEffect(() => {
+        if(price === Infinity) {
+            setSwitches(obj => ({...obj, [title]: false}))
+        }
+    }, [price, setSwitches, title])
+    
     return (
     <FourGSwitchStyles buy={buy} onClick={(e) => e.stopPropagation()} price={price} checked={price ? true : checked} modal={modal}>
         {title}
