@@ -434,7 +434,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
 
 
     useEffect(() => {
-        console.log(contract)
+        
         const truthy = Object.values(contract).every(item => item)
         if (buy) {
             

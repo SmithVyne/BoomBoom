@@ -57,7 +57,7 @@ export default function Numbers(props) {
             if (res.result.length > 0) {
                 let numbers = res.result.filter((item) => {
                     if (item.ctn) {
-                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6)) {
+                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6 || item.category === 9)) {
                             return true
                         }
                         return false
@@ -627,7 +627,7 @@ export default function Numbers(props) {
         }
         if (category === 'Бриллиантовый') {
 
-            setSelectedCategoryID(10)
+            setSelectedCategoryID(9)
 
 
         }
@@ -728,31 +728,31 @@ export default function Numbers(props) {
             if (selectedNumbers[0] && selectedNumbers[0].category === 2) firstPrice = 300
             if (selectedNumbers[0] && (selectedNumbers[0].category === 3 || selectedNumbers[0].category === 4 || selectedNumbers[0].category === 5)) firstPrice = 500
             if (selectedNumbers[0] && selectedNumbers[0].category === 6) firstPrice = 1000
-            if (selectedNumbers[0] && selectedNumbers[0].category === 10) firstPrice = 1500
+            if (selectedNumbers[0] && selectedNumbers[0].category === 9) firstPrice = 1500
 
             if (selectedNumbers[1] && selectedNumbers[1].category === 1) secondPrice = 0
             if (selectedNumbers[1] && selectedNumbers[1].category === 2) secondPrice = 300
             if (selectedNumbers[1] && (selectedNumbers[1].category === 3 || selectedNumbers[1].category === 4 || selectedNumbers[1].category === 5)) secondPrice = 500
             if (selectedNumbers[1] && selectedNumbers[1].category === 6) secondPrice = 1000
-            if (selectedNumbers[1] && selectedNumbers[1].category === 10) secondPrice = 1500
+            if (selectedNumbers[1] && selectedNumbers[1].category === 9) secondPrice = 1500
 
             if (selectedNumbers[2] && selectedNumbers[2].category === 1) thirdPrice = 0
             if (selectedNumbers[2] && selectedNumbers[2].category === 2) thirdPrice = 300
             if (selectedNumbers[2] && (selectedNumbers[2].category === 3 || selectedNumbers[2].category === 4 || selectedNumbers[2].category === 5)) thirdPrice = 500
             if (selectedNumbers[2] && selectedNumbers[2].category === 6) thirdPrice = 1000
-            if (selectedNumbers[2] && selectedNumbers[2].category === 10) thirdPrice = 1500
+            if (selectedNumbers[2] && selectedNumbers[2].category === 9) thirdPrice = 1500
 
             if (selectedNumbers[3] && selectedNumbers[3].category === 1) fourthPrice = 0
             if (selectedNumbers[3] && selectedNumbers[3].category === 2) fourthPrice = 300
             if (selectedNumbers[3] && (selectedNumbers[3].category === 3 || selectedNumbers[3].category === 4 || selectedNumbers[3].category === 5)) fourthPrice = 500
             if (selectedNumbers[3] && selectedNumbers[3].category === 6) fourthPrice = 1000
-            if (selectedNumbers[3] && selectedNumbers[3].category === 10) fourthPrice = 1500
+            if (selectedNumbers[3] && selectedNumbers[3].category === 9) fourthPrice = 1500
 
             if (selectedNumbers[4] && selectedNumbers[4].category === 1) fifthPrice = 0
             if (selectedNumbers[4] && selectedNumbers[4].category === 2) fifthPrice = 300
             if (selectedNumbers[4] && (selectedNumbers[4].category === 3 || selectedNumbers[4].category === 4 || selectedNumbers[4].category === 5)) fifthPrice = 500
             if (selectedNumbers[4] && selectedNumbers[4].category === 6) fifthPrice = 1000
-            if (selectedNumbers[4] && selectedNumbers[4].category === 10) fifthPrice = 1500
+            if (selectedNumbers[4] && selectedNumbers[4].category === 9) fifthPrice = 1500
 
             setFullPrice(firstPrice + secondPrice + thirdPrice + fourthPrice + fifthPrice)
         }
@@ -1013,10 +1013,10 @@ export default function Numbers(props) {
                                     <div className='numbers__selected'>
                                         {selectedNumbers && selectedNumbers.length > 0 ? selectedNumbers.map((item, i) => (
                                             <div key={item.ctn + 'selected-pc'} className={`numbers__selected-number`}>
-                                                <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 10) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
+                                                <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 9) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
                                                 <div className={`numbers__selected-number-prices`}>
-                                                    <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 10) ? '500 000 ₽' : ''}`}</p>
-                                                    <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
+                                                    <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 9) ? '500 000 ₽' : ''}`}</p>
+                                                    <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 9) ? '1500 ₽/мес' : ''}`}</p>
                                                 </div>
                                                 <div onClick={() => handleItemDelite(item)} className={`numbers__selected-number-trash`}>
                                                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1110,10 +1110,10 @@ export default function Numbers(props) {
                             <div className='numbers__selected'>
                                 {selectedNumbers && selectedNumbers.length > 0 ? selectedNumbers.map((item, i) => (
                                     <div key={item.ctn + 'selected-mobile'} className={`numbers__selected-number`}>
-                                        <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 10) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
+                                        <p className={`numbers__selected-number-text ${(item.category === 1) ? 'numbers__selected-number-text_bronz' : ''} ${(item.category === 2) ? 'numbers__selected-number-text_silver' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? 'numbers__selected-number-text_gold' : ''} ${(item.category === 6) ? 'numbers__selected-number-text_platina' : ''} ${(item.category === 9) ? 'numbers__selected-number-text_briliant' : ''}`}>{`${item && item.ctn && item.ctn.substring(0, 3)} ${item && item.ctn && item.ctn.substring(3, 6)} `}{`${item && item.ctn && item.ctn.substring(6, 8)} ${item && item.ctn && item.ctn.substring(8, 10)}`}</p>
                                         <div className={`numbers__selected-number-prices`}>
-                                            <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 10) ? '500 000 ₽' : ''}`}</p>
-                                            <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 10) ? '1500 ₽/мес' : ''}`}</p>
+                                            <p className={`numbers__selected-number-lastprice`}>{`${(item.category === 1) ? '1 000 ₽' : ''} ${(item.category === 2) ? '5 000 ₽' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '35 000 ₽' : ''} ${(item.category === 6) ? '200 000 ₽' : ''} ${(item.category === 9) ? '500 000 ₽' : ''}`}</p>
+                                            <p className={`numbers__selected-number-price ${darkTheme ? 'numbers__selected-price_dark' : ''}`}>{`${(item.category === 1) ? 'Бесплатно' : ''} ${(item.category === 2) ? '300 ₽/мес' : ''} ${(item.category === 3 || item.category === 4 || item.category === 5) ? '500 ₽/мес' : ''} ${(item.category === 6) ? '1000 ₽/мес' : ''} ${(item.category === 9) ? '1500 ₽/мес' : ''}`}</p>
                                         </div>
                                         <div onClick={() => handleItemDelite(item)} className={`numbers__selected-number-trash`}>
                                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -2,8 +2,9 @@ import React, { createContext, useEffect, useState, Suspense } from "react";
 import styled, { ThemeProvider } from "styled-components/macro";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import urlUtmParams from 'url-utm-params'
 import { useLocalStorage } from "./hooks";
 
 import Preloader from "./globals/Preloader/Preloader"
@@ -55,8 +56,9 @@ const Mainml = styled.main`
   color:  ${props => props.theme.textColor};
 `
 
-export default function App() {
+export default withRouter(function App({ location }) {
   const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
+
 
   darkTheme === null && setDarkTheme(false)
   const [loginForm, setLoginForm] = useState(false);
@@ -78,6 +80,35 @@ export default function App() {
       }
     }
   }
+
+  useEffect(() => {
+    
+    let utmParams = urlUtmParams.utm(window.location.href)
+
+    if (Object.keys(utmParams).length > 0) {
+      let utm = {}
+
+      if (utmParams.utm_source) {
+        utm.utm_source = decodeURI(utmParams.utm_source)
+      }
+      if (utmParams.utm_medium) {
+        utm.utm_medium = decodeURI(utmParams.utm_medium)
+      }
+      if (utmParams.utm_campaign) {
+        utm.utm_campaign = decodeURI(utmParams.utm_campaign)
+      }
+      if (utmParams.utm_term) {
+        utm.utm_term = decodeURI(utmParams.utm_term)
+      }
+      if (utmParams.utm_content) {
+        utm.utm_content = decodeURI(utmParams.utm_content)
+
+      }
+      localStorage.setItem('utm', JSON.stringify(utm));
+      
+    }
+
+  }, [location])
 
   useEffect(() => {
     const watcher = () => setIsMobile(window.innerWidth < 1100);
@@ -177,3 +208,4 @@ export default function App() {
     </GlobalContext.Provider>
   )
 }
+)
