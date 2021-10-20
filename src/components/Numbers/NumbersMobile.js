@@ -19,7 +19,7 @@ export default function NumbersMobile(props) {
             if (res.result.length > 0) {
                 let numbers = res.result.filter((item) => {
                     if (item.ctn) {
-                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6)) {
+                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6 || item.category === 9)) {
                             return true
                         }
                         return false
@@ -40,7 +40,7 @@ export default function NumbersMobile(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -57,7 +57,7 @@ export default function NumbersMobile(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -74,7 +74,7 @@ export default function NumbersMobile(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -91,12 +91,29 @@ export default function NumbersMobile(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
                             ...numbersByCategories,
                             category_plat: [...numbersByCategories.category_plat, numbers[i]]
+                        }))
+
+                    }
+                    if (numbers[i].category === 9 && numbers.filter((item) => {
+                        if (item.ctn) {
+                            if (numbers[i].category === 9) {
+                                return true
+                            }
+                            return false
+                        }
+                        return false
+                    }).length > 0) {
+
+                        // numbersByCategories.category_bronz 
+                        setNumbersByCategories(numbersByCategories => ({
+                            ...numbersByCategories,
+                            category_briliant: [...numbersByCategories.category_briliant, numbers[i]]
                         }))
 
                     }
@@ -504,7 +521,7 @@ export default function NumbersMobile(props) {
                             </div>
                             : <></>}
 
-                        {props.selectedCategoryID === 'all' || props.selectedCategoryID === 10 ?
+                        {props.selectedCategoryID === 'all' || props.selectedCategoryID === 9 ?
                             <div className={`numbers__table-mobile`}>
                                 <div className={`numbers__table-mobile-titles`}>
                                     <h2 className={`numbers__table-mobile-name numbers__table-mobile-name_briliant`}>Бриллиантовый</h2>

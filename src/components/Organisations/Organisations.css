@@ -333,8 +333,12 @@ p:last-child {
     background: rgba(75, 108, 253, 0.16);
     border-radius: 49px;
     padding: 12px 24px;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
 }
-
+.more:hover{
+    opacity: 0.8;
+}
 .content-style {
     padding-bottom: 25px;
 }

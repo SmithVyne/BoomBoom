@@ -36,7 +36,7 @@ export const CATEGORIES = {
     4: { name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2 },
     5: { name: "Золотой", bg: "#FFD700", price: 500, prevPrice: "35 000", exclude: 2 },
     6: { name: "Платиновый", bg: "#e5e4e2", price: 1000, prevPrice: "200 000", exclude: 3 },
-    10: { name: "Бриллиантовый", bg: "#FFB02E", price: 1500, prevPrice: "500 000", exclude: 4 }
+    9: { name: "Бриллиантовый", bg: "#D6F7FF", price: 1500, prevPrice: "500 000", exclude: 4 }
 }
 
 const getAuth = (accessToken) => {
@@ -89,7 +89,7 @@ export async function GetNumbers() {
         .then(res => res.json())
 }
 
-export async function OrderService(serviceName, userPhone, fromMosсow) {
+export async function OrderService({ serviceName, userPhone, fromMosсow, utm }) {
     return fetch('https://boomtele.com/api/order-service/', {
         method: "POST",
         headers: {
@@ -99,7 +99,8 @@ export async function OrderService(serviceName, userPhone, fromMosсow) {
         body: JSON.stringify({
             "serviceName": serviceName,
             "userPhone": userPhone,
-            "fromMosсow": fromMosсow
+            "fromMosсow": fromMosсow,
+            "utm": utm
         }
         )
     })
@@ -110,7 +111,7 @@ export async function TransferNumber({
     transferDate,
     transferredNumber,
     userPhone,
-    fromMosсow}) {
+    fromMosсow, utm }) {
 
     return fetch('https://boomtele.com/api/transfer-number/', {
         method: "POST",
@@ -122,14 +123,15 @@ export async function TransferNumber({
             transferDate,
             transferredNumber,
             userPhone,
-            fromMosсow
+            fromMosсow,
+            "utm": utm
         }
         )
     })
         .then(res => res.json())
 }
 
-export async function OrderTariff(tariffName,
+export async function OrderTariff({ tariffName,
     tariffOptions,
     unlimitedInternet,
     modem,
@@ -141,7 +143,8 @@ export async function OrderTariff(tariffName,
     transferredNumber,
     deliveryMethod,
     userPhone,
-    fromMosсow) {
+    fromMosсow,
+    utm }) {
     return fetch('https://boomtele.com/api/order-tariff/', {
         method: "POST",
         headers: {
@@ -161,20 +164,22 @@ export async function OrderTariff(tariffName,
             transferredNumber,
             deliveryMethod,
             userPhone,
-            fromMosсow
+            fromMosсow,
+            "utm": utm
         }
         )
     })
         .then(res => res.json())
 }
 
-export async function BuyNumbers(deliveryDate,
+export async function BuyNumbers({ deliveryDate,
     deliveryTime,
     deliveryAddress,
     deliveryMethod,
     numbersArray,
     userPhone,
-    fromMosсow) {
+    fromMosсow,
+    utm }) {
     return fetch('https://boomtele.com/api/buy-numbers/', {
         method: "POST",
         headers: {
@@ -188,7 +193,8 @@ export async function BuyNumbers(deliveryDate,
             deliveryMethod,
             numbersArray,
             userPhone,
-            fromMosсow
+            fromMosсow,
+            "utm": utm
         }
         )
     })

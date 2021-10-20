@@ -253,7 +253,7 @@ const NumbersDropDown = memo(({ setShowNumbers, inputNumber, setInputNumber, sel
                     {selectedCategoryID === 2 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_silver`}>Серебряный</h2> : <></>}
                     {selectedCategoryID === 3 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_gold`}>Золотой</h2> : <></>}
                     {selectedCategoryID === 6 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_platina`}>Платиновый</h2> : <></>}
-                    {selectedCategoryID === 10 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
+                    {selectedCategoryID === 9 ? <h2 className={`numbers-for-mobile__select-button-category numbers-for-mobile__select-button-category_briliant`}>Бриллиантовый</h2> : <></>}
                     <svg className={`numbers-for-mobile__select-button-tick ${isSelectCategoryOpen ? 'numbers-for-mobile__select-button-tick_rotated' : ''}`} width="21" height="12" viewBox="0 0 21 12" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" />
                     </svg>
@@ -263,7 +263,7 @@ const NumbersDropDown = memo(({ setShowNumbers, inputNumber, setInputNumber, sel
                         {selectedCategoryID === 2 ? <></> : <p onClick={(e) => handleCategoryChange(e, 2)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_silver`}>Серебряный</p>}
                         {selectedCategoryID === 3 ? <></> : <p onClick={(e) => handleCategoryChange(e, 3)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_gold`}>Золотой</p>}
                         {selectedCategoryID === 6 ? <></> : <p onClick={(e) => handleCategoryChange(e, 6)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_platina`}>Платиновый</p>}
-                        {selectedCategoryID === 10 ? <></> : <p onClick={(e) => handleCategoryChange(e, 10)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
+                        {selectedCategoryID === 9 ? <></> : <p onClick={(e) => handleCategoryChange(e, 9)} className={`numbers-for-mobile__select-item numbers-for-mobile__select-button-category_brilian`}>Бриллиантовый</p>}
                     </div>}
                 </div>
             </div>
@@ -503,20 +503,23 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
     }
 
     useEffect(() => {
-        if(buy && selected) {
+        if (buy && selected) {
             const fourG = localSwitches["Безлимитный 4G"] ? 150 : 0;
             const modem = localSwitches["Раздача интернета"] ? 50 : 0;
             const price = tariff.price + CATEGORIES[number.category].price + fourG + modem;
             setBoughtNumbers(boughtNumbers => ({
-                ...boughtNumbers, 
+                ...boughtNumbers,
                 [number.ctn]: {
-                    ...number.ctn,
+                    ctn: number.ctn,
+                    category: number.category,
+                    tariffName: tariff.title,
+                    tariffOptions: `${tariff.positions[dropDownPosition].min} мин, ${tariff.positions[dropDownPosition].gb === Infinity ? "Безлимит" : tariff.positions[dropDownPosition].gb} гб, ${tariff.positions[dropDownPosition].sms} смс`,
                     ...localSwitches,
                     price,
                 }
             }))
         }
-    }, [setBoughtNumbers, localSwitches, number, tariff, selected, buy])
+    }, [setBoughtNumbers, localSwitches, number, tariff, selected, buy, dropDownPosition])
 
     return (
         <Dropdown buy={buy} selected={selected} drop={drop} onClick={handleOpen}>
@@ -553,7 +556,7 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
 const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, setModalPosition, number, buy, setBoughtNumbers, setDeletedNumbers }) => {
     const category = CATEGORIES[number.category]
     const [dropDownPosition, setDropDownPosition] = useState(
-        tariffTypesArray.slice(category.exclude).reduce((total, tariff) => ({...total, [tariff.title]: 0}), {})
+        tariffTypesArray.slice(category.exclude).reduce((total, tariff) => ({ ...total, [tariff.title]: 0 }), {})
     );
     const [localSwitches, setLocalSwitches] = useState({ "Безлимитный 4G": false, "Раздача интернета": false })
 
@@ -578,7 +581,7 @@ const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, set
                 </span>
                 {toggleOpen && <div onClick={(e) => e.stopPropagation()} className="body">
                     {tariffTypesArray.slice(category.exclude).map((tariff, index) =>
-                        <TariffsDropDown selected={selectedTariff === index} drop={clickedTariff === index} setSelectedTariff={() => setSelectedTariff(index)} handleOpen={() => handleOpen(index)} buy={buy} key={tariff.title} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} setBoughtNumbers={setBoughtNumbers} number={number} dropDownPosition={dropDownPosition[[tariff.title]]} setDropDownPosition={(position) => setDropDownPosition(values => ({...values, [tariff.title]: position}))} localSwitches={localSwitches} setLocalSwitches={setLocalSwitches} />
+                        <TariffsDropDown selected={selectedTariff === index} drop={clickedTariff === index} setSelectedTariff={() => setSelectedTariff(index)} handleOpen={() => handleOpen(index)} buy={buy} key={tariff.title} modalPosition={modalPosition} setModalPosition={setModalPosition} tariff={tariff} setBoughtNumbers={setBoughtNumbers} number={number} dropDownPosition={dropDownPosition[[tariff.title]]} setDropDownPosition={(position) => setDropDownPosition(values => ({ ...values, [tariff.title]: position }))} localSwitches={localSwitches} setLocalSwitches={setLocalSwitches} />
                     )}
                 </div>}
             </BuyNumbersDropdownStyles>
@@ -628,6 +631,24 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const handleServiceSubmit = (phoneValue) => {
         setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
+        let utm = {}
+        if (localStorage.getItem('utm')) utm = JSON.parse(localStorage.getItem('utm'));
+
+        let utmMarks = {
+            utm_content: 'Отсутствует',
+            utm_medium: 'Отсутствует',
+            utm_source: 'Отсутствует',
+            utm_term: 'Отсутствует',
+            utm_campaign: 'Отсутствует',
+        }
+        if (utm) {
+            if (utm.utm_content) utmMarks.utm_content = utm.utm_content
+            if (utm.utm_medium) utmMarks.utm_medium = utm.utm_medium
+            if (utm.utm_source) utmMarks.utm_source = utm.utm_source
+            if (utm.utm_term) utmMarks.utm_term = utm.utm_term
+            if (utm.utm_campaign) utmMarks.utm_campaign = utm.utm_campaign
+        }
+        
         let serviceName = service.eSim ? "Подключение eSim" : service.title.replace(/\s+/g, ' ')
             .replace(/^\s/, '')
             .replace(/\s$/, '');
@@ -642,8 +663,13 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         }
 
         if (fromMosсow && userPhone && serviceName) {
-            console.log(serviceName)
-            OrderService(serviceName, userPhone, fromMosсow).then(() => {
+            
+            OrderService({
+                serviceName,
+                userPhone,
+                fromMosсow,
+                utm: JSON.stringify(utmMarks)
+            }).then(() => {
                 setSubmit(true);
                 setShowPreloader(false)
             })
@@ -672,6 +698,23 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         deliveryMethod,
         userPhone
     }) => {
+        let utm = {}
+        if (localStorage.getItem('utm')) utm = JSON.parse(localStorage.getItem('utm'));
+
+        let utmMarks = {
+            utm_content: 'Отсутствует',
+            utm_medium: 'Отсутствует',
+            utm_source: 'Отсутствует',
+            utm_term: 'Отсутствует',
+            utm_campaign: 'Отсутствует',
+        }
+        if (utm) {
+            if (utm.utm_content) utmMarks.utm_content = utm.utm_content
+            if (utm.utm_medium) utmMarks.utm_medium = utm.utm_medium
+            if (utm.utm_source) utmMarks.utm_source = utm.utm_source
+            if (utm.utm_term) utmMarks.utm_term = utm.utm_term
+            if (utm.utm_campaign) utmMarks.utm_campaign = utm.utm_campaign
+        }
         setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
         let fromMosсow
@@ -682,7 +725,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        console.log({
+        
+        OrderTariff({
             tariffName,
             tariffOptions,
             unlimitedInternet,
@@ -695,32 +739,19 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             transferredNumber,
             deliveryMethod,
             userPhone,
-            fromMosсow
-        })
-        OrderTariff(
-            tariffName,
-            tariffOptions,
-            unlimitedInternet,
-            modem,
-            productionMethod,
-            selectedNumber,
-            deliveryDate,
-            deliveryTime,
-            deliveryAddress,
-            transferredNumber,
-            deliveryMethod,
-            userPhone,
-            fromMosсow).then((res) => {
-                console.log(res)
-                setSubmit(true);
-                setShowPreloader(false)
-            }).catch((err) => {
+            fromMosсow,
+            utm: JSON.stringify(utmMarks)
+        }).then((res) => {
+            console.log(res)
+            setSubmit(true);
+            setShowPreloader(false)
+        }).catch((err) => {
 
-                setSubmit(true);
-                setError(true)
-                setShowPreloader(false)
-                console.log(err)
-            })
+            setSubmit(true);
+            setError(true)
+            setShowPreloader(false)
+            console.log(err)
+        })
     }
 
 
@@ -732,6 +763,23 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
         numbersArray,
         userPhone
     }) => {
+        let utm = {}
+        if (localStorage.getItem('utm')) utm = JSON.parse(localStorage.getItem('utm'));
+
+        let utmMarks = {
+            utm_content: 'Отсутствует',
+            utm_medium: 'Отсутствует',
+            utm_source: 'Отсутствует',
+            utm_term: 'Отсутствует',
+            utm_campaign: 'Отсутствует',
+        }
+        if (utm) {
+            if (utm.utm_content) utmMarks.utm_content = utm.utm_content
+            if (utm.utm_medium) utmMarks.utm_medium = utm.utm_medium
+            if (utm.utm_source) utmMarks.utm_source = utm.utm_source
+            if (utm.utm_term) utmMarks.utm_term = utm.utm_term
+            if (utm.utm_campaign) utmMarks.utm_campaign = utm.utm_campaign
+        }
         setShowPreloader(true)
         const inMoscow = localStorage.getItem('InMoscow');
         let fromMosсow
@@ -742,7 +790,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        console.log({
+        
+        BuyNumbers({
             deliveryDate,
             deliveryTime,
             deliveryAddress,
@@ -750,15 +799,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             numbersArray,
             userPhone,
             fromMosсow,
-        })
-        BuyNumbers(
-            deliveryDate,
-            deliveryTime,
-            deliveryAddress,
-            deliveryMethod,
-            numbersArray,
-            userPhone,
-            fromMosсow).then((res) => {
+            utm: JSON.stringify(utmMarks)
+            }).then((res) => {
                 console.log(res)
                 setSubmit(true);
                 setShowPreloader(false)
@@ -790,7 +832,6 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
 
         if (buy) {
 
-
             let numbersArray = []
             // eslint-disable-next-line no-unused-vars
             for (const [key, value] of Object.entries(boughtNumbers)) {
@@ -798,7 +839,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 numbersArray = [...numbersArray, value]
             }
             contract = { ...contract, numbersArray }
-            console.log(contract)
+            
             handleBuySubmit({
                 deliveryDate: contract.deliveryDate ? contract.deliveryDate : 'none',
                 deliveryTime: contract.deliveryTime ? `${contract.deliveryTime[0]}-${contract.deliveryTime[1]}` : 'none',
@@ -817,8 +858,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 productionMethod: options[selectedOption],
                 ...modalSwitches
             }
-            console.log(contract)
-            console.log(tariff.title, contract)
+           
             handleTariffSubmit({
                 tariffName: tariff.title,
                 tariffOptions: contract.tariffOptions,
@@ -854,8 +894,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             onClick={() => dispatch({ type: HIDE_MODAL })} darkTheme={darkTheme}>
             <Modal onClick={(e) => { e.stopPropagation(); setClickedNumber({}) }}>
                 {showPreloader ? <Centered>
-                                    <Preloader />
-                                 </Centered> :
+                    <Preloader />
+                </Centered> :
 
                     <>
                         <Close onClick={() => dispatch({ type: HIDE_MODAL })}><CgClose strokeWidth={1.5} size={29} /></Close>

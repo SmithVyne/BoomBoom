@@ -52,7 +52,7 @@ function NumbersForMain(props) {
             if (res.result.length > 0) {
                 let numbers = res.result.filter((item) => {
                     if (item.ctn) {
-                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6)) {
+                        if (item.category && (item.category === 1 || item.category === 2 || item.category === 3 || item.category === 4 || item.category === 5 || item.category === 6|| item.category === 9)) {
                             return true
                         }
                         return false
@@ -72,7 +72,7 @@ function NumbersForMain(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length  > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -89,7 +89,7 @@ function NumbersForMain(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length  > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -106,7 +106,7 @@ function NumbersForMain(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length  > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
@@ -123,12 +123,29 @@ function NumbersForMain(props) {
                             return false
                         }
                         return false
-                    }).length > 1) {
+                    }).length  > 0) {
 
                         // numbersByCategories.category_bronz 
                         setNumbersByCategories(numbersByCategories => ({
                             ...numbersByCategories,
                             category_plat: [...numbersByCategories.category_plat, numbers[i]]
+                        }))
+
+                    }
+                    if (numbers[i].category === 9 && numbers.filter((item) => {
+                        if (item.ctn) {
+                            if (item.category === 9) {
+                                return true
+                            }
+                            return false
+                        }
+                        return false
+                    }).length > 0) {
+
+                        // numbersByCategories.category_bronz 
+                        setNumbersByCategories(numbersByCategories => ({
+                            ...numbersByCategories,
+                            category_briliant: [...numbersByCategories.category_briliant, numbers[i]]
                         }))
 
                     }
@@ -685,7 +702,7 @@ function NumbersForMain(props) {
         }
         if (category === 'Бриллиантовый') {
 
-            setSelectedCategoryID(10)
+            setSelectedCategoryID(9)
             setSelectedNumber({})
 
         }
