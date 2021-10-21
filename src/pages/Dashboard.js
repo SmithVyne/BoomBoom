@@ -278,6 +278,8 @@ export default function Dashboard() {
         });
     }
 
+    console.log(userData)
+
     return (
             <>
             {!userInfo ? <Loader /> : 
@@ -311,12 +313,12 @@ export default function Dashboard() {
                             <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Сообщения</Small>
-                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
-                        </SubCard>
-                        <SubCard darkTheme={darkTheme}>
                             <Small style={{fontWeight: 700}}>Интернет</Small>
                             <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
+                        </SubCard>
+                        <SubCard darkTheme={darkTheme}>
+                            <Small style={{fontWeight: 700}}>Сообщения</Small>
+                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <Button fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>Изменить номер</Button>
                         <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Сменить тариф</Button>
