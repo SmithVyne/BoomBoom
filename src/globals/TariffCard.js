@@ -342,11 +342,15 @@ export default memo(function TariffCard({ tariff, tariffId }) {
                     {switchTypes.map(title => <FourGSwitch key={title} checked={switches[title]} setSwitches={setSwitches} title={title} price={tariff.positions[positionValue][title]} />)}
                 </Switches>
                 <span className="detailsWrapper" >
-                    <Details>
+                    <Details style={{ opacity: `${tariff.positions[positionValue].details[0] ? 1 : 0.3}` }}>
                         <MiniIcon src={infinity} /><p className='text-body'>безлимитные соц сети и мессенджеры</p><MiniIcon onClick={handleInfo} onMouseOver={handleInfo} pointer src={info} />
                     </Details>
-                    <Details style={{ opacity: `${(tariff.beeline && positionValue === 2) ? '1' : '0.3'}` }}><MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p></Details>
-                    <Details style={{ opacity: 0.3}}><MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p></Details>
+                    <Details style={{ opacity: `${tariff.positions[positionValue].details[1] ? 1 : 0.3}` }}>
+                        <MiniIcon src={beeline} /><p className='text-body'>безлимитное общение <br /> с абонентами внутри сети Билайн</p>
+                    </Details>
+                    <Details style={{ opacity: `${tariff.positions[positionValue].details[2] ? 1 : 0.3}` }}>
+                        <MiniIcon src={headphones} /><p className='text-body'>выделенная линия поддержки</p>
+                    </Details>
                 </span>
                 <More to={`/tariff-info/:${title}`}>Подробнее про тариф</More>
             </span>

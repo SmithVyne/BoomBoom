@@ -209,18 +209,22 @@ export const tariffBase = {
         min: 300,
         gb: 40,
         sms: 300,
+        details: [true, false, false]
     }, {
         min: 400,
         gb: 30,
         sms: 300,
+        details: [true, false, false]
     }, {
         min: 400,
         gb: 20,
         sms: 300,
+        details: [true, true, false]
     }, {
         min: 500,
         gb: 10,
         sms: 100,
+        details: [false, false, false]
     }],
     infinitInternet: 150,
     modem: 50,
@@ -235,18 +239,22 @@ export const tariffBright = {
         min: 600,
         gb: 50,
         sms: 500,
+        details: [true, false, false]
     }, {
         min: 800,
         gb: 40,
         sms: 500,
+        details: [true, false, false]
     }, {
         min: 800,
         gb: 30,
         sms: 500,
+        details: [true, true, false]
     }, {
         min: 1000,
         gb: 25,
         sms: 500,
+        details: [false, false, false]
     }],
     infinitInternet: 150,
     modem: 50,
@@ -263,18 +271,22 @@ export const tariffAdvanced = {
         gb: Infinity,
         sms: 1000,
         "Безлимитный 4G": Infinity,
+        details: [true, false, false]
     }, {
         min: 1500,
         gb: 50,
         sms: 1000,
+        details: [true, false, false]
     }, {
         min: 1500,
         gb: 40,
         sms: 1000,
+        details: [true, true, false]
     }, {
         min: 2000,
         gb: 35,
         sms: 1000,
+        details: [false, false, false]
     }],
     infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
     modem: 50,
@@ -289,18 +301,22 @@ export const tariffBiz = {
         gb: Infinity,
         sms: 1000,
         "Безлимитный 4G": Infinity,
+        details: [true, false, false]
     }, {
         min: 3000,
         gb: 60,
         sms: 1000,
+        details: [true, false, false]
     }, {
         min: 3000,
         gb: 50,
         sms: 1000,
+        details: [true, true, false]
     }, {
         min: 4000,
         gb: 50,
         sms: 1000,
+        details: [false, false, false]
     }],
     infinitInternet: 'Включено в один из пакетов тарифа, для остальных пакетов 150 ₽',
     modem: 50,
@@ -316,11 +332,13 @@ export const tariffVip = {
         sms: 1000,
         "Безлимитный 4G": Infinity,
         "Раздача интернета": Infinity,
+        details: [true, true, true]
     }, {
         min: 7000,
         gb: 150,
         sms: 1000,
         "Раздача интернета": Infinity,
+        details: [false, false, true]
     }],
     infinitInternet: 'Включено в тариф',
     modem: 'Включено в тариф',
