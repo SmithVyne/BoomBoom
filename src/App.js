@@ -134,7 +134,7 @@ export default withRouter(function App({ location }) {
       scrollbar.addListener(listener);
       return () => {
         scrollbar.removeListener(listener)
-    }
+      }
     }
   }, [scrollbar])
 

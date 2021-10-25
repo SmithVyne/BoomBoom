@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
@@ -7,11 +7,12 @@ import { HiDownload } from "react-icons/hi";
 import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
-import {CREATE_AUTH, Fetcher, percentage, replacePoints, USER } from "../globals/utils";
+import {CREATE_AUTH, Fetcher, parseDetailsFile, percentage, replacePoints, USER } from "../globals/utils";
 import html2pdf from "html2pdf.js";
 import { spacer } from "../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
 import { useLocalStorage } from "../hooks";
+import { decode } from 'js-base64';
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -162,12 +163,16 @@ const Dbody = styled.table`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0px 12px;
-    & tr:first-child {
+    thead tr {
         font-size: 16px;
         font-weight: 550;
         & th {
             padding-left: 24px;
         }
+    }
+
+    tbody tr td:first-child span{
+        margin: 0 5px 0 8px;
     }
 `
 const Trows = styled.tr`
@@ -240,21 +245,23 @@ const getDashboard = (ctn, accessToken, dispatch) => {
     Promise.all([
         Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
         Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
-        // Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
+        Fetcher({method: "getDetailsFile", params:{idToSearch: ctn, period: "2021M09", encoding: "utf-8",}, id:null}, {accessToken}),
     ])
-    .then(([userInfo, userData]) => dispatch({type: USER, user: {userInfo, userData}}))
+    .then(([userInfo, userData, detailsFile]) => dispatch({type: USER, user: {userInfo, userData, detailsFile}}))
 }
 
 export default function Dashboard() {
     const {darkTheme, setLoginForm} = useContext(GlobalContext);
-    const {userInfo, userData} = useSelector(store => store.auth.user);
+    const {userInfo, userData, detailsFile} = useSelector(store => store.auth.user);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
-    
+    const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
+    console.log(details)
+
     useEffect(() => {
         if (accessToken) {
             getDashboard(ctn, accessToken, dispatch)
@@ -278,8 +285,6 @@ export default function Dashboard() {
             setTimeout(() => setCopied(false), 60000);
         });
     }
-
-    console.log(userData)
 
     return (
             <>
@@ -340,12 +345,14 @@ export default function Dashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <Trows darkTheme={darkTheme}>
-                                    <td>Дата</td>
-                                    <td>Действие</td>
-                                    <td><img alt="mtc" src={mtc} /> MTC</td>
-                                    <td>Длительность</td>
-                                </Trows>
+                                {details && details.slice(0, details.length - 1).map(detail => (
+                                    <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
+                                        <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
+                                        <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
+                                        <td><img alt="Оператор" src={mtc} />MTC</td>
+                                        <td>{detail["Продолжительность звонка"]}</td>
+                                    </Trows>
+                                ))}
                             </tbody>
                         </Dbody>
                     </Details>
