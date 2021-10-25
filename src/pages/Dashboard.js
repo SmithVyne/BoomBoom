@@ -260,7 +260,6 @@ export default function Dashboard() {
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
     const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
-    console.log(details)
 
     useEffect(() => {
         if (accessToken) {
