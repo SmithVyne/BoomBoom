@@ -6,7 +6,7 @@ import { GlobalContext } from "../App";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
-import Scrollbar from 'smooth-scrollbar';
+// import Scrollbar from 'smooth-scrollbar';
 
 const WrapScroller = styled.div`
     position: relative;
@@ -105,19 +105,16 @@ const Ellipses = styled.div`
     }
 `
 smoothscroll.polyfill();
-const body = document.querySelector("body");
 
 export default function Tariffs({ children }) {
     const ref = useRef();
-    const { darkTheme } = useContext(GlobalContext);
+    const { darkTheme, isPhone } = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
     const [scrollWidth, setScrollWidth] = useState(2);
     const [percentage, setPercentage] = useState(0);
-    
     const [position, setPosition] = useState(0);
-    const [mobile, setMobile] = useState(false);
 
     useLayoutEffect(() => {
         const { current } = ref;
@@ -125,7 +122,6 @@ export default function Tariffs({ children }) {
             setShowScroll(current.scrollWidth > current.offsetWidth);
             setOffSetWidth(current.offsetWidth);
             setScrollWidth(current.scrollWidth);
-            setMobile(window.innerWidth <= 600)
         }
         init();
         window.addEventListener("resize", init)
@@ -159,7 +155,7 @@ export default function Tariffs({ children }) {
     const handlePan = (e, info) => {
         const { current } = ref;
         const {x, y} = info.offset;
-        if(mobile && Math.abs(x) > Math.abs(y)) {
+        if(isPhone && Math.abs(x) > Math.abs(y)) {
             if(x < 0) {
                 current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
             } else {
@@ -168,12 +164,6 @@ export default function Tariffs({ children }) {
         }
     }
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        if(mobile) {
-            Scrollbar.init(body, {damping: 0.1})
-        }
-    }, [mobile])
 
     return (
         <>

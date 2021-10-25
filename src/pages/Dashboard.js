@@ -239,7 +239,8 @@ const Name = styled.div`
 const getDashboard = (ctn, accessToken, dispatch) => { 
     Promise.all([
         Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
-        Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken})
+        Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
+        // Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
     ])
     .then(([userInfo, userData]) => dispatch({type: USER, user: {userInfo, userData}}))
 }
