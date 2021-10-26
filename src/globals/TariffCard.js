@@ -13,7 +13,7 @@ import TariffCardModal from "./TariffCardModal";
 import { memo, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TariffBar from "./TariffBar";
-import { SHOW_MODAL } from "./utils";
+import { SHOW_MODAL , sendMetriс} from "./utils";
 import { useDispatch } from "react-redux";
 
 const Wrapper = styled(motion.div)`
@@ -356,7 +356,10 @@ export default memo(function TariffCard({ tariff, tariffId }) {
             </span>
             <span className="priceInfo">
                 {totalPrice} руб./мес
-                <SubScribeBtn onClick={() => dispatch({type: SHOW_MODAL, payload})}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
+                <SubScribeBtn onClick={() => {
+                    sendMetriс('reachGoal','tarif_podkluchit')
+                    dispatch({type: SHOW_MODAL, payload})
+                    }}>Подключить <AiOutlineRight style={{transform: "translateY(20%)"}} /></SubScribeBtn>
             </span>
         </Wrapper>
     )

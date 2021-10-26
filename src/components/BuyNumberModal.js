@@ -16,7 +16,7 @@ import { FourGSwitch, switchTypes } from '../globals/TariffCard'
 import Cleave from 'cleave.js/react';
 import NumbersMobile from './Numbers/NumbersMobile'
 import searchIcon_black from '../assets/images/search-black.svg'
-import { OrderService, OrderTariff, BuyNumbers } from '../globals/utils'
+import { OrderService, OrderTariff, BuyNumbers, sendMetriс } from '../globals/utils'
 import Preloader from '../globals/Loader/index'
 
 const Wrapper = styled(motion.div)`
@@ -599,7 +599,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
-    const { position, tariffId, service, switches, toSubmit } = payload;
+    const { position, tariffId, service, switches, toSubmit , ym} = payload;
     const [submit, setSubmit] = useState(toSubmit);
     const [error, setError] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
@@ -612,6 +612,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const tariff = (typeof tariffId === "number") && tariffTypesArray[tariffId];
     const [enableButton, setEnableButton] = useState(false);
     const [clickedNumber, setClickedNumber] = useState({});
+
     const openCloseNumbers = (number) => {
         if (number.ctn === clickedNumber.ctn) setClickedNumber({})
         else setClickedNumber(number)
@@ -661,7 +662,8 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-
+        
+        sendMetriс(ym.type, ym.value)
         if (fromMosсow && userPhone && serviceName) {
             
             OrderService({
@@ -725,7 +727,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        
+        sendMetriс('reachGoal','tarif_oformit-form')
         OrderTariff({
             tariffName,
             tariffOptions,
@@ -790,7 +792,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        
+        sendMetriс('reachGoal','nomer-forma')
         BuyNumbers({
             deliveryDate,
             deliveryTime,
