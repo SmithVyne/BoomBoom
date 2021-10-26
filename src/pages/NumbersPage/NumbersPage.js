@@ -2,13 +2,13 @@ import Numbers from '../../components/Numbers/Numbers'
 import { BUY_NUMBER, SHOW_MODAL } from '../../globals/utils'
 import { useDispatch } from 'react-redux';
 import './NumbersPage.css';
-import { TransferNumber } from '../../globals/utils'
+import { TransferNumber, sendMetriс } from '../../globals/utils'
 
 
 export default function NumbersPage() {
     const dispatch = useDispatch();
     function buyNumbers(numbers) {
-
+        sendMetriс('reachGoal','nomer-click')
         dispatch({ type: BUY_NUMBER, numbers })
     }
     
@@ -39,6 +39,7 @@ export default function NumbersPage() {
             fromMosсow = "не из Москвы"
 
         }
+        sendMetriс('reachGoal','perenesti_svoy-forma')
         TransferNumber({
                 transferDate: date,
                 transferredNumber,
@@ -54,7 +55,8 @@ export default function NumbersPage() {
         
     }
     function buyEsim() {
-        dispatch({ type: SHOW_MODAL, payload: { service: { eSim: true } } })
+        sendMetriс('reachGoal','esim-click')
+        dispatch({ type: SHOW_MODAL, payload: { service: { eSim: true}, ym:{type:'reachGoal', value:'esim-forma'} } })
     }
     return (
         <>
