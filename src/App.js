@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState, Suspense, useMemo } from "re
 import styled, { ThemeProvider } from "styled-components/macro";
 import 'cleave.js/dist/addons/cleave-phone.ru';
 import { useSelector } from "react-redux";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import urlUtmParams from 'url-utm-params'
 import { useLocalStorage } from "./hooks";
@@ -138,8 +138,10 @@ export default withRouter(function App({ location }) {
     }
   }, [scrollbar])
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    if(buyNumberModal.show || loginForm){
+    if(buyNumberModal.show || loginForm || pathname === "/dashboard"){
       Scrollbar.destroy(document.body)
       window.scrollTo(0, scrollY)
     } 
@@ -150,11 +152,11 @@ export default withRouter(function App({ location }) {
     else if(!isPhone) {
       Scrollbar.destroy(document.body)
     }
-  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar])
+  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname])
   
   
   return (
-    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone }}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, scrollbar }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper>

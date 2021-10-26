@@ -108,7 +108,7 @@ smoothscroll.polyfill();
 
 export default function Tariffs({ children }) {
     const ref = useRef();
-    const { darkTheme, isPhone } = useContext(GlobalContext);
+    const { darkTheme, isPhone, scrollbar } = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
@@ -152,7 +152,7 @@ export default function Tariffs({ children }) {
         }
     }
 
-    const handlePan = (e, info) => {
+    const handlePanStart = (e, info) => {
         const { current } = ref;
         const {x, y} = info.offset;
         if(isPhone && Math.abs(x) > Math.abs(y)) {
@@ -164,6 +164,11 @@ export default function Tariffs({ children }) {
         }
     }
 
+    const handlePan = (e, {offset: {x, y}}) => {
+        if(isPhone && Math.abs(x) > Math.abs(y)) {
+            // scrollbar.scrollTop += y;
+        }
+    }
 
     return (
         <>
@@ -178,7 +183,7 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller onPanStart={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
+                <Scroller onPanStart={handlePanStart} onPan={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
                     <WrapTariffs>
                         <AnimatePresence>
                             {children}

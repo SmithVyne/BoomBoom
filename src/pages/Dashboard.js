@@ -142,9 +142,19 @@ const Details = styled.section`
     border-radius: 28px;
     padding: 24px;
     gap: 26px;
-    #wrapTable {
-        overflow: auto;
-        height: 550px;
+    overflow: auto;
+    height: 550px;
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.09);
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: black;
+        outline: none;
+        border-radius: 5px;
     }
 `
 const Dtitle = styled.span`
@@ -156,21 +166,25 @@ const Dtitle = styled.span`
     gap: 20px;
     position: sticky;
     left: 0;
-    top: 0;
     flex-wrap: wrap;
 `
-const Dbody = styled.table`
+const DetailsTable = styled.table`
     width: 100%;
     min-width: 1000px;
     font-size: 24px;
     text-align: left;
     border-collapse: separate;
     border-spacing: 0px 12px;
+    position: relative;
+    top: auto;
     thead tr {
         font-size: 16px;
         font-weight: 550;
-        & th {
+        th {
             padding-left: 24px;
+            position: sticky;
+            top: 0;
+            background: ${({theme}) => theme.darkTheme ? "rgba(24, 24, 24, 1)" : "#FFFFFF"};
         }
     }
 
@@ -261,8 +275,7 @@ export default function Dashboard() {
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
-    const detailsRef = useRef();
-    const detailsBodyRef = useRef();
+    const detailsTableRef = useRef();
     const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
 
     useEffect(() => {
@@ -280,17 +293,13 @@ export default function Dashboard() {
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
-        html2pdf().from(detailsBodyRef.current).save("Детализация.pdf");
+        html2pdf().from(detailsTableRef.current).save("Детализация.pdf");
     }
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 60000);
         });
-    }
-
-    if(detailsRef.current) {
-        Scrollbar.init(detailsRef.current, {damping: 0.1, thumbMinSize: false});
     }
 
     return (
@@ -337,33 +346,33 @@ export default function Dashboard() {
                         <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Сменить тариф</Button>
                         <span id="Абонентская_плата">Абонентская плата в месяц: </span>
                     </Cards>
-                    <Details darkTheme={darkTheme}>
+                    <Details id="Детализация" darkTheme={darkTheme}>
                         <Dtitle>
                             Детализация
                             <DownloadBtn onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
-                        <div ref={detailsRef} id="wrapTable">
-                            <Dbody ref={detailsBodyRef}>
-                                <thead>
-                                    <tr>
-                                        <th>Дата</th>
-                                        <th>Действие</th>
-                                        <th>Оператор</th>
-                                        <th>Длительность</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {details && details.slice(0, details.length - 1).map(detail => (
-                                        <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
-                                            <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
-                                            <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
-                                            <td><img alt="Оператор" src={mtc} />MTC</td>
-                                            <td>{detail["Продолжительность звонка"]}</td>
-                                        </Trows>
-                                    ))}
-                                </tbody>
-                            </Dbody>
-                        </div>
+
+                        <DetailsTable ref={detailsTableRef}>
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Действие</th>
+                                    <th>Оператор</th>
+                                    <th>Длительность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {details && details.slice(0, details.length - 1).map(detail => (
+                                    <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
+                                        <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
+                                        <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
+                                        <td><img alt="Оператор" src={mtc} />MTC</td>
+                                        <td>{detail["Продолжительность звонка"]}</td>
+                                    </Trows>
+                                ))}
+                            </tbody>
+                        </DetailsTable>
+
                     </Details>
                 </MainSection>
             </Wrapper>}
