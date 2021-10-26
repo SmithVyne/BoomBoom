@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import MetaTags from 'react-meta-tags';
 import { useDispatch } from "react-redux"
-import { SHOW_MODAL } from "../../globals/utils"
+import { SHOW_MODAL, sendMetriс } from "../../globals/utils"
 import { GlobalContext } from '../../App';
 import { useParams, useHistory } from 'react-router-dom';
 import './Organisations.css';
@@ -25,11 +25,15 @@ import pcFace from '../../assets/images/pc-face.png'
 
 const cardsMalBiz = [
     {
+        ymForm:{type:'reachGoal', value:'mix-forma'},
+        ymClickBtn:{type:'reachGoal', value:'mix-click'},
         img: box,
         title: 'Яркий микс',
         text: `Высокоскоростной интернет в офисе со скидкой, корпоративная мобильная связь и облачная АТС бесплатно`
     },
     {
+        ymForm:{type:'reachGoal', value:'mobil_predpriyatie-forma'},
+        ymClickBtn:{type:'reachGoal', value:'mobil_predpriyatie-click'},
         img: pcFace,
         title: 'Мобильное предприятие',
         text: `CRM-система со встроенной облачной
@@ -37,24 +41,32 @@ const cardsMalBiz = [
         контроля продаж и управления проектами`
     },
     {
+        ymForm:{type:'reachGoal', value:'ip_samozaniyatie-forma'},
+        ymClickBtn:{type:'reachGoal', value:'ip_samozaniyatie-click'},
         img: bucket,
         title: 'Для ИП и самозанятых',
         text: `Облачная телефония, статистика эффективности рекламы, CRM-система и SMS-рассылки`
     }
     ,
     {
+        ymForm:{type:'reachGoal', value:'8800-forma'},
+        ymClickBtn:{type:'reachGoal', value:'8800-click'},
         img: anchor,
         title: 'Номер 8800',
         text: `Звонки по всей России и бесплатное подключение`
     }
     ,
     {
+        ymForm:{type:'reachGoal', value:'biznes_internet-forma'},
+        ymClickBtn:{type:'reachGoal', value:'biznes_internet-click'},
         img: link,
         title: 'Интернет для бизнеса',
         text: `Скорость до 100 Мбит/с. При подключении Вы получаете техподдержку, бесплатный домен, почтовые ящики и доступ к статическим и динамическим IP-адресам`
     }
     ,
     {
+        ymForm:{type:'reachGoal', value:'ofd_beeline-forma'},
+        ymClickBtn:{type:'reachGoal', value:'ofd_beeline-click'},
         img: beeline,
         title: 'ОФД “Билайн”',
         text: `Касса + ФН + ОФД + Интернет + Настройка кассы — с рассрочкой на 12 месяцев`
@@ -63,17 +75,23 @@ const cardsMalBiz = [
 
 const cardsBigBiz = [
     {
+        ymForm:{type:'reachGoal', value:'boom_geoanalitika-forma'},
+        ymClickBtn:{type:'reachGoal', value:'boom_geoanalitika-click'},
         img: globe_icon,
         title: 'BOOM геоаналитика',
         text: `Исследование аудитории пользователей Ваших сервисов. Отчеты по потенциальновый выручке. Сезонные исследования за 2 недели`
     },
     {
+        ymForm:{type:'reachGoal', value:'boom_cloud-forma'},
+        ymClickBtn:{type:'reachGoal', value:'boom_cloud-click'},
         img: folder,
         title: 'BOOM CLOUD (цифровое решение)',
         text: `Универсальная облачная платформа 
         для цифровой устойчивости Вашего бизнеса`
     },
     {
+        ymForm:{type:'reachGoal', value:'boom_smart-forma'},
+        ymClickBtn:{type:'reachGoal', value:'boom_smart-click'},
         img: blub,
         title: 'BOOM SMART',
         text: `Комплексное решение для прокачки 
@@ -81,6 +99,8 @@ const cardsBigBiz = [
         Обслуживание, Логистика, Финансы и т.д.)`
     },
     {
+        ymForm:{type:'reachGoal', value:'udalennaya_rabota-forma'},
+        ymClickBtn:{type:'reachGoal', value:'udalennaya_rabota-click'},
         img: computer,
         title: 'Решения для удаленной работы',
         text: `Все необходимые инструменты для 
@@ -88,6 +108,8 @@ const cardsBigBiz = [
         клиентов при удаленной работе`
     },
     {
+        ymForm:{type:'reachGoal', value:'integratsyia-forma'},
+        ymClickBtn:{type:'reachGoal', value:'integratsyia-click'},
         img: floppy,
         title: 'Системная интеграция (цифровизация бизнеса)',
         text: `Применение комплексных IT-решений 
@@ -99,27 +121,37 @@ const cardsBigBiz = [
 
 const cardsGosSector = [
     {
+        ymForm:{type:'reachGoal', value:'transport-forma'},
+        ymClickBtn:{type:'reachGoal', value:'transport-click'},
         img: car,
         title: 'Управление общественным транспортом и городским трафиком',
         text: `Единая интеллектуальная транспортная
         система`
     },
     {
+        ymForm:{type:'reachGoal', value:'obucheniye-forma'},
+        ymClickBtn:{type:'reachGoal', value:'obucheniye-click'},
         img: red_book,
         title: 'Цифровизация образовательных учреждений',
         text: `РОББО Классы — занятия по робототехнике, VR/AR обучение, интерактивные классы`
     },
     {
+        ymForm:{type:'reachGoal', value:'medicina-forma'},
+        ymClickBtn:{type:'reachGoal', value:'medicina-click'},
         img: thermometer,
         title: 'Решения для автоматизации процессов в медицинских учреждениях',
         text: `Сервисы ЕГИСЗ, Электронная медицинская карта, Сервис персонифицированного учета медпомощи`
     },
     {
+        ymForm:{type:'reachGoal', value:'kommunalnie-forma'},
+        ymClickBtn:{type:'reachGoal', value:'kommunalnie-click'},
         img: magic_hat,
         title: 'Технологичные инструменты для городских коммунальных служб и горуправления',
         text: `Умное ЖКХ, энергоэффективное городское освещение`
     },
     {
+        ymForm:{type:'reachGoal', value:'instrument_upravleniya-forma'},
+        ymClickBtn:{type:'reachGoal', value:'instrument_upravleniya-click'},
         img: clapperboard,
         title: 'Инструменты для принятия решений и эффективного управления',
         text: `Планирование социальной инфраструктуры, оптимизация транспортной инфраструктуры`
@@ -143,11 +175,20 @@ export default function Organisations() {
 
     const dispatch = useDispatch();
     function handleSubmit(service) {
+        
         if (!service.title) {
-            service = { desc: service.text }
+            service.title = service.text 
         }
+        service.desc = service.text 
         service.type = "organisations"
-        dispatch({ type: SHOW_MODAL, payload: { service } })
+        console.log(service)
+        if (service.ymClickBtn && service.ymForm) {
+            sendMetriс(service.ymClickBtn.type, service.ymClickBtn.value)
+            dispatch({ type: SHOW_MODAL, payload: { service, ym: { type: service.ymForm.type, value: service.ymForm.value } } })
+        }
+        else {
+            dispatch({ type: SHOW_MODAL, payload: { service, ym: { type: 'reachGoal', value: 'free-service-forma' } } })
+        }
     }
     return (
         <section className={`organisations`}>
@@ -194,10 +235,7 @@ export default function Organisations() {
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
                                                 <div className="more" onClick={() => {
-                                                    handleSubmit({
-                                                        title: item.title,
-                                                        desc: item.text
-                                                    })
+                                                    handleSubmit(item)
                                                 }}>Подключить</div>
                                             </div>
                                         </div>
@@ -214,10 +252,7 @@ export default function Organisations() {
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
                                                 <div className="more" onClick={() => {
-                                                    handleSubmit({
-                                                        title: item.title,
-                                                        desc: item.text
-                                                    })
+                                                    handleSubmit(item)
                                                 }}>Подключить</div>
                                             </div>
                                         </div>
@@ -235,10 +270,7 @@ export default function Organisations() {
                                                 <h3 className={`card-title ${darkTheme ? 'card-title_dark' : ''}`}>{item.title}</h3>
                                                 <p className={`card-text ${darkTheme ? 'card-text_dark' : ''}`}>{item.text}</p>
                                                 <div className="more" onClick={() => {
-                                                    handleSubmit({
-                                                        title: item.title,
-                                                        desc: item.text
-                                                    })
+                                                    handleSubmit(item)
                                                 }}>Подключить</div>
                                             </div>
                                         </div>

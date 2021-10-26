@@ -4,7 +4,7 @@ import { GlobalContext } from '../../App';
 import './NumbersForMain.css';
 import searchIcon from '../../assets/images/search.svg'
 import numbers_cart from '../../assets/images/numbers-cart.svg'
-import { GetNumbers } from '../../globals/utils'
+import { GetNumbers , sendMetriс} from '../../globals/utils'
 import Loader from '../../globals/Loader/index'
 
 function NumbersForMain(props) {
@@ -735,6 +735,7 @@ function NumbersForMain(props) {
 
     }
     function handleCtnClick(item) {
+        sendMetriс('reachGoal','nomer-click')
         props.buyNumber([item])
         return
 

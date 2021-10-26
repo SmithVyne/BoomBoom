@@ -8,7 +8,7 @@ import styled from "styled-components/macro"
 import bomb from "../../assets/images/services/bomb.png"
 import Roaming from "../../components/Roaming/Roaming"
 import TariffBar from "../../globals/TariffBar"
-import { services, SHOW_MODAL } from "../../globals/utils"
+import { sendMetriс, services, SHOW_MODAL } from "../../globals/utils"
 import './Services.css';
 
 const Wrapper = styled.div`
@@ -111,7 +111,13 @@ const ServiceComponent = ({ service }) => {
         if (!service.title) {
             service = { ...posValues, desc: service.desc }
         }
-        dispatch({ type: SHOW_MODAL, payload: { service } })
+        if (service.ymClickBtn && service.ymForm) {
+            sendMetriс(service.ymClickBtn.type, service.ymClickBtn.value)
+            dispatch({ type: SHOW_MODAL, payload: { service, ym: { type: service.ymForm.type, value: service.ymForm.value } } })
+        }
+        else {
+            dispatch({ type: SHOW_MODAL, payload: { service, ym: { type: 'reachGoal', value: 'free-service-forma' } } })
+        }
     }
     return (
         <Service>
@@ -147,7 +153,7 @@ export default function Services() {
             <Wrapper>
                 <div className={`services__head-container`}>
                     <img className={`services__head-logo`} src={bomb} alt="Услуги" />
-                    <h2 className={`services__head-title ${darkTheme ? 'services__text_dark' : ''}`}>Бомбезные<br/>услуги</h2>
+                    <h2 className={`services__head-title ${darkTheme ? 'services__text_dark' : ''}`}>Бомбезные<br />услуги</h2>
                 </div>
                 <div className={`services__head-buttons`}>
                     <button onClick={() => {
@@ -181,7 +187,7 @@ export default function Services() {
                 }
                 {selectedType === "free" ?
                     <WrapServices>
-                        {services && services.free && services.free.map((service) => <ServiceComponent  key={`free-${service.title}`} service={service} />)}
+                        {services && services.free && services.free.map((service) => <ServiceComponent key={`free-${service.title}`} service={service} />)}
 
                     </WrapServices> :
                     <></>

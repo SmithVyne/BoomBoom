@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CgInfinity } from "react-icons/cg";
 import "./header.css";
-import { SHOW_MODAL } from "../../globals/utils";
+import { SHOW_MODAL ,sendMetriс } from "../../globals/utils";
 import { useDispatch } from "react-redux";
 import TariffPageBar from "../../globals/TariffPageBar";
 import icon1 from '../../assets/images/ico1.svg'
@@ -27,7 +27,8 @@ export default function Section(props) {
     switches: { "Безлимитный 4G": false, "Раздача интернета": false }
   }
   function handleEsimBuy() {
-    dispatch({ type: SHOW_MODAL, payload: { service: { eSim: true } } })
+    sendMetriс('reachGoal','esim-click')
+    dispatch({ type: SHOW_MODAL, payload: { service: { eSim: true}, ym:{type:'reachGoal', value:'esim-forma'} } })
   }
   return (
     <>
@@ -55,7 +56,10 @@ export default function Section(props) {
                     <TariffPageBar vip={props.tariff.title.toLowerCase() === "vip"} handlePositionChange={handlePositionChange} />
                   </div>
                   <div className={`tarrif-page__button`}>
-                    <div onClick={() => dispatch({ type: SHOW_MODAL, payload })} className="main-data__button">
+                    <div onClick={() => {
+                      sendMetriс('reachGoal','tarif_podkluchit')
+                      dispatch({ type: SHOW_MODAL, payload })
+                      }} className="main-data__button">
                       <p className="main-data__button-text">Подключить</p>
                     </div>
                     <div className={`tarrif-page__subscription ${props.darkTheme ? 'tarrif-page__subscription_dark' : ''}`}>
