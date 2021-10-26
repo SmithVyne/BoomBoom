@@ -151,6 +151,8 @@ export default function LoginForm() {
     useEscapeKey(setLoginForm);
     const [, saveCtn] = useLocalStorage("ctn");
     
+    accessToken && setLoginForm(false)
+    
     const body = {
         method: "login",
         params: { username: apiUsername, password },

@@ -13,6 +13,7 @@ import { spacer } from "../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
 import { useLocalStorage } from "../hooks";
 import { decode } from 'js-base64';
+import Scrollbar from 'smooth-scrollbar';
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -28,9 +29,6 @@ const MainSection = styled.div`
     flex-direction: column;
     @media(max-width: 1100px) {
         padding-right: 0px;
-    }
-    #Детализация {
-        overflow-x: auto;
     }
 `;
 const Button = styled.button`
@@ -144,6 +142,10 @@ const Details = styled.section`
     border-radius: 28px;
     padding: 24px;
     gap: 26px;
+    #wrapTable {
+        overflow: auto;
+        height: 550px;
+    }
 `
 const Dtitle = styled.span`
     display: flex;
@@ -154,6 +156,7 @@ const Dtitle = styled.span`
     gap: 20px;
     position: sticky;
     left: 0;
+    top: 0;
     flex-wrap: wrap;
 `
 const Dbody = styled.table`
@@ -259,6 +262,7 @@ export default function Dashboard() {
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
+    const detailsBodyRef = useRef();
     const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
 
     useEffect(() => {
@@ -276,13 +280,17 @@ export default function Dashboard() {
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
-        html2pdf().from(detailsRef.current).save("Детализация.pdf");
+        html2pdf().from(detailsBodyRef.current).save("Детализация.pdf");
     }
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 60000);
         });
+    }
+
+    if(detailsRef.current) {
+        Scrollbar.init(detailsRef.current, {damping: 0.1, thumbMinSize: false});
     }
 
     return (
@@ -329,34 +337,36 @@ export default function Dashboard() {
                         <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Сменить тариф</Button>
                         <span id="Абонентская_плата">Абонентская плата в месяц: </span>
                     </Cards>
-                    <Details id="Детализация" darkTheme={darkTheme}>
+                    <Details darkTheme={darkTheme}>
                         <Dtitle>
                             Детализация
                             <DownloadBtn onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
-                        <Dbody ref={detailsRef}>
-                            <thead>
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Действие</th>
-                                    <th>Оператор</th>
-                                    <th>Длительность</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {details && details.slice(0, details.length - 1).map(detail => (
-                                    <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
-                                        <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
-                                        <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
-                                        <td><img alt="Оператор" src={mtc} />MTC</td>
-                                        <td>{detail["Продолжительность звонка"]}</td>
-                                    </Trows>
-                                ))}
-                            </tbody>
-                        </Dbody>
+                        <div ref={detailsRef} id="wrapTable">
+                            <Dbody ref={detailsBodyRef}>
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Действие</th>
+                                        <th>Оператор</th>
+                                        <th>Длительность</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {details && details.slice(0, details.length - 1).map(detail => (
+                                        <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
+                                            <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
+                                            <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
+                                            <td><img alt="Оператор" src={mtc} />MTC</td>
+                                            <td>{detail["Продолжительность звонка"]}</td>
+                                        </Trows>
+                                    ))}
+                                </tbody>
+                            </Dbody>
+                        </div>
                     </Details>
                 </MainSection>
-                </Wrapper>}
+            </Wrapper>}
             </>
     )
 }
