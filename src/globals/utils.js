@@ -483,6 +483,10 @@ export const sendMetriс = (type, value) =>{
     window.ym(85620877, type, value)
 }
 
+const operatorIcons = {
+    МТС: mtc,
+    Beeline: beeline, 
+} 
 export const parseCols = (detail) => {
     if(detail["Тип звонка"] === "GPRS"){
         return (
@@ -493,21 +497,23 @@ export const parseCols = (detail) => {
         )
     } else if(detail["Тип звонка"] === "SMS / MMS") {
         let operator = detail["Описание звонка"].split(" ");
-        operator = operator[operator.length - 1]
+        operator = operator[operator.length - 1];
+        const icon = operatorIcons[operator];
         return (
             <>
                 <td>SMS / MMS ({spacer(detail["Входящий номер"])})</td>
-                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+                <td>{icon && <img alt="Оператор" src={icon} />}{operator}</td>
             </>
         )
 
     } else if(detail["Тип звонка"] === "Местные звонки") {
         let operator = detail["Описание звонка"].split("\"");
-        operator = operator[operator.length - 2]
+        operator = operator[operator.length - 2];
+        const icon = operatorIcons[operator];
         return (
             <>
                 <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
-                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+                <td>{icon && <img alt="Оператор" src={icon} />}{operator}</td>
             </>
         )
     }

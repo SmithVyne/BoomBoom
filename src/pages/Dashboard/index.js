@@ -1,21 +1,25 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components/macro";
-import { GlobalContext } from "../App";
-import Aside from "../components/Aside";
+import { GlobalContext } from "../../App";
+import Aside from "../../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../globals/Loader";
-import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../globals/utils";
-import { spacer } from "../components/BuyNumberModal";
+import Loader from "../../globals/Loader";
+import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../../globals/utils";
+import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
-import { useEscapeKey, useLocalStorage } from "../hooks";
+import { useEscapeKey, useLocalStorage } from "../../hooks";
 import { decode } from 'js-base64';
 import Scrollbar from 'smooth-scrollbar';
-import { Close } from "../globals/LoginForm";
+import { Close } from "../../globals/LoginForm";
 import { CgClose } from "react-icons/cg";
 import { GiHazardSign } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import docDefinition from "./docDefinition";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -378,7 +382,7 @@ export default function Dashboard() {
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
-
+        pdfMake.createPdf(docDefinition(details)).open();
     }
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
