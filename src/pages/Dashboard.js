@@ -14,6 +14,7 @@ import { RiFileCopyLine } from "react-icons/ri";
 import { useLocalStorage } from "../hooks";
 import { decode } from 'js-base64';
 import Scrollbar from 'smooth-scrollbar';
+import beeline from "../assets/images/beeline.png"
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -142,19 +143,9 @@ const Details = styled.section`
     border-radius: 28px;
     padding: 24px;
     gap: 26px;
-    overflow: auto;
-    height: 550px;
-    ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-        background-color: rgba(255, 255, 255, 0.09);
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: black;
-        outline: none;
-        border-radius: 5px;
+    #wrapTable {
+        overflow: auto;
+        max-height: 550px;
     }
 `
 const Dtitle = styled.span`
@@ -166,6 +157,7 @@ const Dtitle = styled.span`
     gap: 20px;
     position: sticky;
     left: 0;
+    top: 0;
     flex-wrap: wrap;
 `
 const DetailsTable = styled.table`
@@ -175,16 +167,11 @@ const DetailsTable = styled.table`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0px 12px;
-    position: relative;
-    top: auto;
     thead tr {
         font-size: 16px;
         font-weight: 550;
-        th {
+        & th {
             padding-left: 24px;
-            position: sticky;
-            top: 0;
-            background: ${({theme}) => theme.darkTheme ? "rgba(24, 24, 24, 1)" : "#FFFFFF"};
         }
     }
 
@@ -267,6 +254,37 @@ const getDashboard = (ctn, accessToken, dispatch) => {
     .then(([userInfo, userData, detailsFile]) => dispatch({type: USER, user: {userInfo, userData, detailsFile}}))
 }
 
+const parseCols = (detail) => {
+    if(detail["Тип звонка"] === "GPRS"){
+        return (
+            <>
+                <td>Интернет ({detail["Интернет МБ"]} мб.)</td>
+                <td><img alt="Оператор" src={beeline} />Beeline</td>
+            </>
+        )
+    } else if(detail["Тип звонка"] === "SMS / MMS") {
+        let operator = detail["Описание звонка"].split(" ");
+        operator = operator[operator.length - 1]
+        return (
+            <>
+                <td>SMS / MMS ({spacer(detail["Входящий номер"])})</td>
+                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+            </>
+        )
+
+    } else if(detail["Тип звонка"] === "Местные звонки") {
+        let operator = detail["Описание звонка"].split("\"");
+        operator = operator[operator.length - 2]
+        return (
+            <>
+                <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
+                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+            </>
+        )
+    }
+    
+}
+
 export default function Dashboard() {
     const {darkTheme, setLoginForm} = useContext(GlobalContext);
     const {userInfo, userData, detailsFile} = useSelector(store => store.auth.user);
@@ -275,6 +293,7 @@ export default function Dashboard() {
     const dispatch = useDispatch();
     const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
+    const detailsRef = useRef();
     const detailsTableRef = useRef();
     const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
 
@@ -300,6 +319,10 @@ export default function Dashboard() {
             setCopied(true);
             setTimeout(() => setCopied(false), 60000);
         });
+    }
+    
+    if(detailsRef.current) {
+        Scrollbar.init(detailsRef.current, {damping: 0.1, thumbMinSize: false});
     }
 
     return (
@@ -352,27 +375,27 @@ export default function Dashboard() {
                             <DownloadBtn onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
 
-                        <DetailsTable ref={detailsTableRef}>
-                            <thead>
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Действие</th>
-                                    <th>Оператор</th>
-                                    <th>Длительность</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {details && details.slice(0, details.length - 1).map(detail => (
-                                    <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
-                                        <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
-                                        <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
-                                        <td><img alt="Оператор" src={mtc} />MTC</td>
-                                        <td>{detail["Продолжительность звонка"]}</td>
-                                    </Trows>
-                                ))}
-                            </tbody>
-                        </DetailsTable>
-
+                        <div ref={detailsRef} id="wrapTable">
+                            <DetailsTable ref={detailsTableRef}>
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Действие</th>
+                                        <th>Оператор</th>
+                                        <th>Длительность</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {details && details.slice(0, details.length - 1).map(detail => (
+                                        <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
+                                            <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
+                                            {parseCols(detail)}
+                                            <td>{detail["Продолжительность звонка"]}</td>
+                                        </Trows>
+                                    ))}
+                                </tbody>
+                            </DetailsTable>
+                        </div>
                     </Details>
                 </MainSection>
             </Wrapper>}

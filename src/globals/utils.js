@@ -175,7 +175,7 @@ export const parseDetailsFile = (file) => {
     file = file.split("\n").map(line => line.split("\t"));
     const headers = file[0];
     const body = file.slice(1);
-    return body.map(line => line.reduce((obj, col, index) => ({...obj, [headers[index]]: col}), {}))
+    return body.map(line => line.reduce((obj, col, index) => ({...obj, [index === 9 ? "Интернет МБ" : headers[index] ]: col}), {}))
 }
 
 export async function BuyNumbers({ deliveryDate,

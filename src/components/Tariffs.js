@@ -108,7 +108,7 @@ smoothscroll.polyfill();
 
 export default function Tariffs({ children }) {
     const ref = useRef();
-    const { darkTheme, isPhone, scrollbar } = useContext(GlobalContext);
+    const { darkTheme, isPhone } = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
