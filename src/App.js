@@ -145,12 +145,12 @@ export default withRouter(function App({ location }) {
       Scrollbar.destroy(document.body)
       window.scrollTo(0, scrollY)
     } 
+    else if(!isPhone || pathname === "/dashboard") {
+      Scrollbar.destroy(document.body)
+    }
     else if(isPhone) {
       window.scrollTo(0, 0)
       scrollbar.scrollTop = scrollY;
-    }
-    else if(!isPhone || pathname === "/dashboard") {
-      Scrollbar.destroy(document.body)
     }
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname])
   

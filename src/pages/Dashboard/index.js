@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -16,6 +16,7 @@ import { Close } from "../../globals/LoginForm";
 import { CgClose } from "react-icons/cg";
 import { GiHazardSign } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import sub from 'date-fns/sub'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import docDefinition from "./docDefinition";
@@ -345,18 +346,39 @@ const AttentionModal = ({setShowPopup}) => {
     )
 }
 
+const getDetailsFile = (idToSearch, accessToken) => {
+    const d = new Date();
+    const requestArray = [];
+    for(let i = 0; i <= 6; i++) {
+        const date = sub(d, {months: i});
+        const year = date.getFullYear();
+        let month = 1+date.getMonth();
+        month = month < 10 ? "0"+month : month;
+        requestArray.push(
+            Fetcher({method: "getDetailsFile", params:{idToSearch, period: `${year}M${month}`, encoding: "utf-8",}, id:null}, {accessToken})
+        )
+    }
+
+    return Promise.all(requestArray)
+    .then(list => list.reduce((total, detailsFile) => [
+            ...total, 
+            ...parseDetailsFile(decode(detailsFile.file))
+        ], [])
+    )
+}
+
 const getDashboard = (ctn, accessToken, dispatch) => { 
     Promise.all([
         Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
         Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
-        Fetcher({method: "getDetailsFile", params:{idToSearch: ctn, period: "2021M09", encoding: "utf-8",}, id:null}, {accessToken}),
+        getDetailsFile(ctn, accessToken),
     ])
-    .then(([userInfo, userData, detailsFile]) => dispatch({type: USER, user: {userInfo, userData, detailsFile}}))
+    .then(([userInfo, userData, details]) => dispatch({type: USER, user: {userInfo, userData, details}}))
 }
 
 export default function Dashboard() {
     const {darkTheme, setLoginForm} = useContext(GlobalContext);
-    const {userInfo, userData, detailsFile} = useSelector(store => store.auth.user);
+    const {userInfo, userData, details} = useSelector(store => store.auth.user);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
@@ -364,7 +386,6 @@ export default function Dashboard() {
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
     const detailsTableRef = useRef();
-    const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
@@ -459,7 +480,7 @@ export default function Dashboard() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {details && details.slice(0, details.length - 1).map(detail => (
+                                    {details && details.filter(detail => detail["Продолжительность звонка"]).map(detail => (
                                         <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
                                             <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
                                             {parseCols(detail)}

@@ -55,7 +55,10 @@ const docDefinition = (details) => ({
             fontSize: 12,
         },
     },
-    // footer: (currentPage) =>  ({ text: currentPage.toString(), alignment: 'center', fontSize: 11 }),
+    footer: (currentPage) =>  ({ text: currentPage.toString(), alignment: 'left', fontSize: 11, margin: [40, 0] }),
+    info: {
+        title: 'Детализация | Boom Telecom',
+    },
 })
 
 export default docDefinition;
