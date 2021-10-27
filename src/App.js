@@ -141,7 +141,7 @@ export default withRouter(function App({ location }) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if(buyNumberModal.show || loginForm || pathname === "/dashboard"){
+    if(buyNumberModal.show || loginForm){
       Scrollbar.destroy(document.body)
       window.scrollTo(0, scrollY)
     } 
@@ -149,7 +149,7 @@ export default withRouter(function App({ location }) {
       window.scrollTo(0, 0)
       scrollbar.scrollTop = scrollY;
     }
-    else if(!isPhone) {
+    else if(!isPhone || pathname === "/dashboard") {
       Scrollbar.destroy(document.body)
     }
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname])

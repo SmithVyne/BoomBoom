@@ -97,11 +97,12 @@ const Submit = styled.button`
         height: 57px;
     }
 `
-const Close = styled.span`
+export const Close = styled.span`
     position: absolute;
     top: 24px;
     right: 24px;
-    cursor: pointer
+    cursor: pointer;
+    color: #010101;
 `
 const Error = styled.small `
     color: red;

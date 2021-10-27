@@ -18,6 +18,10 @@ import umbrella from "../assets/images/services/umbrella.png"
 import telescope from "../assets/images/services/telescope.png"
 import wifi from "../assets/images/services/wifi.png"
 import telephone from "../assets/images/services/telephone.png"
+import { spacer } from "../components/BuyNumberModal";
+import mtc from '../assets/images/mtc.png';
+import beeline from "../assets/images/beeline.png"
+
 
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
 export const LOGIN_FAILED = "LOGIN_FAILED";
@@ -477,4 +481,35 @@ export const services = {
 
 export const sendMetriс = (type, value) =>{
     window.ym(85620877, type, value)
+}
+
+export const parseCols = (detail) => {
+    if(detail["Тип звонка"] === "GPRS"){
+        return (
+            <>
+                <td>Интернет ({detail["Интернет МБ"]} мб.)</td>
+                <td><img alt="Оператор" src={beeline} />Beeline</td>
+            </>
+        )
+    } else if(detail["Тип звонка"] === "SMS / MMS") {
+        let operator = detail["Описание звонка"].split(" ");
+        operator = operator[operator.length - 1]
+        return (
+            <>
+                <td>SMS / MMS ({spacer(detail["Входящий номер"])})</td>
+                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+            </>
+        )
+
+    } else if(detail["Тип звонка"] === "Местные звонки") {
+        let operator = detail["Описание звонка"].split("\"");
+        operator = operator[operator.length - 2]
+        return (
+            <>
+                <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
+                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
+            </>
+        )
+    }
+    
 }

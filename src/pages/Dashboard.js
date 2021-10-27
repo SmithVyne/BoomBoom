@@ -4,17 +4,18 @@ import { GlobalContext } from "../App";
 import Aside from "../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
-import mtc from '../assets/images/mtc.png';
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../globals/Loader";
-import {CREATE_AUTH, Fetcher, parseDetailsFile, percentage, replacePoints, USER } from "../globals/utils";
-import html2pdf from "html2pdf.js";
+import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../globals/utils";
 import { spacer } from "../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
-import { useLocalStorage } from "../hooks";
+import { useEscapeKey, useLocalStorage } from "../hooks";
 import { decode } from 'js-base64';
 import Scrollbar from 'smooth-scrollbar';
-import beeline from "../assets/images/beeline.png"
+import { Close } from "../globals/LoginForm";
+import { CgClose } from "react-icons/cg";
+import { GiHazardSign } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
     padding-top: 50px;
@@ -50,6 +51,7 @@ const Button = styled.button`
     max-width: 100%;
     max-height: fit-content;
     padding: 20px 16px;
+    outline: none;
 `;
 
 const Small = styled.small`
@@ -244,6 +246,100 @@ const Name = styled.div`
         font-size: 20px;
     }
 `
+const AttentionModalStyles = styled.div`
+    background: ${({theme}) => theme.darkTheme ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.7)"};
+    width: 100%;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #010101;
+    .modal {
+        width: 320px;
+        height: 271px;
+        max-width: 90vw;
+        background: #fff;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        padding: 30px 12px 0;
+    }
+    .header {
+        font-weight: 500;
+        font-size: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        svg {
+            color: #FF0202;
+        }
+    }
+
+    .body {
+        margin: 9px 0 20px;
+        font-weight: 500;
+        font-size: 20px;
+        a {
+            text-decoration: underline;
+            color: #4B75FC;
+        }
+    }
+    .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 21px;
+        font-size: 20px;
+        .left {
+            color: #4B75FC;
+        }
+        .right {
+            color: #FF0202;
+            background: #FF02021F;
+            padding: 5px 10px;
+            border-radius: 35px;
+        }
+    }
+`
+
+const AttentionModal = ({setShowPopup}) => {
+    useEscapeKey(setShowPopup);
+    const dispatch = useDispatch();
+    return (
+        <AttentionModalStyles onClick={(e) => {e.stopPropagation(); setShowPopup(false)}}>
+            <div onClick={(e) => e.stopPropagation()} className="modal">
+                <Close onClick={()=>setShowPopup(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
+                <span className="header">
+                    <GiHazardSign />
+                    Внимание
+                </span>
+                <span className="body">
+                    только при наличии 
+                    неиспользованной пластиковой 
+                    сим-карты или <Link to="/numbers/:esim">eSIM</Link>
+                </span>
+
+                <span className="bottom">
+                    <span onClick={()=>{
+                        setShowPopup(false); 
+                        dispatch({type: SHOW_MODAL, payload: {toSubmit: true}})
+                    }} className="left">Хорошо</span>
+                    <span onClick={()=>setShowPopup(false)} className="right">Отмена</span>
+                </span>
+            </div>
+        </AttentionModalStyles>
+    )
+}
 
 const getDashboard = (ctn, accessToken, dispatch) => { 
     Promise.all([
@@ -252,37 +348,6 @@ const getDashboard = (ctn, accessToken, dispatch) => {
         Fetcher({method: "getDetailsFile", params:{idToSearch: ctn, period: "2021M09", encoding: "utf-8",}, id:null}, {accessToken}),
     ])
     .then(([userInfo, userData, detailsFile]) => dispatch({type: USER, user: {userInfo, userData, detailsFile}}))
-}
-
-const parseCols = (detail) => {
-    if(detail["Тип звонка"] === "GPRS"){
-        return (
-            <>
-                <td>Интернет ({detail["Интернет МБ"]} мб.)</td>
-                <td><img alt="Оператор" src={beeline} />Beeline</td>
-            </>
-        )
-    } else if(detail["Тип звонка"] === "SMS / MMS") {
-        let operator = detail["Описание звонка"].split(" ");
-        operator = operator[operator.length - 1]
-        return (
-            <>
-                <td>SMS / MMS ({spacer(detail["Входящий номер"])})</td>
-                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
-            </>
-        )
-
-    } else if(detail["Тип звонка"] === "Местные звонки") {
-        let operator = detail["Описание звонка"].split("\"");
-        operator = operator[operator.length - 2]
-        return (
-            <>
-                <td>Звонок ({"+7 " + spacer(detail["Входящий номер"])})</td>
-                <td>{operator === "МТС" && <img alt="Оператор" src={mtc} />}{operator}</td>
-            </>
-        )
-    }
-    
 }
 
 export default function Dashboard() {
@@ -296,6 +361,7 @@ export default function Dashboard() {
     const detailsRef = useRef();
     const detailsTableRef = useRef();
     const details = useMemo(() => detailsFile && parseDetailsFile(decode(detailsFile.file)), [detailsFile]);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         if (accessToken) {
@@ -312,7 +378,7 @@ export default function Dashboard() {
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
-        html2pdf().from(detailsTableRef.current).save("Детализация.pdf");
+
     }
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
@@ -322,7 +388,7 @@ export default function Dashboard() {
     }
     
     if(detailsRef.current) {
-        Scrollbar.init(detailsRef.current, {damping: 0.1, thumbMinSize: false});
+        Scrollbar.init(detailsRef.current, {damping: 0.1});
     }
 
     return (
@@ -365,7 +431,10 @@ export default function Dashboard() {
                             <Small style={{fontWeight: 700}}>Сообщения</Small>
                             <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
                         </SubCard>
-                        <Button fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>Изменить номер</Button>
+                        <Button onClick={() => setShowPopup(true)} fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>
+                            Изменить номер
+                            {showPopup && <AttentionModal setShowPopup={setShowPopup} />}
+                        </Button>
                         <Button fontSize="24px" color="white" background="#4B75FC" height="71px" width="100%" round>Сменить тариф</Button>
                         <span id="Абонентская_плата">Абонентская плата в месяц: </span>
                     </Cards>
