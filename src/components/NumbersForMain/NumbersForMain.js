@@ -37,7 +37,6 @@ function NumbersForMain(props) {
 
     function handleResize() {
         setScreenWidth(window.innerWidth)
-        window.removeEventListener('resize', handleResize);
     }
     React.useEffect(() => {
         window.addEventListener('resize', handleResize);

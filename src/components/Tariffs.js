@@ -126,7 +126,7 @@ export default function Tariffs({ children }) {
         init();
         window.addEventListener("resize", init)
         return () => {
-            document.removeEventListener("resize", init);
+            window.removeEventListener("resize", init);
         }
     }, [])
 

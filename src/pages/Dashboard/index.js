@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -360,11 +360,6 @@ const getDetailsFile = (idToSearch, accessToken) => {
     }
 
     return Promise.all(requestArray)
-    .then(list => list.reduce((total, detailsFile) => [
-            ...total, 
-            ...parseDetailsFile(decode(detailsFile.file))
-        ], [])
-    )
 }
 
 const getDashboard = (ctn, accessToken, dispatch) => { 
@@ -373,12 +368,12 @@ const getDashboard = (ctn, accessToken, dispatch) => {
         Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
         getDetailsFile(ctn, accessToken),
     ])
-    .then(([userInfo, userData, details]) => dispatch({type: USER, user: {userInfo, userData, details}}))
+    .then(([userInfo, userData, detailsFile]) => dispatch({type: USER, user: {userInfo, userData, detailsFile}}))
 }
 
 export default function Dashboard() {
     const {darkTheme, setLoginForm} = useContext(GlobalContext);
-    const {userInfo, userData, details} = useSelector(store => store.auth.user);
+    const {userInfo, userData, detailsFile} = useSelector(store => store.auth.user);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
@@ -386,6 +381,10 @@ export default function Dashboard() {
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
     const detailsTableRef = useRef();
+    const details = useMemo(() => detailsFile && detailsFile.reduce((total, detailsFile) => [
+        ...total, 
+        ...parseDetailsFile(decode(detailsFile.file))
+    ], []), [detailsFile])
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
