@@ -123,11 +123,13 @@ export default withRouter(function App({ location }) {
     };
   }, [])
 
+  const { pathname } = useLocation();
+
   const scrollbar = useMemo(() => {
-    if(isPhone && !(buyNumberModal.show || loginForm)) {
+    if(isPhone && pathname !== "/dashboard" && !(buyNumberModal.show || loginForm)) {
       return Scrollbar.init(document.body, {damping: 0.1})
     }
-  }, [buyNumberModal.show, isPhone, loginForm])
+  }, [buyNumberModal.show, isPhone, loginForm, pathname])
   useEffect(() => {
     if(scrollbar) {
       const listener = ({offset}) => setScrollY(offset.y);
@@ -138,7 +140,6 @@ export default withRouter(function App({ location }) {
     }
   }, [scrollbar])
 
-  const { pathname } = useLocation();
 
   useEffect(() => {
     if(buyNumberModal.show || loginForm){

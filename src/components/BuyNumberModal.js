@@ -489,18 +489,24 @@ const BuyNumbersDropdownStyles = styled.div`
 `
 
 const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition, tariff, buy, handleOpen, setSelectedTariff, drop, number, setBoughtNumbers, dropDownPosition, setDropDownPosition, localSwitches, setLocalSwitches }) => {
-    const handleChoose = (index) => {
+    const handleChoose = (e, index) => {
         if (buy) {
             setSelectedTariff()
             setDropDownPosition(index);
-            setBoughtNumbers(boughtNumbers => ({
-                ...boughtNumbers, [number.ctn]: {
-                    ...number, tariffName: tariff.title,
-                    tariffOptions: `${tariff.positions[index].min} мин, ${tariff.positions[index].gb === Infinity ? "Безлимит" : tariff.positions[index].gb} гб, ${tariff.positions[index].sms} смс`,
-                }
-            }))
-        } else setModalPosition(index)
+        } else {setModalPosition(index)}
     }
+
+    // const prevSwitches = usePrevious(localSwitches);
+    useEffect(() => {
+        if(buy) {
+            setLocalSwitches(obj => ({
+                ...obj, 
+                "Безлимитный 4G" : tariff.positions[dropDownPosition]["Безлимитный 4G"] ? false : obj["Безлимитный 4G"], 
+                "Раздача интернета" : tariff.positions[dropDownPosition]["Раздача интернета"] ? false : obj["Раздача интернета"],
+            }))
+        }
+    }, [dropDownPosition, setLocalSwitches, tariff.positions, buy])
+    
 
     useEffect(() => {
         if (buy && selected) {
@@ -510,8 +516,7 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
             setBoughtNumbers(boughtNumbers => ({
                 ...boughtNumbers,
                 [number.ctn]: {
-                    ctn: number.ctn,
-                    category: number.category,
+                    ...number,
                     tariffName: tariff.title,
                     tariffOptions: `${tariff.positions[dropDownPosition].min} мин, ${tariff.positions[dropDownPosition].gb === Infinity ? "Безлимит" : tariff.positions[dropDownPosition].gb} гб, ${tariff.positions[dropDownPosition].sms} смс`,
                     ...localSwitches,
@@ -536,7 +541,7 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
             {drop &&
                 <div className="dropdown">
                     {tariff.positions.map((position, index) => (
-                        <span key={index} onClick={() => handleChoose(index)} className="bottom">
+                        <span key={index} onClick={(e) => handleChoose(e, index)} className="bottom">
                             <span>{position.min}мин , </span>
                             <span>{position.gb === Infinity ? <CgInfinity /> : position.gb}гб , </span>
                             <span>{position.sms}смс</span>
@@ -564,8 +569,9 @@ const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, set
     const [selectedTariff, setSelectedTariff] = useState(null);
     const handleOpen = (index) => {
         if (index === clickedTariff) setClickedTariff(null)
-        else setClickedTariff(index)
+        else {setClickedTariff(index)}
     }
+    
     return (
         <div className={`buyNumbersDropdown ${toggleOpen ? 'alignTop' : ''}`} >
             <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onClick={setToggleOpen}>
