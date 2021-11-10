@@ -63,6 +63,7 @@ export default withRouter(function App({ location }) {
   const [isPhone, setIsPhone] = useState(window.innerWidth <= 600);
   const [scrollY, setScrollY] = useState(0);
   const buyNumberModal = useSelector(store => store.buyNumberModal);
+  const [ctn, saveCtn] = useLocalStorage("ctn");
 
   const whichTheme = (darkTheme) => {
     if (darkTheme) {
@@ -130,7 +131,7 @@ export default withRouter(function App({ location }) {
   }, [pathname, setScrollY])
 
   const scrollbar = useMemo(() => {
-    if(isPhone && pathname !== "/dashboard" && !(buyNumberModal.show || loginForm)) {
+    if(isPhone && pathname !== "/dashboard" && pathname !== "/numbers/:все" && !(buyNumberModal.show || loginForm)) {
       return Scrollbar.init(document.body, {damping: 0.1})
     }
   }, [buyNumberModal.show, isPhone, loginForm, pathname])
@@ -150,7 +151,7 @@ export default withRouter(function App({ location }) {
       Scrollbar.destroy(document.body)
       window.scrollTo(0, scrollY)
     } 
-    else if(!isPhone || pathname === "/dashboard") {
+    else if(!isPhone || pathname === "/dashboard" || pathname === "/numbers/:все") {
       Scrollbar.destroy(document.body)
     }
     else if(isPhone) {
@@ -161,7 +162,7 @@ export default withRouter(function App({ location }) {
   
   
   return (
-    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, scrollbar }}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, scrollbar, ctn, saveCtn }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper>

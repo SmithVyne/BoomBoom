@@ -8,7 +8,7 @@ import { GlobalContext } from "../App";
 import {CREATE_AUTH, Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
 import Cleave from 'cleave.js/react';
 import { FaCheck } from "react-icons/fa";
-import {useEscapeKey, useLocalStorage} from "../hooks";
+import {useEscapeKey} from "../hooks";
 
 
 const Wrapper = styled(motion.div)`
@@ -142,7 +142,7 @@ const handlePhoneForApi = (number) => {
 }
 
 export default function LoginForm() {
-    const {darkTheme, setLoginForm} = useContext(GlobalContext);
+    const {darkTheme, setLoginForm, saveCtn} = useContext(GlobalContext);
     const {accessToken} = useSelector(store => store.auth);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -150,7 +150,7 @@ export default function LoginForm() {
     const form_status = useSelector(store => store.form_status);
     const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
-    const [, saveCtn] = useLocalStorage("ctn");
+    
     
     // accessToken && setLoginForm(false)
     

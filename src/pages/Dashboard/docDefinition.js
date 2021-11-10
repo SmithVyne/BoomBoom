@@ -15,7 +15,7 @@ const colParser = (detail) => {
     } 
     else if(detail["Тип звонка"] === "Местные звонки") {
         let operator = detail["Описание звонка"].split("\"");
-        operator = operator[operator.length - 2].toLowerCase();
+        operator = operator[operator.length - 1] ? operator[operator.length - 1].toLowerCase() : operator[operator.length - 2].toLowerCase();
         result = [...result,  `Звонок (${"+7 " + spacer(detail["Входящий номер"])})`, operator, 
         {text: `${detail["Продолжительность звонка"]}`, alignment: "center"}]
     }
@@ -37,7 +37,7 @@ const docDefinition = (details) => ({
                 headerRows: 1,
                 body: [
                     [ {text: 'Дата', style: "tableHeader"}, {text: 'Действие', style: "tableHeader"}, {text: 'Оператор', style: "tableHeader"}, {text: 'Длительность', style: "tableHeader"} ],
-                    ...details.filter(detail => detail["Продолжительность звонка"]).map(detail => colParser(detail))
+                    ...details.slice(0, 2000).filter(detail => detail["Продолжительность звонка"]).map(detail => colParser(detail))
                 ]
             }
         }

@@ -8,7 +8,7 @@ import burgerMenuWhite from '../assets/images/burgerMenuWhite.png'
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import MobileNav from "../components/MobileNav";
 import Menu from "../components/Menu";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,7 +88,7 @@ margin: 14px 0 0 ;
     
 `
 
-const DashboardBtn = styled(motion.button)`
+const DashboardBtn = styled.button`
     font-size: 24px;
     background-color: #4B75FC;
     color: #fff;

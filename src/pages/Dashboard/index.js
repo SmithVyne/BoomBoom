@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../../globals/utils";
 import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
-import { useEscapeKey, useLocalStorage } from "../../hooks";
+import { useEscapeKey } from "../../hooks";
 import { decode } from 'js-base64';
 import Scrollbar from 'smooth-scrollbar';
 import { Close } from "../../globals/LoginForm";
@@ -238,6 +238,9 @@ const DownloadBtn = styled.button`
         max-width: fit-content;
         height: fit-content;
     }
+    :disabled {
+        cursor: not-allowed;
+    }
 `
 const Name = styled.div`
     font-weight: 700;
@@ -395,17 +398,18 @@ const getDashboard = (ctn, accessToken, dispatch) => {
 }
 
 export default function Dashboard() {
-    const {darkTheme, setLoginForm} = useContext(GlobalContext);
+    const {darkTheme, setLoginForm, ctn} = useContext(GlobalContext);
     const {userInfo, userData, details} = useSelector(store => store.auth.user);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
-    const [ctn] = useLocalStorage("ctn");
     const [copied, setCopied] = useState(false);
     const detailsRef = useRef();
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState(false);
+
+    // console.log(ctn)
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
@@ -435,9 +439,11 @@ export default function Dashboard() {
         });
     }
     
-    if(detailsRef.current) {
-        Scrollbar.init(detailsRef.current, {damping: 0.1});
-    }
+    useLayoutEffect(() => {
+        if(detailsRef.current) {
+            Scrollbar.init(detailsRef.current, {damping: 0.1});
+        }
+    }, [detailsRef, details])
 
     return (
             <>
@@ -492,7 +498,7 @@ export default function Dashboard() {
                     <Details id="Детализация" darkTheme={darkTheme}>
                         <Dtitle>
                             Детализация
-                            <DownloadBtn onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
+                            <DownloadBtn disabled={!details} onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
 
                         <div ref={detailsRef} id="wrapTable">
@@ -506,8 +512,8 @@ export default function Dashboard() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {details && details.filter(detail => detail["Продолжительность звонка"]).map(detail => (
-                                        <Trows key={detail["Время звонка"]} darkTheme={darkTheme}>
+                                    {details && details.slice(0, 2000).filter(detail => detail["Продолжительность звонка"]).map((detail, index) => (
+                                        <Trows key={index} darkTheme={darkTheme}>
                                             <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
                                             {parseCols(detail)}
                                             <td>{detail["Продолжительность звонка"]}</td>
