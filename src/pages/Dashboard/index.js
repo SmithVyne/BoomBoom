@@ -321,13 +321,11 @@ const Info = styled.div`
     display: flex;
     gap: 8px;
     align-items: center;
+    flex-wrap: wrap;
 `
 
 const Blocked = styled.span`
     width: fit-content;
-    /* height: 57px; */
-    /* display: flex;
-    align-items: center; */
     padding: 8px 20px;
     color: #fff;
     background: ${({blocked}) => blocked ? "#FF0202" : "#32A43E"};
