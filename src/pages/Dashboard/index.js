@@ -408,10 +408,8 @@ export default function Dashboard() {
     const [blocked, setBlocked] = useState(false);
     
     useEffect(() => {
-        userInfo && setBlocked(!userInfo.unblockable ||  new Date(userInfo.blockDate) < new Date());
+        userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
     }, [userInfo, setBlocked])
-
-    console.log(userInfo)
 
     useEffect(() => {
         if (accessToken) {

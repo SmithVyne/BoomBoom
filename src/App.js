@@ -125,6 +125,10 @@ export default withRouter(function App({ location }) {
 
   const { pathname } = useLocation();
 
+  useEffect(() => {
+    setScrollY(0)
+  }, [pathname, setScrollY])
+
   const scrollbar = useMemo(() => {
     if(isPhone && pathname !== "/dashboard" && !(buyNumberModal.show || loginForm)) {
       return Scrollbar.init(document.body, {damping: 0.1})
