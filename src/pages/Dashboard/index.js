@@ -408,8 +408,6 @@ export default function Dashboard() {
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState(false);
-
-    // console.log(ctn)
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );

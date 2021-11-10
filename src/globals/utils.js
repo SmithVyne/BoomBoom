@@ -485,8 +485,9 @@ export const sendMetriс = (type, value) =>{
 
 const operatorIcons = {
     МТС: mtc,
-    Beeline: beeline, 
-} 
+    Beeline: beeline,
+    "\"Билайн\"" : beeline
+}
 export const parseCols = (detail) => {
     if(detail["Тип звонка"] === "GPRS"){
         return (
