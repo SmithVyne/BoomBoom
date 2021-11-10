@@ -5,7 +5,6 @@ import Aside from "../../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../../globals/Loader";
 import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../../globals/utils";
 import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
@@ -20,6 +19,7 @@ import sub from 'date-fns/sub'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import docDefinition from "./docDefinition";
+import Preloader from "../../globals/Preloader/Preloader";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Wrapper = styled.div`
@@ -317,6 +317,26 @@ const AttentionModalStyles = styled.div`
     }
 `
 
+const Info = styled.div`
+    display: flex;
+    gap: 8px;
+    align-items: center;
+`
+
+const Blocked = styled.span`
+    width: fit-content;
+    /* height: 57px; */
+    /* display: flex;
+    align-items: center; */
+    padding: 8px 20px;
+    color: #fff;
+    background: ${({blocked}) => blocked ? "#FF0202" : "#32A43E"};
+    border-radius: 50px;
+    font-family: Circe;
+    font-size: 28px;
+    font-weight: 400;
+`
+
 const AttentionModal = ({setShowPopup}) => {
     useEscapeKey(setShowPopup);
     const dispatch = useDispatch();
@@ -387,6 +407,13 @@ export default function Dashboard() {
     const detailsRef = useRef();
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
+    const [blocked, setBlocked] = useState(false);
+    
+    useEffect(() => {
+        userInfo && setBlocked(!userInfo.unblockable ||  new Date(userInfo.blockDate) < new Date());
+    }, [userInfo, setBlocked])
+
+    console.log(userInfo)
 
     useEffect(() => {
         if (accessToken) {
@@ -418,11 +445,14 @@ export default function Dashboard() {
 
     return (
             <>
-            {!userInfo ? <Loader /> : 
+            {!userInfo ? <Preloader /> : 
             <Wrapper id="Мой тариф">
                 <Aside />
                 <MainSection>
-                    <Name>{userData.owner}</Name>
+                    <Info>
+                        <Name>{userData.owner}</Name>
+                        <Blocked  blocked={blocked}>{blocked ? "Заблокирован" : "Активен"}</Blocked>
+                    </Info>
                     <Cards>
                         <TopCard darkTheme={darkTheme}>
                             <span className="topCardTitle">Номер:</span>
