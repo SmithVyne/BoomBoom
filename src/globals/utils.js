@@ -179,7 +179,7 @@ export const parseDetailsFile = (file) => {
     file = file.split("\n").map(line => line.split("\t"));
     const headers = file[0];
     const body = file.slice(1);
-    return body.map(line => line.reduce((obj, col, index) => ({...obj, [index === 9 ? "Интернет МБ" : headers[index] ]: col}), {}))
+    return body.map(line => line.reduce((obj, col, index) => ({ ...obj, [index === 9 ? "Интернет МБ" : headers[index]]: col }), {}))
 }
 
 export async function BuyNumbers({ deliveryDate,
@@ -361,8 +361,8 @@ export const tariffTypesArray = [tariffBase, tariffBright, tariffAdvanced, tarif
 export const services = {
     paid: [
         {
-            ymForm:{type:'reachGoal', value:'paket_gb-forma'},
-            ymClickBtn:{type:'reachGoal', value:'paket_gb-click'},
+            ymForm: { type: 'reachGoal', value: 'paket_gb-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'paket_gb-click' },
             desc: `Интернет закончился раньше, чем 
             Вы планировали? Докупите еще гигабайт 
             на максимальной скорости`,
@@ -370,8 +370,8 @@ export const services = {
             positions: [{ title: "Пакет 10 ГБ", price: "150 ₽" }, { title: "Пакет 20 ГБ", price: "250 ₽" }, { title: "Пакет 30 ГБ", price: "350 ₽" }, { title: "Пакет 40 ГБ", price: "550 ₽" }]
         },
         {
-            ymForm:{type:'reachGoal', value:'bezlim-forma'},
-            ymClickBtn:{type:'reachGoal', value:'bezlim-click'},
+            ymForm: { type: 'reachGoal', value: 'bezlim-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'bezlim-click' },
             title: `Пакет безлимитного 
             интернета в сети 4G`,
             desc: `Интернет никогда не закончится в сети 4G`,
@@ -379,16 +379,16 @@ export const services = {
             price: "150 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'avtootvet-forma'},
-            ymClickBtn:{type:'reachGoal', value:'avtootvet-click'},
+            ymForm: { type: 'reachGoal', value: 'avtootvet-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'avtootvet-click' },
             title: `Автоответчик`,
             desc: `Включите Автоответчик, и Вы не пропустите ни одного звонка, даже если телефон будет выключен или окажется вне зоны обслуживания`,
             img: robot,
             price: "50 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'privet-forma'},
-            ymClickBtn:{type:'reachGoal', value:'privet-click'},
+            ymForm: { type: 'reachGoal', value: 'privet-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'privet-click' },
             title: `Привет`,
             desc: `Установите вместо скучных гудков
             музыку, шутки и приколы! Каталог мелодий 
@@ -397,8 +397,8 @@ export const services = {
             price: "100 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'antiopredelitel-forma'},
-            ymClickBtn:{type:'reachGoal', value:'antiopredelitel-click'},
+            ymForm: { type: 'reachGoal', value: 'antiopredelitel-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'antiopredelitel-click' },
             title: `Антиопределитель номера`,
             desc: `Антиопределитель сохранит 
             Ваш номер в секрете во время разговора, даже если у собеседника подключён определитель номера`,
@@ -406,24 +406,24 @@ export const services = {
             price: "200 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'superopredelitel-forma'},
-            ymClickBtn:{type:'reachGoal', value:'superopredelitel-click'},
+            ymForm: { type: 'reachGoal', value: 'superopredelitel-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'superopredelitel-click' },
             title: `Суперопределитель номера`,
             desc: `Чтобы всегда знать, кто вам звонит, даже если у них «Антиопределитель номера»`,
             img: telescope,
             price: "1800 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'modem-forma'},
-            ymClickBtn:{type:'reachGoal', value:'modem-click'},
+            ymForm: { type: 'reachGoal', value: 'modem-forma' },
+            ymClickBtn: { type: 'reachGoal', value: 'modem-click' },
             title: `Режим модема`,
             desc: `Раздача интернета с устройства в режиме модема`,
             img: wifi,
             price: "50 ₽ / месяц"
         },
         {
-            ymForm:{type:'reachGoal', value:'495-forma'},
-            ymClickBtn:{type:'reachGoal', value:'495-click'},
+            ymForm: { type: 'reachGoal', value: '495-forma' },
+            ymClickBtn: { type: 'reachGoal', value: '495-click' },
             title: `Городской номер (495)`,
             desc: `Приобретайте городской номер телефона в коде 495. Тарификация производится согласно местной телефонной связи. Все входящие звонки для абонента бесплатны`,
             img: telephone,
@@ -479,24 +479,24 @@ export const services = {
     ],
 }
 
-export const sendMetriс = (type, value) =>{
+export const sendMetriс = (type, value) => {
     window.ym(85620877, type, value)
 }
 
 const operatorIcons = {
     МТС: mtc,
     Beeline: beeline,
-    "\"Билайн\"" : beeline
+    "\"Билайн\"": beeline
 }
 export const parseCols = (detail) => {
-    if(detail["Тип звонка"] === "GPRS"){
+    if (detail["Тип звонка"] === "GPRS") {
         return (
             <>
                 <td>Интернет ({detail["Интернет МБ"]} мб.)</td>
                 <td><img alt="Оператор" src={beeline} />Beeline</td>
             </>
         )
-    } else if(detail["Тип звонка"] === "SMS / MMS") {
+    } else if (detail["Тип звонка"] === "SMS / MMS") {
         let operator = detail["Описание звонка"].split(" ");
         operator = operator[operator.length - 1];
         const icon = operatorIcons[operator];
@@ -507,7 +507,7 @@ export const parseCols = (detail) => {
             </>
         )
 
-    } else if(detail["Тип звонка"] === "Местные звонки") {
+    } else if (detail["Тип звонка"] === "Местные звонки") {
         let operator = detail["Описание звонка"].split("\"");
         operator = operator[operator.length - 2];
         const icon = operatorIcons[operator];
@@ -518,5 +518,5 @@ export const parseCols = (detail) => {
             </>
         )
     }
-    
+
 }

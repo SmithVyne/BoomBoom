@@ -327,7 +327,7 @@ export default function Roaming() {
                         {zoneValue && zoneValue === 1 ?
                             <>
                                 <p className={`roaming__internet-text ${darkTheme ? 'roaming__internet-text_dark' : ''}`}>Пакет 50 Мб на день <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>&#183;</span> <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>{roamingData.zone1.internet.package} р</span></p>
-                                <p className={`roaming__internet-text ${darkTheme ? 'roaming__internet-text_dark' : ''}`}>1 Мб после исчерания 50 Мб <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>&#183;</span> <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>{roamingData.zone1.internet.perOne} р</span></p>
+                                <p className={`roaming__internet-text ${darkTheme ? 'roaming__internet-text_dark' : ''}`}>1 Мб после исчерпания 50 Мб <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>&#183;</span> <span className={`roaming__internet-text_bold ${darkTheme ? 'roaming__internet-text_bold_dark' : ''}`}>{roamingData.zone1.internet.perOne} р</span></p>
                             </>
                             : <></>}
                         {zoneValue && zoneValue === 2 ?
