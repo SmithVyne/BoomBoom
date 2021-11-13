@@ -219,11 +219,11 @@ const Arrow = () => <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xm
     <path d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM7 7V8H9V7H7Z" fill="#F8F8F8" />
 </svg>;
 
-const options = ["Доставка", "Самовывоз", "eSIM"]
+const options = ["Самовывоз", "eSIM", "Доставка"]
 
 function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy, tariff, enableButton, boughtNumbers, chosenNumber, setEnableButton }) {
     const [selectedOption, setSelectedOption] = useState(0);
-    
+
 
     const [deliveryDate, setDeliveryDate] = useState(moment().format("DD/MM/YYYY"));
     const [deliveryTime, setDeliveryTime] = useState(["10:00", "14:00"]);
@@ -318,7 +318,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
     const [contactPhoneNumber, setContactPhoneNumber] = useState("");
     const [contactPhoneValidity, setContactPhoneValidity] = useState({});
     function handleContctPhoneChange(e) {
-        
+
         let inputValue = e.target.value.replace(/\D/g, '')
         let formattedInputValue = '';
         if (!inputValue) {
@@ -412,12 +412,12 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                     deliveryAddress,
                 }
             } else if (selectedOption === 1 || selectedOption === 2) {
-                return {...local, deliveryMethod: options[selectedOption], contactPhoneNumber: phoneValue}
+                return { ...local, deliveryMethod: options[selectedOption], contactPhoneNumber: phoneValue }
             }
         }
         else if (selected === 1) {
             if (checked) {
-                
+
                 return { ...local, contactPhoneNumber: phoneValue }
             }
             else return { ...local, contactPhoneNumber }
@@ -426,7 +426,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
 
     // console.log(contract)
     useEffect(() => {
-        if (phoneValue === contactPhoneNumber){
+        if (phoneValue === contactPhoneNumber) {
             setChecked(true)
             setContactPhoneNumber('')
         }
@@ -434,14 +434,14 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
 
 
     useEffect(() => {
-        
+
         const truthy = Object.values(contract).every(item => item)
         if (buy) {
-            
-            setEnableButton(checked? phoneValidity.validState && !!_.size(boughtNumbers) && truthy: phoneValidity.validState && contactPhoneValidity.validState && !!_.size(boughtNumbers) && truthy)
+
+            setEnableButton(checked ? phoneValidity.validState && !!_.size(boughtNumbers) && truthy : phoneValidity.validState && contactPhoneValidity.validState && !!_.size(boughtNumbers) && truthy)
         } else if (tariff) {
             if (selected === 0) setEnableButton(phoneValidity.validState && !!_.size(chosenNumber) && truthy)
-            else setEnableButton(checked? phoneValidity.validState && truthy : phoneValidity.validState && contactPhoneValidity.validState && truthy)
+            else setEnableButton(checked ? phoneValidity.validState && truthy : phoneValidity.validState && contactPhoneValidity.validState && truthy)
         } else if (service) setEnableButton(phoneValidity.validState)
     }, [buy, tariff, boughtNumbers, chosenNumber, setEnableButton, contract, checked, service, phoneValue, selected, phoneValidity, contactPhoneValidity.validState])
 
@@ -454,11 +454,14 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                             <div className="Способ_получения">
                                 Способ получения
                                 <div className="options">
-                                    {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)} className="option">{option}</Option>)}
+                                    {options.map((option, idx) => <Option key={option} selected={selectedOption} idx={idx} onClick={() => {
+                                        if (option === "Доставка") return
+                                        setSelectedOption(idx)
+                                    }} className={`option ${option === "Доставка" ? 'option_disabled' : ''}`}>{option}</Option>)}
                                 </div>
                                 <small>Только Москва и МО</small>
                             </div>
-                            {selectedOption === 0 &&
+                            {selectedOption === 2 &&
                                 <><div className="orderDates">
                                     <div className="Способ_получения">
                                         Дата доставки
@@ -475,7 +478,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                                         <small>Доставка 350 Р по МСК / <br /> За МКАД каждый 1 КМ - 50 Р</small>
                                     </div></>
                             }
-                            {selectedOption === 1 &&
+                            {selectedOption === 0 &&
                                 <Pickup>
                                     Вы можете получить свою сим-карту в любом офисе Beeline
                                     <span>
@@ -488,12 +491,12 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                         :
                         <div className="Переносимый_номер">
                             <label>Переносимый номер</label>
-                            <input className="input" value={phoneValue}  onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handlePhoneDelite(e)} />
+                            <input className="input" value={phoneValue} onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e) => handlePhoneDelite(e)} />
                             <label className="checker"><input onChange={() => setChecked(val => !val)} checked={checked} type="checkbox" />Совпадает с контактным</label>
                             {checked ||
                                 <>
                                     <label>Контактный номер</label>
-                                    <input className="input" value={contactPhoneNumber} onChange={(e) => handleContctPhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handleContctPhoneDelite(e)} />
+                                    <input className="input" value={contactPhoneNumber} onChange={(e) => handleContctPhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e) => handleContctPhoneDelite(e)} />
                                 </>}
                         </div>
                     }
@@ -506,7 +509,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                 <small className="свой_номер">Введите свой номер телефона</small>
                 <span>
                     {(selected === 0 || !!service) &&
-                        <input className="omo" value={phoneValue} onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e)=>handlePhoneDelite(e)} />
+                        <input className="omo" value={phoneValue} onChange={(e) => handlePhoneChange(e)} type="tel" placeholder="+7 (000) 000-00-00" onKeyDown={(e) => handlePhoneDelite(e)} />
                     }
                     <button disabled={!enableButton} onClick={() => handleSubmit(contract)}>{service ? service.eSim ? "Оставить заявку" : "Подключить" : 'Оформить заказ'} <Arrow /></button>
                 </span>

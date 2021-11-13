@@ -951,7 +951,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                                                     </Switches>
                                                 </section>
                                                 <section>
-                                                    <p>Способ получения</p>
+                                                    <p>Способ подключения</p>
                                                     <div className="options first">
                                                         {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)}>{option}</Option>)}
                                                     </div>
