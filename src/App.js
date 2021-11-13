@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Switch, Route, Redirect, withRouter, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import urlUtmParams from 'url-utm-params'
-import { useLocalStorage } from "./hooks";
+import { useLocalStorage, usePrevious } from "./hooks";
 
 import Preloader from "./globals/Preloader/Preloader"
 import LoginForm from "./globals/LoginForm";
@@ -124,17 +124,19 @@ export default withRouter(function App({ location }) {
     };
   }, [])
 
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(); 
+  const prevPath = usePrevious(pathname);
 
   useEffect(() => {
     setScrollY(0)
   }, [pathname, setScrollY])
 
   const scrollbar = useMemo(() => {
-    if(isPhone && pathname !== "/dashboard" && pathname !== "/numbers/:все" && !(buyNumberModal.show || loginForm)) {
+    if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs")) && !(buyNumberModal.show || loginForm)) {
       return Scrollbar.init(document.body, {damping: 0.1})
     }
   }, [buyNumberModal.show, isPhone, loginForm, pathname])
+
   useEffect(() => {
     if(scrollbar) {
       const listener = ({offset}) => setScrollY(offset.y);
@@ -147,18 +149,22 @@ export default withRouter(function App({ location }) {
 
 
   useEffect(() => {
-    if(buyNumberModal.show || loginForm){
+    if(buyNumberModal.show || loginForm || !isPhone){
       Scrollbar.destroy(document.body)
       window.scrollTo(0, scrollY)
     } 
-    else if(!isPhone || pathname === "/dashboard" || pathname === "/numbers/:все") {
+    else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
+      window.scrollTo(0, 0);
+      if(prevPath === "/dashboard") {
+        scrollbar.scrollTop = 0;
+      } else {
+        scrollbar.scrollTop = scrollY;
+      }
+    }
+    else {
       Scrollbar.destroy(document.body)
     }
-    else if(isPhone) {
-      window.scrollTo(0, 0)
-      scrollbar.scrollTop = scrollY;
-    }
-  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname])
+  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath])
   
   
   return (

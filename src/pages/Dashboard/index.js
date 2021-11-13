@@ -27,6 +27,10 @@ const Wrapper = styled.div`
     display: flex;
     gap: 0px 100px;
     width: 100%;
+    /* position: relative; */
+    @media(max-width: 1400px) {
+        gap: 0px;
+    }
 `;
 const MainSection = styled.div`
     padding-right: 100px;
@@ -34,8 +38,8 @@ const MainSection = styled.div`
     row-gap: 20px;
     display: flex;
     flex-direction: column;
-    @media(max-width: 1100px) {
-        padding-right: 0px;
+    @media(max-width: 1400px) {
+        padding: 0 2vw;
     }
 `;
 const Button = styled.button`
@@ -336,6 +340,16 @@ const Blocked = styled.span`
     font-family: Circe;
     font-size: 28px;
     font-weight: 400;
+    @media(max-width: 1400px) {
+        font-size: 16px;
+    }
+    @media(max-width: 600px) {
+        padding: 4px 12px;
+        font-size: 12px;
+    }
+    @media(max-width: 350px) {
+        font-size: 16px;
+    }
 `
 
 const AttentionModal = ({setShowPopup}) => {
@@ -407,12 +421,12 @@ export default function Dashboard() {
     const detailsRef = useRef();
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
-    const [blocked, setBlocked] = useState(false);
+    const [blocked, setBlocked] = useState();
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
     }, [userInfo, setBlocked])
-
+    
     useEffect(() => {
         if (accessToken) {
             getDashboard(ctn, accessToken, dispatch)
@@ -451,7 +465,7 @@ export default function Dashboard() {
                 <MainSection>
                     <Info>
                         <Name>{userData.owner}</Name>
-                        <Blocked  blocked={blocked}>{blocked ? "Заблокирован" : "Активен"}</Blocked>
+                        {blocked === undefined || <Blocked  blocked={blocked}>{blocked ? "Заблокирован" : "Активен"}</Blocked>}
                     </Info>
                     <Cards>
                         <TopCard darkTheme={darkTheme}>
@@ -467,7 +481,7 @@ export default function Dashboard() {
                                 {userInfo.plan + " ₽"}
                             </span>
                         </TopCard>
-                        <TopCard color={userInfo.balance < 0 ? "#FF0202" : "#32A43E"} darkTheme={darkTheme}>
+                        <TopCard color={userInfo.balance <= 0 ? "#FF0202" : "#32A43E"} darkTheme={darkTheme}>
                             <span className="topCardTitle">Баланс:</span>
                             <span className="topCardBody">
                                 {replacePoints(userInfo.balance)+ " ₽"}

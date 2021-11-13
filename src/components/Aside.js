@@ -11,7 +11,7 @@ const Wrapper = styled.aside`
     position: sticky;
     top: 50px;
     height: fit-content;
-    @media(max-width: 1100px) {
+    @media(max-width: 1300px) {
         display: none;
     }
 `;

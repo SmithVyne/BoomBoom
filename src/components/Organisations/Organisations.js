@@ -190,6 +190,7 @@ export default function Organisations() {
             dispatch({ type: SHOW_MODAL, payload: { service, ym: { type: 'reachGoal', value: 'free-service-forma' } } })
         }
     }
+    
     return (
         <section className={`organisations`}>
             <MetaTags>
