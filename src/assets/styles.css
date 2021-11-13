@@ -127,8 +127,8 @@ body {
 }
 
 .option_disabled {
-    opacity: 0.3;
-    cursor: no-drop;
+    opacity: 0.3 !important;
+    cursor: no-drop !important;
     border: 3px solid rgba(1, 1, 1, 0.16) !important;
 }
 
