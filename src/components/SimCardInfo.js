@@ -403,7 +403,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
     const contract = useMemo(() => {
         const local = { phoneValue }
         if (selected === 0) {
-            if (selectedOption === 0) {
+            if (selectedOption === 2) {
                 return {
                     ...local, contactPhoneNumber: phoneValue,
                     deliveryDate,
@@ -411,7 +411,7 @@ function SimCardInfo({ selected, Option, service, handleSubmit, totalPrice, buy,
                     deliveryMethod: options[selectedOption],
                     deliveryAddress,
                 }
-            } else if (selectedOption === 1 || selectedOption === 2) {
+            } else if (selectedOption === 0 || selectedOption === 1) {
                 return { ...local, deliveryMethod: options[selectedOption], contactPhoneNumber: phoneValue }
             }
         }
