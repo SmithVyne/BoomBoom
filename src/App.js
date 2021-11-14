@@ -127,10 +127,6 @@ export default withRouter(function App({ location }) {
   const { pathname } = useLocation(); 
   const prevPath = usePrevious(pathname);
 
-  useEffect(() => {
-    setScrollY(0)
-  }, [pathname, setScrollY])
-
   const scrollbar = useMemo(() => {
     if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs")) && !(buyNumberModal.show || loginForm)) {
       return Scrollbar.init(document.body, {damping: 0.1})
@@ -155,20 +151,18 @@ export default withRouter(function App({ location }) {
     } 
     else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
       window.scrollTo(0, 0);
-      if(prevPath === "/dashboard") {
-        scrollbar.scrollTop = 0;
-      } else {
-        scrollbar.scrollTop = scrollY;
-      }
+      scrollbar.scrollTop = scrollY;
     }
     else {
       Scrollbar.destroy(document.body)
     }
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath])
+
+  useEffect(() => setScrollY(0), [pathname, setScrollY]);
   
   
   return (
-    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, scrollbar, ctn, saveCtn }}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper>

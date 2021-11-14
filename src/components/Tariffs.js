@@ -6,7 +6,6 @@ import { GlobalContext } from "../App";
 import { AnimatePresence, motion } from "framer-motion";
 import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
-// import Scrollbar from 'smooth-scrollbar';
 
 const WrapScroller = styled.div`
     position: relative;

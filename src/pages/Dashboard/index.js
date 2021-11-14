@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -46,7 +46,7 @@ const Button = styled.button`
     color: ${({color}) => color ? color : "#121212"};
     background: ${({background}) => background};
     font-size: ${({fontSize}) => fontSize};
-    font-weight: ${({fontWeight}) => fontWeight};
+    font-weight: 500;
     width: ${({width}) => width};
     height: ${({height}) => height};
     display: flex;
@@ -61,22 +61,26 @@ const Button = styled.button`
     max-height: fit-content;
     padding: 20px 16px;
     outline: none;
+    @media(max-width: 900px) and (min-width: 550px) {
+        font-size: 16px;
+        height: fit-content;
+    }
 `;
 
 const Small = styled.small`
     font-size: 16px;
     line-height: 50%;
-    font-weight: 500;
+    font-weight: 700;
+    @media(max-width: 900px) and (min-width: 550px) {
+        font-size: 12px;
+    }
 `;
 const Cards = styled.div`
     display: grid;
-    gap: 20px;
+    gap: 12px 20px;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
     font-family: Circe;
-    @media(max-width: 1100px) {
-        grid-template-columns: 1fr 1fr;
-    }
     @media(max-width: 550px) {
         grid-template-columns: 1fr;
     }
@@ -88,23 +92,37 @@ const Cards = styled.div`
         justify-content: center;
         align-items: center;
         border-radius: 71px;
-        font-weight: 550;
+        font-weight: 700;
+        @media(max-width: 900px) and (min-width: 550px) {
+            font-size: 16px;
+        }
     }
 `
 const TopCard = styled.div` 
     width: 100%;
+    height: 123px;
+    max-height: fit-content;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
-    height: 123px;
-    border-radius: 32px;
+    border-radius: 12px;
     padding: 20px;
-    max-height: fit-content;
+    @media(max-width: 900px) and (min-width: 550px) {
+        height: fit-content;
+        padding: 12px;
+        :first-child {
+            min-width: max-content;
+        }
+    }
     .topCardTitle {
         font-size: 20px;
         color: ${({darkTheme}) => darkTheme ? "#FFFFFFAD" : "#010101AD"};
+        @media(max-width: 900px) and (min-width: 550px) {
+            font-size: 12px;
+        }
     }
     .topCardBody {
         font-size: 24px;
@@ -113,6 +131,9 @@ const TopCard = styled.div`
         align-items: center;
         gap: 11px;
         font-weight: bold;
+        @media(max-width: 900px) and (min-width: 550px) {
+            font-size: 16px;
+        }
     }
 `;
 const SubCard = styled(TopCard)`
@@ -121,6 +142,9 @@ const SubCard = styled(TopCard)`
     padding: 24px;
     height: 266px;
     gap: 20px;
+    @media(max-width: 900px) and (min-width: 550px) {
+        height: fit-content;
+    }
 `
 const Span = styled.span`
     display: flex;
@@ -132,10 +156,16 @@ const Span = styled.span`
 const Ptitle = styled.span`
     font-size: 28px;
     font-weight: 700;
+    @media(max-width: 900px) and (min-width: 550px) {
+        font-size: 16px;
+    }
 `
 const Psub = styled.span`
     font-size: 20px;
     color: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.6)" : 'rgba(18,18,18, 0.6)'};
+    @media(max-width: 900px) and (min-width: 550px) {
+        font-size: 12px;
+    }
 `
 const ProgressText = ({title, sub}) => {
     const {darkTheme} = useContext(GlobalContext);
@@ -346,9 +376,12 @@ const Blocked = styled.span`
     @media(max-width: 600px) {
         padding: 4px 12px;
         font-size: 12px;
+        font-family: Circe;
+        line-height: 18px;
     }
-    @media(max-width: 350px) {
+    @media(max-width: 351px) {
         font-size: 16px;
+        line-height: 24px;
     }
 `
 
@@ -422,10 +455,17 @@ export default function Dashboard() {
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState();
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
     }, [userInfo, setBlocked])
+
+    useEffect(() => {
+        const watcher = () => setInnerWidth(window.innerWidth);
+        window.addEventListener("resize", watcher)
+        return () => window.removeEventListener("resize", watcher)
+    }, [])
     
     useEffect(() => {
         if (accessToken) {
@@ -457,6 +497,7 @@ export default function Dashboard() {
         }
     }, [detailsRef, details])
 
+    const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
     return (
             <>
             {!userInfo ? <Preloader /> : 
@@ -472,7 +513,7 @@ export default function Dashboard() {
                             <span className="topCardTitle">Номер:</span>
                             <span className="topCardBody">
                                 {"+7 "+spacer(userInfo.ctn)}
-                                <Copier onClick={handleCopy} color={copied ? "#4B75FC" : darkTheme ? "#fff" : "#010101AD"} size={23} />
+                                {innerWidth >= 900 && <Copier onClick={handleCopy} color={copied ? "#4B75FC" : darkTheme ? "#fff" : "#010101AD"} size={23} />}
                             </span>
                         </TopCard>
                         <TopCard color="#4B75FC" darkTheme={darkTheme}>
@@ -489,16 +530,16 @@ export default function Dashboard() {
                         </TopCard>
 
                         <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Минуты</Small>
-                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
+                            <Small>Минуты</Small>
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Интернет</Small>
-                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
+                            <Small>Интернет</Small>
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <SubCard darkTheme={darkTheme}>
-                            <Small style={{fontWeight: 700}}>Сообщения</Small>
-                            <Progress strokeColor="#4B75FC" width={181} strokeWidth={7} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
+                            <Small>Сообщения</Small>
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <Button onClick={() => setShowPopup(true)} fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>
                             Изменить номер

@@ -151,9 +151,6 @@ export default function LoginForm() {
     const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
     
-    
-    // accessToken && setLoginForm(false)
-    
     const body = {
         method: "login",
         params: { username: apiUsername, password },
@@ -167,6 +164,7 @@ export default function LoginForm() {
             const {accessToken, refreshToken} = result;
             dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
             saveCtn(apiUsername)
+            setLoginForm(false)
         })
     }
 
