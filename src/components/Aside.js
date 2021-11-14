@@ -8,9 +8,9 @@ const Wrapper = styled.aside`
     flex-direction: column;
     line-height: 30px;
     gap: 10px;
+    height: fit-content;
     position: sticky;
     top: 50px;
-    height: fit-content;
     @media(max-width: 1300px) {
         display: none;
     }

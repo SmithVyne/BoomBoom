@@ -28,7 +28,6 @@ margin: 14px 0 0 ;
         margin-right: auto;
     }
     & .nav-right {
-        
         display: flex;
         gap: 20px;
         flex-wrap: wrap;

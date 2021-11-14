@@ -46,7 +46,7 @@ const AuthReducer = (store = initialAuth, action) => {
     switch(action.type) {
         case USER:
             const {user} = action;
-            return {...store, user}
+            return {...store, user: {...store.user, ...user}}
         case CREATE_AUTH:
             const {accessToken, refreshToken} = action.payload;
             setCookieValue("accessToken", accessToken, 600)

@@ -21,6 +21,7 @@ import telephone from "../assets/images/services/telephone.png"
 import { spacer } from "../components/BuyNumberModal";
 import mtc from '../assets/images/mtc.png';
 import beeline from "../assets/images/beeline.png"
+import { decode } from "js-base64";
 
 
 export const BASE_URL = "https://binom.itcmobile.ru/api/json.php";
@@ -179,7 +180,7 @@ export const parseDetailsFile = (file) => {
     file = file.split("\n").map(line => line.split("\t"));
     const headers = file[0];
     const body = file.slice(1);
-    return body.map(line => line.reduce((obj, col, index) => ({ ...obj, [index === 9 ? "Интернет МБ" : headers[index]]: col }), {}))
+    return body.reverse().map(line => line.reduce((obj, col, index) => ({ ...obj, [index === 9 ? "Интернет МБ" : headers[index]]: col }), {}))
 }
 
 export async function BuyNumbers({ deliveryDate,
@@ -519,4 +520,30 @@ export const parseCols = (detail) => {
         )
     }
 
+}
+
+export const wrapPromise = (promise) => {
+    let status = "pending";
+    let result;
+    let suspender = promise.then(res => {
+        status = "success";
+        result = res.reduce((total, detailsFile) => [...total, ...parseDetailsFile(decode(detailsFile.file))], [])
+    }, err => {
+        status = "error";
+        result = err;
+    })
+
+    return {
+        read: () => {
+            if(status === "pending") {
+                throw suspender
+            }
+            else if (status === "error") {
+                throw result;
+            }
+            else if(status === "success") {
+                return result;
+            } 
+        }
+    }
 }

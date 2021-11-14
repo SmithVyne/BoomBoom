@@ -50,15 +50,6 @@ body::-webkit-scrollbar-thumb:hover {
     box-sizing: border-box;
 }
 
-body {
-    height: 100vh;
-}
-
-#root {
-    min-height: 100vh;
-    height: fit-content;
-}
-
 .main-text {
     font-family: Circe, Arial, sans-serif;
     font-weight: bold;

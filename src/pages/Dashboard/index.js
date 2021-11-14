@@ -27,7 +27,6 @@ const Wrapper = styled.div`
     display: flex;
     gap: 0px 100px;
     width: 100%;
-    /* position: relative; */
     @media(max-width: 1400px) {
         gap: 0px;
     }
@@ -37,6 +36,7 @@ const MainSection = styled.div`
     width: 100%;
     row-gap: 20px;
     display: flex;
+    height: fit-content;
     flex-direction: column;
     @media(max-width: 1400px) {
         padding: 0 2vw;
@@ -65,6 +65,9 @@ const Button = styled.button`
         font-size: 16px;
         height: fit-content;
     }
+    @media(max-width: 550px) { 
+        order: 2;
+    }
 `;
 
 const Small = styled.small`
@@ -89,12 +92,15 @@ const Cards = styled.div`
         height: 71px;
         width: 100%;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         border-radius: 71px;
         font-weight: 700;
         @media(max-width: 900px) and (min-width: 550px) {
             font-size: 16px;
+        }
+        @media(max-width: 550px) { 
+            order: 2;
         }
     }
 `
@@ -116,6 +122,10 @@ const TopCard = styled.div`
         :first-child {
             min-width: max-content;
         }
+    }
+    @media(max-width: 600px) {
+        padding: 10px 12px;
+        height: fit-content;
     }
     .topCardTitle {
         font-size: 20px;
@@ -142,8 +152,11 @@ const SubCard = styled(TopCard)`
     padding: 24px;
     height: 266px;
     gap: 20px;
-    @media(max-width: 900px) and (min-width: 550px) {
+    @media(max-width: 900px) {
         height: fit-content;
+    }
+    @media(max-width: 550px) { 
+        order: 3;
     }
 `
 const Span = styled.span`
@@ -196,9 +209,6 @@ const Dtitle = styled.span`
     line-height: 40px;
     font-weight: 650;
     gap: 20px;
-    position: sticky;
-    left: 0;
-    top: 0;
     flex-wrap: wrap;
 `
 const DetailsTable = styled.table`
@@ -414,6 +424,7 @@ const AttentionModal = ({setShowPopup}) => {
     )
 }
 
+
 const getDetailsFile = (idToSearch, accessToken) => {
     const d = new Date();
     const requestArray = [];
@@ -439,9 +450,8 @@ const getDashboard = (ctn, accessToken, dispatch) => {
     Promise.all([
         Fetcher({method: "getCtnInfo", params:{ctn}, id:null}),
         Fetcher({method: "getCustomerData", params:{id: ctn}, id:null}, {accessToken}),
-        getDetailsFile(ctn, accessToken),
     ])
-    .then(([userInfo, userData, details]) => dispatch({type: USER, user: {userInfo, userData, details}}))
+    .then(([userInfo, userData]) => dispatch({type: USER, user: {userInfo, userData}}))
 }
 
 export default function Dashboard() {
@@ -470,6 +480,7 @@ export default function Dashboard() {
     useEffect(() => {
         if (accessToken) {
             getDashboard(ctn, accessToken, dispatch)
+            getDetailsFile(ctn, accessToken).then(details =>  dispatch({type: USER, user: {details}}))
         } 
         else if(refreshToken) {
             Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
@@ -490,6 +501,7 @@ export default function Dashboard() {
             setTimeout(() => setCopied(false), 60000);
         });
     }
+
     
     useLayoutEffect(() => {
         if(detailsRef.current) {
@@ -555,7 +567,8 @@ export default function Dashboard() {
                         </Dtitle>
 
                         <div ref={detailsRef} id="wrapTable">
-                            <DetailsTable ref={detailsTableRef}>
+                            {!details ? <Preloader /> :
+                             <div><DetailsTable ref={detailsTableRef}>
                                 <thead>
                                     <tr>
                                         <th>Дата</th>
@@ -565,7 +578,7 @@ export default function Dashboard() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {details && details.slice(0, 2000).filter(detail => detail["Продолжительность звонка"]).map((detail, index) => (
+                                    {details.slice(0, 2000).filter(detail => detail["Продолжительность звонка"]).map((detail, index) => (
                                         <Trows key={index} darkTheme={darkTheme}>
                                             <td>{detail["Дата звонка"]} <span>/</span> {detail["Время звонка"]}</td>
                                             {parseCols(detail)}
@@ -573,7 +586,7 @@ export default function Dashboard() {
                                         </Trows>
                                     ))}
                                 </tbody>
-                            </DetailsTable>
+                            </DetailsTable></div>}
                         </div>
                     </Details>
                 </MainSection>

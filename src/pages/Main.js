@@ -14,6 +14,7 @@ import { GlobalContext } from '../App';
 import TariffCard from '../globals/TariffCard';
 import { BUY_NUMBER, tariffTypesArray } from '../globals/utils';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 // const slides = [
 //     {
@@ -69,6 +70,9 @@ import { useDispatch } from 'react-redux';
 //     )
 // }
 
+const Overflow = styled.section`
+    overflow: hidden;
+`
 
 export default function Main() {
     const [isCityPopupVisible, setCityPopupVisible] = React.useState(false);
@@ -97,7 +101,7 @@ export default function Main() {
     }
 
     return (
-        <>
+        <Overflow>
             <MetaTags>
                 <title>Главная</title>
                 <meta property="og:title" content="Boom - Главная" />
@@ -113,6 +117,6 @@ export default function Main() {
 
             {/* <СoverageMap /> */}
             {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}
-        </>
+        </Overflow>
     )
 }

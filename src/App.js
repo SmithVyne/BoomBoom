@@ -30,7 +30,7 @@ export const GlobalContext = createContext();
 
 
 const Wrapper = styled.div`
-position: relative;
+  position: relative;
   max-width: 100%;
   min-height:100vh;
   max-width: 2560px;
@@ -38,7 +38,6 @@ position: relative;
   height: fit-content;
   background: ${props => props.theme.background};
   padding: 48px 80px 0 80px;
-  overflow: hidden;
   @media(max-width: 1500px) {
     padding: 48px 40px 0 40px;
   }
@@ -47,7 +46,6 @@ position: relative;
   }
 `;
 const Mainml = styled.main`
-
   display: flex;
   flex-direction: column;
   color:  ${props => props.theme.textColor};
