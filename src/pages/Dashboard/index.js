@@ -379,7 +379,7 @@ const Blocked = styled.span`
         font-family: Circe;
         line-height: 18px;
     }
-    @media(max-width: 351px) {
+    @media(max-width: 400px) {
         font-size: 16px;
         line-height: 24px;
     }
