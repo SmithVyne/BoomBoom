@@ -75,8 +75,10 @@ const Overflow = styled.section`
 `
 
 export default function Main() {
+    const { darkTheme } = useContext(GlobalContext);
     const [isCityPopupVisible, setCityPopupVisible] = React.useState(false);
     const [isCityPopupChecked, setCityPopupChecked] = React.useState(false);
+
     React.useEffect(() => {
         const InMoscow = localStorage.getItem("InMoscow");
         if (!InMoscow) {
@@ -87,7 +89,6 @@ export default function Main() {
 
     }, [])
 
-    const { darkTheme } = useContext(GlobalContext);
 
     const dispatch = useDispatch();
 

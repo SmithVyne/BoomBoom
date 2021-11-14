@@ -149,7 +149,9 @@ export default withRouter(function App({ location }) {
     } 
     else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
       window.scrollTo(0, 0);
-      scrollbar.scrollTop = scrollY;
+      if(pathname === prevPath) {
+        scrollbar.scrollTop = scrollY;
+      } 
     }
     else {
       Scrollbar.destroy(document.body)
@@ -157,7 +159,6 @@ export default withRouter(function App({ location }) {
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath])
 
   useEffect(() => setScrollY(0), [pathname, setScrollY]);
-  
   
   return (
     <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn }}>
