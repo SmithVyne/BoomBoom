@@ -61,7 +61,7 @@ const Button = styled.button`
     max-height: fit-content;
     padding: 20px 16px;
     outline: none;
-    @media(max-width: 900px) and (min-width: 550px) {
+    @media(max-width: 900px) {
         font-size: 16px;
         height: fit-content;
     }
@@ -76,6 +76,9 @@ const Small = styled.small`
     font-weight: 700;
     @media(max-width: 900px) and (min-width: 550px) {
         font-size: 12px;
+    }
+    @media(max-width: 550px) {
+        font-size: 17px;
     }
 `;
 const Cards = styled.div`
@@ -101,6 +104,7 @@ const Cards = styled.div`
         }
         @media(max-width: 550px) { 
             order: 2;
+            font-size: 16px;
         }
     }
 `
@@ -130,7 +134,7 @@ const TopCard = styled.div`
     .topCardTitle {
         font-size: 20px;
         color: ${({darkTheme}) => darkTheme ? "#FFFFFFAD" : "#010101AD"};
-        @media(max-width: 900px) and (min-width: 550px) {
+        @media(max-width: 900px) {
             font-size: 12px;
         }
     }
@@ -195,11 +199,18 @@ const Details = styled.section`
     color: ${({theme}) => theme.textColor};
     background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
     border-radius: 28px;
-    padding: 24px;
+    padding: 25px 16px 16px;
     gap: 26px;
     #wrapTable {
         overflow: auto;
         max-height: 550px;
+    }
+    @media(max-width: 900px) {
+        padding: 25px 23px;
+        padding-right: 0;
+    }
+    @media(max-width: 550px) {
+        padding: 24px 0 12px 12px;
     }
 `
 const Dtitle = styled.span`
@@ -210,6 +221,12 @@ const Dtitle = styled.span`
     font-weight: 650;
     gap: 20px;
     flex-wrap: wrap;
+    @media(max-width: 900px) {
+        padding-right: 23px;
+    }
+    @media(max-width: 550px) {
+        padding-right: 12px;
+    }
 `
 const DetailsTable = styled.table`
     width: 100%;
@@ -231,11 +248,16 @@ const DetailsTable = styled.table`
     }
 `
 const Trows = styled.tr`
-    font-size: 24px;
-    background: ${({darkTheme}) => darkTheme ? "#242424" : "#f8f8f8"};
+    font-family: "Roboto Mono";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    background: ${({darkTheme}) => darkTheme ? "#242424" : "#EBEBEB"};
     & td {
         padding: 24px;
         line-height: 100%;
+        height: 72px;
     }
     & td:first-child {
         border-radius: 18px 0 0 18px;
@@ -274,13 +296,19 @@ const DownloadBtn = styled.button`
     justify-content: center;
     gap: 5px;
     text-align: center;
+    font-family: "Jost", "Circe";
+    svg {
+        width: 20px;
+        height: 20px;
+    }
     @media(max-width: 720px) {
-        padding: 12px 12px 16px 12px;
+        padding: 10px 10px 16px 10px;
         font-size: 16px;
         line-height: 16px;
         width: fit-content;
         max-width: fit-content;
         height: fit-content;
+        margin-right: -10px;
     }
     :disabled {
         cursor: not-allowed;

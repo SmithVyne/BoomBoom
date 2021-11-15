@@ -44,6 +44,9 @@ const Wrapper = styled.div`
   @media(max-width: 720px) {
     padding: 7vw 5vw 0 5vw;
   }
+  @media(max-width: 550px) {
+      padding: ${props => props.pathname === "/dashboard" && '8px'};
+  }
 `;
 const Mainml = styled.main`
   display: flex;
@@ -169,7 +172,7 @@ export default withRouter(function App({ location }) {
     <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn, showMobileNav, setShowMobileNav }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
-          <Wrapper>
+          <Wrapper pathname={pathname}>
             <Nav />
             <Mainml>
               <Switch>
