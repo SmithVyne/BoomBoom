@@ -62,6 +62,7 @@ export default withRouter(function App({ location }) {
   const [scrollY, setScrollY] = useState(0);
   const buyNumberModal = useSelector(store => store.buyNumberModal);
   const [ctn, saveCtn] = useLocalStorage("ctn");
+  const [showMobileNav, setShowMobileNav] = useState(false);
 
   const whichTheme = (darkTheme) => {
     if (darkTheme) {
@@ -126,10 +127,10 @@ export default withRouter(function App({ location }) {
   const prevPath = usePrevious(pathname);
 
   const scrollbar = useMemo(() => {
-    if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs")) && !(buyNumberModal.show || loginForm)) {
+    if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs")) && !(buyNumberModal.show || loginForm || showMobileNav)) {
       return Scrollbar.init(document.body, {damping: 0.1})
     }
-  }, [buyNumberModal.show, isPhone, loginForm, pathname])
+  }, [buyNumberModal.show, isPhone, loginForm, pathname, showMobileNav])
 
   useEffect(() => {
     if(scrollbar) {
@@ -143,9 +144,13 @@ export default withRouter(function App({ location }) {
 
 
   useEffect(() => {
-    if(buyNumberModal.show || loginForm || !isPhone){
+    if(buyNumberModal.show || loginForm || showMobileNav || !isPhone){
       Scrollbar.destroy(document.body)
-      window.scrollTo(0, scrollY)
+      if(showMobileNav) {
+        window.scrollTo(0, 0)
+      } else {
+        window.scrollTo(0, scrollY)
+      }
     } 
     else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
       window.scrollTo(0, 0);
@@ -156,12 +161,12 @@ export default withRouter(function App({ location }) {
     else {
       Scrollbar.destroy(document.body)
     }
-  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath])
+  }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath, showMobileNav])
 
   useEffect(() => setScrollY(0), [pathname, setScrollY]);
   
   return (
-    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn }}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn, showMobileNav, setShowMobileNav }}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper>

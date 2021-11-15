@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
 import logo1 from '../assets/images/logo1.svg'
@@ -134,8 +134,7 @@ const MenuBtn = styled.img`
 `;
 
 export default function Nav() {
-    const { darkTheme, setLoginForm, isMobile } = useContext(GlobalContext);
-    const [showMobileNav, setShowMobileNav] = useState(false);
+    const { darkTheme, setLoginForm, isMobile, showMobileNav, setShowMobileNav } = useContext(GlobalContext);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
     const { pathname } = useLocation();
     const dispatch = useDispatch();
