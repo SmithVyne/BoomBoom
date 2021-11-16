@@ -255,9 +255,8 @@ const Trows = styled.tr`
     text-align: left;
     background: ${({darkTheme}) => darkTheme ? "#242424" : "#EBEBEB"};
     & td {
-        padding: 24px;
+        padding: 28px 24px;
         line-height: 100%;
-        height: 72px;
     }
     & td:first-child {
         border-radius: 18px 0 0 18px;
