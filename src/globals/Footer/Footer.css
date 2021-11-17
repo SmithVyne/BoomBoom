@@ -5,7 +5,7 @@
     padding-right: 80px;
     margin-top: 77px;
     background: #F0F0F0;
-    width: 100vw;
+    width: calc(100vw - 5px);
     margin-left: -80px;
     display: flex;
     flex-direction: row;

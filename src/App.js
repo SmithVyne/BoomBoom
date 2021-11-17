@@ -31,7 +31,7 @@ export const GlobalContext = createContext();
 
 const Wrapper = styled.div`
   position: relative;
-  max-width: 100%;
+  width: 100%;
   min-height:100vh;
   max-width: 2560px;
   margin: 0 auto;
