@@ -70,8 +70,8 @@ import styled from 'styled-components';
 //     )
 // }
 
-const Overflow = styled.section`
-    overflow: hidden;
+const Wrapper = styled.section`
+
 `
 
 export default function Main() {
@@ -102,7 +102,7 @@ export default function Main() {
     }
 
     return (
-        <Overflow>
+        <Wrapper>
             <MetaTags>
                 <title>Главная</title>
                 <meta property="og:title" content="Boom - Главная" />
@@ -118,6 +118,6 @@ export default function Main() {
 
             {/* <СoverageMap /> */}
             {/* <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A6ef07207ddabc0960bbcba5ae8faa14849723bf94e88096283051f9d6d588401&amp;width=500&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script> */}
-        </Overflow>
+        </Wrapper>
     )
 }

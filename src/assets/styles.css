@@ -47,6 +47,10 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: black;
 }
 
+html, body {
+    margin: 0;
+    width: 100%;
+}
 
 * {
     box-sizing: border-box;

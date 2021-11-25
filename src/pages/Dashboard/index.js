@@ -210,7 +210,7 @@ const Details = styled.section`
         padding-right: 0;
     }
     @media(max-width: 550px) {
-        padding: 24px 0 12px 12px;
+        padding: 24px 0 24px 12px;
     }
 `
 const Dtitle = styled.span`
@@ -245,6 +245,12 @@ const DetailsTable = styled.table`
 
     tbody tr td:first-child span{
         margin: 0 5px 0 8px;
+    }
+    @media(max-width: 900px) {
+        padding-right: 23px;
+    }
+    @media(max-width: 550px) {
+        padding-right: 12px;
     }
 `
 const Trows = styled.tr`

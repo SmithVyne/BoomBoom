@@ -107,7 +107,7 @@ smoothscroll.polyfill();
 
 export default function Tariffs({ children }) {
     const ref = useRef();
-    const { darkTheme, isPhone } = useContext(GlobalContext);
+    const { darkTheme, isPhone, scrollbar } = useContext(GlobalContext);
     const [showScroll, setShowScroll] = useState(false);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [offsetWidth, setOffSetWidth] = useState(1);
@@ -165,7 +165,7 @@ export default function Tariffs({ children }) {
 
     const handlePan = (e, {offset: {x, y}}) => {
         if(isPhone && Math.abs(x) > Math.abs(y)) {
-            // scrollbar.scrollTop += y;
+            scrollbar.scrollTop += y;
         }
     }
 

@@ -48,11 +48,6 @@ const Wrapper = styled.div`
       padding: ${props => props.pathname === "/dashboard" && '8px'};
   }
 `;
-const Mainml = styled.main`
-  display: flex;
-  flex-direction: column;
-  color:  ${props => props.theme.textColor};
-`
 
 export default withRouter(function App({ location }) {
   const [darkTheme, setDarkTheme] = useLocalStorage("darkTheme");
@@ -169,84 +164,82 @@ export default withRouter(function App({ location }) {
   useEffect(() => setScrollY(0), [pathname, setScrollY]);
   
   return (
-    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn, showMobileNav, setShowMobileNav }}>
+    <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn, showMobileNav, setShowMobileNav, scrollbar}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
           <Wrapper pathname={pathname}>
             <Nav />
-            <Mainml>
-              <Switch>
-                <Route exact path="/" component={Main} />
+            <Switch>
+              <Route exact path="/" component={Main} />
 
-                <Route path="/tariffs/:type">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <TariffPage />
-                  </Suspense>
-                </Route>
+              <Route path="/tariffs/:type">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <TariffPage />
+                </Suspense>
+              </Route>
 
-                <Route path="/tariffs">
-                  <Redirect to="/tariffs/:all" />
-                </Route>
+              <Route path="/tariffs">
+                <Redirect to="/tariffs/:all" />
+              </Route>
 
-                <Route path="/dashboard" >
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <Dashboard />
-                  </Suspense>
-                </Route>
+              <Route path="/dashboard" >
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <Dashboard />
+                </Suspense>
+              </Route>
 
-                <Route path="/numbers/:button">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <NumbersPage />
-                  </Suspense>
-                </Route>
+              <Route path="/numbers/:button">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <NumbersPage />
+                </Suspense>
+              </Route>
 
-                <Route path="/numbers">
-                  <Redirect to="/numbers/:все" />
-                </Route>
+              <Route path="/numbers">
+                <Redirect to="/numbers/:все" />
+              </Route>
 
-                <Route path="/services/:type">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <Services />
-                  </Suspense>
-                </Route>
+              <Route path="/services/:type">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <Services />
+                </Suspense>
+              </Route>
 
-                <Route path="/services">
-                  <Redirect to="/services/:paid" />
-                </Route>
+              <Route path="/services">
+                <Redirect to="/services/:paid" />
+              </Route>
 
-                <Route path="/organisations/:type">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <OrganisationsPage />
-                  </Suspense>
-                </Route>
+              <Route path="/organisations/:type">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <OrganisationsPage />
+                </Suspense>
+              </Route>
 
-                <Route path="/organisations">
-                  <Redirect to="/organisations/:small-biz" />
-                </Route>
+              <Route path="/organisations">
+                <Redirect to="/organisations/:small-biz" />
+              </Route>
 
-                <Route path="/tariff-info/:tariff">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <TariffePage />
-                  </Suspense>
-                </Route>
+              <Route path="/tariff-info/:tariff">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <TariffePage />
+                </Suspense>
+              </Route>
 
-                <Route path="/support/about-us" >
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <AboutCompany />
-                  </Suspense>
-                </Route>
+              <Route path="/support/about-us" >
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <AboutCompany />
+                </Suspense>
+              </Route>
 
-                <Route path="/support">
-                  <Redirect to="/support/about-us" />
-                </Route>
+              <Route path="/support">
+                <Redirect to="/support/about-us" />
+              </Route>
 
-                <Route path="*">
-                  <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
-                    <PageNotFound />
-                  </Suspense>
-                </Route>
-              </Switch>
-            </Mainml>
+              <Route path="*">
+                <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
+                  <PageNotFound />
+                </Suspense>
+              </Route>
+            </Switch>
             <Footer />
           </Wrapper>
           <AnimatePresence>
