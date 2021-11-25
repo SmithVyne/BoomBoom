@@ -240,7 +240,7 @@
 }
 
 .footer__text_dark {
-    color: #FFFFFF !important;
+    color: #FFFFFF;
 }
 
 @media screen and (max-width: 1500px) {
