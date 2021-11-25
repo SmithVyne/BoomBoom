@@ -49,7 +49,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 html, body {
     margin: 0;
-    width: 100%;
+    width: 100% !important;
+    overflow-x: hidden;
 }
 
 * {
