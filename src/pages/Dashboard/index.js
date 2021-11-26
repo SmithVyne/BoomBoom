@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -10,7 +10,6 @@ import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
 import { useEscapeKey } from "../../hooks";
 import { decode } from 'js-base64';
-import Scrollbar from 'smooth-scrollbar';
 import { Close } from "../../globals/LoginForm";
 import { CgClose } from "react-icons/cg";
 import { GiHazardSign } from "react-icons/gi";
@@ -204,6 +203,22 @@ const Details = styled.section`
     #wrapTable {
         overflow: auto;
         max-height: 550px;
+        &::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: white;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.5);
+            outline: none;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: black;
+        }
     }
     @media(max-width: 900px) {
         padding: 25px 23px;
@@ -235,10 +250,15 @@ const DetailsTable = styled.table`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0px 12px;
+    position: relative;
+    padding-top: 0;
     thead tr {
         font-size: 16px;
         font-weight: 550;
         & th {
+            background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
+            position: sticky;
+            top: 0;
             padding-left: 24px;
         }
     }
@@ -494,7 +514,6 @@ export default function Dashboard() {
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [copied, setCopied] = useState(false);
-    const detailsRef = useRef();
     const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState();
@@ -535,12 +554,6 @@ export default function Dashboard() {
         });
     }
 
-    
-    useLayoutEffect(() => {
-        if(detailsRef.current) {
-            Scrollbar.init(detailsRef.current, {damping: 0.1});
-        }
-    }, [detailsRef, details])
 
     const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
     return (
@@ -599,9 +612,9 @@ export default function Dashboard() {
                             <DownloadBtn disabled={!details} onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
 
-                        <div ref={detailsRef} id="wrapTable">
+                        <div id="wrapTable">
                             {!details ? <Preloader /> :
-                             <div><DetailsTable ref={detailsTableRef}>
+                             <DetailsTable ref={detailsTableRef}>
                                 <thead>
                                     <tr>
                                         <th>Дата</th>
@@ -619,7 +632,7 @@ export default function Dashboard() {
                                         </Trows>
                                     ))}
                                 </tbody>
-                            </DetailsTable></div>}
+                            </DetailsTable>}
                         </div>
                     </Details>
                 </MainSection>

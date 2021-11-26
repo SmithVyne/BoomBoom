@@ -15,13 +15,8 @@ import blurBigTriangle from '../../assets/images/main-cards/blur-big-triangle.pn
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    width: 100%;
-    overflow-x: hidden;
     display: flex;
     justify-content: center;
-    &::-webkit-scrollbar {
-        width: 0px;
-    }
 `
 
 export default function MainCards() {
