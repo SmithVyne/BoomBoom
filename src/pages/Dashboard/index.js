@@ -256,10 +256,11 @@ const DetailsTable = styled.table`
         font-size: 16px;
         font-weight: 550;
         & th {
-            background: ${({darkTheme}) => darkTheme ? "rgba(255, 255, 255, 0.09)" : "#FFFFFF"};
+            background: ${({theme}) => theme.darkTheme ? "rgb(24 24 24)" : "#FFFFFF"};
             position: sticky;
-            top: 0;
+            top: -2px;
             padding-left: 24px;
+            padding-bottom: 12px;
         }
     }
 
