@@ -553,8 +553,9 @@ export default function Dashboard() {
             const fixed = document.querySelectorAll("#wrapTable th")
             const listener = ({offset: {y}}) => {
                 fixed.forEach(ele => {
-                    ele.style.top = y-2 + 'px';
-                    ele.style.paddingBottom = "12px";
+                    ele.style.top = y-7 + 'px';
+                    ele.style.paddingBottom = y > 0 ? "12px" : "0";
+                    ele.style.paddingTop = y > 0 ? "3px" : "0";
                 });
             }
             scrollbar.addListener(listener);
