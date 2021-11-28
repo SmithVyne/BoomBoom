@@ -28,7 +28,6 @@ const Services = React.lazy(() => import('./pages/Services/Services'));
 
 export const GlobalContext = createContext();
 
-
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -37,6 +36,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   height: fit-content;
   background: ${props => props.theme.background};
+  color:  ${props => props.theme.textColor};
   padding: 48px 80px 0 80px;
   @media(max-width: 1500px) {
     padding: 48px 40px 0 40px;

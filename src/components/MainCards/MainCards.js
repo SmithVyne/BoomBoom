@@ -17,6 +17,15 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     display: flex;
     justify-content: center;
+    width: 100vw;
+    overflow: hidden;
+    margin: 0 -80px;
+    @media(max-width: 1500px) {
+        margin: 0 -40px;
+    }
+    @media(max-width: 720px) {
+        margin: 0 -5vw;
+    }
 `
 
 export default function MainCards() {
