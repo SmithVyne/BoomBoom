@@ -239,9 +239,7 @@
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)), #010101;
 }
 
-.footer__text_dark {
-    color: #FFFFFF;
-}
+
 
 @media screen and (max-width: 1500px) {
     .footer {
@@ -420,4 +418,8 @@
         line-height: 100%;
         margin-left: 16px;
     }
+}
+
+.footer__text_dark {
+    color: #FFFFFF;
 }
