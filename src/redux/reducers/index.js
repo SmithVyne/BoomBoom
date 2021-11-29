@@ -17,16 +17,19 @@ const BuyNumberReducer = (store = initialNumber, action) => {
     }
 }
 
-const FormReducer = (store = null, action) => {
+
+
+const FormReducer = (store = {status: null}, action) => {
     switch(action.type) {
         case LOGIN_FAILED:
-            return -1
+            return {...store, status: -1, err_message: action.err_message}
         case GET_PASSWORD:
-            return store === -2 ? null : -2
+            return {...store, status: store.status === -2 ? null : -2}
         default:
             return store
     }
 }
+
 
 
 
@@ -61,4 +64,4 @@ const AuthReducer = (store = initialAuth, action) => {
     }
 }
 
-export default combineReducers({form_status: FormReducer, auth: AuthReducer, buyNumberModal: BuyNumberReducer});
+export default combineReducers({login: FormReducer, auth: AuthReducer, buyNumberModal: BuyNumberReducer});

@@ -147,7 +147,7 @@ export default function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const form_status = useSelector(store => store.form_status);
+    const {status, err_message} = useSelector(store => store.login);
     const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
     
@@ -159,20 +159,32 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        Fetcher(body, {errorDispatch: () => dispatch({type: LOGIN_FAILED})})
+        Fetcher(body, {errorDispatch: () => dispatch({type: LOGIN_FAILED, err_message: "Неверный логин или пароль"})})
         .then(result => {
-            const {accessToken, refreshToken} = result;
-            dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
-            saveCtn(apiUsername)
-            setLoginForm(false)
+            if(result) {
+                const {accessToken, refreshToken} = result;
+                dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
+                saveCtn(apiUsername)
+                setLoginForm(false)
+            }
         })
     }
 
     const handleGetPassword = (e) => {
         e.preventDefault();
-        Fetcher({method: "sendPassword", params: {ctn: apiUsername}, id: apiUsername})
-        .then(() => dispatch({type: GET_PASSWORD}))
+        if(apiUsername && apiUsername.length === 10) {
+            Fetcher({method: "sendPassword", params: {ctn: apiUsername}, id: apiUsername})
+                .then(() => {dispatch({type: GET_PASSWORD})})
+        } else {
+            dispatch({type: LOGIN_FAILED, err_message: "Введите верный номер телефона"})
+        }
     }
+
+    const returnToForm = (e) => {
+        e.preventDefault();
+        dispatch({type: GET_PASSWORD});
+    }
+    
     return (
         <>
         {accessToken ? 
@@ -189,14 +201,16 @@ export default function LoginForm() {
             }}>
                 <Form darkTheme={darkTheme} onClick={(e)=>e.stopPropagation()}>
                     <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
-                    {form_status === -2 ?
+                    {status === -2 ?
                     <>
                         <Instruction style={{textAlign: "center"}}>Ваш пароль должен прийти вам через СМС</Instruction>
                         <span id="check"><FaCheck size={50} /></span>
                     </> : 
                     <>
                         <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
-                        {form_status === -1 && <Error>Неверный логин или пароль</Error>}
+
+                        {status === -1 && <Error>{err_message}</Error>}
+
                         <Field as={Cleave} options={{
                             phone: true,
                             phoneRegionCode: 'RU'
@@ -205,7 +219,7 @@ export default function LoginForm() {
                         <GetPassword>Нет пароля? <span onClick={handleGetPassword}>Получить пароль</span></GetPassword>
                     </>
                     }
-                    <Submit onClick={form_status === -2 ? handleGetPassword : handleSubmit}>{form_status === -2 ? "Хорошо" : "войти"}</Submit>
+                    <Submit onClick={status === -2 ? returnToForm  : handleSubmit}>{status === -2 ? "Хорошо" : "войти"}</Submit>
                 </Form>
             </Wrapper>
         }

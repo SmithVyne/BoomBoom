@@ -149,7 +149,12 @@ export default withRouter(function App({ location }) {
       if(showMobileNav) {
         window.scrollTo(0, 0)
       } 
-    } 
+    } else if (isPhone || pathname === "/" || pathname.startsWith("/tariffs")) {
+        window.scrollTo(0, 0);
+        if(pathname === prevPath) {
+          scrollbar.scrollTop = scrollY;
+        } 
+    }
     
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath, showMobileNav])
 

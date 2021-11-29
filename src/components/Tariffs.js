@@ -90,7 +90,7 @@ const MobileTracker = styled.div`
         justify-content: center;
     }
 `
-const Ellipses = styled.div`
+const Ellipse = styled.div`
     height: 8px;
     width: 8px;
     background: ${({ position, idx }) => position === idx ? "#0E5EF8" : "transparent"};
@@ -188,7 +188,7 @@ export default function Tariffs({ children }) {
                     </>
                 }
                 <MobileTracker>
-                    {Array(children.length).fill(null).map((_, idx) => <Ellipses key={idx} position={position} idx={idx}></Ellipses>)}
+                    {Array(children.length).fill(null).map((_, idx) => <Ellipse key={idx} position={position} idx={idx}></Ellipse>)}
                 </MobileTracker>
             </WrapScroller>
         </>

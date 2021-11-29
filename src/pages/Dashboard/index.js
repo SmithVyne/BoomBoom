@@ -568,6 +568,7 @@ export default function Dashboard() {
 
 
     const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
+    
     return (
             <>
             {!userInfo ? <Preloader /> : 
