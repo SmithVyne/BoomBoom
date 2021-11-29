@@ -14,6 +14,7 @@ import Main from "./pages/Main";
 import BuyNumberModal from "./components/BuyNumberModal";
 import Footer from "./globals/Footer/Footer";
 import Scrollbar from 'smooth-scrollbar';
+import ScrollToTop from "./globals/ScrollToTop";
 
 
 const TariffPage = React.lazy(() => import('./pages/TariffPage/TariffPage'));
@@ -112,7 +113,7 @@ export default withRouter(function App({ location }) {
       setIsMobile(window.innerWidth < 1100); 
       setIsPhone(window.innerWidth <= 600);
     };
-    const watcher2 = () => window.scrollY && setScrollY(window.scrollY)
+    const watcher2 = () => /*window.scrollY && */setScrollY(window.scrollY)
     window.addEventListener("resize", watcher);
     window.addEventListener("scroll", watcher2);
     return () => {
@@ -142,28 +143,33 @@ export default withRouter(function App({ location }) {
 
 
   useEffect(() => {
-    if(buyNumberModal.show || loginForm || showMobileNav || !isPhone){
+    if(buyNumberModal.show || loginForm || showMobileNav){
       Scrollbar.destroy(document.body)
       if(showMobileNav) {
         window.scrollTo(0, 0)
       } else {
-        window.scrollTo(0, scrollY)
+        // window.scrollTo(0, scrollY)
+        // console.log("na wa")
       }
     } 
     else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
-      window.scrollTo(0, 0);
-      if(pathname === prevPath) {
-        scrollbar.scrollTop = scrollY;
-      } 
+      // window.scrollTo(0, 0);
+      // if(pathname === prevPath) {
+      //   scrollbar.scrollTop = scrollY;
+      // } else {
+      //   scrollbar.scrollTop = 0
+      // }
     }
     else {
       Scrollbar.destroy(document.body)
     }
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath, showMobileNav])
 
-  useEffect(() => setScrollY(0), [pathname, setScrollY]);
+  
   
   return (
+    <>
+    <ScrollToTop scrollbar={scrollbar} />
     <GlobalContext.Provider value={{ darkTheme, setDarkTheme, setLoginForm, isMobile, isPhone, ctn, saveCtn, showMobileNav, setShowMobileNav, scrollbar}}>
       <ThemeProvider theme={whichTheme(darkTheme)}>
         <div className={`app ${darkTheme ? 'app_dark' : ''}`}>
@@ -250,6 +256,7 @@ export default withRouter(function App({ location }) {
 
       </ThemeProvider>
     </GlobalContext.Provider>
+    </>
   )
-}
-)
+  
+})

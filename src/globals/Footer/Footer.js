@@ -115,12 +115,12 @@ export default function Footer() {
                                     <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/tariffs">Тарифы</Link>
                                 </li>
                                 <li className={`footer__nav-item`}>
-                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/numbers/:все">Номера</Link>
+                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/numbers">Номера</Link>
                                 </li>
                             </div>
                             <div className={`footer__nav-column`}>
                                 <li className={`footer__nav-item`}>
-                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/organisations/:small-biz">Организациям</Link>
+                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/organisations">Организациям</Link>
                                 </li>
                                 <li className={`footer__nav-item`}>
                                     <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/services">Услуги</Link>
@@ -201,12 +201,12 @@ export default function Footer() {
                                     <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/tariffs">Тарифы</Link>
                                 </li>
                                 <li className={`footer__nav-item`}>
-                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/numbers/:все">Номера</Link>
+                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/numbers">Номера</Link>
                                 </li>
                             </div>
                             <div className={`footer__nav-column`}>
                                 <li className={`footer__nav-item`}>
-                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/organisations/:small-biz">Организациям</Link>
+                                    <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/organisations">Организациям</Link>
                                 </li>
                                 <li className={`footer__nav-item`}>
                                     <Link className={`footer__nav-item ${darkTheme ? 'footer__text_dark' : ''}`} to="/services">Услуги</Link>

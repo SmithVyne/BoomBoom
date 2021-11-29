@@ -155,17 +155,12 @@ export default function Tariffs({ children }) {
         const { current } = ref;
         const {x, y} = info.offset;
         if(isPhone && Math.abs(x) > Math.abs(y)) {
+            scrollbar.scrollTop += y;
             if(x < 0) {
                 current.scroll({ left: scrollLeft + current.offsetWidth + 40, behavior: 'smooth' });
             } else {
                 current.scroll({ left: scrollLeft - current.offsetWidth - 40, behavior: 'smooth' });
             }
-        }
-    }
-
-    const handlePan = (e, {offset: {x, y}}) => {
-        if(isPhone && Math.abs(x) > Math.abs(y)) {
-            scrollbar.scrollTop += y;
         }
     }
 
@@ -182,7 +177,7 @@ export default function Tariffs({ children }) {
                         </WrapCtrl>
                     </>
                 }
-                <Scroller onPanStart={handlePanStart} onPan={handlePan} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
+                <Scroller onPanStart={handlePanStart} onScroll={({target}) => setScrollLeft(target.scrollLeft)} ref={ref}>
                     <WrapTariffs>
                         <AnimatePresence>
                             {children}

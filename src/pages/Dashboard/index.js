@@ -540,6 +540,7 @@ export default function Dashboard() {
     const handleDownload = () => {
         pdfMake.createPdf(docDefinition(details)).open();
     }
+    
     const handleCopy = () => {
         navigator.clipboard.writeText("+7"+userInfo.ctn).then(() => {
             setCopied(true);
