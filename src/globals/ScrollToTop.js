@@ -8,8 +8,7 @@ export default function ScrollToTop({scrollbar}) {
     if(scrollbar) scrollbar.scrollTop = 0;
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-    // console.log("err")
-  }, [pathname]);
+  }, [pathname, scrollbar]);
 
   return null;
 }

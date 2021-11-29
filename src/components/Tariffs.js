@@ -10,8 +10,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 const WrapScroller = styled.div`
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    flex-direction: column;
 `
 const Scroller = styled(motion.div)`
     height: fit-content;
@@ -83,13 +82,12 @@ const Tracker = styled.div`
 `
 
 const MobileTracker = styled.div`
-    position: absolute;
-    top: calc(100% + 10px);
-    left: calc(50% - 46px);
-    height: 8px;
+    width: 100%;
+    margin-top: 10px;
     display: none;
     @media(max-width: 600px) {
         display: flex;
+        justify-content: center;
     }
 `
 const Ellipses = styled.div`

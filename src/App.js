@@ -43,10 +43,11 @@ const Wrapper = styled.div`
     padding: 48px 40px 0 40px;
   }
   @media(max-width: 720px) {
-    padding: 7vw 5vw 0 5vw;
+    padding: 5vw 5vw 0 5vw;
   }
   @media(max-width: 550px) {
       padding: ${props => props.pathname === "/dashboard" && '8px'};
+      padding-top: 5vw;
   }
 `;
 
@@ -113,7 +114,7 @@ export default withRouter(function App({ location }) {
       setIsMobile(window.innerWidth < 1100); 
       setIsPhone(window.innerWidth <= 600);
     };
-    const watcher2 = () => /*window.scrollY && */setScrollY(window.scrollY)
+    const watcher2 = () => setScrollY(window.scrollY)
     window.addEventListener("resize", watcher);
     window.addEventListener("scroll", watcher2);
     return () => {
@@ -143,30 +144,17 @@ export default withRouter(function App({ location }) {
 
 
   useEffect(() => {
-    if(buyNumberModal.show || loginForm || showMobileNav){
+    if(buyNumberModal.show || loginForm || showMobileNav || !isPhone || !(pathname === "/" || pathname.startsWith("/tariffs")) ){
       Scrollbar.destroy(document.body)
       if(showMobileNav) {
         window.scrollTo(0, 0)
-      } else {
-        // window.scrollTo(0, scrollY)
-        // console.log("na wa")
-      }
+      } 
     } 
-    else if(isPhone && (pathname === "/" || pathname.startsWith("/tariffs"))) {
-      // window.scrollTo(0, 0);
-      // if(pathname === prevPath) {
-      //   scrollbar.scrollTop = scrollY;
-      // } else {
-      //   scrollbar.scrollTop = 0
-      // }
-    }
-    else {
-      Scrollbar.destroy(document.body)
-    }
+    
   }, [buyNumberModal.show, isPhone, loginForm, scrollY, scrollbar, pathname, prevPath, showMobileNav])
 
   
-  
+
   return (
     <>
     <ScrollToTop scrollbar={scrollbar} />

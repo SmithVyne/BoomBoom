@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DELETE_AUTH } from "./utils";
 
 const Wrappper = styled.nav`
-margin: 14px 0 0 ;
+    margin: 14px 0 0 ;
     display: flex;
     flex-direction:row;
     justify-content: space-between;
@@ -63,13 +63,12 @@ margin: 14px 0 0 ;
         }
     }
     & #helpCenter {
-
         position: absolute;
         top: 15px;
         right: 80px;
         text-decoration: underline;
         color: inherit;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 26px;
         @media (max-width: 1500px) {
             right: 40px;
