@@ -33,6 +33,7 @@ export const BUY_NUMBER = "BUY_NUMBER";
 export const USER = "USER";
 export const CREATE_AUTH = "CREATE_AUTH";
 export const DELETE_AUTH = "DELETE_AUTH";
+export const RESET_ACCESSTOKEN = "RESET_ACCESSTOKEN"
 
 export const CATEGORIES = {
     1: { name: "Бронзовый", bg: "#CD7F32", price: 0, prevPrice: "1000", exclude: 0 },

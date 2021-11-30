@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../App";
-import {CREATE_AUTH, Fetcher, GET_PASSWORD, LOGIN_FAILED} from "./utils";
+import {CREATE_AUTH, Fetcher, GET_PASSWORD, LOGIN_FAILED, RESET_ACCESSTOKEN} from "./utils";
 import Cleave from 'cleave.js/react';
 import { FaCheck } from "react-icons/fa";
 import {useEscapeKey} from "../hooks";
@@ -164,8 +164,9 @@ export default function LoginForm() {
             if(result) {
                 const {accessToken, refreshToken} = result;
                 dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
-                saveCtn(apiUsername)
-                setLoginForm(false)
+                setTimeout(() => dispatch({type: RESET_ACCESSTOKEN}), 600000);
+                saveCtn(apiUsername);
+                setLoginForm(false);
             }
         })
     }

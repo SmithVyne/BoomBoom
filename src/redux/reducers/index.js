@@ -1,5 +1,5 @@
 import { combineReducers } from "redux"
-import { LOGIN_FAILED, GET_PASSWORD, USER, SHOW_MODAL, HIDE_MODAL, BUY_NUMBER, CREATE_AUTH, DELETE_AUTH } from "../../globals/utils"
+import { LOGIN_FAILED, GET_PASSWORD, USER, SHOW_MODAL, HIDE_MODAL, BUY_NUMBER, CREATE_AUTH, DELETE_AUTH, RESET_ACCESSTOKEN } from "../../globals/utils"
 
 const initialNumber = {show: false, numbers: [], buy: false, payload: {}}
 const BuyNumberReducer = (store = initialNumber, action) => {
@@ -59,6 +59,8 @@ const AuthReducer = (store = initialAuth, action) => {
             setCookieValue("accessToken", "", 0)
             setCookieValue("refreshToken", "", 0)
             return {...store, accessToken: "", refreshToken: "", user: {}}
+        case RESET_ACCESSTOKEN: 
+            return {...store, accessToken: ""}
         default:
             return store
     }

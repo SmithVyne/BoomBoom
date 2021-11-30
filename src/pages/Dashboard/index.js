@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components/macro";
 import { GlobalContext } from "../../App";
 import Aside from "../../components/Aside";
@@ -19,7 +19,6 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import docDefinition from "./docDefinition";
 import Preloader from "../../globals/Preloader/Preloader";
-import Scrollbar from 'smooth-scrollbar';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Wrapper = styled.div`
@@ -204,6 +203,21 @@ const Details = styled.section`
     #wrapTable {
         overflow: auto;
         max-height: 550px;
+        z-index: 2;
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+            z-index: 2;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: grey;
+            border-radius: 5px;
+            outline: none;
+        }
     }
     @media(max-width: 900px) {
         padding: 25px 23px;
@@ -237,6 +251,7 @@ const DetailsTable = styled.table`
     border-spacing: 0px 12px;
     position: relative;
     padding: 0;
+    z-index: 1;
     thead tr {
         font-size: 16px;
         line-height: 100%;
@@ -244,10 +259,15 @@ const DetailsTable = styled.table`
         & th {
             background: ${({theme}) => theme.darkTheme ? "rgb(24 24 24)" : "#FFFFFF"};
             position: sticky;
+            top: -2px;
             padding-left: 24px;
+            padding-bottom: ${({$scrolling}) => $scrolling && "12px"};
+            @media(max-width: 500px) {
+                top: 10px;
+            }
         }
     }
-e
+
     tbody tr td:first-child span{
         margin: 0 5px 0 8px;
     }
@@ -495,7 +515,6 @@ const getDashboard = (ctn, accessToken, dispatch) => {
 
 
 
-
 export default function Dashboard() {
     const {darkTheme, setLoginForm, ctn} = useContext(GlobalContext);
     const {userInfo, userData, details} = useSelector(store => store.auth.user);
@@ -506,14 +525,15 @@ export default function Dashboard() {
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState();
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-    const tableRef = useRef();
-
+    const [tScrolling, setTScrolling] = useState(false);
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
     }, [userInfo, setBlocked])
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
         const watcher = () => setInnerWidth(window.innerWidth);
         window.addEventListener("resize", watcher)
         return () => window.removeEventListener("resize", watcher)
@@ -521,20 +541,18 @@ export default function Dashboard() {
 
     
     useEffect(() => {
-        Fetcher({method: "check", id:null}, {accessToken}).then(isValid => {
-            if (isValid) {
-                getDashboard(ctn, accessToken, dispatch)
-                getDetailsFile(ctn, accessToken).then(details =>  dispatch({type: USER, user: {details}}))
-            } 
-            else if(refreshToken) {
-                Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
-                    .then(result => {
-                        const {accessToken, refreshToken} = result;
-                        dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
-                    })
-            } 
-            else setLoginForm(true)
-        })
+        if (accessToken) {
+            getDashboard(ctn, accessToken, dispatch)
+            getDetailsFile(ctn, accessToken).then(details =>  dispatch({type: USER, user: {details}}))
+        } 
+        else if(refreshToken) {
+            Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
+                .then(result => {
+                    const {accessToken, refreshToken} = result;
+                    dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
+                })
+        } 
+        else setLoginForm(true)
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
@@ -547,25 +565,6 @@ export default function Dashboard() {
             setTimeout(() => setCopied(false), 60000);
         });
     }
-
-    useLayoutEffect(() => {
-        if(tableRef.current) {
-            const scrollbar = Scrollbar.init(tableRef.current, {damping: 0.1})
-            const fixed = document.querySelectorAll("#wrapTable th")
-            const listener = ({offset: {y}}) => {
-                fixed.forEach(ele => {
-                    ele.style.top = y-7 + 'px';
-                    ele.style.paddingBottom = y > 0 ? "12px" : "0";
-                    ele.style.paddingTop = y > 0 ? "3px" : "0";
-                });
-            }
-            scrollbar.addListener(listener);
-            return () => {
-                scrollbar.removeListener(listener);
-            }
-        }
-    })
-
 
     const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
     
@@ -625,9 +624,9 @@ export default function Dashboard() {
                             <DownloadBtn disabled={!details} onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
 
-                        <div ref={tableRef} id="wrapTable">
+                        <div onScroll={({target}) => setTScrolling(target.scrollTop > 0)} id="wrapTable">
                             {!details ? <Preloader /> :
-                             <DetailsTable>
+                             <DetailsTable $scrolling={tScrolling}>
                                 <thead>
                                     <tr>
                                         <th>Дата</th>
