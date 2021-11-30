@@ -12,6 +12,21 @@ import clock from '../../assets/images/main-cards/clock.png'
 import cylinder from '../../assets/images/main-cards/cylinder.png'
 import sphere from '../../assets/images/main-cards/sphere.png'
 import blurBigTriangle from '../../assets/images/main-cards/blur-big-triangle.png'
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    overflow: hidden;
+    margin: 0 -80px;
+    @media(max-width: 1500px) {
+        margin: 0 -40px;
+    }
+    @media(max-width: 720px) {
+        margin: 0 -5vw;
+    }
+`
 
 export default function MainCards() {
     const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
@@ -26,6 +41,7 @@ export default function MainCards() {
         };
     });
     return (
+        <Wrapper>
         <section className={`main__cards`}>
             {screenWidth > 703 ? <>
                 <div className={`main__left-cards`}>
@@ -130,9 +146,8 @@ export default function MainCards() {
 
                         </div>
                     </div></>}
-
-
         </section>
+        </Wrapper>
     )
 
 }

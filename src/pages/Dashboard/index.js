@@ -10,7 +10,6 @@ import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
 import { useEscapeKey } from "../../hooks";
 import { decode } from 'js-base64';
-import Scrollbar from 'smooth-scrollbar';
 import { Close } from "../../globals/LoginForm";
 import { CgClose } from "react-icons/cg";
 import { GiHazardSign } from "react-icons/gi";
@@ -20,6 +19,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import docDefinition from "./docDefinition";
 import Preloader from "../../globals/Preloader/Preloader";
+import Scrollbar from 'smooth-scrollbar';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const Wrapper = styled.div`
@@ -210,7 +210,7 @@ const Details = styled.section`
         padding-right: 0;
     }
     @media(max-width: 550px) {
-        padding: 24px 0 12px 12px;
+        padding: 24px 0 24px 12px;
     }
 `
 const Dtitle = styled.span`
@@ -225,7 +225,7 @@ const Dtitle = styled.span`
         padding-right: 23px;
     }
     @media(max-width: 550px) {
-        padding-right: 12px;
+        padding-right: 10px;
     }
 `
 const DetailsTable = styled.table`
@@ -235,16 +235,27 @@ const DetailsTable = styled.table`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0px 12px;
+    position: relative;
+    padding: 0;
     thead tr {
         font-size: 16px;
+        line-height: 100%;
         font-weight: 550;
         & th {
+            background: ${({theme}) => theme.darkTheme ? "rgb(24 24 24)" : "#FFFFFF"};
+            position: sticky;
             padding-left: 24px;
         }
     }
-
+e
     tbody tr td:first-child span{
         margin: 0 5px 0 8px;
+    }
+    @media(max-width: 900px) {
+        padding-right: 23px;
+    }
+    @media(max-width: 550px) {
+        padding-right: 12px;
     }
 `
 const Trows = styled.tr`
@@ -481,6 +492,10 @@ const getDashboard = (ctn, accessToken, dispatch) => {
     .then(([userInfo, userData]) => dispatch({type: USER, user: {userInfo, userData}}))
 }
 
+
+
+
+
 export default function Dashboard() {
     const {darkTheme, setLoginForm, ctn} = useContext(GlobalContext);
     const {userInfo, userData, details} = useSelector(store => store.auth.user);
@@ -488,11 +503,11 @@ export default function Dashboard() {
     if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [copied, setCopied] = useState(false);
-    const detailsRef = useRef();
-    const detailsTableRef = useRef();
     const [showPopup, setShowPopup] = useState(false);
     const [blocked, setBlocked] = useState();
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    const tableRef = useRef();
+
     
     useEffect(() => {
         userInfo && setBlocked( !(userInfo.unblockable || new Date(userInfo.blockDate) > new Date()) );
@@ -503,20 +518,23 @@ export default function Dashboard() {
         window.addEventListener("resize", watcher)
         return () => window.removeEventListener("resize", watcher)
     }, [])
+
     
     useEffect(() => {
-        if (accessToken) {
-            getDashboard(ctn, accessToken, dispatch)
-            getDetailsFile(ctn, accessToken).then(details =>  dispatch({type: USER, user: {details}}))
-        } 
-        else if(refreshToken) {
-            Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
-                .then(result => {
-                    const {accessToken, refreshToken} = result;
-                    dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
-                })
-        } 
-        else setLoginForm(true)
+        Fetcher({method: "check", id:null}, {accessToken}).then(isValid => {
+            if (isValid) {
+                getDashboard(ctn, accessToken, dispatch)
+                getDetailsFile(ctn, accessToken).then(details =>  dispatch({type: USER, user: {details}}))
+            } 
+            else if(refreshToken) {
+                Fetcher({method: "refreshToken", params:{username: ctn, refreshToken}, id:null})
+                    .then(result => {
+                        const {accessToken, refreshToken} = result;
+                        dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
+                    })
+            } 
+            else setLoginForm(true)
+        })
     }, [accessToken, refreshToken, dispatch, setLoginForm, ctn]);
 
     const handleDownload = () => {
@@ -529,12 +547,24 @@ export default function Dashboard() {
         });
     }
 
-    
     useLayoutEffect(() => {
-        if(detailsRef.current) {
-            Scrollbar.init(detailsRef.current, {damping: 0.1});
+        if(tableRef.current) {
+            const scrollbar = Scrollbar.init(tableRef.current, {damping: 0.1})
+            const fixed = document.querySelectorAll("#wrapTable th")
+            const listener = ({offset: {y}}) => {
+                fixed.forEach(ele => {
+                    ele.style.top = y-7 + 'px';
+                    ele.style.paddingBottom = y > 0 ? "12px" : "0";
+                    ele.style.paddingTop = y > 0 ? "3px" : "0";
+                });
+            }
+            scrollbar.addListener(listener);
+            return () => {
+                scrollbar.removeListener(listener);
+            }
         }
-    }, [detailsRef, details])
+    })
+
 
     const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
     return (
@@ -593,9 +623,9 @@ export default function Dashboard() {
                             <DownloadBtn disabled={!details} onClick={handleDownload}> <HiDownload /> получите полную детализацию</DownloadBtn>
                         </Dtitle>
 
-                        <div ref={detailsRef} id="wrapTable">
+                        <div ref={tableRef} id="wrapTable">
                             {!details ? <Preloader /> :
-                             <div><DetailsTable ref={detailsTableRef}>
+                             <DetailsTable>
                                 <thead>
                                     <tr>
                                         <th>Дата</th>
@@ -613,7 +643,7 @@ export default function Dashboard() {
                                         </Trows>
                                     ))}
                                 </tbody>
-                            </DetailsTable></div>}
+                            </DetailsTable>}
                         </div>
                     </Details>
                 </MainSection>
