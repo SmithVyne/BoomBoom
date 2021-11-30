@@ -493,20 +493,20 @@ const TariffsDropDown = memo(({ modalPosition, selected = true, setModalPosition
         if (buy) {
             setSelectedTariff()
             setDropDownPosition(index);
-        } else {setModalPosition(index)}
+        } else { setModalPosition(index) }
     }
 
     // const prevSwitches = usePrevious(localSwitches);
     useEffect(() => {
-        if(buy) {
+        if (buy) {
             setLocalSwitches(obj => ({
-                ...obj, 
-                "Безлимитный 4G" : tariff.positions[dropDownPosition]["Безлимитный 4G"] ? false : obj["Безлимитный 4G"], 
-                "Раздача интернета" : tariff.positions[dropDownPosition]["Раздача интернета"] ? false : obj["Раздача интернета"],
+                ...obj,
+                "Безлимитный 4G": tariff.positions[dropDownPosition]["Безлимитный 4G"] ? false : obj["Безлимитный 4G"],
+                "Раздача интернета": tariff.positions[dropDownPosition]["Раздача интернета"] ? false : obj["Раздача интернета"],
             }))
         }
     }, [dropDownPosition, setLocalSwitches, tariff.positions, buy])
-    
+
 
     useEffect(() => {
         if (buy && selected) {
@@ -569,9 +569,9 @@ const BuyNumbersDropdown = memo(({ toggleOpen, setToggleOpen, modalPosition, set
     const [selectedTariff, setSelectedTariff] = useState(null);
     const handleOpen = (index) => {
         if (index === clickedTariff) setClickedTariff(null)
-        else {setClickedTariff(index)}
+        else { setClickedTariff(index) }
     }
-    
+
     return (
         <div className={`buyNumbersDropdown ${toggleOpen ? 'alignTop' : ''}`} >
             <BuyNumbersDropdownStyles selectedTariff={selectedTariff} bg={category.bg} toggleOpen={toggleOpen} onClick={setToggleOpen}>
@@ -605,7 +605,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
     const [showNumbers, setShowNumbers] = useState(false);
     const [chosenNumber, setChosenNumber] = useState({});
     const [inputNumber, setInputNumber] = useState("");
-    const { position, tariffId, service, switches, toSubmit , ym} = payload;
+    const { position, tariffId, service, switches, toSubmit, ym } = payload;
     const [submit, setSubmit] = useState(toSubmit);
     const [error, setError] = useState(false);
     const [selectedCategoryID, setSelectedCategoryID] = useState("all");
@@ -655,7 +655,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             if (utm.utm_term) utmMarks.utm_term = utm.utm_term
             if (utm.utm_campaign) utmMarks.utm_campaign = utm.utm_campaign
         }
-        
+
         let serviceName = service.eSim ? "Подключение eSim" : service.title.replace(/\s+/g, ' ')
             .replace(/^\s/, '')
             .replace(/\s$/, '');
@@ -668,10 +668,10 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        
+
         sendMetriс(ym.type, ym.value)
         if (fromMosсow && userPhone && serviceName) {
-            
+
             OrderService({
                 serviceName,
                 userPhone,
@@ -733,7 +733,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        sendMetriс('reachGoal','tarif_oformit-form')
+        sendMetriс('reachGoal', 'tarif_oformit-form')
         OrderTariff({
             tariffName,
             tariffOptions,
@@ -798,7 +798,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             fromMosсow = "не из Москвы"
 
         }
-        sendMetriс('reachGoal','nomer-forma')
+        sendMetriс('reachGoal', 'nomer-forma')
         BuyNumbers({
             deliveryDate,
             deliveryTime,
@@ -808,16 +808,16 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
             userPhone,
             fromMosсow,
             utm: JSON.stringify(utmMarks)
-            }).then((res) => {
-                console.log(res)
-                setSubmit(true);
-                setShowPreloader(false)
-            }).catch((err) => {
-                setSubmit(true);
-                setError(true)
-                setShowPreloader(false)
-                console.log(err)
-            })
+        }).then((res) => {
+            console.log(res)
+            setSubmit(true);
+            setShowPreloader(false)
+        }).catch((err) => {
+            setSubmit(true);
+            setError(true)
+            setShowPreloader(false)
+            console.log(err)
+        })
     }
 
 
@@ -847,7 +847,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 numbersArray = [...numbersArray, value]
             }
             contract = { ...contract, numbersArray }
-            
+
             handleBuySubmit({
                 deliveryDate: contract.deliveryDate ? contract.deliveryDate : 'none',
                 deliveryTime: contract.deliveryTime ? `${contract.deliveryTime[0]}-${contract.deliveryTime[1]}` : 'none',
@@ -866,7 +866,7 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                 productionMethod: options[selectedOption],
                 ...modalSwitches
             }
-           
+
             handleTariffSubmit({
                 tariffName: tariff.title,
                 tariffOptions: contract.tariffOptions,
@@ -953,7 +953,10 @@ export default memo(function BuyNumberModal({ numbers, buy, payload }) {
                                                 <section>
                                                     <p>Способ подключения</p>
                                                     <div className="options first">
-                                                        {options.map((option, idx) => <Option className="first" key={option} selected={selectedOption} idx={idx} onClick={() => setSelectedOption(idx)}>{option}</Option>)}
+                                                        {options.map((option, idx) => <Option className={`first ${option === 'Перенести номер в BOOM' ? 'option_disabled' : ''}`} key={option} selected={selectedOption} idx={idx} onClick={() => {
+                                                            if (option === "Перенести номер в BOOM") return
+                                                            setSelectedOption(idx)
+                                                        }}>{option}</Option>)}
                                                     </div>
                                                 </section>
                                                 {selectedOption === 0 && <section>
