@@ -163,7 +163,7 @@ export default function LoginForm() {
         .then(result => {
             if(result) {
                 const {accessToken, refreshToken} = result;
-                dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken}});
+                dispatch({type: CREATE_AUTH, payload:{accessToken, refreshToken, dispatch}});
                 setTimeout(() => dispatch({type: RESET_ACCESSTOKEN}), 600000);
                 saveCtn(apiUsername);
                 setLoginForm(false);

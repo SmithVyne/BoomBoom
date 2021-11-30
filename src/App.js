@@ -46,8 +46,7 @@ const Wrapper = styled.div`
     padding: 5vw 5vw 0 5vw;
   }
   @media(max-width: 550px) {
-      padding: ${props => props.pathname === "/dashboard" && '8px'};
-      padding-top: 5vw;
+      /* padding: ${props => props.pathname === "/dashboard" && '5vw 8px 0 8px'}; */
   }
 `;
 

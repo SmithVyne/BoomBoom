@@ -5,7 +5,7 @@ import Aside from "../../components/Aside";
 import { Progress } from 'antd'
 import { HiDownload } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, SHOW_MODAL, USER } from "../../globals/utils";
+import {CREATE_AUTH, Fetcher, parseCols, parseDetailsFile, percentage, replacePoints, RESET_ACCESSTOKEN, SHOW_MODAL, USER } from "../../globals/utils";
 import { spacer } from "../../components/BuyNumberModal";
 import { RiFileCopyLine } from "react-icons/ri";
 import { useEscapeKey } from "../../hooks";
@@ -513,13 +513,10 @@ const getDashboard = (ctn, accessToken, dispatch) => {
 }
 
 
-
-
 export default function Dashboard() {
     const {darkTheme, setLoginForm, ctn} = useContext(GlobalContext);
     const {userInfo, userData, details} = useSelector(store => store.auth.user);
     const {accessToken, refreshToken} = useSelector(store => store.auth);
-    if(userInfo) var {VOICE, SMS_MMS, INTERNET} = userInfo.rests;
     const dispatch = useDispatch();
     const [copied, setCopied] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -532,8 +529,6 @@ export default function Dashboard() {
     }, [userInfo, setBlocked])
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
         const watcher = () => setInnerWidth(window.innerWidth);
         window.addEventListener("resize", watcher)
         return () => window.removeEventListener("resize", watcher)
@@ -550,6 +545,7 @@ export default function Dashboard() {
                 .then(result => {
                     const {accessToken, refreshToken} = result;
                     dispatch({type: CREATE_AUTH, payload: {accessToken, refreshToken}})
+                    setTimeout(() => dispatch({type: RESET_ACCESSTOKEN}), 600000);
                 })
         } 
         else setLoginForm(true)
@@ -567,6 +563,7 @@ export default function Dashboard() {
     }
 
     const width = useMemo(() => innerWidth >= 550 && innerWidth <= 900 ? 0.266*innerWidth - 48 : 181, [innerWidth]);
+    const rests = useMemo(() => userInfo && userInfo.rests, [userInfo])
     
     return (
             <>
@@ -601,15 +598,15 @@ export default function Dashboard() {
 
                         <SubCard darkTheme={darkTheme}>
                             <Small>Минуты</Small>
-                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(VOICE.current, VOICE.initial)} format={() => <ProgressText title={`${VOICE.current} мин`} sub={`из ${VOICE.initial}`} /> } gapDegree={60} />
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(rests.VOICE.current, rests.VOICE.initial)} format={() => <ProgressText title={`${rests.VOICE.current} мин`} sub={`из ${rests.VOICE.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <SubCard darkTheme={darkTheme}>
                             <Small>Интернет</Small>
-                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(INTERNET.current, INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(INTERNET.current)} гб.`} sub={`из ${INTERNET.initial}`} /> } gapDegree={60} />
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(rests.INTERNET.current, rests.INTERNET.initial)} format={() => <ProgressText title={`${replacePoints(rests.INTERNET.current)} гб.`} sub={`из ${rests.INTERNET.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <SubCard darkTheme={darkTheme}>
                             <Small>Сообщения</Small>
-                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(SMS_MMS.current, SMS_MMS.initial)} format={() => <ProgressText title={`${SMS_MMS.current} SMS`} sub={`из ${SMS_MMS.initial}`} /> } gapDegree={60} />
+                            <Progress strokeColor="#4B75FC" strokeWidth={7} width={width} type="dashboard" percent={percentage(rests.SMS_MMS.current, rests.SMS_MMS.initial)} format={() => <ProgressText title={`${rests.SMS_MMS.current} SMS`} sub={`из ${rests.SMS_MMS.initial}`} /> } gapDegree={60} />
                         </SubCard>
                         <Button onClick={() => setShowPopup(true)} fontSize="24px" color="#4B75FC" background="#4B75FC29" height="71px" width="100%" round>
                             Изменить номер
