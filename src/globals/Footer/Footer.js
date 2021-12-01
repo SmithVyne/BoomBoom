@@ -104,7 +104,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/d" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>
@@ -190,7 +190,7 @@ export default function Footer() {
                     <div className={`footer__column`}>
                         <div className="footer__controllers">
                             <ThemeSwitch />
-                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/dashboard" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
+                            <Link className={`footer__dashboard-btn`} to={logged_in ? "/" : refreshToken ? "/d" : pathname} onClick={handleButton}>{logged_in ? "выйти" : "личный кабинет"}</Link>
                         </div>
                         <ul className={`footer__nav`}>
                             <div className={`footer__nav-column`}>

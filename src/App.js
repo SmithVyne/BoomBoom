@@ -180,14 +180,14 @@ export default withRouter(function App({ location }) {
                 <Redirect to="/tariffs/:all" />
               </Route>
 
-              <Route path="/d">
+              <Route path="/dashboard">
                 <Suspense fallback={<div className='app__preloader'><Preloader /></div>}>
                   <Dashboard />
                 </Suspense>
               </Route>
 
-              <Route path="/dashboard" >
-                <Redirect to="/d" />
+              <Route path="/d" >
+                <Redirect to="/dashboard" />
               </Route>
 
               <Route path="/numbers/:button">
