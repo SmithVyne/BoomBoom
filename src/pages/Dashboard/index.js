@@ -533,7 +533,6 @@ export default function Dashboard() {
         window.addEventListener("resize", watcher)
         return () => window.removeEventListener("resize", watcher)
     }, [])
-
     
     useEffect(() => {
         if (accessToken) {

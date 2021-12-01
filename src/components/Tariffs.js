@@ -8,7 +8,7 @@ import { debounce } from "lodash";
 import smoothscroll from 'smoothscroll-polyfill';
 
 const WrapScroller = styled.div`
-    position: relative;
+    position: relatiscrollbarve;
     display: flex;
     flex-direction: column;
 `
