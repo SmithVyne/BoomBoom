@@ -66,7 +66,7 @@ export async function Fetcher(body, options = {}) {
         .then(data => {
             if (data.error) {
                 if (errorDispatch) {
-                    errorDispatch()
+                    errorDispatch(data.error.message)
                 } else {
                     throw data.error
                 }

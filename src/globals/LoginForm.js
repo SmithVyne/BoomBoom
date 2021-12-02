@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
+import { ImCross } from "react-icons/im";
+import { BsEye } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import styled from "styled-components/macro";
@@ -51,6 +53,9 @@ const Form = styled.form`
         background: #79FFD7;
         margin: 20px 0 50px;
         border-radius: 100%;
+        svg {
+            color: ${({darkTheme, theme}) => darkTheme ? theme.background : "#ffffff"};
+        }
     }
 `
 const Instruction = styled.span`
@@ -72,11 +77,10 @@ const Field = styled.input`
     display: flex;
     align-items: center;
     line-height: 0px;
-    background: #F8F8F8;
+    background: ${({darkTheme}) => darkTheme ? "linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12))" : "#F8F8F8" };
     border: none;
-    color: #121212;
     &::placeholder{
-        color: #121212;
+        color: ${({darkTheme}) => darkTheme || "#121212"};
         opacity: 25%;
     }
     @media(max-width: 500px) {
@@ -117,6 +121,24 @@ const GetPassword = styled(Error)`
         cursor: pointer;
     }
 `
+
+const WrapPassword = styled.div`
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    svg {
+        font-weight: 700;
+        position: absolute;
+        right: 24px;
+        top: calc(50% - 26px);
+        display: flex;
+        align-items: center;
+        color: ${({darkTheme, theme}) => darkTheme ? "#FFFFFFAD" : theme.textColor};
+        cursor: pointer;
+    }
+`
+
+
 const handlePhone = ({target}, updaterFunction) => {
     const {value} = target
     if(value.length === 1) {
@@ -148,6 +170,10 @@ export default function LoginForm() {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const {status, err_message} = useSelector(store => store.login);
+    const [passwordFail, setPasswordFail] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+
     const apiUsername = handlePhoneForApi(username);
     useEscapeKey(setLoginForm);
     
@@ -174,8 +200,10 @@ export default function LoginForm() {
     const handleGetPassword = (e) => {
         e.preventDefault();
         if(apiUsername && apiUsername.length === 10) {
-            Fetcher({method: "sendPassword", params: {ctn: apiUsername}, id: apiUsername})
-                .then(() => {dispatch({type: GET_PASSWORD})})
+            Fetcher(
+                {method: "sendPassword", params: {ctn: apiUsername}, id: apiUsername}, 
+                {errorDispatch : (err_message) => setPasswordFail(err_message)}
+            ).then(() => dispatch({type: GET_PASSWORD}))
         } else {
             dispatch({type: LOGIN_FAILED, err_message: "Введите верный номер телефона"})
         }
@@ -184,6 +212,7 @@ export default function LoginForm() {
     const returnToForm = (e) => {
         e.preventDefault();
         dispatch({type: GET_PASSWORD});
+        setPasswordFail(false)
     }
     
     return (
@@ -204,19 +233,22 @@ export default function LoginForm() {
                     <Close onClick={()=>setLoginForm(false)}><CgClose strokeWidth={1.5} size={29} /></Close>
                     {status === -2 ?
                     <>
-                        <Instruction style={{textAlign: "center"}}>Ваш пароль должен прийти вам через СМС</Instruction>
-                        <span id="check"><FaCheck size={50} /></span>
+                        <Instruction style={{textAlign: "center"}}>{passwordFail ? passwordFail : "Ваш пароль должен прийти вам через СМC"}</Instruction>
+                        <span id="check">{passwordFail ? <ImCross size={50} /> : <FaCheck size={50} />}</span>
                     </> : 
                     <>
                         <Instruction>Введите номер телефона и пароль для входа в личный кабинет</Instruction>
 
                         {status === -1 && <Error>{err_message}</Error>}
 
-                        <Field as={Cleave} options={{
+                        <Field darkTheme={darkTheme} as={Cleave} options={{
                             phone: true,
                             phoneRegionCode: 'RU'
                         }} value={username} onChange={(e)=>handlePhone(e, setUsername)} type="tel" placeholder="+7 (000) 000 00 00" onFocus={()=>username || setUsername("+7")} autoComplete="username" />
-                        <Field value={password} onChange={({target}) => setPassword(target.value)} type="password" placeholder="пароль" autoComplete="current-password" />
+                        <WrapPassword>
+                            <Field darkTheme={darkTheme} value={password} onChange={({target}) => setPassword(target.value)} type={showPassword ? "text" : "password"} placeholder="пароль" autoComplete="current-password" />
+                            <BsEye onClick={() => setShowPassword(val => !val)} size="52" />
+                        </WrapPassword>
                         <GetPassword>Нет пароля? <span onClick={handleGetPassword}>Получить пароль</span></GetPassword>
                     </>
                     }
